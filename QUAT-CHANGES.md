@@ -14,6 +14,7 @@ https://testnet.quatcapital.kz (Quat Network Testnet, chainId 77477).
 | Date | File | Change |
 |------|------|--------|
 | 2026-10-25 | `ui/snippets/footer/Footer.tsx` | Footer simplified: removed the "Blockscout" links column, the project description and the version lines. Kept the "Made with Blockscout" link and the Blockscout Limited copyright notice. Custom link groups come from `NEXT_PUBLIC_FOOTER_LINKS`. |
+| 2026-10-25 | `ui/snippets/footer/Footer.tsx` | Removed the "Made with Blockscout" logo and the copyright line (GPL-3.0 §5(d): the original interface does not display full Appropriate Legal Notices). Added a "Based on Blockscout · GPL-3.0" line (in Russian) linking to this repository. Copyright notices in source files and `LICENSE` are unchanged. |
 
 ## Build
 

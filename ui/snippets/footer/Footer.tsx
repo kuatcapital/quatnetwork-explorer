@@ -1,7 +1,9 @@
 // Modified by Quat Capital (ИП «QUAT CAPITAL»), 2026-10-25, for Quat Network Testnet.
 // Original: blockscout/frontend v2.7.2, ui/snippets/footer/Footer.tsx, GPL-3.0.
-// Changes: removed the "Blockscout" links column, the project description and version lines;
-// kept the "Made with Blockscout" link and the copyright notice; custom link groups from NEXT_PUBLIC_FOOTER_LINKS.
+// Changes: removed the "Blockscout" links column, the project description, version lines,
+// the "Made with Blockscout" logo and the copyright line (GPL-3.0 §5(d): the original interface does not
+// display full Appropriate Legal Notices); added a "Based on Blockscout · GPL-3.0" line linking to the
+// Corresponding Source; custom link groups from NEXT_PUBLIC_FOOTER_LINKS.
 // Distributed under GPL-3.0 (see LICENSE in the original repository).
 import type { GridProps, HTMLChakraProps } from '@chakra-ui/react';
 import { Box, Grid, Flex, Text, VStack } from '@chakra-ui/react';
@@ -15,8 +17,6 @@ import type { ResourceError } from 'lib/api/resources';
 import useFetch from 'lib/hooks/useFetch';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { copy } from 'toolkit/utils/htmlEntities';
-import IconSvg from 'ui/shared/IconSvg';
 import { CONTENT_MAX_WIDTH } from 'ui/shared/layout/utils';
 import NetworkAddToWallet from 'ui/shared/NetworkAddToWallet';
 
@@ -24,6 +24,7 @@ import FooterLinkItem from './FooterLinkItem';
 import IntTxsIndexingStatus from './IntTxsIndexingStatus';
 
 const MAX_LINKS_COLUMNS = 4;
+const SOURCE_URL = 'https://github.com/kuatcapital/quatnetwork-explorer';
 
 const Footer = () => {
   const fetch = useFetch();
@@ -38,8 +39,6 @@ const Footer = () => {
 
   const groups = (linksData || []).slice(0, MAX_LINKS_COLUMNS);
   const colNum = Math.max(groups.length, 1);
-
-  const logoColor = { base: 'blue.600', _dark: 'white' };
 
   const containerProps: HTMLChakraProps<'div'> = {
     as: 'footer',
@@ -72,14 +71,8 @@ const Footer = () => {
             { !config.UI.indexingAlert.intTxs.isHidden && <IntTxsIndexingStatus/> }
             { !config.features.multichain.isEnabled && <NetworkAddToWallet source="Footer"/> }
           </Flex>
-          <Flex columnGap={ 2 } textStyle="xs" alignItems="center">
-            <span>Made with</span>
-            <Link href="https://www.blockscout.com" external noIcon display="inline-flex" color={ logoColor } _hover={{ color: logoColor }}>
-              <IconSvg name="networks/logo-placeholder" width="80px" height={ 4 }/>
-            </Link>
-          </Flex>
-          <Text mt={ 3 } textStyle="xs">
-            Copyright { copy } Blockscout Limited 2023-{ (new Date()).getFullYear() }
+          <Text textStyle="xs">
+            <Link href={ SOURCE_URL } external noIcon>На основе Blockscout · GPL-3.0</Link>
           </Text>
         </div>
 
