@@ -5,7 +5,7 @@ https://testnet.quatcapital.kz (Quat Network Testnet, chainId 77477).
 
 - Upstream: [blockscout/frontend v2.7.2](https://github.com/blockscout/frontend/tree/v2.7.2),
   commit `446c409eeb54274aab90ff371a705f9699cd84ef`, licensed under **GNU GPL v3.0** (see `LICENSE`).
-- The first commit (tag `upstream-v2.7.2`) is the unmodified upstream source.
+- The first commit of this repository is the unmodified upstream source.
 - Later commits are modifications by Quat Capital (ИП «QUAT CAPITAL», Almaty, Kazakhstan).
   They are distributed under the same GPL-3.0 licence.
 
