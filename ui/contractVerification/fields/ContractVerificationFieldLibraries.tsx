@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -10,6 +12,8 @@ import ContractVerificationFormRow from '../ContractVerificationFormRow';
 import ContractVerificationFieldLibraryItem from './ContractVerificationFieldLibraryItem';
 
 const ContractVerificationFieldLibraries = () => {
+  const { t: tQuat } = useTranslation();
+
   const { formState, control, getValues } = useFormContext<FormFields>();
   const { fields, append, remove, insert } = useFieldArray({
     name: 'libraries',
@@ -49,9 +53,7 @@ const ContractVerificationFieldLibraries = () => {
           onChange={ handleCheckboxChange }
           mt={ 9 }
           disabled={ formState.isSubmitting }
-        >
-          Add contract libraries
-        </Checkbox>
+        >{ tQuat('verification.add_libraries') }</Checkbox>
       </ContractVerificationFormRow>
       { fields.map((field, index) => (
         <ContractVerificationFieldLibraryItem

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenHolder, TokenInfo } from 'types/api/token';
 
@@ -18,9 +20,11 @@ interface Props {
 }
 
 const TokenHoldersListItem = ({ holder, token, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ListItemMobileGrid.Container>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Address</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('tokenUi.address') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity
           address={ holder.address }
@@ -32,14 +36,14 @@ const TokenHoldersListItem = ({ holder, token, isLoading }: Props) => {
 
       { (hasTokenIds(token.type)) && 'token_id' in holder && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>ID#</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('tokenUi.id_number') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <TruncatedText text={ holder.token_id } loading={ isLoading } w="100%"/>
           </ListItemMobileGrid.Value>
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Quantity</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('tokenUi.quantity') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { isConfidentialTokenType(token.type) ? (
           <ConfidentialValue loading={ isLoading }/>
@@ -54,7 +58,7 @@ const TokenHoldersListItem = ({ holder, token, isLoading }: Props) => {
 
       { token.total_supply && token.type !== 'ERC-404' && !isConfidentialTokenType(token.type) && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Percentage</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('tokenUi.percentage') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Utilization
               value={ BigNumber(holder.value).div(BigNumber(token.total_supply)).dp(4).toNumber() }

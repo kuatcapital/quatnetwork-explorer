@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Text, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 
@@ -24,6 +26,8 @@ type Props = {
 };
 
 const AddressNetWorth = ({ addressData, isLoading, addressHash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data, isError, isPending } = useFetchTokens({ hash: addressData?.hash, enabled: addressData?.has_tokens });
 
   const { usdBn: nativeUsd } = calculateUsdValue({
@@ -51,7 +55,7 @@ const AddressNetWorth = ({ addressData, isLoading, addressHash }: Props) => {
       <>
         <TextSeparator/>
         <HStack columnGap={ 2 }>
-          <Text>Multichain</Text>
+          <Text>{ tQuat('addresses.multichain') }</Text>
           <HStack gap={{ base: 2, lg: 3 }}>
             { providers.map((item, index) => (
               <AddressMultichainButton
@@ -73,7 +77,7 @@ const AddressNetWorth = ({ addressData, isLoading, addressHash }: Props) => {
   return (
     <Skeleton display="flex" alignItems="center" flexWrap="wrap" loading={ isLoading && !(addressData?.has_tokens && isPending) }>
       { (isError || !addressData?.exchange_rate) ?
-        <span>N/A</span> :
+        <span>{ tQuat('home.not_available') }</span> :
         <SimpleValue value={ totalUsd } accuracy={ DEFAULT_ACCURACY_USD } prefix="$" overflowed={ isOverflow }/> }
       { multichainItems }
     </Skeleton>

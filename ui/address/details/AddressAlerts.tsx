@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMetadataTagFormatted } from 'types/client/addressMetadata';
 
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const AddressAlerts = ({ tags, isScamToken, className }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const noteTags = tags?.filter(({ tagType }) => tagType === 'note').filter(({ meta }) => meta?.data);
 
   if (!noteTags?.length && !isScamToken) {
@@ -22,9 +26,7 @@ const AddressAlerts = ({ tags, isScamToken, className }: Props) => {
   return (
     <Flex flexDir="column" rowGap={{ base: 1, lg: 2 }} mb={ 3 } className={ className }>
       { isScamToken && (
-        <Alert status="error">
-          This token has been flagged as a potential scam.
-        </Alert>
+        <Alert status="error">{ tQuat('addresses.potential_scam') }</Alert>
       ) }
       { noteTags?.map((noteTag) => (
         <Alert

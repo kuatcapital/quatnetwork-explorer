@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware display labels with stable analytics names. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type { FieldPath, ErrorOption } from 'react-hook-form';
 
 import type {
@@ -46,6 +48,22 @@ export const METHOD_LABELS: Record<SmartContractVerificationMethod, string> = {
   'solidity-foundry': 'Solidity (Foundry)',
   'stylus-github-repository': 'Stylus (GitHub repository)',
 };
+
+// Preserve the original English labels above for analytical events; UI labels are resolved per render/request.
+export function getVerificationMethodLabels(t: TFunction): Record<SmartContractVerificationMethod, string> {
+  return {
+    'flattened-code': t('verification.method_solidity_single'),
+    'standard-input': t('verification.method_solidity_json'),
+    sourcify: t('verification.method_sourcify'),
+    'multi-part': t('verification.method_solidity_multi'),
+    'vyper-code': t('verification.method_vyper'),
+    'vyper-multi-part': t('verification.method_vyper_multi'),
+    'vyper-standard-input': t('verification.method_vyper_json'),
+    'solidity-hardhat': t('verification.method_hardhat'),
+    'solidity-foundry': t('verification.method_foundry'),
+    'stylus-github-repository': t('verification.method_stylus'),
+  };
+}
 
 export const DEFAULT_VALUES: Record<SmartContractVerificationMethod, FormFields> = {
   'flattened-code': {

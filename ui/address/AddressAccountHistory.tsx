@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NovesHistoryFilterValue } from 'types/api/noves';
 import { NovesHistoryFilterValues } from 'types/api/noves';
@@ -29,6 +31,8 @@ type Props = {
 };
 
 const AddressAccountHistory = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMounted = useIsMounted();
 
@@ -87,15 +91,9 @@ const AddressAccountHistory = ({ shouldRender = true, isQueryEnabled = true }: P
         <TableRoot>
           <TableHeaderSticky top={ 75 }>
             <TableRow>
-              <TableColumnHeader width="120px">
-                Age
-              </TableColumnHeader>
-              <TableColumnHeader>
-                Action
-              </TableColumnHeader>
-              <TableColumnHeader width="320px">
-                From/To
-              </TableColumnHeader>
+              <TableColumnHeader width="120px">{ tQuat('common.age') }</TableColumnHeader>
+              <TableColumnHeader>{ tQuat('addresses.action') }</TableColumnHeader>
+              <TableColumnHeader width="320px">{ tQuat('transactions.from_to') }</TableColumnHeader>
             </TableRow>
           </TableHeaderSticky>
           <TableBody maxWidth="full">
@@ -117,11 +115,11 @@ const AddressAccountHistory = ({ shouldRender = true, isQueryEnabled = true }: P
     <DataListDisplay
       isError={ isError }
       itemsNum={ filteredData?.length }
-      emptyText="There are no transactions."
+      emptyText={ tQuat('addresses.no_transactions') }
       actionBar={ actionBar }
       hasActiveFilters={ Boolean(filterValue) }
       emptyStateProps={{
-        description: 'No match found for current filter',
+        description: tQuat('addresses.no_filter_matches'),
       }}
     >
       { content }

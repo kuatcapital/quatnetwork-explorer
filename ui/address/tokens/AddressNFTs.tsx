@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Grid } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NFTTokenType } from 'types/api/token';
 
@@ -20,6 +22,8 @@ type Props = {
 };
 
 const AddressNFTs = ({ tokensQuery, tokenTypes, onTokenTypesChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
 
@@ -61,7 +65,7 @@ const AddressNFTs = ({ tokensQuery, tokenTypes, onTokenTypesChange }: Props) => 
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items?.length }
-      emptyText="There are no tokens of selected type."
+      emptyText={ tQuat('addresses.no_selected_tokens') }
       actionBar={ actionBar }
       hasActiveFilters={ hasActiveFilters }
       emptyStateProps={{

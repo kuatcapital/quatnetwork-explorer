@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressParam } from 'types/api/addressParams';
 import type { OptimisticL2WithdrawalStatus } from 'types/api/optimisticL2';
@@ -42,8 +44,18 @@ const WITHDRAWAL_STATUS_ORDER_GAME: Array<OptimisticL2WithdrawalStatus> = [
 ];
 
 const rollupFeature = config.features.rollup;
+const WITHDRAWAL_STATUS_KEYS: Record<string, string> = {
+  'Waiting for state root': 'transactions.waiting_state_root',
+  'Ready to prove': 'transactions.ready_prove',
+  'In challenge period': 'transactions.challenge_period',
+  'Ready for relay': 'transactions.ready_relay',
+  'Waiting a game to resolve': 'transactions.waiting_dispute',
+  Proven: 'transactions.proven',
+  Relayed: 'transactions.relayed',
+};
 
 const TxDetailsWithdrawalStatusOptimistic = ({ data, from, txHash }: Props) => {
+  const { t: tTx } = useTranslation();
   const queryClient = useQueryClient();
 
   const handleClaimSuccess = React.useCallback((l1TxHash: string) => {
@@ -95,7 +107,7 @@ const TxDetailsWithdrawalStatusOptimistic = ({ data, from, txHash }: Props) => {
         if (data.l1_transaction_hash) {
           return WITHDRAWAL_STATUS_STEPS.map((status) => {
             return status === 'Relayed' ? {
-              content: <TxEntityL1 hash={ data.l1_transaction_hash } truncation="constant" text="Relayed" noIcon noCopy/>,
+              content: <TxEntityL1 hash={ data.l1_transaction_hash } truncation="constant" text={ tTx('transactions.relayed') } noIcon noCopy/>,
               label: status,
             } : status;
           });
@@ -109,9 +121,14 @@ const TxDetailsWithdrawalStatusOptimistic = ({ data, from, txHash }: Props) => {
     }
   })();
 
+  const localizedSteps = steps.map(step => typeof step === 'string' ? {
+    label: step,
+    content: tTx(WITHDRAWAL_STATUS_KEYS[step]),
+  } : step);
+
   return (
     <VerificationSteps
-      steps={ steps as unknown as Array<OptimisticL2WithdrawalStatus> }
+      steps={ localizedSteps }
       currentStep={ data.status }
       rightSlot={ rightSlot }
     />

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMetadataTagFormatted } from 'types/client/addressMetadata';
 
@@ -21,6 +23,8 @@ interface Props {
 }
 
 const TokenNftMarketplaces = ({ hash, id, isLoading, appActionData, source }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!hash || config.UI.views.nft.marketplaces.length === 0) {
     return null;
   }
@@ -52,11 +56,9 @@ const TokenNftMarketplaces = ({ hash, id, isLoading, appActionData, source }: Pr
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Marketplaces trading this NFT"
+        hint={ tQuat('tokenUi.marketplaces_hint') }
         isLoading={ isLoading }
-      >
-        Marketplaces
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('tokenUi.marketplaces') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue
         py={ appActionData ? '1px' : '6px' }
       >
@@ -64,11 +66,11 @@ const TokenNftMarketplaces = ({ hash, id, isLoading, appActionData, source }: Pr
           <HStack gap={ 3 }>
             { items.map((item) => {
               return (
-                <Tooltip content={ `View on ${ item.name }` } key={ item.name }>
+                <Tooltip content={ tQuat('tokenUi.view_on', { name: item.name }) } key={ item.name }>
                   <Link href={ item.href } external noIcon>
                     <Image
                       src={ item.logo_url }
-                      alt={ `${ item.name } marketplace logo` }
+                      alt={ tQuat('tokenUi.marketplace_logo', { name: item.name }) }
                       boxSize={ 5 }
                       borderRadius="full"
                     />

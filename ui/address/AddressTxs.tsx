@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localize address UI. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -33,6 +35,8 @@ interface Props {
 }
 
 const AddressTxs = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMounted = useIsMounted();
   const isMobile = useIsMobile();
@@ -77,7 +81,7 @@ const AddressTxs = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
   const tabs = [
     {
       id: [ 'txs_local', 'txs' ],
-      title: 'Txns',
+      title: tQuat('home.txns'),
       component: (
         <TxsWithAPISorting
           filter={ txsLocalFilter }
@@ -96,7 +100,7 @@ const AddressTxs = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
     },
     config.features.crossChainTxs.isEnabled && {
       id: 'txs_cross_chain',
-      title: 'Cross-chain txns',
+      title: tQuat('home.cross_chain_txns'),
       component: (
         <AddressTxsCrossChain
           pagination={ crossChainQuery.pagination }

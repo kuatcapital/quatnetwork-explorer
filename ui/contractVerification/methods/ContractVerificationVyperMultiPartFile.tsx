@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { SmartContractVerificationConfig } from 'types/client/contract';
 
@@ -13,27 +15,24 @@ const MAIN_SOURCES_TYPES = [ '.vy' as const ];
 const INTERFACE_TYPES = [ '.vy' as const, '.json' as const ];
 
 const ContractVerificationVyperMultiPartFile = ({ config }: { config: SmartContractVerificationConfig }) => {
+  const { t: tQuat } = useTranslation();
 
   const interfacesHint = (
-    <>
-      <span>Add any </span>
-      <Link href="https://docs.vyperlang.org/en/stable/interfaces.html" external noIcon>required interfaces</Link>
-      <span> for the main compiled contract.</span>
-    </>
+    <Trans
+      i18nKey="verification.vyper_interfaces_hint"
+      components={{ docs: <Link href="https://docs.vyperlang.org/en/stable/interfaces.html" external noIcon/> }}
+    />
   );
 
   return (
-    <ContractVerificationMethod title="Contract verification via Vyper (multi-part files)">
+    <ContractVerificationMethod title={ tQuat('verification.vyper_multi_title') }>
       <ContractVerificationFieldCompiler config={ config } isVyper/>
       <ContractVerificationFieldEvmVersion isVyper config={ config }/>
       <ContractVerificationFieldSources
         name="sources"
         fileTypes={ MAIN_SOURCES_TYPES }
-        title="Upload main *.vy source"
-        hint={ `
-          Primary compiled Vyper contract. 
-          Only add the main contract here whose bytecode has been deployed, all other files can be uploaded to the interfaces box below.
-        ` }
+        title={ tQuat('verification.upload_vyper') }
+        hint={ tQuat('verification.vyper_primary_hint') }
         required
       />
       <ContractVerificationFieldSources
@@ -41,7 +40,7 @@ const ContractVerificationVyperMultiPartFile = ({ config }: { config: SmartContr
         fileTypes={ INTERFACE_TYPES }
         multiple
         fullFilePath
-        title="Interfaces (.vy or .json)"
+        title={ tQuat('verification.vyper_interfaces') }
         hint={ interfacesHint }
       />
     </ContractVerificationMethod>

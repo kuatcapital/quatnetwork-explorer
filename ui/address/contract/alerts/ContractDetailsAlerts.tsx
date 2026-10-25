@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Box, Flex } from '@chakra-ui/react';
 import type { Channel } from 'phoenix';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { Address } from 'types/api/address';
@@ -24,6 +26,8 @@ export interface Props {
 }
 
 const ContractDetailsAlerts = ({ data, isLoading, addressData, channel }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ isChangedBytecodeSocket, setIsChangedBytecodeSocket ] = React.useState<boolean>();
 
   const handleChangedBytecodeMessage: SocketMessage.AddressChangedBytecode['handler'] = React.useCallback(() => {
@@ -55,9 +59,7 @@ const ContractDetailsAlerts = ({ data, isLoading, addressData, channel }: Props)
         />
       ) }
       { (data?.is_changed_bytecode || isChangedBytecodeSocket) && (
-        <Alert status="warning">
-          Warning! Contract bytecode has been changed and does not match the verified one. Therefore, interaction with this smart contract may be risky.
-        </Alert>
+        <Alert status="warning">{ tQuat('contracts.changed_bytecode_warning') }</Alert>
       ) }
       { !data?.is_verified && data?.verified_twin_address_hash && (!addressData.proxy_type || addressData.proxy_type === 'unknown') && (
         <Alert status="warning" whiteSpace="pre-wrap">

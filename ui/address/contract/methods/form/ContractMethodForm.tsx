@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { encodeFunctionData, type AbiFunction } from 'viem';
 
 import type { FormSubmitHandler, FormSubmitResult, MethodCallStrategy, SmartContractMethod } from '../types';
@@ -37,6 +39,7 @@ interface Props {
 }
 
 const ContractMethodForm = ({ data, attempt, onSubmit, onReset, isOpen }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const [ result, setResult ] = React.useState<FormSubmitResult>();
   const [ isLoading, setLoading ] = React.useState(false);
@@ -301,9 +304,7 @@ const ContractMethodForm = ({ data, attempt, onSubmit, onReset, isOpen }: Props)
                 onClick={ onReset }
                 gap={ 1 }
               >
-                <IconSvg name="repeat" boxSize={ 5 }/>
-                Reset
-              </Button>
+                <IconSvg name="repeat" boxSize={ 5 }/>{ tQuat('common.reset') }</Button>
             ) }
           </Flex>
         </chakra.form>

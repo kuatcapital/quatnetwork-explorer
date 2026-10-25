@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localize contract verification interface. GPL-3.0.
 import { Grid, Text, chakra } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from './types';
 import type { SocketMessage } from 'lib/socket/types';
@@ -44,11 +46,20 @@ interface Props {
 }
 
 const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const translationRef = React.useRef(tQuat);
+  translationRef.current = tQuat;
   const formApi = useForm<FormFields>({
     mode: 'onBlur',
     defaultValues: getDefaultValues(methodFromQuery, config, hash, []),
   });
   const { handleSubmit, watch, formState, setError, reset, getFieldState, getValues, clearErrors } = formApi;
+  React.useEffect(() => {
+    const type = getFieldState('address').error?.type;
+    if (type === 'verification.already_verified' || type === 'verification.not_contract' || type === 'verification.went_wrong') {
+      setError('address', { type, message: tQuat(type) });
+    }
+  }, [ getFieldState, setError, tQuat ]);
   const submitPromiseResolver = React.useRef<((value: unknown) => void)>(undefined);
   const methodNameRef = React.useRef<string>(undefined);
 
@@ -65,13 +76,13 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
 
         const isVerifiedContract = 'is_verified' in response && response?.is_verified && !response.is_partially_verified;
         if (isVerifiedContract) {
-          setError('address', { message: 'Contract has already been verified' });
+          setError('address', { type: 'verification.already_verified', message: tQuat('verification.already_verified') });
           return Promise.resolve();
         }
       } catch (error) {
         const statusCode = getErrorObjStatusCode(error);
-        const message = statusCode === 404 ? 'Address is not a smart contract' : 'Something went wrong';
-        setError('address', { message });
+        const type = statusCode === 404 ? 'verification.not_contract' : 'verification.went_wrong';
+        setError('address', { type, message: tQuat(type) });
         return Promise.resolve();
       }
     }
@@ -92,7 +103,7 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
     return new Promise((resolve) => {
       submitPromiseResolver.current = resolve;
     });
-  }, [ apiFetch, hash, setError, trackContract ]);
+  }, [ apiFetch, hash, setError, trackContract, tQuat ]);
 
   const handleFormChange = React.useCallback(() => {
     clearErrors('root');
@@ -120,8 +131,8 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
     }
 
     toaster.success({
-      title: 'Success',
-      description: 'Contract is successfully verified.',
+      title: translationRef.current('common.success'),
+      description: translationRef.current('verification.verified_success'),
     });
 
     mixpanel.logEvent(
@@ -141,13 +152,13 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
     submitPromiseResolver.current?.(null);
 
     toaster.error({
-      title: 'Error',
-      description: 'There was an error with socket connection. Try again later.',
+      title: translationRef.current('common.error'),
+      description: translationRef.current('verification.socket_error'),
     });
   // callback should not change when form is submitted
   // otherwise it will resubscribe to channel, but we don't want that since in that case we might miss verification result message
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+  }, []);
 
   const channel = useSocketChannel({
     topic: `addresses:${ address?.toLowerCase() }`,
@@ -211,9 +222,9 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
             type="submit"
             mt={ 12 }
             loading={ formState.isSubmitting }
-            loadingText="Verify & publish"
+            loadingText={ tQuat('verification.verify_publish') }
           >
-            Verify & publish
+            { tQuat('verification.verify_publish') }
           </Button>
         ) }
       </chakra.form>

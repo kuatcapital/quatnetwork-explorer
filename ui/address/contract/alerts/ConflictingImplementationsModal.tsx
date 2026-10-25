@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Grid, GridItem, HStack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractConflictingImplementation } from 'types/api/contract';
 
@@ -16,19 +18,17 @@ interface Props {
 }
 
 const ConflictingImplementationsModal = ({ data, children }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <DialogRoot size={{ lgDown: 'full', lg: 'md' }}>
       <DialogTrigger>
         { children }
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>Detected proxy implementations</DialogHeader>
+        <DialogHeader>{ tQuat('contracts.detected_implementations') }</DialogHeader>
         <DialogBody>
-          <Text>
-            Multiple proxy patterns were detected for this contract.
-            This may be due to an unsupported custom proxy design or due to a malicious proxy spoofing attempt.
-            Review carefully.
-          </Text>
+          <Text>{ tQuat('contracts.proxy_spoof_warning') }</Text>
           <VStack alignItems="stretch" mt={ 6 } textStyle="sm">
             { data.map((item) => {
               const addressNum = item.implementations.length;
@@ -46,7 +46,7 @@ const ConflictingImplementationsModal = ({ data, children }: Props) => {
                   borderRadius="md"
                   bgColor={{ _light: 'blackAlpha.50', _dark: 'whiteAlpha.50' }}
                 >
-                  <GridItem>Proxy type:</GridItem>
+                  <GridItem>{ tQuat('contracts.proxy_type') }</GridItem>
                   <GridItem>{ proxyType }</GridItem>
                   <GridItem>{ addressText }</GridItem>
                   <GridItem>
@@ -65,11 +65,9 @@ const ConflictingImplementationsModal = ({ data, children }: Props) => {
           </VStack>
           <HStack mt={ 6 } gap={ 6 }>
             <DialogActionTrigger asChild>
-              <Button>Got it, thanks</Button>
+              <Button>{ tQuat('contracts.acknowledge') }</Button>
             </DialogActionTrigger>
-            <Link external noIcon href="https://discord.com/invite/blockscout">
-              Contact us
-            </Link>
+            <Link external noIcon href="https://discord.com/invite/blockscout">{ tQuat('contracts.contact_us') }</Link>
           </HStack>
         </DialogBody>
       </DialogContent>

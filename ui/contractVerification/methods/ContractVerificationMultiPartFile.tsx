@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractVerificationConfig } from 'types/client/contract';
 
@@ -12,8 +14,10 @@ import ContractVerificationFieldSources from '../fields/ContractVerificationFiel
 const FILE_TYPES = [ '.sol' as const, '.yul' as const ];
 
 const ContractVerificationMultiPartFile = ({ config }: { config: SmartContractVerificationConfig }) => {
+  const { t: tQuat } = useTranslation();
+
   return (
-    <ContractVerificationMethod title="Contract verification via Solidity (multi-part files)">
+    <ContractVerificationMethod title={ tQuat('verification.multi_part_title') }>
       <ContractVerificationFieldCompiler config={ config }/>
       <ContractVerificationFieldEvmVersion config={ config }/>
       <ContractVerificationFieldOptimization/>
@@ -22,7 +26,7 @@ const ContractVerificationMultiPartFile = ({ config }: { config: SmartContractVe
         multiple
         fullFilePath
         required
-        title="Sources *.sol or *.yul files"
+        title={ tQuat('verification.source_files') }
         hint="Upload all Solidity or Yul contract source files."
       />
       <ContractVerificationFieldLibraries/>

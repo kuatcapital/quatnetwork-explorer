@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -18,6 +20,7 @@ interface Props {
 }
 
 const TxDetailsBurntFees = ({ data, isLoading }: Props) => {
+  const { t: tTx } = useTranslation();
 
   if (config.UI.views.tx.hiddenFields?.burnt_fees || (rollupFeature.isEnabled && rollupFeature.type === 'optimistic')) {
     return null;
@@ -32,14 +35,13 @@ const TxDetailsBurntFees = ({ data, isLoading }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint={ `
-            Amount of ${ currencyUnits.ether } burned for this transaction. Equals Block Base Fee per Gas * Gas Used
-            ${ data.blob_gas_price && data.blob_gas_used ? ' + Blob Gas Price * Blob Gas Used' : '' }
-          ` }
+        hint={ tTx('transactions.burnt_fee_hint', {
+          currency: currencyUnits.ether,
+          blobPart: data.blob_gas_price && data.blob_gas_used ? tTx('transactions.burnt_blob_part') : '',
+        }) }
         isLoading={ isLoading }
       >
-        Burnt fees
-      </DetailedInfo.ItemLabel>
+        { tTx('blocks.burnt_fees') }</DetailedInfo.ItemLabel>
       <DetailedInfoNativeCoinValue
         amount={ value.toString() }
         exchangeRate={ data.exchange_rate }

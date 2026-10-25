@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
 
@@ -15,7 +17,9 @@ import { TX_INTERNALS_ITEMS } from 'ui/tx/internals/utils';
 type Props = InternalTransaction & { isLoading?: boolean };
 
 const TxInternalsListItem = ({ type, from, to, value, success, error, gas_limit: gasLimit, created_contract: createdContract, isLoading }: Props) => {
-  const typeTitle = TX_INTERNALS_ITEMS.find(({ id }) => id === type)?.title;
+  const { t: tTx } = useTranslation();
+  const titleKey = TX_INTERNALS_ITEMS.find(({ id }) => id === type)?.titleKey;
+  const typeTitle = titleKey ? tTx(titleKey) : undefined;
   const toData = to ? to : createdContract;
 
   return (
@@ -32,7 +36,7 @@ const TxInternalsListItem = ({ type, from, to, value, success, error, gas_limit:
         fontWeight="500"
       />
       <HStack gap={ 3 } textStyle="sm" >
-        <Skeleton loading={ isLoading } fontWeight={ 500 }><span>Value { currencyUnits.ether }</span></Skeleton>
+        <Skeleton loading={ isLoading } fontWeight={ 500 }><span>{ tTx('transactions.value_amount') }{ ' ' }{ currencyUnits.ether }</span></Skeleton>
         <NativeCoinValue
           amount={ value }
           noSymbol
@@ -41,7 +45,7 @@ const TxInternalsListItem = ({ type, from, to, value, success, error, gas_limit:
         />
       </HStack>
       <HStack gap={ 3 } textStyle="sm" >
-        <Skeleton loading={ isLoading } fontWeight={ 500 }><span>Gas limit</span></Skeleton>
+        <Skeleton loading={ isLoading } fontWeight={ 500 }><span>{ tTx('common.gas_limit') }</span></Skeleton>
         <NativeCoinValue
           amount={ gasLimit }
           units="wei"

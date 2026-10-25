@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -26,6 +28,7 @@ type Props =
   };
 
 const TxAdditionalInfo = ({ hash, tx, isMobile, isLoading, className }: Props) => {
+  const { t: tTx } = useTranslation();
   const content = hash !== undefined ? <TxAdditionalInfoContainer hash={ hash }/> : <TxAdditionalInfoContent tx={ tx }/>;
 
   if (isMobile) {
@@ -36,8 +39,7 @@ const TxAdditionalInfo = ({ hash, tx, isMobile, isLoading, className }: Props) =
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            Additional info
-          </DialogHeader>
+            { tTx('transactions.additional_info') }</DialogHeader>
           <DialogBody>
             { content }
           </DialogBody>
@@ -52,7 +54,7 @@ const TxAdditionalInfo = ({ hash, tx, isMobile, isLoading, className }: Props) =
       </PopoverTrigger>
       <PopoverContent w="330px">
         <PopoverBody>
-          <Heading level="3" mb={ 4 }>Additional info </Heading>
+          <Heading level="3" mb={ 4 }>{ tTx('transactions.additional_info') }{ ' ' }</Heading>
           { content }
         </PopoverBody>
       </PopoverContent>

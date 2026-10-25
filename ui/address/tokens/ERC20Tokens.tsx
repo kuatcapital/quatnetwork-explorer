@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTokenBalance } from 'types/api/address';
 import type { PaginationParams } from 'ui/shared/pagination/types';
@@ -22,6 +24,8 @@ type Props = {
 };
 
 const ERC20Tokens = ({ items, isLoading, pagination, isError, top }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
 
   const hasAdditionalTokenTypes = config.chain.additionalTokenTypes.length > 0;
@@ -57,7 +61,7 @@ const ERC20Tokens = ({ items, isLoading, pagination, isError, top }: Props) => {
     <DataListDisplay
       isError={ isError }
       itemsNum={ items?.length }
-      emptyText="There are no tokens of selected type."
+      emptyText={ tQuat('addresses.no_selected_tokens') }
       actionBar={ actionBar }
     >
       { content }

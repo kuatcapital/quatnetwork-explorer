@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormattedData } from './types';
 
@@ -17,6 +19,8 @@ interface Props {
 }
 
 const TokenSelectButton = ({ isOpen, isLoading, data, ...rest }: Props, ref: React.ForwardedRef<HTMLButtonElement>) => {
+  const { t: tQuat } = useTranslation();
+
   const { usd, num, isOverflow } = getTokensTotalInfo(data);
 
   const prefix = isOverflow ? ` >${ thinsp }` : '';
@@ -37,7 +41,7 @@ const TokenSelectButton = ({ isOpen, isLoading, data, ...rest }: Props, ref: Rea
         variant="dropdown"
         onClick={ handleClick }
         gap={ 0 }
-        aria-label="Token select"
+        aria-label={ tQuat('addresses.select_token') }
         loadingSkeleton={ isLoading && !isOpen }
         { ...rest }
       >

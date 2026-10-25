@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokensSortingValue } from 'types/api/tokens';
 
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const Tokens = ({ query, onSortChange, sort, actionBar, description, hasActiveFilters, tableTop }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const { isError, isPlaceholderData, data, pagination } = query;
 
@@ -64,7 +67,7 @@ const Tokens = ({ query, onSortChange, sort, actionBar, description, hasActiveFi
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items.length }
-      emptyText="There are no tokens."
+      emptyText={ tQuat('tokenUi.no_tokens') }
       hasActiveFilters={ hasActiveFilters }
       emptyStateProps={{
         term: 'token',

@@ -11,7 +11,7 @@ import { collectSources, nodeLocation, parseSource, PROJECT_ROOT, propertyName, 
 const USER_FACING_NAMES = new Set([
   'title', 'label', 'description', 'placeholder', 'aria-label', 'aria-description', 'alt',
   'message', 'errorMessage', 'successMessage', 'helperText', 'emptyText', 'loadingText',
-  'buttonText', 'tooltip', 'tooltipText', 'text', 'caption', 'heading', 'summary',
+  'buttonText', 'tooltip', 'tooltipText', 'text', 'caption', 'heading', 'summary', 'content', 'hint',
 ]);
 const KNOWN_NON_TEXT_NAMES = new Set([
   'id', 'className', 'class', 'href', 'src', 'url', 'path', 'pathname', 'route', 'method',

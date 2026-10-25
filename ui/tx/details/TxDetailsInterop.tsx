@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Grid, Text, Flex, Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InteropTransactionInfo } from 'types/api/transaction';
 
@@ -22,6 +24,7 @@ type Props = {
 };
 
 const TxDetailsInterop = ({ data, isLoading }: Props) => {
+  const { t: tTx } = useTranslation();
   const hasInterop = rollupFeature.isEnabled && rollupFeature.interopEnabled;
 
   if (!hasInterop || !data) {
@@ -40,13 +43,13 @@ const TxDetailsInterop = ({ data, isLoading }: Props) => {
       rowGap={ 4 }
       borderRadius="md"
     >
-      <Text color="text.secondary">Message id</Text>
+      <Text color="text.secondary">{ tTx('transactions.message_id') }</Text>
       <Text>{ data.nonce }</Text>
-      <Text color="text.secondary">Interop status</Text>
+      <Text color="text.secondary">{ tTx('transactions.interop_status') }</Text>
       <Box>
         <InteropMessageStatus status={ data.status }/>
       </Box>
-      <Text color="text.secondary">Sender</Text>
+      <Text color="text.secondary">{ tTx('transactions.sender') }</Text>
       { data.init_chain !== undefined ? (
         <AddressEntityInterop
           chain={ data.init_chain }
@@ -57,7 +60,7 @@ const TxDetailsInterop = ({ data, isLoading }: Props) => {
       ) : (
         <AddressEntity address={{ hash: data.sender_address_hash }} isLoading={ isLoading } truncation="constant"/>
       ) }
-      <Text color="text.secondary">Target</Text>
+      <Text color="text.secondary">{ tTx('transactions.target') }</Text>
       { data.relay_chain !== undefined ? (
         <AddressEntityInterop
           chain={ data.relay_chain }
@@ -68,7 +71,7 @@ const TxDetailsInterop = ({ data, isLoading }: Props) => {
       ) : (
         <AddressEntity address={{ hash: data.target_address_hash }} isLoading={ isLoading } truncation="constant"/>
       ) }
-      <Text color="text.secondary">Payload</Text>
+      <Text color="text.secondary">{ tTx('transactions.payload') }</Text>
       <Flex overflow="hidden">
         <Text
           wordBreak="break-all"
@@ -87,11 +90,10 @@ const TxDetailsInterop = ({ data, isLoading }: Props) => {
     return (
       <>
         <DetailedInfo.ItemLabel
-          hint={ `The originating transaction that initiated the cross-${ layerLabels.current } message on the source chain` }
+          hint={ tTx('transactions.interop_source_hint', { layer: layerLabels.current }) }
           isLoading={ isLoading }
         >
-          Interop source tx
-        </DetailedInfo.ItemLabel>
+          { tTx('transactions.interop_source_tx') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue flexWrap="wrap" mt={{ lg: 1 }}>
           <InteropMessageSourceTx { ...data } isLoading={ isLoading }/>
           <CollapsibleDetails variant="secondary" noScroll ml={ 3 }>
@@ -106,11 +108,10 @@ const TxDetailsInterop = ({ data, isLoading }: Props) => {
     return (
       <>
         <DetailedInfo.ItemLabel
-          hint={ `The transaction that relays the cross-${ layerLabels.current } message to its destination chain` }
+          hint={ tTx('transactions.interop_relay_hint', { layer: layerLabels.current }) }
           isLoading={ isLoading }
         >
-          Interop relay tx
-        </DetailedInfo.ItemLabel>
+          { tTx('transactions.interop_relay_tx') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue flexWrap="wrap" mt={{ lg: 1 }}>
           <InteropMessageDestinationTx { ...data } isLoading={ isLoading }/>
           <CollapsibleDetails variant="secondary" noScroll ml={ 3 }>

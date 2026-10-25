@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 
@@ -25,6 +27,8 @@ type Props = {
 };
 
 const TokenHolders = ({ holdersQuery, token, shouldRender = true, tabsHeight = TABS_HEIGHT }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const isMounted = useIsMounted();
 
@@ -75,7 +79,7 @@ const TokenHolders = ({ holdersQuery, token, shouldRender = true, tabsHeight = T
     <DataListDisplay
       isError={ holdersQuery.isError }
       itemsNum={ holdersQuery.data?.items.length }
-      emptyText="There are no holders for this token."
+      emptyText={ tQuat('tokenUi.no_holders') }
       actionBar={ actionBar }
     >
       { content }

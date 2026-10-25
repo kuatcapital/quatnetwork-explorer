@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInstance } from 'types/api/token';
 import type { MetadataAttributes } from 'types/client/token';
@@ -70,6 +72,8 @@ const Item = ({ data, isLoading }: ItemProps) => {
 };
 
 const TokenInstanceMetadataInfo = ({ data, isLoading: isLoadingProp }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { status: refetchStatus } = useMetadataUpdateContext() || {};
 
   const metadata = React.useMemo(() => parseMetadata(data?.metadata), [ data ]);
@@ -87,11 +91,9 @@ const TokenInstanceMetadataInfo = ({ data, isLoading: isLoadingProp }: Props) =>
       { metadata?.name && (
         <>
           <DetailedInfo.ItemLabel
-            hint="NFT name"
+            hint={ tQuat('tokenUi.name_hint') }
             isLoading={ isLoading }
-          >
-            Name
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.name') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue
             whiteSpace="normal"
             wordBreak="break-word"
@@ -105,11 +107,9 @@ const TokenInstanceMetadataInfo = ({ data, isLoading: isLoadingProp }: Props) =>
       { metadata?.description && (
         <>
           <DetailedInfo.ItemLabel
-            hint="NFT description"
+            hint={ tQuat('tokenUi.description_hint') }
             isLoading={ isLoading }
-          >
-            Description
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.description') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue
             whiteSpace="normal"
             wordBreak="break-word"
@@ -123,11 +123,9 @@ const TokenInstanceMetadataInfo = ({ data, isLoading: isLoadingProp }: Props) =>
       { metadata?.attributes && metadata.attributes.length > 0 && (
         <>
           <DetailedInfo.ItemLabel
-            hint="NFT attributes"
+            hint={ tQuat('tokenUi.attributes_hint') }
             isLoading={ isLoading }
-          >
-            Attributes
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.attributes') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Grid gap={ 2 } templateColumns="repeat(auto-fill,minmax(160px, 1fr))" w="100%" whiteSpace="normal">
               { metadata.attributes

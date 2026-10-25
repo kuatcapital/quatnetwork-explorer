@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 import { capitalize } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FheOperation } from 'types/api/fheOperations';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Badge } from 'toolkit/chakra/badge';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -13,6 +17,8 @@ import { getTypeColor } from 'ui/tx/fheOperations/utils';
 type Props = FheOperation & { isLoading?: boolean };
 
 const TxFHEOperationsListItem = (props: Props) => {
+  const { locale } = useLocale();
+  const { t: tTx } = useTranslation();
   const { log_index: logIndex, operation, type, fhe_type: fheType, is_scalar: isScalar, hcu_cost: hcuCost, hcu_depth: hcuDepth, caller, isLoading } = props;
 
   return (
@@ -25,32 +31,32 @@ const TxFHEOperationsListItem = (props: Props) => {
           { fheType }
         </Badge>
         <Badge colorPalette="gray" loading={ isLoading }>
-          { isScalar ? 'Scalar' : 'Non-scalar' }
+          { isScalar ? tTx('transactions.scalar') : tTx('transactions.non_scalar') }
         </Badge>
       </Flex>
 
       <Grid templateColumns="110px 1fr" rowGap={ 2 } columnGap={ 2 }>
-        <Text fontWeight="medium">Index</Text>
+        <Text fontWeight="medium">{ tTx('transactions.index') }</Text>
         <Skeleton loading={ isLoading } color="text.secondary">
           { logIndex }
         </Skeleton>
 
-        <Text fontWeight="medium">Operation</Text>
+        <Text fontWeight="medium">{ tTx('transactions.operation') }</Text>
         <Skeleton loading={ isLoading } color="text.secondary">
           { operation }
         </Skeleton>
 
-        <Text fontWeight="medium">HCU cost</Text>
+        <Text fontWeight="medium">{ tTx('transactions.hcu_cost') }</Text>
         <Skeleton loading={ isLoading } color="text.secondary">
-          { hcuCost.toLocaleString() }
+          { formatNumber(hcuCost, locale) }
         </Skeleton>
 
-        <Text fontWeight="medium">HCU depth</Text>
+        <Text fontWeight="medium">{ tTx('transactions.hcu_depth') }</Text>
         <Skeleton loading={ isLoading } color="text.secondary">
-          { hcuDepth.toLocaleString() }
+          { formatNumber(hcuDepth, locale) }
         </Skeleton>
 
-        <Text fontWeight="medium">Caller</Text>
+        <Text fontWeight="medium">{ tTx('transactions.caller') }</Text>
         <Box minW={ 0 }>
           { caller && caller.hash ? (
             <AddressEntity

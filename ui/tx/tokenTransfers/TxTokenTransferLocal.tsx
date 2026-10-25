@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const TxTokenTransferLocal = ({ txQuery, tokenTransferQuery, tokenTransferFilter, numActiveFilters }: Props) => {
+  const { t: tTx } = useTranslation();
 
   let items: Array<TokenTransfer> = [];
 
@@ -45,7 +48,7 @@ const TxTokenTransferLocal = ({ txQuery, tokenTransferQuery, tokenTransferFilter
     <DataListDisplay
       isError={ txQuery.isError || tokenTransferQuery.isError }
       itemsNum={ items.length }
-      emptyText="There are no token transfers."
+      emptyText={ tTx('transactions.no_token_transfers') }
       hasActiveFilters={ Boolean(numActiveFilters) }
       emptyStateProps={{
         term: 'token transfer',

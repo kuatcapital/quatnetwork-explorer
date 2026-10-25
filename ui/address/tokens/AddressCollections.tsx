@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Text, Grid, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NFTTokenType } from 'types/api/token';
 
@@ -28,6 +30,8 @@ type Props = {
 };
 
 const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenTypesChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
 
@@ -68,9 +72,7 @@ const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenType
           <Skeleton loading={ isPlaceholderData } mr={ 3 }>
             <Text color="text.secondary" whiteSpace="pre">{ ` - ${ Number(item.amount).toLocaleString() } item${ Number(item.amount) > 1 ? 's' : '' }` }</Text>
           </Skeleton>
-          <Link href={ collectionUrl } loading={ isPlaceholderData }>
-            View in collection
-          </Link>
+          <Link href={ collectionUrl } loading={ isPlaceholderData }>{ tQuat('addresses.view_collection') }</Link>
         </Flex>
         <Grid
           w="100%"
@@ -99,9 +101,7 @@ const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenType
                   <NftFallback bgColor={{ _light: 'unset', _dark: 'unset' }} w="30px" h="30px" boxSize="30px" p={ 0 }/>
                   <NftFallback bgColor={{ _light: 'unset', _dark: 'unset' }} w="30px" h="30px" boxSize="30px" p={ 0 }/>
                   <NftFallback bgColor={{ _light: 'unset', _dark: 'unset' }} w="30px" h="30px" boxSize="30px" p={ 0 }/>
-                </HStack>
-                View all NFTs
-              </NFTItemContainer>
+                </HStack>{ tQuat('addresses.view_all_nfts') }</NFTItemContainer>
             </Link>
           ) }
         </Grid>
@@ -113,7 +113,7 @@ const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenType
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items?.length }
-      emptyText="There are no tokens of selected type."
+      emptyText={ tQuat('addresses.no_selected_tokens') }
       actionBar={ actionBar }
       hasActiveFilters={ hasActiveFilters }
       emptyStateProps={{

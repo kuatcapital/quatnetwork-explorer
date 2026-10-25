@@ -1,8 +1,12 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
 import TextSeparator from 'ui/shared/TextSeparator';
@@ -14,18 +18,19 @@ interface Props {
 }
 
 const TxDetailsGasUsage = ({ isLoading, data }: Props) => {
+  const { locale } = useLocale();
+  const { t: tTx } = useTranslation();
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Actual gas amount used by the transaction"
+        hint={ tTx('transactions.gas_used_hint') }
         isLoading={ isLoading }
       >
-        Gas usage & limit by txn
-      </DetailedInfo.ItemLabel>
+        { tTx('transactions.gas_usage_limit') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
-        <Skeleton loading={ isLoading }>{ BigNumber(data.gas_used || 0).toFormat() }</Skeleton>
+        <Skeleton loading={ isLoading }>{ formatBigNumber(BigNumber(data.gas_used || 0), locale) }</Skeleton>
         <TextSeparator/>
-        <Skeleton loading={ isLoading }>{ BigNumber(data.gas_limit).toFormat() }</Skeleton>
+        <Skeleton loading={ isLoading }>{ formatBigNumber(BigNumber(data.gas_limit), locale) }</Skeleton>
         <Utilization ml={ 4 } value={ BigNumber(data.gas_used || 0).dividedBy(BigNumber(data.gas_limit)).toNumber() } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
     </>

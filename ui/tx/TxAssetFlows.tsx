@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import { chunk } from 'es-toolkit';
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { PaginationParams } from 'ui/shared/pagination/types';
 
@@ -22,6 +24,7 @@ interface FlowViewProps {
 }
 
 export default function TxAssetFlows(props: FlowViewProps) {
+  const { t: tTx } = useTranslation();
 
   const { data: queryData, isPlaceholderData, isError } = useApiQuery('general:noves_transaction', {
     pathParams: { hash: props.hash },
@@ -55,8 +58,7 @@ export default function TxAssetFlows(props: FlowViewProps) {
       <Box display="flex" alignItems="center" gap={ 1 }>
         <Skeleton borderRadius="sm" loading={ isPlaceholderData } >
           <Text fontWeight="400" mr={ 1 }>
-            Wallet
-          </Text>
+            { tTx('common.wallet') }</Text>
         </Skeleton>
 
         <AddressEntity
@@ -87,11 +89,9 @@ export default function TxAssetFlows(props: FlowViewProps) {
           <TableHeaderSticky top={ 75 }>
             <TableRow>
               <TableColumnHeader>
-                Actions
-              </TableColumnHeader>
+                { tTx('common.actions') }</TableColumnHeader>
               <TableColumnHeader width="450px">
-                From/To
-              </TableColumnHeader>
+                { tTx('transactions.from_to') }</TableColumnHeader>
             </TableRow>
           </TableHeaderSticky>
           <TableBody>
@@ -112,7 +112,7 @@ export default function TxAssetFlows(props: FlowViewProps) {
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.length }
-      emptyText="There are no transfers."
+      emptyText={ tTx('transactions.no_transfers') }
       actionBar={ actionBar }
     >
       { content }

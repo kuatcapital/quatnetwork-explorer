@@ -6,7 +6,11 @@ export default defineConfig({
   plugins: [ tsconfigPaths({ ignoreConfigErrors: true }) ],
   test: {
     environment: 'node',
-    include: [ 'lib/i18n/*.spec.ts', 'lib/i18n/*.spec.tsx', 'lib/format/*.spec.ts', 'lib/date/dayjs.spec.ts', 'deploy/tools/envs-validator/i18n.spec.ts' ],
+    include: [
+      'lib/i18n/*.spec.ts', 'lib/i18n/*.spec.tsx', 'lib/format/*.spec.ts', 'lib/date/dayjs.spec.ts',
+      'deploy/tools/envs-validator/i18n.spec.ts', 'ui/address/contract/sourceSelection.spec.ts',
+      'ui/shared/Utilization/formatUtilization.spec.ts',
+    ],
     exclude: [ '**/node_modules/**', '**/node_modules_linux/**' ],
   },
 });

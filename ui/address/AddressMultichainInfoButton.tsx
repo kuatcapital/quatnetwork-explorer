@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 
@@ -13,6 +15,8 @@ interface Props extends LinkProps {
 }
 
 const AddressMultichainInfoButton = ({ addressData, ...rest }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!feature.isEnabled) {
     return null;
   }
@@ -48,9 +52,7 @@ const AddressMultichainInfoButton = ({ addressData, ...rest }: Props) => {
       external={ promotedProvider.dappId ? false : true }
       flexShrink={ 0 }
       { ...rest }
-    >
-      Multichain info
-    </Link>
+    >{ tQuat('addresses.multichain_info') }</Link>
   );
 };
 

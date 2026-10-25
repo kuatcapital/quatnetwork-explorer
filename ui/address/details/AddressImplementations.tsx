@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize address UI. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressImplementation } from 'types/api/addressParams';
 import type { SmartContractProxyType } from 'types/api/contract';
@@ -13,13 +15,12 @@ interface Props {
 }
 
 const AddressImplementations = ({ data, isLoading, proxyType }: Props) => {
-  const hasManyItems = data.length > 1;
+  const { t: tQuat } = useTranslation();
+
   const [ hasScroll, setHasScroll ] = React.useState(false);
 
-  const text = proxyType === 'eip7702' ? 'Delegated to' : `Implementation${ hasManyItems ? 's' : '' }`;
-  const hint = proxyType === 'eip7702' ?
-    'Account\'s executable code address' :
-    `Implementation${ hasManyItems ? 's' : '' } address${ hasManyItems ? 'es' : '' } of the proxy contract`;
+  const text = proxyType === 'eip7702' ? tQuat('addresses.delegated_to') : tQuat('addresses.implementation', { count: data.length });
+  const hint = proxyType === 'eip7702' ? tQuat('addresses.executable_code_hint') : tQuat('addresses.implementation_hint', { count: data.length });
 
   return (
     <>

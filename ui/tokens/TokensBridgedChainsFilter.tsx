@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Text, Flex, useCheckboxGroup, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Button } from 'toolkit/chakra/button';
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const TokensBridgedChainsFilter = ({ onChange, defaultValue }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { value, setValue } = useCheckboxGroup({ defaultValue });
 
   const handleReset = React.useCallback(() => {
@@ -35,15 +39,13 @@ const TokensBridgedChainsFilter = ({ onChange, defaultValue }: Props) => {
   return (
     <>
       <Flex justifyContent="space-between" textStyle="sm">
-        <Text fontWeight={ 600 } color="text.secondary">Show bridged tokens from</Text>
+        <Text fontWeight={ 600 } color="text.secondary">{ tQuat('tokenUi.bridged_from') }</Text>
         <Button
           variant="link"
           onClick={ handleReset }
           disabled={ value.length === 0 }
           textStyle="sm"
-        >
-          Reset
-        </Button>
+        >{ tQuat('tokenUi.reset') }</Button>
       </Flex>
       <CheckboxGroup defaultValue={ defaultValue } onValueChange={ handleChange } value={ value } name="bridged_token_chain">
         { feature.chains.map(({ title, id, short_title: shortTitle }) => (

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NovesResponseData } from 'types/api/noves';
 
@@ -18,6 +20,7 @@ type Props = {
 };
 
 const AddressAccountHistoryListItem = (props: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const parsedDescription = useMemo(() => {
     const description = props.tx.classificationData.description;
@@ -37,9 +40,7 @@ const AddressAccountHistoryListItem = (props: Props) => {
               color="icon.primary"
             />
 
-            <Text fontSize="sm" fontWeight={ 500 }>
-              Action
-            </Text>
+            <Text fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.action') }</Text>
           </Flex>
           <TimeWithTooltip
             timestamp={ props.tx.rawTransactionData.timestamp * SECOND }

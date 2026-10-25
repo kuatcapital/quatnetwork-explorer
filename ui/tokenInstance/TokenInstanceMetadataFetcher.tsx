@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Spinner, Center } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { TokenInstance } from 'types/api/token';
@@ -28,6 +30,8 @@ interface Props {
 }
 
 const TokenInstanceMetadataFetcher = ({ hash, id }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const timeoutId = React.useRef<number>(undefined);
 
   const { status, setStatus } = useMetadataUpdateContext() || {};
@@ -38,8 +42,8 @@ const TokenInstanceMetadataFetcher = ({ hash, id }: Props) => {
   const handleRefreshError = React.useCallback(() => {
     setStatus?.('ERROR');
     toaster.update(TOAST_ID, {
-      title: 'Error',
-      description: 'The refreshing process has failed. Please try again.',
+      title: <Trans i18nKey="tokenUi.error"/>,
+      description: <Trans i18nKey="tokenUi.refresh_failed"/>,
       type: 'error',
       duration: 5 * SECOND,
     });
@@ -64,16 +68,16 @@ const TokenInstanceMetadataFetcher = ({ hash, id }: Props) => {
       setStatus?.('WAITING_FOR_RESPONSE');
       toaster.loading({
         id: TOAST_ID,
-        title: 'Please wait',
-        description: 'Refetching metadata request sent',
+        title: <Trans i18nKey="tokenUi.please_wait"/>,
+        description: <Trans i18nKey="tokenUi.refresh_requested"/>,
         duration: Infinity,
       });
       timeoutId.current = window.setTimeout(handleRefreshError, 2 * MINUTE);
     } catch (error) {
       toaster.error({
         id: TOAST_ID,
-        title: 'Error',
-        description: getErrorMessage(error) || 'Unable to initialize metadata update',
+        title: <Trans i18nKey="tokenUi.error"/>,
+        description: getErrorMessage(error) || <Trans i18nKey="tokenUi.refresh_init_failed"/>,
       });
       setStatus?.('ERROR');
     }
@@ -113,8 +117,8 @@ const TokenInstanceMetadataFetcher = ({ hash, id }: Props) => {
     });
 
     toaster.update(TOAST_ID, {
-      title: 'Success!',
-      description: 'Metadata has been refreshed',
+      title: <Trans i18nKey="tokenUi.success"/>,
+      description: <Trans i18nKey="tokenUi.refreshed"/>,
       type: 'success',
       duration: 5 * SECOND,
     });
@@ -169,7 +173,7 @@ const TokenInstanceMetadataFetcher = ({ hash, id }: Props) => {
       closeOnInteractOutside={ false }
     >
       <DialogContent>
-        <DialogHeader mb={ 4 }>Sending request</DialogHeader>
+        <DialogHeader mb={ 4 }>{ tQuat('tokenUi.sending') }</DialogHeader>
         <DialogBody mb={ 0 } minH="78px">
           { config.services.reCaptchaV2.siteKey ? (
             <>
@@ -179,10 +183,7 @@ const TokenInstanceMetadataFetcher = ({ hash, id }: Props) => {
               <ReCaptcha { ...recaptcha } hideWarning/>
             </>
           ) : (
-            <Alert status="error">
-              Metadata refresh is not available at the moment since reCaptcha is not configured for this application.
-              Please contact the service maintainer to make necessary changes in the service configuration.
-            </Alert>
+            <Alert status="error">{ tQuat('tokenUi.recaptcha_missing') }</Alert>
           ) }
         </DialogBody>
       </DialogContent>

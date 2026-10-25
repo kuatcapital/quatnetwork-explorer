@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressNFT } from 'types/api/address';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -20,6 +22,8 @@ import NFTItemContainer from './NFTItemContainer';
 type Props = AddressNFT & { isLoading: boolean; withTokenLink?: boolean; chain?: ClusterChainConfig };
 
 const NFTItem = ({ value, isLoading, withTokenLink, chain, ...tokenInstance }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { token } = tokenInstance;
   const valueResult = token.decimals && value ? calculateUsdValue({ amount: value, decimals: token.decimals, accuracy: 2 }).valueStr : value;
   const tokenInstanceLink = tokenInstance.id ?
@@ -48,7 +52,7 @@ const NFTItem = ({ value, isLoading, withTokenLink, chain, ...tokenInstance }: P
         <Skeleton loading={ isLoading } overflow="hidden" ml={ 1 }>
           { valueResult && (
             <Flex>
-              <Text color="text.secondary" whiteSpace="pre">Qty </Text>
+              <Text color="text.secondary" whiteSpace="pre">{ tQuat('addresses.quantity_short') }{ ' ' }</Text>
               <Text overflow="hidden" wordBreak="break-all">{ valueResult }</Text>
             </Flex>
           ) }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FheOperation } from 'types/api/fheOperations';
 
@@ -13,20 +15,21 @@ interface Props {
 }
 
 const TxFHEOperationsTable = ({ data, isLoading }: Props) => {
+  const { t: tTx } = useTranslation();
   return (
     <AddressHighlightProvider>
       <Box maxW="100%" overflowX="auto" hideBelow="lg">
         <TableRoot tableLayout="fixed" minWidth="900px" w="100%">
           <TableHeader>
             <TableRow>
-              <TableColumnHeader width="10%">Index</TableColumnHeader>
-              <TableColumnHeader width="15%">Operation</TableColumnHeader>
-              <TableColumnHeader width="12%">Type</TableColumnHeader>
-              <TableColumnHeader width="12%">FHE type</TableColumnHeader>
-              <TableColumnHeader width="12%">Mode</TableColumnHeader>
-              <TableColumnHeader width="12%">HCU cost</TableColumnHeader>
-              <TableColumnHeader width="12%">HCU depth</TableColumnHeader>
-              <TableColumnHeader width="24%">Caller</TableColumnHeader>
+              <TableColumnHeader width="10%">{ tTx('transactions.index') }</TableColumnHeader>
+              <TableColumnHeader width="15%">{ tTx('transactions.operation') }</TableColumnHeader>
+              <TableColumnHeader width="12%">{ tTx('common.type') }</TableColumnHeader>
+              <TableColumnHeader width="12%">{ tTx('transactions.fhe_type') }</TableColumnHeader>
+              <TableColumnHeader width="12%">{ tTx('transactions.mode') }</TableColumnHeader>
+              <TableColumnHeader width="12%">{ tTx('transactions.hcu_cost') }</TableColumnHeader>
+              <TableColumnHeader width="12%">{ tTx('transactions.hcu_depth') }</TableColumnHeader>
+              <TableColumnHeader width="24%">{ tTx('transactions.caller') }</TableColumnHeader>
             </TableRow>
           </TableHeader>
           <TableBody>

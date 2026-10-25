@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized labels and controlled source selection. GPL-3.0.
 import { chakra, createListCollection, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -24,6 +26,8 @@ interface Props {
 }
 
 const ContractSourceAddressSelector = ({ className, selectedItem, onItemSelect, items, isLoading, label }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const selectedValue = React.useMemo(() => [ selectedItem.address_hash ], [ selectedItem.address_hash ]);
 
   const handleItemSelect = React.useCallback(({ value }: { value: Array<string> }) => {
     const nextOption = items.find(({ address_hash: addressHash }) => addressHash === value[0]);
@@ -61,8 +65,8 @@ const ContractSourceAddressSelector = ({ className, selectedItem, onItemSelect, 
       <chakra.span fontWeight={ 500 } fontSize="sm">{ label }</chakra.span>
       <Select
         collection={ collection }
-        placeholder="Select contract"
-        defaultValue={ [ selectedItem.address_hash ] }
+        placeholder={ tQuat('contracts.select_contract') }
+        value={ selectedValue }
         onValueChange={ handleItemSelect }
         maxW={{ base: '180px', lg: '400px' }}
         w="fit-content"
@@ -71,7 +75,7 @@ const ContractSourceAddressSelector = ({ className, selectedItem, onItemSelect, 
       <Flex alignItems="center">
         <CopyToClipboard text={ selectedItem.address_hash } ml={ 0 }/>
         <LinkNewTab
-          label="Open contract details page in new tab"
+          label={ tQuat('contracts.open_details_new_tab') }
           href={ route({ pathname: '/address/[hash]', query: { hash: selectedItem.address_hash, tab: 'contract' } }) }
         />
       </Flex>

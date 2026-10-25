@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo, TokenInstance } from 'types/api/token';
 
@@ -16,6 +18,7 @@ import NftMedia from 'ui/shared/nft/NftMedia';
 type Props = { item: TokenInstance; token: TokenInfo; isLoading: boolean };
 
 const TokenInventoryItem = ({ item, token, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
@@ -47,7 +50,7 @@ const TokenInventoryItem = ({ item, token, isLoading }: Props) => {
       </Link>
       { item.id && (
         <Flex mb={ 2 } ml={ 1 }>
-          <Text whiteSpace="pre" color="text.secondary">ID# </Text>
+          <Text whiteSpace="pre" color="text.secondary">{ tQuat('tokenUi.id_number') }{ ' ' }</Text>
           <TruncatedTextTooltip label={ item.id }>
             <Skeleton loading={ isLoading } overflow="hidden">
               <Link
@@ -66,7 +69,7 @@ const TokenInventoryItem = ({ item, token, isLoading }: Props) => {
       ) }
       { item.owner && (
         <Flex mb={ 2 } ml={ 1 }>
-          <Text whiteSpace="pre" color="text.secondary" mr={ 2 } lineHeight="24px">Owner</Text>
+          <Text whiteSpace="pre" color="text.secondary" mr={ 2 } lineHeight="24px">{ tQuat('tokenUi.owner') }</Text>
           <AddressEntity
             address={ item.owner }
             isLoading={ isLoading }

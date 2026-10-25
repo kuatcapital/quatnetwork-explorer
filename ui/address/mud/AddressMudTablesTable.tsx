@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMudTables } from 'types/api/address';
 
@@ -15,14 +17,16 @@ type Props = {
 
 //sorry for the naming
 const AddressMudTablesTable = ({ items, isLoading, top, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot style={{ tableLayout: 'auto' }}>
       <TableHeaderSticky top={ top }>
         <TableRow>
           <TableColumnHeader width="24px"></TableColumnHeader>
-          <TableColumnHeader>Full name</TableColumnHeader>
-          <TableColumnHeader>Table ID</TableColumnHeader>
-          <TableColumnHeader>Type</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('addresses.full_name') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('addresses.table_id') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('common.type') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

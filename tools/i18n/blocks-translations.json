@@ -1,0 +1,84 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedOn": "2026-10-25",
+    "license": "GPL-3.0",
+    "purpose": "T18 reviewed blocks and table translations; merge into canonical runtime dictionaries.",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "blocks": {
+      "size": "Size",
+      "size_bytes": "Size, bytes",
+      "size_bytes_value": "{{value}} bytes",
+      "reward_currency": "Reward {{currency}}",
+      "burnt_fees": "Burnt fees",
+      "burnt_fees_currency": "Burnt fees {{currency}}",
+      "base_fee": "Base fee",
+      "countdown": "Block countdown",
+      "empty": "There are no blocks.",
+      "chain_reorganizations": "Chain reorganizations",
+      "burnt_fees_ratio": "Burnt fees / Txn fees * 100%",
+      "network_utilization": "Network utilization (last 50 blocks):"
+    },
+    "transactions": {
+      "from_to": "From/To",
+      "value_amount": "Value",
+      "value_with_currency": "Value {{currency}}",
+      "fee_with_currency": "Fee{{currency}}"
+    },
+    "tokens": {
+      "on_chain_market_cap": "On-chain market cap"
+    }
+  },
+  "ru": {
+    "blocks": {
+      "size": "Размер",
+      "size_bytes": "Размер, байт",
+      "size_bytes_value": "{{value}} байт",
+      "reward_currency": "Награда {{currency}}",
+      "burnt_fees": "Сожжённые комиссии",
+      "burnt_fees_currency": "Сожжённые комиссии {{currency}}",
+      "base_fee": "Базовая комиссия",
+      "countdown": "Обратный отсчёт до блока",
+      "empty": "Блоков нет.",
+      "chain_reorganizations": "Реорганизации цепочки",
+      "burnt_fees_ratio": "Сожжённые комиссии / Комиссии за транзакции * 100%",
+      "network_utilization": "Загрузка сети (последние 50 блоков):"
+    },
+    "transactions": {
+      "from_to": "Отправитель/Получатель",
+      "value_amount": "Сумма",
+      "value_with_currency": "Сумма {{currency}}",
+      "fee_with_currency": "Комиссия{{currency}}"
+    },
+    "tokens": {
+      "on_chain_market_cap": "Капитализация в сети"
+    }
+  },
+  "kk": {
+    "blocks": {
+      "size": "Көлемі",
+      "size_bytes": "Көлемі, байт",
+      "size_bytes_value": "{{value}} байт",
+      "reward_currency": "Сыйақы {{currency}}",
+      "burnt_fees": "Өртелген комиссиялар",
+      "burnt_fees_currency": "Өртелген комиссиялар {{currency}}",
+      "base_fee": "Базалық комиссия",
+      "countdown": "Блокқа дейінгі кері санау",
+      "empty": "Блоктар жоқ.",
+      "chain_reorganizations": "Тізбектің қайта ұйымдастырылуы",
+      "burnt_fees_ratio": "Өртелген комиссиялар / Транзакция комиссиялары * 100%",
+      "network_utilization": "Желі жүктемесі (соңғы 50 блок):"
+    },
+    "transactions": {
+      "from_to": "Жіберуші/Алушы",
+      "value_amount": "Сома",
+      "value_with_currency": "Сома {{currency}}",
+      "fee_with_currency": "Комиссия{{currency}}"
+    },
+    "tokens": {
+      "on_chain_market_cap": "Желідегі капиталдандыру"
+    }
+  }
+}

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TxsSocketType } from './socket/types';
 import type { AddressFromToFilter } from 'types/api/address';
@@ -60,6 +62,7 @@ const TxsContent = ({
   stickyHeader = true,
   showTableViewButton,
 }: Props) => {
+  const { t: tTx } = useTranslation();
   const isMobile = useIsMobile();
 
   const tableViewFlag = useTableViewValue();
@@ -141,7 +144,7 @@ const TxsContent = ({
     <DataListDisplay
       isError={ isError }
       itemsNum={ items?.length }
-      emptyText="There are no transactions."
+      emptyText={ tTx('transactions.no_transactions') }
       actionBar={ actionBar }
       hasActiveFilters={ Boolean(filterValue) }
       emptyStateProps={{

@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize token sort labels at render time. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { TokensSortingValue } from 'types/api/tokens';
 import type { ClusterChainConfig } from 'types/multichain';
 
@@ -7,14 +10,26 @@ import { getTokenTypes } from 'lib/token/tokenTypes';
 import type { SelectOption } from 'toolkit/chakra/select';
 
 export const SORT_OPTIONS: Array<SelectOption<TokensSortingValue>> = [
-  { label: 'Default', value: 'default' },
-  { label: 'Price ascending', value: 'fiat_value-asc' },
-  { label: 'Price descending', value: 'fiat_value-desc' },
-  { label: 'Holders ascending', value: 'holders_count-asc' },
-  { label: 'Holders descending', value: 'holders_count-desc' },
-  { label: 'On-chain market cap ascending', value: 'circulating_market_cap-asc' },
-  { label: 'On-chain market cap descending', value: 'circulating_market_cap-desc' },
+  { label: 'tokenUi.sort_default', value: 'default' },
+  { label: 'tokenUi.sort_price_asc', value: 'fiat_value-asc' },
+  { label: 'tokenUi.sort_price_desc', value: 'fiat_value-desc' },
+  { label: 'tokenUi.sort_holders_asc', value: 'holders_count-asc' },
+  { label: 'tokenUi.sort_holders_desc', value: 'holders_count-desc' },
+  { label: 'tokenUi.sort_cap_asc', value: 'circulating_market_cap-asc' },
+  { label: 'tokenUi.sort_cap_desc', value: 'circulating_market_cap-desc' },
 ];
+
+export function getLocalizedSortOptions(t: TFunction): Array<SelectOption<TokensSortingValue>> {
+  return [
+    { label: t('tokenUi.sort_default'), value: 'default' },
+    { label: t('tokenUi.sort_price_asc'), value: 'fiat_value-asc' },
+    { label: t('tokenUi.sort_price_desc'), value: 'fiat_value-desc' },
+    { label: t('tokenUi.sort_holders_asc'), value: 'holders_count-asc' },
+    { label: t('tokenUi.sort_holders_desc'), value: 'holders_count-desc' },
+    { label: t('tokenUi.sort_cap_asc'), value: 'circulating_market_cap-asc' },
+    { label: t('tokenUi.sort_cap_desc'), value: 'circulating_market_cap-desc' },
+  ];
+}
 
 export const getTokenFilterValue = (
   value: string | Array<string> | undefined,

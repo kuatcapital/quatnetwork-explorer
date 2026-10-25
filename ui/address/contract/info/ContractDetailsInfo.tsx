@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Grid } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 import type { SmartContract } from 'types/api/contract';
@@ -26,6 +28,8 @@ interface Props {
 }
 
 const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
 
   const contractNameWithCertifiedIcon = data ? (
@@ -89,7 +93,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.name && (
         <ContractDetailsInfoItem
-          label="Contract name"
+          label={ tQuat('contracts.contract_name') }
           isLoading={ isLoading }
         >
           { contractNameWithCertifiedIcon }
@@ -97,7 +101,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.compiler_version && (
         <ContractDetailsInfoItem
-          label="Compiler version"
+          label={ tQuat('contracts.compiler_version') }
           isLoading={ isLoading }
         >
           { data.compiler_version }
@@ -105,7 +109,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.zk_compiler_version && (
         <ContractDetailsInfoItem
-          label="ZK compiler version"
+          label={ tQuat('contracts.zk_compiler_version') }
           isLoading={ isLoading }
         >
           { data.zk_compiler_version }
@@ -113,7 +117,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.evm_version && (
         <ContractDetailsInfoItem
-          label="EVM version"
+          label={ tQuat('contracts.evm_version') }
           textTransform="capitalize"
           isLoading={ isLoading }
         >
@@ -122,7 +126,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { licenseLink && (
         <ContractDetailsInfoItem
-          label="License"
+          label={ tQuat('contracts.license_title') }
           hint="License type is entered manually during verification. The initial source code may contain a different license type than the one displayed."
           isLoading={ isLoading }
         >
@@ -131,7 +135,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { typeof data.optimization_enabled === 'boolean' && !isStylusContract && (
         <ContractDetailsInfoItem
-          label="Optimization enabled"
+          label={ tQuat('contracts.optimization_enabled') }
           isLoading={ isLoading }
         >
           { data.optimization_enabled ? 'true' : 'false' }
@@ -147,7 +151,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.package_name && (
         <ContractDetailsInfoItem
-          label="Package name"
+          label={ tQuat('contracts.package_name') }
           isLoading={ isLoading }
         >
           { data.package_name }
@@ -155,7 +159,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.verified_at && (
         <ContractDetailsInfoItem
-          label="Verified at"
+          label={ tQuat('contracts.verified_at') }
           wordBreak="break-word"
           isLoading={ isLoading }
         >
@@ -164,7 +168,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.file_path && !isStylusContract && (
         <ContractDetailsInfoItem
-          label="Contract file path"
+          label={ tQuat('contracts.file_path') }
           wordBreak="break-word"
           isLoading={ isLoading }
         >
@@ -173,7 +177,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { sourceCodeLink && (
         <ContractDetailsInfoItem
-          label="Source code"
+          label={ tQuat('common.source_code') }
           isLoading={ isLoading }
         >
           { sourceCodeLink }
@@ -181,7 +185,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { config.UI.hasContractAuditReports && (
         <ContractDetailsInfoItem
-          label="Security audit"
+          label={ tQuat('contracts.security_audit') }
           isLoading={ isLoading }
         >
           <ContractSecurityAudits addressHash={ addressData.hash }/>

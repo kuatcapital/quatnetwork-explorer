@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useAccount from 'lib/web3/useAccount';
 import { Button } from 'toolkit/chakra/button';
@@ -10,6 +12,8 @@ interface Props {
 }
 
 const ContractMethodAddressButton = ({ onClick, isDisabled }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { address } = useAccount();
 
   const handleClick = React.useCallback(() => {
@@ -26,9 +30,7 @@ const ContractMethodAddressButton = ({ onClick, isDisabled }: Props) => {
         ml={ 1 }
         onClick={ handleClick }
         disabled={ isDisabled || !address }
-      >
-        Self
-      </Button>
+      >{ tQuat('contracts.self_address') }</Button>
     </Tooltip>
   );
 };

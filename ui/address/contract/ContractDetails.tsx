@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-25: localized labels with stable contract selection across language changes. GPL-3.0.
 import { Grid } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import type { Channel } from 'phoenix';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 import type { AddressImplementation } from 'types/api/addressParams';
@@ -21,6 +23,8 @@ import ContractSourceAddressSelector from './ContractSourceAddressSelector';
 import ContractDetailsInfo from './info/ContractDetailsInfo';
 import ContractDetailsInfoCreator from './info/ContractDetailsInfoCreator';
 import ContractDetailsInfoImplementations from './info/ContractDetailsInfoImplementations';
+import type { SourceSelection } from './sourceSelection';
+import { resolveSourceSelection } from './sourceSelection';
 import useContractDetailsTabs from './useContractDetailsTabs';
 
 const TAB_LIST_PROPS = { flexWrap: 'wrap', rowGap: 2 };
@@ -33,12 +37,14 @@ type Props = {
 };
 
 const ContractDetails = ({ addressData, channel, mainContractQuery }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const sourceAddress = getQueryParamString(router.query.source_address);
   const multichainContext = useMultichainContext();
 
   const sourceItems: Array<AddressImplementation> = React.useMemo(() => {
-    const currentAddressDefaultName = addressData?.proxy_type === 'eip7702' ? 'Current address' : 'Current contract';
+    const currentAddressDefaultName = tQuat(addressData?.proxy_type === 'eip7702' ? 'contracts.current_address' : 'contracts.current_contract');
     const currentAddressItem = { address_hash: addressData.hash, name: addressData?.name || currentAddressDefaultName };
     if (!addressData || !addressData.implementations || addressData.implementations.length === 0) {
       return [ currentAddressItem ];
@@ -48,15 +54,24 @@ const ContractDetails = ({ addressData, channel, mainContractQuery }: Props) => 
       currentAddressItem,
       ...(addressData?.implementations.filter((item) => item.address_hash !== addressData.hash && item.name) || []),
     ];
-  }, [ addressData ]);
+  }, [ addressData, tQuat ]);
 
-  const [ selectedItem, setSelectedItem ] = React.useState<AddressImplementation | undefined>(undefined);
+  const [ sourceSelection, setSourceSelection ] = React.useState<SourceSelection | undefined>(undefined);
+  const selectedItem = sourceItems.find(item => item.address_hash === sourceSelection?.selectedHash);
 
   React.useEffect(() => {
     if (!mainContractQuery.isPlaceholderData) {
-      setSelectedItem(sourceItems.find((item) => item.address_hash === sourceAddress) || sourceItems[0]);
+      setSourceSelection(previous => resolveSourceSelection(previous, {
+        availableHashes: sourceItems.map(item => item.address_hash),
+        addressHash: addressData.hash,
+        requestedHash: sourceAddress,
+      }));
     }
-  }, [ mainContractQuery.isPlaceholderData, sourceAddress, sourceItems ]);
+  }, [ mainContractQuery.isPlaceholderData, sourceAddress, sourceItems, addressData.hash ]);
+
+  const handleSourceSelect = React.useCallback((item: AddressImplementation) => {
+    setSourceSelection({ selectedHash: item.address_hash, addressHash: addressData.hash, requestedHash: sourceAddress });
+  }, [ addressData.hash, sourceAddress ]);
 
   const contractQuery = useApiQuery('general:contract', {
     pathParams: { hash: selectedItem?.address_hash },
@@ -77,10 +92,10 @@ const ContractDetails = ({ addressData, channel, mainContractQuery }: Props) => 
   const addressSelector = sourceItems.length > 1 && selectedItem ? (
     <ContractSourceAddressSelector
       isLoading={ mainContractQuery.isPlaceholderData }
-      label="Source code"
+      label={ tQuat('common.source_code') }
       items={ sourceItems }
       selectedItem={ selectedItem }
-      onItemSelect={ setSelectedItem }
+      onItemSelect={ handleSourceSelect }
       mr={{ lg: 8 }}
     />
   ) : null;

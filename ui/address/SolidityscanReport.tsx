@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Text, Icon } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 // This icon doesn't work properly when it is in the sprite
 // Probably because of the gradient
@@ -18,6 +20,8 @@ interface Props {
 }
 
 const SolidityscanReport = ({ hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const popover = useDisclosure();
   const { data, isPlaceholderData, isError } = useFetchReport({ hash });
 
@@ -52,11 +56,11 @@ const SolidityscanReport = ({ hash }: Props) => {
           <SolidityscanReportScore score={ score } mb={ 5 }/>
           { vulnerabilities && vulnerabilitiesCount > 0 && (
             <Box mb={ 5 }>
-              <Text py="7px" color="text.secondary" textStyle="xs" fontWeight={ 500 }>Vulnerabilities distribution</Text>
+              <Text py="7px" color="text.secondary" textStyle="xs" fontWeight={ 500 }>{ tQuat('addresses.vulnerability_distribution') }</Text>
               <SolidityscanReportDetails vulnerabilities={ vulnerabilities } vulnerabilitiesCount={ vulnerabilitiesCount }/>
             </Box>
           ) }
-          <Link href={ data.scan_report.scanner_reference_url } external>View full report</Link>
+          <Link href={ data.scan_report.scanner_reference_url } external>{ tQuat('addresses.view_full_report') }</Link>
         </PopoverBody>
       </PopoverContent>
     </PopoverRoot>

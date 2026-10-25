@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
 
 import type { FormSubmitHandler, SmartContractMethod } from './types';
@@ -30,6 +32,8 @@ interface Props {
 }
 
 const ContractAbiItem = ({ data, index, id, addressHash, sourceAddress, tab, onSubmit, isVisible = true, isOpen }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ attempt, setAttempt ] = React.useState(0);
 
   const url = React.useMemo(() => {
@@ -112,7 +116,7 @@ const ContractAbiItem = ({ data, index, id, addressHash, sourceAddress, tab, onS
       </Element>
       <AccordionItemContent pb={ 4 } pr={ 0 } pl="28px" w="calc(100% - 6px)">
         { 'is_invalid' in data && data.is_invalid ? (
-          <Alert status="warning">An error occurred while parsing the method signature.</Alert>
+          <Alert status="warning">{ tQuat('contracts.signature_error') }</Alert>
         ) : (
           <ContractMethodForm
             key={ id + '_' + index + '_' + attempt }

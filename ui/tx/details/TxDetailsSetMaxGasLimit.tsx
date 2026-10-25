@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const TxDetailsSetMaxGasLimit = ({ data }: Props) => {
+  const { t: tTx } = useTranslation();
   if (!config.UI.views.tx.additionalFields?.set_max_gas_limit) {
     return null;
   }
@@ -23,10 +26,9 @@ const TxDetailsSetMaxGasLimit = ({ data }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="The maximum network fee the sender is willing to pay for this transaction"
+        hint={ tTx('transactions.max_fee_hint') }
       >
-        User’s set max gas limit
-      </DetailedInfo.ItemLabel>
+        { tTx('transactions.max_gas_limit') }</DetailedInfo.ItemLabel>
       <DetailedInfoNativeCoinValue
         amount={ maxGasLimit.toString() }
         exchangeRate={ 'exchange_rate' in data ? data.exchange_rate : null }

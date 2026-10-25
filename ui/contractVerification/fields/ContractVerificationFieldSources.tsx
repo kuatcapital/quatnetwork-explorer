@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localize contract verification interface. GPL-3.0.
 import { Text, Box, Flex, VStack } from '@chakra-ui/react';
 import React from 'react';
 import type { ControllerRenderProps, FieldPathValue, ValidateResult } from 'react-hook-form';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -27,7 +29,12 @@ interface Props {
 }
 
 const ContractVerificationFieldSources = ({ fileTypes, multiple, required, title, hint, name = 'sources', fullFilePath }: Props) => {
-  const { setValue, getValues, control, formState, clearErrors } = useFormContext<FormFields>();
+  const { t: tQuat } = useTranslation();
+  const { setValue, getValues, control, formState, clearErrors, trigger, getFieldState } = useFormContext<FormFields>();
+  React.useEffect(() => {
+    const type = getFieldState(name).error?.type;
+    if (type === 'file_type' || type === 'file_size' || type === 'quantity') void trigger(name);
+  }, [ getFieldState, name, trigger, tQuat ]);
 
   const error = (() => {
     if (name === 'sources' && 'sources' in formState.errors) {
@@ -58,11 +65,11 @@ const ContractVerificationFieldSources = ({ fileTypes, multiple, required, title
       <VStack gap={ 3 }>
         <Text fontWeight={ 500 }>{ title }</Text>
         <Button size="sm" variant="outline">
-          Drop file{ multiple ? 's' : '' } or click here
+          { tQuat(multiple ? 'verification.drop_files' : 'verification.drop_file') }
         </Button>
       </VStack>
     );
-  }, [ multiple, title ]);
+  }, [ multiple, title, tQuat ]);
 
   const renderFiles = React.useCallback((files: Array<File>) => {
     const errorList = fileError?.message?.split(';');
@@ -96,7 +103,7 @@ const ContractVerificationFieldSources = ({ fileTypes, multiple, required, title
 
     const errorElement = (() => {
       if (commonError?.type === 'required') {
-        return <FormFieldError message="Field is required"/>;
+        return <FormFieldError message={ tQuat('verification.required_field') }/>;
       }
 
       if (commonError?.message) {
@@ -131,37 +138,37 @@ const ContractVerificationFieldSources = ({ fileTypes, multiple, required, title
         { errorElement }
       </>
     );
-  }, [ fileTypes, multiple, commonError?.type, commonError?.message, fullFilePath, formState.isSubmitting, error, renderFiles, renderUploadButton ]);
+  }, [ fileTypes, multiple, commonError?.type, commonError?.message, fullFilePath, formState.isSubmitting, error, renderFiles, renderUploadButton, tQuat ]);
 
   const validateFileType = React.useCallback(async(value: FieldPathValue<FormFields, typeof name>): Promise<ValidateResult> => {
     if (Array.isArray(value)) {
-      const errorText = `Wrong file type. Allowed files types are ${ fileTypes.join(',') }.`;
+      const errorText = tQuat('verification.wrong_file_type', { types: fileTypes.join(',') });
       const errors = value.map(({ name }) => fileTypes.some((ext) => name.endsWith(ext)) ? '' : errorText);
       if (errors.some((item) => item !== '')) {
         return errors.join(';');
       }
     }
     return true;
-  }, [ fileTypes ]);
+  }, [ fileTypes, tQuat ]);
 
   const validateFileSize = React.useCallback(async(value: FieldPathValue<FormFields, typeof name>): Promise<ValidateResult> => {
     if (Array.isArray(value)) {
       const FILE_SIZE_LIMIT = 20 * Mb;
-      const errors = value.map(({ size }) => size > FILE_SIZE_LIMIT ? 'File is too big. Maximum size is 20 Mb.' : '');
+      const errors = value.map(({ size }) => size > FILE_SIZE_LIMIT ? tQuat('verification.file_too_big') : '');
       if (errors.some((item) => item !== '')) {
         return errors.join(';');
       }
     }
     return true;
-  }, []);
+  }, [ tQuat ]);
 
   const validateQuantity = React.useCallback(async(value: FieldPathValue<FormFields, typeof name>): Promise<ValidateResult> => {
     if (!multiple && Array.isArray(value) && value.length > 1) {
-      return 'You can upload only one file';
+      return tQuat('verification.one_file_only');
     }
 
     return true;
-  }, [ multiple ]);
+  }, [ multiple, tQuat ]);
 
   const rules = React.useMemo(() => ({
     required,

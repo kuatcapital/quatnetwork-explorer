@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Button } from 'toolkit/chakra/button';
@@ -17,6 +19,8 @@ interface Props {
 }
 
 const ContractCodeIde = ({ className, hash, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { open, onOpenChange } = useDisclosure();
 
   const ideLinks = React.useMemo(() => {
@@ -51,19 +55,19 @@ const ContractCodeIde = ({ className, hash, isLoading }: Props) => {
           className={ className }
           size="sm"
           variant="dropdown"
-          aria-label="Open source code in IDE"
+          aria-label={ tQuat('contracts.open_ide') }
           fontWeight={ 500 }
           gap={ 0 }
           h="32px"
           flexShrink={ 0 }
         >
-          <span>Open in</span>
+          <span>{ tQuat('contracts.open_in') }</span>
           <IconSvg name="arrows/east-mini" transform={ open ? 'rotate(90deg)' : 'rotate(-90deg)' } transitionDuration="faster" boxSize={ 5 }/>
         </Button>
       </PopoverTrigger>
       <PopoverContent w="240px">
         <PopoverBody >
-          <chakra.span color="text.secondary" fontSize="xs">Redactors</chakra.span>
+          <chakra.span color="text.secondary" fontSize="xs">{ tQuat('contracts.editors') }</chakra.span>
           <Flex
             flexDir="column"
             alignItems="flex-start"

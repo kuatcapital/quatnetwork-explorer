@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTokensErc20Item } from './types';
 
@@ -14,14 +16,16 @@ interface Props {
 }
 
 const ERC20TokensTable = ({ data, top, isLoading, hasAdditionalTokenTypes }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot>
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader width="30%">Asset</TableColumnHeader>
-          <TableColumnHeader width="30%">Contract address</TableColumnHeader>
-          <TableColumnHeader width="10%" isNumeric>Price</TableColumnHeader>
-          <TableColumnHeader width="15%" isNumeric>Quantity</TableColumnHeader>
+          <TableColumnHeader width="30%">{ tQuat('addresses.asset') }</TableColumnHeader>
+          <TableColumnHeader width="30%">{ tQuat('addresses.contract_address') }</TableColumnHeader>
+          <TableColumnHeader width="10%" isNumeric>{ tQuat('common.price') }</TableColumnHeader>
+          <TableColumnHeader width="15%" isNumeric>{ tQuat('addresses.quantity') }</TableColumnHeader>
           <TableColumnHeader width="15%" isNumeric>Value</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

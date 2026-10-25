@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
 
@@ -64,6 +66,7 @@ interface Props {
 }
 
 const TxInternals = ({ txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
   // filters are not implemented yet in api
   // const [ filters, setFilters ] = React.useState<Array<TxInternalsType>>([]);
   // const [ searchTerm, setSearchTerm ] = React.useState<string>('');
@@ -125,7 +128,7 @@ const TxInternals = ({ txQuery }: Props) => {
     <DataListDisplay
       isError={ isError || txQuery.isError }
       itemsNum={ data?.items.length }
-      emptyText="There are no internal transactions for this transaction."
+      emptyText={ tTx('transactions.no_internal_for_tx') }
       // filterProps={{
       // emptyFilteredText: `Couldn${ apos }t find any transaction that matches your query.`.
       // hasActiveFilters: Boolean(filters.length || searchTerm),

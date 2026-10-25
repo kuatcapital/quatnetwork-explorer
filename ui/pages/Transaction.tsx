@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { EntityTag as TEntityTag } from 'ui/shared/EntityTags/types';
@@ -37,6 +39,7 @@ const rollupFeature = config.features.rollup;
 const tacFeature = config.features.tac;
 
 const TransactionPageContent = () => {
+  const { t: tTx } = useTranslation();
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -64,36 +67,36 @@ const TransactionPageContent = () => {
     return [
       {
         id: 'index',
-        title: config.features.suave.isEnabled && data?.wrapped ? 'Confidential compute tx details' : 'Details',
+        title: config.features.suave.isEnabled && data?.wrapped ? tTx('transactions.confidential_details') : tTx('common.details'),
         component: detailsComponent,
       },
       txInterpretation.isEnabled && txInterpretation.provider === 'noves' ?
-        { id: 'asset_flows', title: 'Asset Flows', component: <TxAssetFlows hash={ hash }/> } :
+        { id: 'asset_flows', title: tTx('transactions.asset_flows'), component: <TxAssetFlows hash={ hash }/> } :
         undefined,
       config.features.suave.isEnabled && data?.wrapped ?
-        { id: 'wrapped', title: 'Regular tx details', component: <TxDetailsWrapped data={ data.wrapped }/> } :
+        { id: 'wrapped', title: tTx('transactions.regular_details'), component: <TxDetailsWrapped data={ data.wrapped }/> } :
         undefined,
       {
         id: 'token_transfers',
-        title: 'Token transfers',
+        title: tTx('common.token_transfers'),
         component: <TxTokenTransfer txQuery={ txQuery }/>,
         subTabs: [ 'token_transfers', 'token_transfers_cross_chain' ],
       },
       config.features.userOps.isEnabled ?
-        { id: 'user_ops', title: 'User operations', component: <TxUserOps txQuery={ txQuery }/> } :
+        { id: 'user_ops', title: tTx('navigation.user_operations'), component: <TxUserOps txQuery={ txQuery }/> } :
         undefined,
-      { id: 'internal', title: 'Internal txns', component: <TxInternals txQuery={ txQuery }/> },
+      { id: 'internal', title: tTx('common.internal_txns'), component: <TxInternals txQuery={ txQuery }/> },
       config.features.dataAvailability.isEnabled && txQuery.data?.blob_versioned_hashes?.length ?
-        { id: 'blobs', title: 'Blobs', component: <TxBlobs txQuery={ txQuery }/> } :
+        { id: 'blobs', title: tTx('transactions.blobs'), component: <TxBlobs txQuery={ txQuery }/> } :
         undefined,
-      { id: 'logs', title: 'Logs', component: <TxLogs txQuery={ txQuery }/> },
-      { id: 'state', title: 'State', component: <TxState txQuery={ txQuery }/> },
-      { id: 'raw_trace', title: 'Raw trace', component: <TxRawTrace txQuery={ txQuery }/> },
+      { id: 'logs', title: tTx('common.logs'), component: <TxLogs txQuery={ txQuery }/> },
+      { id: 'state', title: tTx('transactions.state'), component: <TxState txQuery={ txQuery }/> },
+      { id: 'raw_trace', title: tTx('transactions.raw_trace'), component: <TxRawTrace txQuery={ txQuery }/> },
       txQuery.data?.fhe_operations_count && txQuery.data.fhe_operations_count > 0 ?
-        { id: 'fhe_operations', title: 'FHE operations', component: <TxFHEOperations txQuery={ txQuery }/> } :
+        { id: 'fhe_operations', title: tTx('transactions.fhe_operations'), component: <TxFHEOperations txQuery={ txQuery }/> } :
         undefined,
       txQuery.data?.authorization_list?.length ?
-        { id: 'authorizations', title: 'Authorizations', component: <TxAuthorizations txQuery={ txQuery }/> } :
+        { id: 'authorizations', title: tTx('transactions.authorizations'), component: <TxAuthorizations txQuery={ txQuery }/> } :
         undefined,
     ].filter(Boolean);
   })();
@@ -134,7 +137,7 @@ const TransactionPageContent = () => {
     <AddressHighlightProvider>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title="Transaction details"
+        title={ tTx('transactions.details_title') }
         contentAfter={ tags }
         secondRow={ titleSecondRow }
       />

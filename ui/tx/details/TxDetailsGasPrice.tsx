@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const TxDetailsGasPrice = ({ gasPrice, gasToken, isLoading }: Props) => {
+  const { t: tTx } = useTranslation();
   if (config.UI.views.tx.hiddenFields?.gas_price || !gasPrice) {
     return null;
   }
@@ -41,11 +44,10 @@ const TxDetailsGasPrice = ({ gasPrice, gasToken, isLoading }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Price per unit of gas specified by the sender. Higher gas prices can prioritize transaction inclusion during times of high usage"
+        hint={ tTx('transactions.gas_price_hint') }
         isLoading={ isLoading }
       >
-        Gas price
-      </DetailedInfo.ItemLabel>
+        { tTx('common.gas_price') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow>
         { content }
       </DetailedInfo.ItemValue>

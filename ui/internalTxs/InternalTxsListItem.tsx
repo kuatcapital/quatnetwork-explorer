@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -34,7 +36,9 @@ const InternalTxsListItem = ({
   showBlockInfo = true,
   chainData,
 }: Props) => {
-  const typeTitle = TX_INTERNALS_ITEMS.find(({ id }) => id === type)?.title;
+  const { t: tTx } = useTranslation();
+  const titleKey = TX_INTERNALS_ITEMS.find(({ id }) => id === type)?.titleKey;
+  const typeTitle = titleKey ? tTx(titleKey) : undefined;
   const toData = to ? to : createdContract;
 
   return (
@@ -61,7 +65,7 @@ const InternalTxsListItem = ({
       </Flex>
       { showBlockInfo && (
         <HStack gap={ 1 }>
-          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Block</Skeleton>
+          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tTx('common.block') }</Skeleton>
           <BlockEntity
             isLoading={ isLoading }
             number={ blockNumber }
@@ -78,7 +82,7 @@ const InternalTxsListItem = ({
         w="100%"
       />
       <HStack gap={ 3 }>
-        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Value { currencyUnits.ether }</Skeleton>
+        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tTx('transactions.value_amount') }{ ' ' }{ currencyUnits.ether }</Skeleton>
         <NativeCoinValue
           amount={ value }
           noSymbol

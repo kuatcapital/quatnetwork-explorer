@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMounted from 'lib/hooks/useIsMounted';
 import getQueryParamString from 'lib/router/getQueryParamString';
@@ -20,6 +22,8 @@ type Props = {
 };
 
 const AddressLogs = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMounted = useIsMounted();
 
@@ -69,7 +73,7 @@ const AddressLogs = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items?.length }
-      emptyText="There are no logs for this address."
+      emptyText={ tQuat('addresses.no_logs') }
       actionBar={ actionBar }
     >
       { content }

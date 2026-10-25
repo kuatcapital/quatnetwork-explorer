@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import { ADDRESS_INFO } from 'stubs/address';
@@ -10,6 +12,8 @@ interface Props {
 }
 
 const TokenInstanceCreatorAddress = ({ hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const addressQuery = useApiQuery('general:address', {
     pathParams: { hash },
     queryOptions: {
@@ -38,11 +42,9 @@ const TokenInstanceCreatorAddress = ({ hash }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Address that deployed this token contract"
+        hint={ tQuat('tokenUi.creator_hint') }
         isLoading={ addressQuery.isPlaceholderData }
-      >
-        Creator
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('tokenUi.creator') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressEntity
           address={ creatorAddress }

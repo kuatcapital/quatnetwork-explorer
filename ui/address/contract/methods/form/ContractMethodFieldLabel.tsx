@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ContractAbiItemInput } from '../types';
 
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const ContractMethodFieldLabel = ({ data, isOptional, level }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <Box
       w="250px"
@@ -25,7 +29,7 @@ const ContractMethodFieldLabel = ({ data, isOptional, level }: Props) => {
       wordBreak="break-all"
     >
       { getFieldLabel(data, !isOptional) }
-      { data.type === 'string' && <Hint label={ `The "" string will be treated as an empty string` } ml={ 2 }/> }
+      { data.type === 'string' && <Hint label={ tQuat('contracts.empty_string_hint') } ml={ 2 }/> }
     </Box>
   );
 };

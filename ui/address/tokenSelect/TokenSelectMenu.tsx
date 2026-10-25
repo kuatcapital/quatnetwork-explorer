@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Text, Box, Flex } from '@chakra-ui/react';
 import { sumBy } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormattedData } from './types';
 
@@ -23,12 +25,14 @@ interface Props {
 }
 
 const TokenSelectMenu = ({ getSort, filteredData, onInputChange, onSortClick, searchTerm }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const hasFilteredResult = sumBy(Object.values(filteredData), ({ items }) => items.length) > 0;
 
   return (
     <>
       <FilterInput
-        placeholder="Search by token name"
+        placeholder={ tQuat('addresses.search_token_name') }
         size="sm"
         inputProps={{ bgColor: 'dialog.bg' }}
         mb={ 5 }
@@ -68,7 +72,7 @@ const TokenSelectMenu = ({ getSort, filteredData, onInputChange, onSortClick, se
           );
         }) }
       </Flex>
-      { Boolean(searchTerm) && !hasFilteredResult && <Text fontSize="sm">Could not find any matches.</Text> }
+      { Boolean(searchTerm) && !hasFilteredResult && <Text fontSize="sm">{ tQuat('addresses.no_matches') }</Text> }
     </>
   );
 };

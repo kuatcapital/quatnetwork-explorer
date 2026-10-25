@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
 
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const InternalTxsTable = ({ data, currentAddress, isLoading, top, showBlockInfo = true }: Props) => {
+  const { t: tTx } = useTranslation();
   const multichainContext = useMultichainContext();
   const chainData = multichainContext?.chain;
 
@@ -29,14 +32,13 @@ const InternalTxsTable = ({ data, currentAddress, isLoading, top, showBlockInfo 
           <TableRow>
             { chainData && <TableColumnHeader width="38px"></TableColumnHeader> }
             <TableColumnHeader width="280px">
-              Parent txn hash
-              <TimeFormatToggle/>
+              { tTx('transactions.parent_hash') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader width="15%">Type</TableColumnHeader>
-            { showBlockInfo && <TableColumnHeader width="15%">Block</TableColumnHeader> }
-            <TableColumnHeader width="50%">From/To</TableColumnHeader>
+            <TableColumnHeader width="15%">{ tTx('common.type') }</TableColumnHeader>
+            { showBlockInfo && <TableColumnHeader width="15%">{ tTx('common.block') }</TableColumnHeader> }
+            <TableColumnHeader width="50%">{ tTx('transactions.from_to') }</TableColumnHeader>
             <TableColumnHeader width="20%" isNumeric>
-              Value { currencyUnits.ether }
+              { tTx('transactions.value_amount') }{ currencyUnits.ether }
             </TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMudRecord } from 'types/api/address';
 
@@ -12,6 +14,8 @@ type Props = {
 };
 
 const AddressMudRecordValues = ({ data }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const valuesBgColor = { _light: 'blackAlpha.50', _dark: 'whiteAlpha.50' };
 
   if (!data?.schema.value_names.length) {
@@ -21,8 +25,8 @@ const AddressMudRecordValues = ({ data }: Props) => {
   return (
     <>
       <TableRow backgroundColor={ valuesBgColor } borderBottomStyle="hidden" >
-        <TableCell fontWeight={ 600 } w="100px" fontSize="sm">Field</TableCell>
-        <TableCell fontWeight={ 600 } w="90px" fontSize="sm">Type</TableCell>
+        <TableCell fontWeight={ 600 } w="100px" fontSize="sm">{ tQuat('addresses.field') }</TableCell>
+        <TableCell fontWeight={ 600 } w="90px" fontSize="sm">{ tQuat('common.type') }</TableCell>
         <TableCell fontWeight={ 600 } fontSize="sm">Value</TableCell>
       </TableRow>
       {

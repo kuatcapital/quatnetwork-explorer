@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import { useQueryClient, useIsFetching } from '@tanstack/react-query';
 import { sumBy } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 
@@ -24,6 +26,8 @@ import TokenSelectDesktop from './TokenSelectDesktop';
 import TokenSelectMobile from './TokenSelectMobile';
 
 const TokenSelect = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
@@ -67,14 +71,14 @@ const TokenSelect = () => {
         <TokenSelectMobile data={ data } isLoading={ tokensIsFetching === 1 }/> :
         <TokenSelectDesktop data={ data } isLoading={ tokensIsFetching === 1 }/>
       }
-      <Tooltip content="Show all tokens">
+      <Tooltip content={ tQuat('addresses.show_all_tokens') }>
         <Link
           href={ route({ pathname: '/address/[hash]', query: { hash: addressHash, tab: 'tokens' } }, { chain: multichainContext?.chain }) }
           asChild
           scroll={ false }
         >
           <IconButton
-            aria-label="Show all tokens"
+            aria-label={ tQuat('addresses.show_all_tokens') }
             variant="icon_background"
             size="md"
             onClick={ handleIconButtonClick }

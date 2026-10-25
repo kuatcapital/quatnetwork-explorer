@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContract } from 'types/api/contract';
 
@@ -64,6 +66,7 @@ interface Props {
 }
 
 const ContractDetailsConstructorArgs = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const content = React.useMemo(() => {
     if (!data?.decoded_constructor_args) {
@@ -74,7 +77,7 @@ const ContractDetailsConstructorArgs = ({ data, isLoading }: Props) => {
       .map(([ value, { name, type } ], index) => {
         return (
           <Box key={ index }>
-            <span>Arg [{ index }] { name || '' } ({ type }): </span>
+            <span>{ tQuat('contracts.argument_label', { index, name: name || '', type }) }</span>
             <DecodedItemValue value={ value } type={ type }/>
           </Box>
         );
@@ -87,7 +90,7 @@ const ContractDetailsConstructorArgs = ({ data, isLoading }: Props) => {
         { decoded }
       </>
     );
-  }, [ data?.constructor_args, data?.decoded_constructor_args ]);
+  }, [ data?.constructor_args, data?.decoded_constructor_args, tQuat ]);
 
   if (!content) {
     return null;
@@ -96,7 +99,7 @@ const ContractDetailsConstructorArgs = ({ data, isLoading }: Props) => {
   return (
     <RawDataSnippet
       data={ content }
-      title="Constructor Arguments"
+      title={ tQuat('contracts.constructor_arguments') }
       textareaMaxHeight="200px"
       isLoading={ isLoading }
     />

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { RawTracesResponse } from 'types/api/rawTrace';
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const TxRawTrace = ({ txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
   const [ isQueryEnabled, setIsQueryEnabled ] = React.useState(false);
   const [ rawTraces, setRawTraces ] = React.useState<RawTracesResponse>();
   const router = useRouter();
@@ -63,7 +66,7 @@ const TxRawTrace = ({ txQuery }: Props) => {
   const dataToDisplay = rawTraces ? rawTraces : data;
 
   if (!isPlaceholderData && dataToDisplay?.length === 0) {
-    return <span>No trace entries found.</span>;
+    return <span>{ tTx('transactions.no_trace') }</span>;
   }
 
   const text = JSON.stringify(dataToDisplay, undefined, 4);

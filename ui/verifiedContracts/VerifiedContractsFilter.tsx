@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize contract verification interface. GPL-3.0.
 import { createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { VerifiedContractsFilter as TVerifiedContractsFilter } from 'types/api/contracts';
 
@@ -15,15 +17,16 @@ interface Props {
 }
 
 const VerifiedContractsFilter = ({ onChange, defaultValue, hasActiveFilter }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const { data, isPending } = useApiQuery('general:config_contract_languages');
 
   const options = React.useMemo(() => {
     return [
-      { value: 'all', label: 'All' },
+      { value: 'all', label: tQuat('common.all') },
       ...(data?.languages || []).map((language) => ({ value: language, label: formatLanguageName(language) })),
     ];
-  }, [ data?.languages ]);
+  }, [ data?.languages, tQuat ]);
 
   const collection = React.useMemo(() => {
     return createListCollection<SelectOption>({ items: options });

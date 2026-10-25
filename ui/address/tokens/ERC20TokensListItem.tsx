@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTokensErc20Item } from './types';
 
@@ -28,6 +30,8 @@ const ERC20TokensListItem = ({
   chain_values: chainValues,
   hasAdditionalTokenTypes,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const {
     valueBn: tokenQuantity,
     usdBn: tokenValue,
@@ -72,7 +76,7 @@ const ERC20TokensListItem = ({
       </Flex>
       { token.exchange_rate !== undefined && token.exchange_rate !== null && (
         <HStack gap={ 3 }>
-          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Price</Skeleton>
+          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('common.price') }</Skeleton>
           <SimpleValue
             value={ BigNumber(token.exchange_rate) }
             loading={ isLoading }
@@ -83,7 +87,7 @@ const ERC20TokensListItem = ({
         </HStack>
       ) }
       <HStack gap={ 3 } alignItems="baseline">
-        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Quantity</Skeleton>
+        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.quantity') }</Skeleton>
         { isConfidentialTokenType(token.type) ? (
           <ConfidentialValue loading={ isLoading }/>
         ) : (

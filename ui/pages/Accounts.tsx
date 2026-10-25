@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import getItemIndex from 'lib/getItemIndex';
 import { TOP_ADDRESS } from 'stubs/address';
@@ -14,6 +16,8 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 
 const Accounts = () => {
+  const { t: tQuat } = useTranslation();
+
   const { isError, isPlaceholderData, data, pagination } = useQueryWithPages({
     resourceName: 'general:addresses',
     options: {
@@ -72,11 +76,11 @@ const Accounts = () => {
 
   return (
     <>
-      <PageTitle title="Top accounts" withTextAd/>
+      <PageTitle title={ tQuat('navigation.top_accounts') } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no accounts."
+        emptyText={ tQuat('addresses.no_accounts') }
         actionBar={ actionBar }
       >
         { content }

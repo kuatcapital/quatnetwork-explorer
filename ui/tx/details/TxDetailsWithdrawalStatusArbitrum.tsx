@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumTransactionMessageStatus, Transaction } from 'types/api/transaction';
 
@@ -19,11 +21,20 @@ const WITHDRAWAL_STATUS_STEPS: Array<ArbitrumTransactionMessageStatus> = [
   'Relayed',
 ];
 
+const WITHDRAWAL_STATUS_KEYS: Record<string, string> = {
+  'Syncing with base layer': 'transactions.syncing_base_layer',
+  'Settlement pending': 'transactions.settlement_pending',
+  'Waiting for confirmation': 'transactions.waiting_confirmation',
+  'Ready for relay': 'transactions.ready_relay',
+  Relayed: 'transactions.relayed',
+};
+
 interface Props {
   data: Transaction;
 }
 
 const TxDetailsWithdrawalStatusArbitrum = ({ data }: Props) => {
+  const { t: tTx } = useTranslation();
 
   const steps = React.useMemo(() => {
     if (!data.arbitrum?.message_related_info) {
@@ -37,7 +48,7 @@ const TxDetailsWithdrawalStatusArbitrum = ({ data }: Props) => {
 
         return WITHDRAWAL_STATUS_STEPS.slice(0, lastElementIndex).map((step, index, array) => {
           if (index !== array.length - 1) {
-            return step;
+            return { label: step, content: tTx(WITHDRAWAL_STATUS_KEYS[step]) };
           }
 
           return {
@@ -45,7 +56,7 @@ const TxDetailsWithdrawalStatusArbitrum = ({ data }: Props) => {
               <Link
                 href={ route({ pathname: '/txn-withdrawals', query: { q: data.hash } }) }
               >
-                { step }
+                { tTx(WITHDRAWAL_STATUS_KEYS[step]) }
               </Link>
             ),
             label: step,
@@ -54,9 +65,9 @@ const TxDetailsWithdrawalStatusArbitrum = ({ data }: Props) => {
       }
 
       default:
-        return WITHDRAWAL_STATUS_STEPS;
+        return WITHDRAWAL_STATUS_STEPS.map(step => ({ label: step, content: tTx(WITHDRAWAL_STATUS_KEYS[step]) }));
     }
-  }, [ data.arbitrum?.message_related_info, data.hash ]);
+  }, [ data.arbitrum?.message_related_info, data.hash, tTx ]);
 
   if (!data.arbitrum || !data.arbitrum?.contains_message || !data.arbitrum?.message_related_info) {
     return null;
@@ -66,17 +77,16 @@ const TxDetailsWithdrawalStatusArbitrum = ({ data }: Props) => {
     return (
       <>
         <DetailedInfo.ItemLabel
-          hint="Detailed status progress of the transaction"
+          hint={ tTx('transactions.progress_hint') }
         >
-          Withdrawal status
-        </DetailedInfo.ItemLabel>
+          { tTx('transactions.withdrawal_status') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           { data.arbitrum.message_related_info.message_status ? (
             <VerificationSteps
-              steps={ steps as unknown as Array<ArbitrumTransactionMessageStatus> }
+              steps={ steps }
               currentStep={ data.arbitrum.message_related_info.message_status }
             />
-          ) : <Text color="text.secondary">Could not determine</Text> }
+          ) : <Text color="text.secondary">{ tTx('transactions.could_not_determine') }</Text> }
         </DetailedInfo.ItemValue>
       </>
     );
@@ -84,14 +94,14 @@ const TxDetailsWithdrawalStatusArbitrum = ({ data }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="The hash of the transaction that originated the message from the base layer"
+        hint={ tTx('transactions.originating_hash_hint') }
       >
-        Originating { layerLabels.parent } txn hash
+        { tTx('transactions.originating_hash', { layer: layerLabels.parent }) }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.arbitrum.message_related_info.associated_l1_transaction_hash ?
           <TxEntityL1 hash={ data.arbitrum.message_related_info.associated_l1_transaction_hash }/> :
-          <Text color="text.secondary">Waiting for confirmation</Text>
+          <Text color="text.secondary">{ tTx('transactions.waiting_confirmation') }</Text>
         }
       </DetailedInfo.ItemValue>
     </>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { createListCollection, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokensSortingValue } from 'types/api/tokens';
 import type { PaginationParams } from 'ui/shared/pagination/types';
@@ -8,11 +10,7 @@ import { FilterInput } from 'toolkit/components/filters/FilterInput';
 import ActionBar from 'ui/shared/ActionBar';
 import Pagination from 'ui/shared/pagination/Pagination';
 import Sort from 'ui/shared/sort/Sort';
-import { SORT_OPTIONS } from 'ui/tokens/utils';
-
-const sortCollection = createListCollection({
-  items: SORT_OPTIONS,
-});
+import { getLocalizedSortOptions } from 'ui/tokens/utils';
 
 interface Props {
   pagination: PaginationParams;
@@ -33,6 +31,8 @@ const TokensActionBar = ({
   filter,
   inTabsSlot,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const sortCollection = React.useMemo(() => createListCollection({ items: getLocalizedSortOptions(tQuat) }), [ tQuat ]);
 
   const handleSortChange = React.useCallback(({ value }: { value: Array<string> }) => {
     onSortChange(value[0] as TokensSortingValue);
@@ -43,7 +43,7 @@ const TokensActionBar = ({
       w={{ base: '100%', lg: '360px' }}
       size="sm"
       onChange={ onSearchChange }
-      placeholder="Token name or symbol"
+      placeholder={ tQuat('tokenUi.search_placeholder') }
       initialValue={ searchTerm }
     />
   );
@@ -54,7 +54,7 @@ const TokensActionBar = ({
         { filter }
         <Sort
           name="tokens_sorting"
-          defaultValue={ [ sort ] }
+          value={ [ sort ] }
           collection={ sortCollection }
           onValueChange={ handleSortChange }
         />

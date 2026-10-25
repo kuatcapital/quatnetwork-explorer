@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MethodType } from './types';
 
@@ -17,6 +19,12 @@ interface Props {
 }
 
 const ContractMethodsFilters = ({ defaultMethodType, defaultSearchTerm, onChange, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const typeLabels: Record<MethodType, string> = {
+    all: tQuat('common.all'),
+    read: tQuat('contracts.read'),
+    write: tQuat('contracts.write'),
+  };
 
   const handleTypeChange = React.useCallback((value: string) => {
     onChange({ type: 'method_type', value: value as MethodType });
@@ -36,14 +44,14 @@ const ContractMethodsFilters = ({ defaultMethodType, defaultSearchTerm, onChange
       >
         { TYPE_FILTER_OPTIONS.map((option) => (
           <Button key={ option.value } value={ option.value } size="sm" px={ 3 }>
-            { option.title }
+            { typeLabels[option.value] }
           </Button>
         )) }
       </ButtonGroupRadio>
       <FilterInput
         initialValue={ defaultSearchTerm }
         onChange={ handleSearchTermChange }
-        placeholder="Search by method name"
+        placeholder={ tQuat('contracts.search_method') }
         w={{ base: '100%', lg: '450px' }}
         size="sm"
         loading={ isLoading }

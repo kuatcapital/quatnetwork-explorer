@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CsvExportParams } from 'types/client/address';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -23,6 +25,8 @@ interface Props {
 }
 
 const AddressCsvExportLink = ({ className, address, params, isLoading, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const isInitialLoading = useIsInitialLoading(isLoading);
   const multichainContext = useMultichainContext();
@@ -34,7 +38,7 @@ const AddressCsvExportLink = ({ className, address, params, isLoading, chainData
   }
 
   return (
-    <Tooltip disabled={ !isMobile } content="Download CSV">
+    <Tooltip disabled={ !isMobile } content={ tQuat('addresses.download_csv') }>
       <Link
         className={ className }
         whiteSpace="nowrap"
@@ -46,7 +50,7 @@ const AddressCsvExportLink = ({ className, address, params, isLoading, chainData
         textStyle="sm"
       >
         <IconSvg name="files/csv" boxSize={ 5 }/>
-        <chakra.span ml={ 1 } hideBelow="lg">Download</chakra.span>
+        <chakra.span ml={ 1 } hideBelow="lg">{ tQuat('common.download') }</chakra.span>
       </Link>
     </Tooltip>
   );

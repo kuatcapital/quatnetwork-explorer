@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import { FHE_OPERATIONS_RESPONSE } from 'stubs/fheOperations';
@@ -18,6 +20,7 @@ interface Props {
 }
 
 const TxFHEOperations = ({ txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
   const hash = txQuery.data?.hash || '';
   const isEnabled = Boolean(hash) && Boolean(txQuery.data?.status) && !txQuery.isPlaceholderData;
 
@@ -57,7 +60,7 @@ const TxFHEOperations = ({ txQuery }: Props) => {
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items?.length ?? 0 }
-      emptyText="There are no FHE operations for this transaction."
+      emptyText={ tTx('transactions.no_fhe') }
     >
       { content }
     </DataListDisplay>

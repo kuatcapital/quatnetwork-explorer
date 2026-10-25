@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { capitalize } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 
@@ -32,6 +34,7 @@ interface Props extends Omit<RoutedTabsProps, 'tabs'> {
 }
 
 const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
+  const { t: tTx } = useTranslation();
   const isMobile = useIsMobile();
   const router = useRouter();
   const tab = getQueryParamString(router.query.tab);
@@ -110,7 +113,7 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
         /> },
     {
       id: getTabId('pending', parentTab),
-      title: 'Pending',
+      title: tTx('common.pending'),
       component: (
         <TxsWithFrontendSorting
           query={ txsPendingQuery }
@@ -122,7 +125,7 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
     },
     chainConfig?.features.dataAvailability.isEnabled && {
       id: getTabId('blob_txs', parentTab),
-      title: 'Blob txns',
+      title: tTx('transactions.blob_txns'),
       component: (
         <TxsWithFrontendSorting
           query={ txsWithBlobsQuery }
@@ -132,7 +135,7 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
     },
     isAuth && {
       id: getTabId('watchlist', parentTab),
-      title: 'Watch list',
+      title: tTx('navigation.watch_list'),
       component: <TxsWatchlist query={ txsWatchlistQuery } top={ tabsHeight }/>,
     },
   ].filter(Boolean);

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Image } from 'toolkit/chakra/image';
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const TxExternalTxs: React.FC<Props> = ({ data }) => {
+  const { t: tTx } = useTranslation();
   if (!externalTxFeature.isEnabled) {
     return null;
   }
@@ -22,7 +25,7 @@ const TxExternalTxs: React.FC<Props> = ({ data }) => {
     <Box textStyle="sm">
       <Flex alignItems="center" gap={ 2 } fontSize="md" mb={ 3 }>
         <Image src={ externalTxFeature.chainLogoUrl } alt={ externalTxFeature.chainName } width={ 5 } height={ 5 }/>
-        { externalTxFeature.chainName } transaction{ data.length > 1 ? 's' : '' }
+        { tTx('transactions.external_title', { count: data.length, chain: externalTxFeature.chainName }) }
       </Flex>
       <Flex flexDirection="column" gap={ 2 } w="100%" maxHeight="460px" overflowY="auto">
         { data.map((txHash) => (
@@ -57,7 +60,7 @@ const TxExternalTxs: React.FC<Props> = ({ data }) => {
         textDecorationStyle="dashed"
       >
         <Image src={ externalTxFeature.chainLogoUrl } alt={ externalTxFeature.chainName } boxSize={ 5 }/>
-        { `${ data.length } ${ externalTxFeature.chainName } txn${ data.length > 1 ? 's' : '' }` }
+        { tTx('transactions.external_summary', { count: data.length, chain: externalTxFeature.chainName }) }
       </Link>
     </Tooltip>
   );

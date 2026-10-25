@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CollapsibleList } from 'toolkit/chakra/collapsible';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const TxAllowedPeekers = ({ items }: Props) => {
+  const { t: tTx } = useTranslation();
   const renderItem = React.useCallback((item: string) => {
     return <AddressEntity key={ item } address={{ hash: item, is_contract: true }}/>;
   }, []);
@@ -16,10 +19,9 @@ const TxAllowedPeekers = ({ items }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Smart contracts allowed to interact with confidential data"
+        hint={ tTx('transactions.allowed_peekers_hint') }
       >
-        Allowed peekers
-      </DetailedInfo.ItemLabel>
+        { tTx('transactions.allowed_peekers') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <CollapsibleList
           items={ items }

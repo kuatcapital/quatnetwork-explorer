@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const TxDetailsTxFee = ({ isLoading, data }: Props) => {
+  const { t: tTx } = useTranslation();
 
   if (config.UI.views.tx.hiddenFields?.tx_fee) {
     return null;
@@ -53,8 +56,8 @@ const TxDetailsTxFee = ({ isLoading, data }: Props) => {
         />
         <DetailedInfoItemBreakdown.Container loading={ isLoading }>
           <DetailedInfoItemBreakdown.Row
-            label="Base fee"
-            hint="The minimum network fee charged per transaction"
+            label={ tTx('blocks.base_fee') }
+            hint={ tTx('transactions.minimum_fee_hint') }
           >
             <NativeCoinValue
               amount={ BigNumber(data.base_fee_per_gas || 0).multipliedBy(data.gas_used || 0).toString() }
@@ -70,8 +73,8 @@ const TxDetailsTxFee = ({ isLoading, data }: Props) => {
             />
           </DetailedInfoItemBreakdown.Row>
           <DetailedInfoItemBreakdown.Row
-            label="Priority fee"
-            hint="An extra fee set by the sender to speed up transaction execution"
+            label={ tTx('transactions.priority_fee') }
+            hint={ tTx('transactions.priority_fee_hint') }
           >
             <NativeCoinValue
               amount={ data.priority_fee || '0' }
@@ -95,11 +98,10 @@ const TxDetailsTxFee = ({ isLoading, data }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint={ data.blob_gas_used ? 'Transaction fee without blob fee' : 'Total transaction fee' }
+        hint={ data.blob_gas_used ? 'Transaction fee without blob fee' : tTx('transactions.total_fee_hint') }
         isLoading={ isLoading }
       >
-        Transaction fee
-      </DetailedInfo.ItemLabel>
+        { tTx('common.transaction_fee') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow>
         { content }
       </DetailedInfo.ItemValue>

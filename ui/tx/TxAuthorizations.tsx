@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import TxPendingAlert from 'ui/tx/TxPendingAlert';
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const TxAuthorizations = ({ txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
 
   if (!txQuery.isPlaceholderData && !txQuery.isError && !txQuery.data?.status) {
     return txQuery.socketStatus ? <TxSocketAlert status={ txQuery.socketStatus }/> : <TxPendingAlert/>;
@@ -34,7 +37,7 @@ const TxAuthorizations = ({ txQuery }: Props) => {
     <DataListDisplay
       isError={ txQuery.isError }
       itemsNum={ txQuery.data?.authorization_list?.length }
-      emptyText="There are no authorizations for this transaction."
+      emptyText={ tTx('transactions.no_authorizations') }
     >
       { content }
     </DataListDisplay>

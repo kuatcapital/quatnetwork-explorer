@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressEpochRewardsItem } from 'types/api/address';
 
@@ -15,6 +17,8 @@ type Props = {
 };
 
 const AddressEpochRewardsListItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="100px auto">
 
@@ -23,7 +27,7 @@ const AddressEpochRewardsListItem = ({ item, isLoading }: Props) => {
         <EpochEntity number={ String(item.epoch_number) } noIcon isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.age') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.block_timestamp }
@@ -33,12 +37,12 @@ const AddressEpochRewardsListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Reward type</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.reward_type') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <EpochRewardTypeTag type={ item.type } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Associated address</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.associated_address') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity
           address={ item.associated_account }

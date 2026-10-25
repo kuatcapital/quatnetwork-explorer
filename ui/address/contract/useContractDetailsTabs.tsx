@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 import type { SmartContract } from 'types/api/contract';
@@ -25,6 +27,7 @@ interface Props {
 }
 
 export default function useContractDetailsTabs({ data, isLoading, addressData, sourceAddress }: Props): Array<Tab> {
+  const { t: tQuat } = useTranslation();
 
   return React.useMemo(() => {
 
@@ -35,7 +38,7 @@ export default function useContractDetailsTabs({ data, isLoading, addressData, s
     return [
       (data?.constructor_args || data?.source_code) ? {
         id: 'contract_source_code' as const,
-        title: 'Code',
+        title: tQuat('contracts.code_title'),
         component: (
           <Flex flexDir="column" rowGap={ 6 }>
             <ContractDetailsConstructorArgs data={ data } isLoading={ isLoading }/>
@@ -52,12 +55,12 @@ export default function useContractDetailsTabs({ data, isLoading, addressData, s
 
       data?.compiler_settings ? {
         id: 'contract_compiler' as const,
-        title: 'Compiler',
+        title: tQuat('contracts.compiler_title'),
         component: (
           <CodeViewSnippet
             data={ JSON.stringify(data.compiler_settings, undefined, 2) }
             language="json"
-            title="Compiler Settings"
+            title={ tQuat('contracts.compiler_settings') }
             copyData={ JSON.stringify(data.compiler_settings) }
             isLoading={ isLoading }
           />
@@ -71,7 +74,7 @@ export default function useContractDetailsTabs({ data, isLoading, addressData, s
           <CodeViewSnippet
             data={ JSON.stringify(data.abi, undefined, 2) }
             language="json"
-            title="Contract ABI"
+            title={ tQuat('contracts.abi_title') }
             copyData={ JSON.stringify(data.abi) }
             isLoading={ isLoading }
           />
@@ -80,9 +83,9 @@ export default function useContractDetailsTabs({ data, isLoading, addressData, s
 
       (data?.creation_bytecode || data?.deployed_bytecode) ? {
         id: 'contract_bytecode' as const,
-        title: 'Bytecode',
+        title: tQuat('contracts.bytecode_title'),
         component: <ContractDetailsByteCode data={ data } isLoading={ isLoading } addressData={ addressData }/>,
       } : undefined,
     ].filter(Boolean);
-  }, [ isLoading, addressData, data, sourceAddress ]);
+  }, [ isLoading, addressData, data, sourceAddress, tQuat ]);
 }

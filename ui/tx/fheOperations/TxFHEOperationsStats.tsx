@@ -1,6 +1,10 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import StatsWidget from 'ui/shared/stats/StatsWidget';
 
 interface Props {
@@ -11,6 +15,8 @@ interface Props {
 }
 
 const TxFHEOperationsStats = ({ totalHcu, maxDepthHcu, operationCount, isLoading }: Props) => {
+  const { locale } = useLocale();
+  const { t: tTx } = useTranslation();
   return (
     <Box
       display="grid"
@@ -19,21 +25,21 @@ const TxFHEOperationsStats = ({ totalHcu, maxDepthHcu, operationCount, isLoading
       mb={ 6 }
     >
       <StatsWidget
-        label="Total HCU"
-        hint="Sum of all Homomorphic Computation Units consumed by FHE operations in this transaction"
-        value={ (totalHcu || 0).toLocaleString() }
+        label={ tTx('transactions.total_hcu') }
+        hint={ tTx('transactions.hcu_total_hint') }
+        value={ formatNumber((totalHcu || 0), locale) }
         isLoading={ isLoading }
       />
       <StatsWidget
-        label="Max Depth HCU"
-        hint="Maximum HCU consumed at any single depth level in the FHE operation tree"
-        value={ (maxDepthHcu || 0).toLocaleString() }
+        label={ tTx('transactions.max_depth_hcu') }
+        hint={ tTx('transactions.hcu_depth_hint') }
+        value={ formatNumber((maxDepthHcu || 0), locale) }
         isLoading={ isLoading }
       />
       <StatsWidget
-        label="Operations"
-        hint="Total number of FHE operations executed in this transaction"
-        value={ operationCount.toLocaleString() }
+        label={ tTx('navigation.operations') }
+        hint={ tTx('transactions.fhe_count_hint') }
+        value={ formatNumber(operationCount, locale) }
         isLoading={ isLoading }
       />
     </Box>

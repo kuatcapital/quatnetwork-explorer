@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, createListCollection, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -10,17 +12,16 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import Pagination from 'ui/shared/pagination/Pagination';
 import Sort from 'ui/shared/sort/Sort';
 import useVerifiedContractsQuery from 'ui/verifiedContracts/useVerifiedContractsQuery';
-import { SORT_OPTIONS } from 'ui/verifiedContracts/utils';
+import { getVerifiedContractsSortOptions } from 'ui/verifiedContracts/utils';
 import VerifiedContractsCounters from 'ui/verifiedContracts/VerifiedContractsCounters';
 import VerifiedContractsFilter from 'ui/verifiedContracts/VerifiedContractsFilter';
 import VerifiedContractsList from 'ui/verifiedContracts/VerifiedContractsList';
 import VerifiedContractsTable from 'ui/verifiedContracts/VerifiedContractsTable';
 
-const sortCollection = createListCollection({
-  items: SORT_OPTIONS,
-});
-
 const VerifiedContracts = () => {
+  const { t: tQuat } = useTranslation();
+  const sortCollection = React.useMemo(() => createListCollection({ items: getVerifiedContractsSortOptions(tQuat) }), [ tQuat ]);
+
   const isMobile = useIsMobile();
 
   const { query, type, searchTerm, debouncedSearchTerm, sort, onSearchTermChange, onTypeChange, onSortChange } = useVerifiedContractsQuery();
@@ -39,7 +40,7 @@ const VerifiedContracts = () => {
       w={{ base: '100%', lg: '350px' }}
       size="sm"
       onChange={ onSearchTermChange }
-      placeholder="Search by contract name or address"
+      placeholder={ tQuat('verification.search_contract') }
       initialValue={ searchTerm }
     />
   );
@@ -87,14 +88,15 @@ const VerifiedContracts = () => {
   return (
     <Box>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `Verified ${ config.chain.name } contracts` : 'Verified contracts' }
+        title={ config.meta.seo.enhancedDataEnabled ?
+          tQuat('verification.verified_chain_contracts', { chain: config.chain.name }) : tQuat('verification.verified_contracts') }
         withTextAd
       />
       <VerifiedContractsCounters/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no verified contracts."
+        emptyText={ tQuat('verification.no_verified_contracts') }
         hasActiveFilters={ Boolean(debouncedSearchTerm || type) }
         emptyStateProps={{
           term: 'contract',

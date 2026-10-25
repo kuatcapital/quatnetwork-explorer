@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenHolder, TokenInfo } from 'types/api/token';
 
@@ -14,15 +16,17 @@ interface Props {
 }
 
 const TokenHoldersTable = ({ data, token, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot>
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader w="70%">Holder</TableColumnHeader>
-          { (hasTokenIds(token.type)) && <TableColumnHeader w="30%">ID#</TableColumnHeader> }
-          <TableColumnHeader isNumeric width="220px">Quantity</TableColumnHeader>
+          <TableColumnHeader w="70%">{ tQuat('tokenUi.holder') }</TableColumnHeader>
+          { (hasTokenIds(token.type)) && <TableColumnHeader w="30%">{ tQuat('tokenUi.id_number') }</TableColumnHeader> }
+          <TableColumnHeader isNumeric width="220px">{ tQuat('tokenUi.quantity') }</TableColumnHeader>
           { token.total_supply && token.type !== 'ERC-404' && !isConfidentialTokenType(token.type) && (
-            <TableColumnHeader isNumeric width="175px">Percentage</TableColumnHeader>
+            <TableColumnHeader isNumeric width="175px">{ tQuat('tokenUi.percentage') }</TableColumnHeader>
           ) }
         </TableRow>
       </TableHeaderSticky>

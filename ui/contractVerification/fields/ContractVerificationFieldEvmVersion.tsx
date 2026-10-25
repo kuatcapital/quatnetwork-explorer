@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 import type { SmartContractVerificationConfig } from 'types/client/contract';
@@ -15,22 +17,27 @@ interface Props {
 }
 
 const ContractVerificationFieldEvmVersion = ({ isVyper, config }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const collection = React.useMemo(() => {
-    const items = (isVyper ? config?.vyper_evm_versions : config?.solidity_evm_versions)?.map((option) => ({ label: option, value: option })) || [];
+    const items = (isVyper ? config?.vyper_evm_versions : config?.solidity_evm_versions)?.map((option) => ({
+      label: option === 'default' ? tQuat('verification.sort_default') : option,
+      value: option,
+    })) || [];
 
     return createListCollection({ items });
-  }, [ config?.solidity_evm_versions, config?.vyper_evm_versions, isVyper ]);
+  }, [ config?.solidity_evm_versions, config?.vyper_evm_versions, isVyper, tQuat ]);
 
   return (
     <ContractVerificationFormRow>
       <FormFieldSelect<FormFields, 'evm_version'>
         name="evm_version"
-        placeholder="EVM Version"
+        placeholder={ tQuat('verification.evm_version') }
         collection={ collection }
         required
       />
       <>
-        <span>The EVM version the contract is written for. If the bytecode does not match the version, we try to verify using the latest EVM version. </span>
+        <span>{ tQuat('verification.evm_version_hint') }{ ' ' }</span>
         <Link
           href={ isVyper ?
             'https://docs.vyperlang.org/en/stable/compiling-a-contract.html#target-options' :
@@ -38,9 +45,7 @@ const ContractVerificationFieldEvmVersion = ({ isVyper, config }: Props) => {
           }
           external
           noIcon
-        >
-          EVM version details
-        </Link>
+        >{ tQuat('verification.evm_details') }</Link>
       </>
     </ContractVerificationFormRow>
   );

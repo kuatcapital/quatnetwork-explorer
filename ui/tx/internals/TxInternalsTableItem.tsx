@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized internal transaction labels. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
 
@@ -15,7 +17,9 @@ type Props = InternalTransaction & {
 };
 
 const TxInternalTableItem = ({ type, from, to, value, success, error, gas_limit: gasLimit, created_contract: createdContract, isLoading }: Props) => {
-  const typeTitle = TX_INTERNALS_ITEMS.find(({ id }) => id === type)?.title;
+  const { t: tTx } = useTranslation();
+  const titleKey = TX_INTERNALS_ITEMS.find(({ id }) => id === type)?.titleKey;
+  const typeTitle = titleKey ? tTx(titleKey) : undefined;
   const toData = to ? to : createdContract;
 
   return (

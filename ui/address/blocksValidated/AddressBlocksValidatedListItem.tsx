@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Text, Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 
@@ -20,6 +22,8 @@ type Props = Block & {
 };
 
 const AddressBlocksValidatedListItem = (props: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const totalReward = getBlockTotalReward(props);
 
   return (
@@ -40,13 +44,13 @@ const AddressBlocksValidatedListItem = (props: Props) => {
         />
       </Flex>
       <Flex columnGap={ 2 } w="100%">
-        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>Txn</Skeleton>
+        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('home.txn') }</Skeleton>
         <Skeleton loading={ props.isLoading } display="inline-block" color="Skeleton_secondary">
           <span>{ props.transactions_count }</span>
         </Skeleton>
       </Flex>
       <Flex columnGap={ 2 } w="100%">
-        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>Gas used</Skeleton>
+        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('common.gas_used') }</Skeleton>
         <Skeleton loading={ props.isLoading }>
           <Text color="text.secondary">{ BigNumber(props.gas_used || 0).toFormat() }</Text>
         </Skeleton>
@@ -58,7 +62,7 @@ const AddressBlocksValidatedListItem = (props: Props) => {
       </Flex>
       { !config.UI.views.block.hiddenFields?.total_reward && !config.features.rollup.isEnabled && (
         <Flex columnGap={ 2 } w="100%">
-          <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>Reward { currencyUnits.ether }</Skeleton>
+          <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('home.reward') }{ ' ' }{ currencyUnits.ether }</Skeleton>
           <SimpleValue
             value={ totalReward }
             accuracy={ 0 }

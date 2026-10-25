@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { TX_BLOB } from 'stubs/blobs';
 import { generateListStub } from 'stubs/utils';
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const TxBlobs = ({ txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
   const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'general:tx_blobs',
     pathParams: { hash: txQuery.data?.hash },
@@ -53,7 +56,7 @@ const TxBlobs = ({ txQuery }: Props) => {
     <DataListDisplay
       isError={ isError || txQuery.isError }
       itemsNum={ data?.items.length }
-      emptyText="There are no blobs for this transaction."
+      emptyText={ tTx('transactions.no_blobs') }
       actionBar={ actionBar }
     >
       { content }

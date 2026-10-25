@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware transaction status labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -14,6 +16,7 @@ export interface Props extends BadgeProps {
 }
 
 const TxStatus = ({ status, errorText, isLoading, ...rest }: Props) => {
+  const { t } = useTranslation();
   if (status === undefined) {
     return null;
   }
@@ -23,15 +26,15 @@ const TxStatus = ({ status, errorText, isLoading, ...rest }: Props) => {
 
   switch (status) {
     case 'ok':
-      text = 'Success';
+      text = t('common.success');
       type = 'ok';
       break;
     case 'error':
-      text = 'Failed';
+      text = t('common.failed');
       type = 'error';
       break;
     case null:
-      text = 'Pending';
+      text = t('common.pending');
       type = 'pending';
       break;
   }

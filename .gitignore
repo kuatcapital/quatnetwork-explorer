@@ -68,3 +68,6 @@ yarn-error.log*
 /toolkit/package/dist
 license.json
 release-prs-data.json
+
+# Modified by Quat Capital, 2026-10-25: keep local T18 preparation artifacts out of source/lint. GPL-3.0.
+/tools/i18n/*.tmp.*

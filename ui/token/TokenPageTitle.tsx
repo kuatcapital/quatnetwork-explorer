@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, useToken } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 import type { TokenInfo, TokenVerifiedInfo as TTokenVerifiedInfo } from 'types/api/token';
@@ -37,6 +39,8 @@ interface Props {
 }
 
 const TokenPageTitle = ({ tokenQuery, addressQuery, verifiedInfoQuery, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
   const addressHash = !tokenQuery.isPlaceholderData ? (tokenQuery.data?.address_hash || '') : '';
 
@@ -56,14 +60,14 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, verifiedInfoQuery, hash }: P
     return [
       tokenQuery.data ? {
         slug: tokenQuery.data?.type,
-        name: getTokenTypeName(tokenQuery.data.type, multichainContext?.chain?.app_config),
+        name: tokenQuery.data.type === 'NATIVE' ? tQuat('tokenUi.native_token') : getTokenTypeName(tokenQuery.data.type, multichainContext?.chain?.app_config),
         tagType: 'custom' as const,
         ordinal: PREDEFINED_TAG_PRIORITY,
       } : undefined,
       config.features.bridgedTokens.isEnabled && tokenQuery.data?.is_bridged ?
         {
           slug: 'bridged',
-          name: 'Bridged',
+          name: tQuat('tokenUi.bridged'),
           tagType: 'custom' as const,
           ordinal: PREDEFINED_TAG_PRIORITY,
           meta: { bgColor: bridgedTokenTagBgColor, textColor: bridgedTokenTagTextColor },
@@ -84,13 +88,14 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, verifiedInfoQuery, hash }: P
     verifiedInfoQuery.data?.projectSector,
     hash,
     multichainContext?.chain?.app_config,
+    tQuat,
   ]);
 
   const contentAfter = (
     <>
       { tokenQuery.data && <TokenEntity.Reputation value={ tokenQuery.data.reputation } ml={ 0 }/> }
       { verifiedInfoQuery.data?.tokenAddress && (
-        <Tooltip content={ `Information on this token has been verified by ${ config.chain.name }` }>
+        <Tooltip content={ tQuat('tokenUi.verified_by', { chain: config.chain.name }) }>
           <IconSvg name="certified" color="green.500" boxSize={ 6 } cursor="pointer"/>
         </Tooltip>
       ) }
@@ -128,7 +133,7 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, verifiedInfoQuery, hash }: P
   return (
     <>
       <PageTitle
-        title={ `${ tokenQuery.data?.name || 'Unnamed token' }${ tokenSymbolText }` }
+        title={ `${ tokenQuery.data?.name || tQuat('tokenUi.unnamed') }${ tokenSymbolText }` }
         isLoading={ tokenQuery.isPlaceholderData }
         beforeTitle={ tokenQuery.data ? (
           <TokenEntity.Icon

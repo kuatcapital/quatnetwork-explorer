@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMudRecords, AddressMudRecordsFilter, AddressMudRecordsSorting } from 'types/api/address';
 
@@ -48,6 +50,8 @@ const AddressMudRecordsTable = ({
   scrollRef,
   hash,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const totalColsCut = data.schema.key_names.length + data.schema.value_names.length;
   const isMobile = useIsMobile();
   const [ colsCutCount, setColsCutCount ] = React.useState<number>(isMobile ? MIN_CUT_COUNT : 0);
@@ -132,7 +136,7 @@ const AddressMudRecordsTable = ({
   const cutButton = (
     <TableColumnHeader width={ `${ CUT_COL_WIDTH }px ` } verticalAlign="baseline">
       <Tooltip content={ isOpened ? 'Hide columns' : 'Show all columns' }>
-        <Link onClick={ toggleIsOpen } aria-label="show/hide columns">{ middot }{ middot }{ middot }</Link>
+        <Link onClick={ toggleIsOpen } aria-label={ tQuat('addresses.show_hide_columns') }>{ middot }{ middot }{ middot }</Link>
       </Tooltip>
     </TableColumnHeader>
   );
@@ -187,7 +191,7 @@ const AddressMudRecordsTable = ({
               </TableColumnHeader>
             )) }
             { hasCut && !isOpened && cutButton }
-            <TableColumnHeader { ...tdStyles } w={ `${ colW }px` }>Modified</TableColumnHeader>
+            <TableColumnHeader { ...tdStyles } w={ `${ colW }px` }>{ tQuat('addresses.modified') }</TableColumnHeader>
             { hasCut && isOpened && cutButton }
           </TableRow>
         </TableHeaderSticky>

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormattedData } from './types';
 
@@ -15,6 +17,8 @@ interface Props {
 }
 
 const TokenSelectMobile = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { open, onOpenChange } = useDisclosure();
   const result = useTokenSelect(data);
 
@@ -24,7 +28,7 @@ const TokenSelectMobile = ({ data, isLoading }: Props) => {
         <TokenSelectButton isOpen={ open } data={ result.data } isLoading={ isLoading }/>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>Tokens</DialogHeader>
+        <DialogHeader>{ tQuat('common.tokens') }</DialogHeader>
         <DialogBody>
           <TokenSelectMenu { ...result }/>
         </DialogBody>

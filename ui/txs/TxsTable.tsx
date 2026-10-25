@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TxsSocketType } from './socket/types';
 import type { Transaction, TransactionsSortingField, TransactionsSortingValue } from 'types/api/transaction';
@@ -44,6 +46,8 @@ const TxsTable = ({
   stickyHeader = true,
   translationQuery,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { cutRef, renderedItemsNum } = useLazyRenderedList(txs, !isLoading);
   const initialList = useInitialList({
     data: txs ?? [],
@@ -76,11 +80,11 @@ const TxsTable = ({
             <TableColumnHeader width="48px"></TableColumnHeader>
             { chainData && <TableColumnHeader width="32px"></TableColumnHeader> }
             <TableColumnHeader width="180px">
-              Txn hash
+              { tQuat('common.txn_hash') }
               <TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader width="160px">Type</TableColumnHeader>
-            <TableColumnHeader width={ baseWidth }>Method</TableColumnHeader>
+            <TableColumnHeader width="160px">{ tQuat('common.type') }</TableColumnHeader>
+            <TableColumnHeader width={ baseWidth }>{ tQuat('common.method') }</TableColumnHeader>
             { showBlockInfo && (
               onSortToggle ? (
                 <TableColumnHeaderSortable
@@ -89,13 +93,13 @@ const TxsTable = ({
                   sortValue={ sort }
                   onSortToggle={ onSortToggle }
                 >
-                  Block
+                  { tQuat('common.block') }
                 </TableColumnHeaderSortable>
               ) : (
-                <TableColumnHeader width={ baseWidth }>Block</TableColumnHeader>
+                <TableColumnHeader width={ baseWidth }>{ tQuat('common.block') }</TableColumnHeader>
               )
             ) }
-            <TableColumnHeader width={ columnNum <= 2 ? baseWidth : '224px' }>From/To</TableColumnHeader>
+            <TableColumnHeader width={ columnNum <= 2 ? baseWidth : '224px' }>{ tQuat('transactions.from_to') }</TableColumnHeader>
             { !config.UI.views.tx.hiddenFields?.value && (
               onSortToggle ? (
                 <TableColumnHeaderSortable
@@ -105,10 +109,10 @@ const TxsTable = ({
                   sortValue={ sort }
                   onSortToggle={ onSortToggle }
                 >
-                  { `Value ${ currencyUnits.ether }` }
+                  { tQuat('transactions.value_with_currency', { currency: currencyUnits.ether }) }
                 </TableColumnHeaderSortable>
               ) : (
-                <TableColumnHeader width={ baseWidth } isNumeric>Value</TableColumnHeader>
+                <TableColumnHeader width={ baseWidth } isNumeric>{ tQuat('transactions.value_amount') }</TableColumnHeader>
               )
             ) }
             { !config.UI.views.tx.hiddenFields?.tx_fee && (
@@ -121,10 +125,10 @@ const TxsTable = ({
                   sortValue={ sort }
                   onSortToggle={ onSortToggle }
                 >
-                  { `Fee${ feeCurrency }` }
+                  { tQuat('transactions.fee_with_currency', { currency: feeCurrency }) }
                 </TableColumnHeaderSortable>
               ) : (
-                <TableColumnHeader width={ baseWidth } isNumeric pr={ 5 }>Fee</TableColumnHeader>
+                <TableColumnHeader width={ baseWidth } isNumeric pr={ 5 }>{ tQuat('common.fee') }</TableColumnHeader>
               )
             ) }
           </TableRow>

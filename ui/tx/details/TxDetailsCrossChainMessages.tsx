@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainMessage } from '@blockscout/interchain-indexer-types';
 
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const TxDetailsCrossChainMessages = ({ hash, isLoading: isLoadingProp }: Props) => {
+  const { t: tTx } = useTranslation();
 
   const { data, isPlaceholderData } = useApiQuery('interchainIndexer:tx_messages', {
     pathParams: { hash },
@@ -39,17 +42,17 @@ const TxDetailsCrossChainMessages = ({ hash, isLoading: isLoadingProp }: Props) 
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Cross-chain messages in this transaction"
+        hint={ tTx('transactions.cross_chain_messages_hint') }
         isLoading={ isLoading }
       >
-        Cross-chain message{ (data?.items ?? []).length > 1 ? 's' : '' }
+        { tTx('transactions.cross_chain_messages', { count: (data?.items ?? []).length }) }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <CollapsibleList
           items={ data?.items ?? [] }
           renderItem={ renderItem }
           cutLength={ 5 }
-          text={ [ 'View all messages', 'Hide all messages' ] }
+          text={ [ tTx('transactions.view_messages'), tTx('transactions.hide_messages') ] }
           py={ 1 }
           rowGap="14px"
         />

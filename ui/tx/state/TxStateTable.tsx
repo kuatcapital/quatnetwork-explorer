@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TxStateChange } from 'types/api/txStateChanges';
 
@@ -13,17 +15,18 @@ interface Props {
 }
 
 const TxStateTable = ({ data, isLoading, top }: Props) => {
+  const { t: tTx } = useTranslation();
   return (
     <AddressHighlightProvider>
       <TableRoot minWidth="1000px" w="100%">
         <TableHeaderSticky top={ top }>
           <TableRow>
-            <TableColumnHeader width="140px">Type</TableColumnHeader>
-            <TableColumnHeader width="160px">Address</TableColumnHeader>
-            <TableColumnHeader width="33%" isNumeric>Before</TableColumnHeader>
-            <TableColumnHeader width="33%" isNumeric>After</TableColumnHeader>
-            <TableColumnHeader width="33%" isNumeric>Change</TableColumnHeader>
-            <TableColumnHeader width="150px" minW="80px" maxW="150px">Token ID</TableColumnHeader>
+            <TableColumnHeader width="140px">{ tTx('common.type') }</TableColumnHeader>
+            <TableColumnHeader width="160px">{ tTx('common.address') }</TableColumnHeader>
+            <TableColumnHeader width="33%" isNumeric>{ tTx('transactions.before') }</TableColumnHeader>
+            <TableColumnHeader width="33%" isNumeric>{ tTx('transactions.after') }</TableColumnHeader>
+            <TableColumnHeader width="33%" isNumeric>{ tTx('transactions.change') }</TableColumnHeader>
+            <TableColumnHeader width="150px" minW="80px" maxW="150px">{ tTx('transactions.token_id') }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

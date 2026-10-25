@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { TX_STATE_CHANGES } from 'stubs/txStateChanges';
 import ActionBar, { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
@@ -18,6 +20,7 @@ interface Props {
 }
 
 const TxState = ({ txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
   const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'general:tx_state_changes',
     pathParams: { hash: txQuery.data?.hash },
@@ -58,14 +61,12 @@ const TxState = ({ txQuery }: Props) => {
     <>
       { !isError && !txQuery.isError && (
         <Text mb={ 6 }>
-          A set of information that represents the current state is updated when a transaction takes place on the network.
-          The below is a summary of those changes.
-        </Text>
+          { tTx('transactions.state_hint') }</Text>
       ) }
       <DataListDisplay
         isError={ isError || txQuery.isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no state changes for this transaction."
+        emptyText={ tTx('transactions.no_state_changes') }
         actionBar={ actionBar }
       >
         { content }

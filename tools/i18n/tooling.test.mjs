@@ -59,6 +59,7 @@ test('inventory finds JSX, labels and templates while excluding code, tests and 
       'const Card = () => <section title="A block title" className="technical classes">',
       '  Hello world',
       '  <input placeholder={\'Search transactions\'}/>',
+      '  <Tooltip content="Execution completed"/><Row hint="Total transaction fee"/>',
       '  <span title={`Block ${blockNumber} details`}>{ready ? \'Ready\' : \'Loading\'}</span>',
       '  <code>{\'const variable = true\'}</code>',
       '</section>;',
@@ -77,6 +78,8 @@ test('inventory finds JSX, labels and templates while excluding code, tests and 
     assert.ok(sources.includes('All blocks'));
     assert.ok(sources.includes('A block title'));
     assert.ok(sources.includes('Search transactions'));
+    assert.ok(sources.includes('Execution completed'));
+    assert.ok(sources.includes('Total transaction fee'));
     assert.ok(sources.includes('Ready'));
     const template = inventory.candidates.find((candidate) => candidate.kind === 'template-expression');
     assert.equal(template.source, 'Block {{expression0}} details');

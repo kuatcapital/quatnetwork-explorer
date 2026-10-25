@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: sort collection follows the active locale. GPL-3.0.
 import { HStack, chakra, createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TransactionsSortingValue } from 'types/api/transaction';
 import type { PaginationParams } from 'ui/shared/pagination/types';
@@ -10,7 +12,7 @@ import ActionBar from 'ui/shared/ActionBar';
 import Pagination from 'ui/shared/pagination/Pagination';
 import Sort from 'ui/shared/sort/Sort';
 
-import { SORT_OPTIONS } from './useTxsSort';
+import { getSortOptions } from './useTxsSort';
 
 type Props = {
   sorting: TransactionsSortingValue;
@@ -23,11 +25,9 @@ type Props = {
   tableViewButton?: React.ReactNode;
 };
 
-const collection = createListCollection({
-  items: SORT_OPTIONS,
-});
-
 const TxsHeaderMobile = ({ filterComponent, sorting, setSorting, paginationProps, className, showPagination = true, linkSlot, tableViewButton }: Props) => {
+  const { t: tTx } = useTranslation();
+  const collection = React.useMemo(() => createListCollection({ items: getSortOptions(tTx) }), [ tTx ]);
   const handleSortValueChange = React.useCallback(({ value }: { value: Array<string> }) => {
     setSorting?.(value[0] as TransactionsSortingValue);
   }, [ setSorting ]);

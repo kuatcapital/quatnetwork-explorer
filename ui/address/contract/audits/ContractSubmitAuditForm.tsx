@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { VStack } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractSecurityAuditSubmission } from 'types/api/contract';
 
@@ -37,6 +39,8 @@ type AuditSubmissionErrors = {
 };
 
 const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const containerRef = React.useRef<HTMLFormElement>(null);
 
   const apiFetch = useApiFetch();
@@ -58,8 +62,8 @@ const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
       });
 
       toaster.success({
-        title: 'Success',
-        description: 'Your audit report has been successfully submitted for review',
+        title: tQuat('common.success'),
+        description: tQuat('contracts.audit_submitted'),
       });
 
       onSuccess();
@@ -74,36 +78,36 @@ const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
         });
       } else {
         toaster.error({
-          title: 'Error',
-          description: (_error as ResourceError<{ message: string }>)?.payload?.message || 'Something went wrong. Try again later.',
+          title: tQuat('common.error'),
+          description: (_error as ResourceError<{ message: string }>)?.payload?.message || tQuat('contracts.try_later'),
         });
       }
     }
-  }, [ apiFetch, address, setError, onSuccess ]);
+  }, [ apiFetch, address, setError, onSuccess, tQuat ]);
 
   return (
     <FormProvider { ...formApi }>
       <form noValidate onSubmit={ handleSubmit(onFormSubmit) } autoComplete="off" ref={ containerRef }>
         <VStack gap={ 5 } alignItems="flex-start">
-          <FormFieldText<Inputs> name="submitter_name" required placeholder="Submitter name"/>
-          <FormFieldEmail<Inputs> name="submitter_email" required placeholder="Submitter email"/>
+          <FormFieldText<Inputs> name="submitter_name" required placeholder={ tQuat('contracts.submitter_name') }/>
+          <FormFieldEmail<Inputs> name="submitter_email" required placeholder={ tQuat('contracts.submitter_email') }/>
           <FormFieldCheckbox<Inputs, 'is_project_owner'>
             name="is_project_owner"
-            label="I'm the contract owner"
+            label={ tQuat('contracts.owner_checkbox') }
           />
-          <FormFieldText<Inputs> name="project_name" required placeholder="Project name"/>
-          <FormFieldUrl<Inputs> name="project_url" required placeholder="Project URL"/>
-          <FormFieldText<Inputs> name="audit_company_name" required placeholder="Audit company name"/>
-          <FormFieldUrl<Inputs> name="audit_report_url" required placeholder="Audit report URL"/>
+          <FormFieldText<Inputs> name="project_name" required placeholder={ tQuat('contracts.project_name') }/>
+          <FormFieldUrl<Inputs> name="project_url" required placeholder={ tQuat('contracts.project_url') }/>
+          <FormFieldText<Inputs> name="audit_company_name" required placeholder={ tQuat('contracts.audit_company') }/>
+          <FormFieldUrl<Inputs> name="audit_report_url" required placeholder={ tQuat('contracts.audit_url') }/>
           <FormFieldText<Inputs>
             name="audit_publish_date"
             inputProps={{ type: 'date', max: dayjs().format('YYYY-MM-DD') }}
             required
-            placeholder="Audit publish date"
+            placeholder={ tQuat('contracts.audit_date') }
           />
           <FormFieldText<Inputs>
             name="comment"
-            placeholder="Comment"
+            placeholder={ tQuat('contracts.comment') }
             maxH="160px"
             rules={{ maxLength: 300 }}
             asComponent="Textarea"
@@ -115,9 +119,7 @@ const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
           loading={ formState.isSubmitting }
           loadingText="Send request"
           disabled={ !formState.isDirty }
-        >
-          Send request
-        </Button>
+        >{ tQuat('contracts.send_request') }</Button>
       </form>
     </FormProvider>
   );

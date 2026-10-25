@@ -1,11 +1,15 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { VerifiedContract } from 'types/api/contracts';
 import type { ClusterChainConfig } from 'types/multichain';
 
 import formatLanguageName from 'lib/contracts/formatLanguageName';
 import { CONTRACT_LICENSES } from 'lib/contracts/licenses';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import { Tooltip } from 'toolkit/chakra/tooltip';
@@ -23,6 +27,9 @@ interface Props {
 }
 
 const VerifiedContractsTableItem = ({ data, isLoading, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const license = (() => {
     const license = CONTRACT_LICENSES.find((license) => license.type === data.license_type);
     if (!license || license.type === 'none') {
@@ -71,7 +78,7 @@ const VerifiedContractsTableItem = ({ data, isLoading, chainData }: Props) => {
       </TableCell>
       <TableCell isNumeric>
         <Skeleton loading={ isLoading } display="inline-block" my={ 1 }>
-          { data.transactions_count ? data.transactions_count.toLocaleString() : '0' }
+          { data.transactions_count ? formatNumber(data.transactions_count, locale) : '0' }
         </Skeleton>
       </TableCell>
       <TableCell>
@@ -87,7 +94,7 @@ const VerifiedContractsTableItem = ({ data, isLoading, chainData }: Props) => {
         </Flex>
         { data.zk_compiler_version && (
           <Flex flexWrap="wrap" columnGap={ 2 } my={ 1 }>
-            <Skeleton loading={ isLoading } >ZK compiler</Skeleton>
+            <Skeleton loading={ isLoading } >{ tQuat('verification.zk_compiler') }</Skeleton>
             <Skeleton loading={ isLoading } color="text.secondary" wordBreak="break-all">
               <span>{ data.zk_compiler_version }</span>
             </Skeleton>
@@ -95,14 +102,14 @@ const VerifiedContractsTableItem = ({ data, isLoading, chainData }: Props) => {
         ) }
       </TableCell>
       <TableCell>
-        <Tooltip content="Optimization" disabled={ isLoading }>
+        <Tooltip content={ tQuat('verification.optimization') } disabled={ isLoading }>
           <chakra.span display="inline-block">
             { data.optimization_enabled ?
               <IconSvg name="check" boxSize={ 6 } color="green.500" cursor="pointer" isLoading={ isLoading }/> :
               <IconSvg name="cross" boxSize={ 6 } color="red.600" cursor="pointer" isLoading={ isLoading }/> }
           </chakra.span>
         </Tooltip>
-        <Tooltip content="Constructor args" disabled={ isLoading }>
+        <Tooltip content={ tQuat('verification.short_constructor_args') } disabled={ isLoading }>
           <chakra.span display="inline-block" ml={ 2 }>
             { data.has_constructor_args ?
               <IconSvg name="check" boxSize={ 6 } color="green.500" cursor="pointer" isLoading={ isLoading }/> :

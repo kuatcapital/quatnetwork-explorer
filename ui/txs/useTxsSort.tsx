@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: render-local translated sort labels. GPL-3.0.
 import type { UseQueryResult } from '@tanstack/react-query';
+import type { TFunction } from 'i18next';
 import React from 'react';
 
 import type { TransactionsSortingValue, TxsResponse } from 'types/api/transaction';
@@ -17,6 +19,20 @@ export const SORT_OPTIONS: Array<SelectOption<TransactionsSortingValue>> = [
   { label: 'Fee descending', value: 'fee-desc' },
   { label: 'Block number ascending', value: 'block_number-asc' },
 ];
+
+const SORT_LABEL_KEYS: Record<TransactionsSortingValue, string> = {
+  'default': 'transactions.sort_default',
+  'value-asc': 'transactions.sort_value_asc',
+  'value-desc': 'transactions.sort_value_desc',
+  'fee-asc': 'transactions.sort_fee_asc',
+  'fee-desc': 'transactions.sort_fee_desc',
+  'block_number-asc': 'transactions.sort_block_asc',
+  'block_number-desc': 'transactions.sort_block_desc',
+};
+
+export function getSortOptions(t: TFunction): Array<SelectOption<TransactionsSortingValue>> {
+  return SORT_OPTIONS.map(option => ({ ...option, label: t(SORT_LABEL_KEYS[option.value]) }));
+}
 
 type SortingValue = TransactionsSortingValue;
 

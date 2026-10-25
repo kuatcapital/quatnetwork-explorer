@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -12,6 +14,8 @@ import ContractVerificationFormRow from '../ContractVerificationFormRow';
 import ContractVerificationMethod from '../ContractVerificationMethod';
 
 const ContractVerificationSolidityFoundry = () => {
+  const { t: tQuat } = useTranslation();
+
   const { watch } = useFormContext<FormFields>();
   const address = watch('address');
   const generalApiEndpoint = config.apis.general ?
@@ -25,16 +29,16 @@ const ContractVerificationSolidityFoundry = () => {
   [contractFile]:[contractName]`;
 
   return (
-    <ContractVerificationMethod title="Contract verification via Foundry">
+    <ContractVerificationMethod title={ tQuat('verification.foundry_title') }>
       <ContractVerificationFormRow>
         <Flex flexDir="column">
           <ContractVerificationFormCodeSnippet code={ codeSnippet }/>
         </Flex>
         <Box whiteSpace="pre-wrap">
-          <span>Full tutorial about contract verification via Foundry on Blockscout is available </span>
-          <Link href="https://docs.blockscout.com/devs/verification/foundry-verification" external>
-            here
-          </Link>
+          <Trans
+            i18nKey="verification.foundry_tutorial"
+            components={{ docs: <Link href="https://docs.blockscout.com/devs/verification/foundry-verification" external/> }}
+          />
         </Box>
       </ContractVerificationFormRow>
     </ContractVerificationMethod>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 import type { SmartContractVerificationConfig } from 'types/client/contract';
@@ -12,6 +14,8 @@ import ContractVerificationFormRow from '../ContractVerificationFormRow';
 const OPTIONS_LIMIT = 50;
 
 const ContractVerificationFieldZkCompiler = ({ config }: { config: SmartContractVerificationConfig }) => {
+  const { t: tQuat } = useTranslation();
+
   const versions = React.useMemo(() => (
     config?.zk_compiler_versions || []
   ), [ config?.zk_compiler_versions ]);
@@ -38,13 +42,15 @@ const ContractVerificationFieldZkCompiler = ({ config }: { config: SmartContract
     <ContractVerificationFormRow>
       <FormFieldSelectAsync<FormFields, 'zk_compiler'>
         name="zk_compiler"
-        placeholder="ZK compiler"
+        placeholder={ tQuat('verification.zk_compiler') }
         loadOptions={ loadOptions }
         required
       />
       <Box>
-        <Link external href="https://docs.zksync.io/zk-stack/components/compiler/specification#glossary">zksolc</Link>
-        <span> compiler version.</span>
+        <Trans
+          i18nKey="verification.zk_compiler_hint"
+          components={{ docs: <Link external href="https://docs.zksync.io/zk-stack/components/compiler/specification#glossary"/> }}
+        />
       </Box>
     </ContractVerificationFormRow>
   );

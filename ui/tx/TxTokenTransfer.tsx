@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenType } from 'types/api/token';
 import type { TokenTransfer } from 'types/api/tokenTransfer';
@@ -31,6 +33,7 @@ interface Props {
 }
 
 const TxTokenTransfer = ({ txQuery, tokenTransferFilter, noCrossChain }: Props) => {
+  const { t: tTx } = useTranslation();
   const router = useRouter();
   const multichainContext = useMultichainContext();
   const isMobile = useIsMobile();
@@ -70,7 +73,7 @@ const TxTokenTransfer = ({ txQuery, tokenTransferFilter, noCrossChain }: Props) 
   const tabs = [
     {
       id: 'token_transfers',
-      title: 'Transfers',
+      title: tTx('common.transfers'),
       component: (
         <TxTokenTransferLocal
           txQuery={ txQuery }
@@ -82,7 +85,7 @@ const TxTokenTransfer = ({ txQuery, tokenTransferFilter, noCrossChain }: Props) 
     },
     hasCrossChainTab && {
       id: 'token_transfers_cross_chain',
-      title: 'Cross-chain',
+      title: tTx('home.cross_chain'),
       component: (
         <TxTokenTransferCrossChain
           txQuery={ txQuery }

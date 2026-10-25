@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -15,12 +17,13 @@ const TAB_LIST_PROPS = {
 const TABS_HEIGHT = 88;
 
 const Transactions = () => {
+  const { t: tTx } = useTranslation();
   const isMobile = useIsMobile();
 
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } transactions` : 'Transactions' }
+        title={ config.meta.seo.enhancedDataEnabled ? tTx('transactions.network_title', { network: config.chain.name }) : tTx('common.transactions') }
         withTextAd
       />
       <TxsStats/>

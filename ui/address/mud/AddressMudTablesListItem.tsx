@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Text, Flex, VStack, chakra, Box, Grid, GridItem, Separator } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMudTableItem } from 'types/api/address';
 
@@ -21,6 +23,8 @@ type Props = {
 };
 
 const AddressMudTablesListItem = ({ item, isLoading, scrollRef, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ isOpened, setIsOpened ] = React.useState(false);
 
   const router = useRouter();
@@ -61,7 +65,7 @@ const AddressMudTablesListItem = ({ item, isLoading, scrollRef, hash }: Props) =
               cursor="pointer"
               onClick={ handleIconClick }
               transitionDuration="faster"
-              aria-label="View schema"
+              aria-label={ tQuat('addresses.view_schema') }
             />
           </Link>
         </Skeleton>
@@ -91,7 +95,7 @@ const AddressMudTablesListItem = ({ item, isLoading, scrollRef, hash }: Props) =
         <Grid templateColumns="48px 1fr" gap="8px 24px" fontWeight={ 500 } w="100%">
           { Boolean(item.schema.key_names.length) && (
             <>
-              <Text lineHeight="24px">Key</Text>
+              <Text lineHeight="24px">{ tQuat('addresses.key') }</Text>
               <VStack gap={ 1 } alignItems="start">
                 { item.schema.key_names.map((name, index) => (
                   <Badge key={ name }>

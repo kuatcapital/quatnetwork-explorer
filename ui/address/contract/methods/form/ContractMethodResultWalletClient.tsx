@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Spinner, Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { UseWaitForTransactionReceiptReturnType } from 'wagmi';
 import { useWaitForTransactionReceipt } from 'wagmi';
 
@@ -31,6 +33,8 @@ export interface PropsDumb {
 }
 
 export const ContractMethodResultWalletClientDumb = ({ data, onSettle, txInfo }: PropsDumb) => {
+  const { t: tQuat } = useTranslation();
+
   const txHash = data && 'hash' in data ? data.hash : undefined;
 
   React.useEffect(() => {
@@ -46,7 +50,7 @@ export const ContractMethodResultWalletClientDumb = ({ data, onSettle, txInfo }:
   const isErrorResult = 'message' in data;
 
   const txLink = txHash ? (
-    <Link href={ route({ pathname: '/tx/[hash]', query: { hash: txHash } }) }>View transaction details</Link>
+    <Link href={ route({ pathname: '/tx/[hash]', query: { hash: txHash } }) }>{ tQuat('contracts.transaction_details') }</Link>
   ) : null;
 
   const content = (() => {
@@ -62,7 +66,7 @@ export const ContractMethodResultWalletClientDumb = ({ data, onSettle, txInfo }:
       case 'success': {
         return (
           <>
-            <span>Transaction has been confirmed. </span>
+            <span>{ tQuat('contracts.transaction_confirmed') }{ ' ' }</span>
             { txLink }
           </>
         );
@@ -73,7 +77,7 @@ export const ContractMethodResultWalletClientDumb = ({ data, onSettle, txInfo }:
           <>
             <Spinner size="sm" mr={ 3 }/>
             <chakra.span verticalAlign="text-bottom">
-              { 'Waiting for transaction\'s confirmation. ' }
+              { tQuat('contracts.awaiting_confirmation') }
               { txLink }
             </chakra.span>
           </>
@@ -83,7 +87,8 @@ export const ContractMethodResultWalletClientDumb = ({ data, onSettle, txInfo }:
       case 'error': {
         return (
           <Alert status="error" textStyle="sm" descriptionProps={{ flexDir: 'column', alignItems: 'flex-start', rowGap: 1 }}>
-            Error: { txInfo.error ? txInfo.error.message : 'Something went wrong' } { txLink }
+            { tQuat('contracts.error_label') }{ ' ' }
+            { txInfo.error ? txInfo.error.message : tQuat('contracts.unexpected_error') } { txLink }
           </Alert>
         );
       }

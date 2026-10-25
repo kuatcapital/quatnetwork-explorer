@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -8,23 +10,24 @@ import { FormFieldText } from 'toolkit/components/forms/fields/FormFieldText';
 import ContractVerificationFormRow from '../ContractVerificationFormRow';
 
 const ContractVerificationFieldConstructorArgs = () => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ContractVerificationFormRow>
       <FormFieldText<FormFields>
         name="constructor_args"
         required
         rules={{ maxLength: 255 }}
-        placeholder="ABI-encoded Constructor Arguments"
+        placeholder={ tQuat('verification.constructor_args') }
         asComponent="Textarea"
       />
-      <>
-        <span>Add arguments in </span>
-        <Link href="https://solidity.readthedocs.io/en/develop/abi-spec.html" external noIcon>ABI hex encoded form</Link>
-        <span> if required by the contract. Constructor arguments are written right to left, and will be found at the end of the input created bytecode.</span>
-        <span> They may also be </span>
-        <Link href="https://abi.hashex.org/" external noIcon>parsed here</Link>
-        <span>.</span>
-      </>
+      <Trans
+        i18nKey="verification.constructor_hint"
+        components={{
+          abi: <Link href="https://solidity.readthedocs.io/en/develop/abi-spec.html" external noIcon/>,
+          parser: <Link href="https://abi.hashex.org/" external noIcon/>,
+        }}
+      />
     </ContractVerificationFormRow>
   );
 };

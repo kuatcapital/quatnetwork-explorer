@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo, TokenInstance } from 'types/api/token';
 
@@ -28,6 +30,8 @@ interface Props {
 }
 
 const TokenInstanceDetails = ({ data, token, scrollRef, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const appActionData = useAppActionData(token?.address_hash, !isLoading);
   const isMounted = useIsMounted();
 
@@ -52,11 +56,9 @@ const TokenInstanceDetails = ({ data, token, scrollRef, isLoading }: Props) => {
           { data.is_unique && data.owner && (
             <>
               <DetailedInfo.ItemLabel
-                hint="Current owner of this token instance"
+                hint={ tQuat('tokenUi.owner_hint') }
                 isLoading={ isLoading }
-              >
-                Owner
-              </DetailedInfo.ItemLabel>
+              >{ tQuat('tokenUi.owner') }</DetailedInfo.ItemLabel>
               <DetailedInfo.ItemValue>
                 <AddressEntity
                   address={ data.owner }
@@ -69,11 +71,9 @@ const TokenInstanceDetails = ({ data, token, scrollRef, isLoading }: Props) => {
           <TokenInstanceCreatorAddress hash={ isLoading ? '' : token.address_hash }/>
 
           <DetailedInfo.ItemLabel
-            hint="This token instance unique token ID"
+            hint={ tQuat('tokenUi.token_id_hint') }
             isLoading={ isLoading }
-          >
-            Token ID
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.token_id') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Flex alignItems="center" overflow="hidden">
               <Skeleton loading={ isLoading } overflow="hidden" display="inline-block" w="100%">
@@ -96,10 +96,8 @@ const TokenInstanceDetails = ({ data, token, scrollRef, isLoading }: Props) => {
           { (config.UI.views.nft.marketplaces.length === 0 && appActionData) && (
             <>
               <DetailedInfo.ItemLabel
-                hint="Link to the dapp"
-              >
-                Dapp
-              </DetailedInfo.ItemLabel>
+                hint={ tQuat('tokenUi.dapp_hint') }
+              >{ tQuat('tokenUi.dapp') }</DetailedInfo.ItemLabel>
               <DetailedInfo.ItemValue py="1px">
                 <AppActionButton data={ appActionData } height="30px" source="NFT item"/>
               </DetailedInfo.ItemValue>

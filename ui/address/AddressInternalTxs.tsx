@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMounted from 'lib/hooks/useIsMounted';
 import InternalTxsList from 'ui/internalTxs/InternalTxsList';
@@ -17,6 +19,8 @@ type Props = {
   isQueryEnabled?: boolean;
 };
 const AddressInternalTxs = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMounted = useIsMounted();
 
   const { hash, query, filterValue, onFilterChange } = useAddressInternalTxsQuery({ enabled: isQueryEnabled });
@@ -63,7 +67,7 @@ const AddressInternalTxs = ({ shouldRender = true, isQueryEnabled = true }: Prop
       emptyStateProps={{
         term: 'transaction',
       }}
-      emptyText="There are no internal transactions for this address."
+      emptyText={ tQuat('addresses.no_internal_transactions') }
       actionBar={ actionBar }
     >
       { content }

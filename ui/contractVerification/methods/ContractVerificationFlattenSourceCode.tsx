@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractVerificationConfig } from 'types/client/contract';
 
@@ -13,8 +15,10 @@ import ContractVerificationFieldName from '../fields/ContractVerificationFieldNa
 import ContractVerificationFieldOptimization from '../fields/ContractVerificationFieldOptimization';
 
 const ContractVerificationFlattenSourceCode = ({ config }: { config: SmartContractVerificationConfig }) => {
+  const { t: tQuat } = useTranslation();
+
   return (
-    <ContractVerificationMethod title="Contract verification via Solidity (flattened source code)">
+    <ContractVerificationMethod title={ tQuat('verification.flattened_title') }>
       { !config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldName/> }
       { config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldIsYul/> }
       <ContractVerificationFieldCompiler config={ config }/>

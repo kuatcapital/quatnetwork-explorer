@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { AddressBlocksValidatedResponse } from 'types/api/address';
@@ -33,6 +35,8 @@ interface Props {
 }
 
 const AddressBlocksValidated = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ showSocketAlert, setShowSocketAlert ] = React.useState(false);
   const [ newItemsCount, setNewItemsCount ] = React.useState(0);
 
@@ -107,15 +111,13 @@ const AddressBlocksValidated = ({ shouldRender = true, isQueryEnabled = true }: 
         <TableRoot tableLayout="auto">
           <TableHeaderSticky top={ query.pagination.isVisible ? ACTION_BAR_HEIGHT_DESKTOP : 0 }>
             <TableRow>
-              <TableColumnHeader>Block</TableColumnHeader>
-              <TableColumnHeader>
-                Timestamp
-                <TimeFormatToggle/>
+              <TableColumnHeader>{ tQuat('common.block') }</TableColumnHeader>
+              <TableColumnHeader>{ tQuat('common.timestamp') }<TimeFormatToggle/>
               </TableColumnHeader>
-              <TableColumnHeader>Txn</TableColumnHeader>
-              <TableColumnHeader>Gas used</TableColumnHeader>
+              <TableColumnHeader>{ tQuat('home.txn') }</TableColumnHeader>
+              <TableColumnHeader>{ tQuat('common.gas_used') }</TableColumnHeader>
               { !config.UI.views.block.hiddenFields?.total_reward && !config.features.rollup.isEnabled &&
-                <TableColumnHeader isNumeric>Reward { currencyUnits.ether }</TableColumnHeader> }
+                <TableColumnHeader isNumeric>{ tQuat('home.reward') }{ ' ' }{ currencyUnits.ether }</TableColumnHeader> }
             </TableRow>
           </TableHeaderSticky>
           <TableBody>
@@ -167,7 +169,7 @@ const AddressBlocksValidated = ({ shouldRender = true, isQueryEnabled = true }: 
     <DataListDisplay
       isError={ query.isError }
       itemsNum={ query.data?.items.length }
-      emptyText="There are no validated blocks for this address."
+      emptyText={ tQuat('addresses.no_validated_blocks') }
       actionBar={ actionBar }
     >
       { content }

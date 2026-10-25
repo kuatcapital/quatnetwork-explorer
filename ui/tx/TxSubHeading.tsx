@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressParam } from 'types/api/addressParams';
 
@@ -27,6 +29,7 @@ type Props = {
 };
 
 const TxSubHeading = ({ hash, hasTag, txQuery }: Props) => {
+  const { t: tTx } = useTranslation();
   const multichainContext = useMultichainContext();
   const feature = multichainContext?.chain?.app_config.features.txInterpretation || config.features.txInterpretation;
 
@@ -93,14 +96,14 @@ const TxSubHeading = ({ hash, hasTag, txQuery }: Props) => {
             chainData={ multichainContext?.chain }
           />
           { hasViewAllInterpretationsLink &&
-          <Link href={ `#${ TX_ACTIONS_BLOCK_ID }` }>View all</Link> }
+          <Link href={ `#${ TX_ACTIONS_BLOCK_ID }` }>{ tTx('common.view_all') }</Link> }
         </Flex>
       );
     } else if (hasInterpretationFeature && txQuery.data?.method && txQuery.data?.from && txQuery.data?.to && !txQuery.isPlaceholderData) {
       return (
         <TxInterpretation
           summary={{
-            summary_template: `{sender_hash} ${ txQuery.data.status === 'error' ? 'failed to call' : 'called' } {method} on {receiver_hash}`,
+            summary_template: tTx(txQuery.data.status === 'error' ? 'transactions.summary_failed' : 'transactions.summary_called'),
             summary_template_variables: {
               sender_hash: {
                 type: 'address',

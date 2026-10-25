@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { FilterInput } from 'toolkit/components/filters/FilterInput';
@@ -12,6 +14,7 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import Pagination from 'ui/shared/pagination/Pagination';
 
 const InternalTxs = () => {
+  const { t: tTx } = useTranslation();
 
   const isMobile = useIsMobile();
 
@@ -23,7 +26,7 @@ const InternalTxs = () => {
       w={{ base: '100%', lg: '350px' }}
       size="sm"
       onChange={ onSearchTermChange }
-      placeholder="Search by transaction hash"
+      placeholder={ tTx('transactions.search_hash') }
       initialValue={ searchTerm }
     />
   );
@@ -58,13 +61,13 @@ const InternalTxs = () => {
   return (
     <>
       <PageTitle
-        title="Internal transactions"
+        title={ tTx('common.internal_transactions') }
         withTextAd
       />
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no internal transactions."
+        emptyText={ tTx('transactions.no_internal') }
         hasActiveFilters={ Boolean(debouncedSearchTerm) }
         emptyStateProps={{
           term: 'internal transaction',

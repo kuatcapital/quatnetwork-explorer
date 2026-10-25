@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Code } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -19,6 +21,8 @@ interface Props {
 }
 
 const ContractVerificationFieldCommit = ({ latestCommitHash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const hashErrorRef = React.useRef<string | undefined>(undefined);
   const fetch = useFetch();
   const { getValues, trigger, setValue, getFieldState } = useFormContext<FormFields>();
@@ -69,7 +73,7 @@ const ContractVerificationFieldCommit = ({ latestCommitHash }: Props) => {
       } catch (error) {}
     }
 
-    hashErrorRef.current = 'Commit hash not found in the repository';
+    hashErrorRef.current = 'verification.commit_missing';
     trigger('commit_hash');
   }, [ fetch, getValues, trigger, getFieldState ]);
 
@@ -82,8 +86,12 @@ const ContractVerificationFieldCommit = ({ latestCommitHash }: Props) => {
   }, [ handleBlur, latestCommitHash ]);
 
   const commitHashValidator = React.useCallback(() => {
-    return hashErrorRef.current ? hashErrorRef.current : true;
-  }, []);
+    return hashErrorRef.current ? tQuat(hashErrorRef.current) : true;
+  }, [ tQuat ]);
+
+  React.useEffect(() => {
+    if (getFieldState('commit_hash').error?.type === 'commitHash') void trigger('commit_hash');
+  }, [ getFieldState, trigger, tQuat ]);
 
   const rules = React.useMemo(() => {
     return {
@@ -98,18 +106,18 @@ const ContractVerificationFieldCommit = ({ latestCommitHash }: Props) => {
     <ContractVerificationFormRow>
       <FormFieldText<FormFields>
         name="commit_hash"
-        placeholder="Commit hash"
+        placeholder={ tQuat('verification.commit_hash') }
         required
         onBlur={ handleBlur }
         rules={ rules }
       />
       { latestCommitHash ? (
         <div>
-          <span >We have found the latest commit hash for the repository: </span>
-          <Code color="text.secondary">{ latestCommitHash.slice(0, 7) }</Code>
-          <span>. If you want to use it, </span>
-          <Link onClick={ handleUseLatestCommitClick }>click here</Link>
-          <span>.</span>
+          <Trans
+            i18nKey="verification.latest_commit_hint"
+            values={{ hash: latestCommitHash.slice(0, 7) }}
+            components={{ hash: <Code color="text.secondary"/>, use: <Link onClick={ handleUseLatestCommitClick }/> }}
+          />
         </div>
       ) : null }
     </ContractVerificationFormRow>

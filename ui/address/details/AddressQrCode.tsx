@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import QRCode from 'qrcode';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import getPageType from 'lib/mixpanel/getPageType';
 import * as mixpanel from 'lib/mixpanel/index';
@@ -26,13 +28,15 @@ interface Props {
 }
 
 const AddressQrCode = ({ hash, className, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { open, onOpen, onOpenChange } = useDisclosure();
 
   const router = useRouter();
   const rollbar = useRollbar();
 
   const [ qr, setQr ] = React.useState('');
-  const [ error, setError ] = React.useState('');
+  const [ error, setError ] = React.useState(false);
 
   const pageType = getPageType(router.pathname);
 
@@ -40,12 +44,12 @@ const AddressQrCode = ({ hash, className, isLoading }: Props) => {
     if (open) {
       QRCode.toString(hash, SVG_OPTIONS, (error: Error | null | undefined, svg: string) => {
         if (error) {
-          setError('We were unable to generate QR code.');
+          setError(true);
           rollbar?.warn('QR code generation failed');
           return;
         }
 
-        setError('');
+        setError(false);
         setQr(svg);
         mixpanel.logEvent(mixpanel.EventTypes.QR_CODE, { 'Page type': pageType });
       });
@@ -58,10 +62,10 @@ const AddressQrCode = ({ hash, className, isLoading }: Props) => {
 
   return (
     <>
-      <Tooltip content="Click to view QR code" disableOnMobile>
+      <Tooltip content={ tQuat('addresses.qr_view_hint') } disableOnMobile>
         <IconButton
           className={ className }
-          aria-label="Show QR code"
+          aria-label={ tQuat('addresses.qr_show') }
           variant="icon_background"
           size="md"
           onClick={ onOpen }
@@ -74,7 +78,7 @@ const AddressQrCode = ({ hash, className, isLoading }: Props) => {
         <DialogRoot open={ open } onOpenChange={ onOpenChange } size={{ lgDown: 'full', lg: 'sm' }}>
           <DialogContent>
             <DialogBody>
-              <Alert status="warning">{ error }</Alert>
+              <Alert status="warning">{ tQuat('addresses.qr_failed') }</Alert>
             </DialogBody>
           </DialogContent>
         </DialogRoot>
@@ -82,7 +86,7 @@ const AddressQrCode = ({ hash, className, isLoading }: Props) => {
       { !error && (
         <DialogRoot open={ open } onOpenChange={ onOpenChange } size={{ lgDown: 'full', lg: 'sm' }}>
           <DialogContent className="light">
-            <DialogHeader>Address QR code</DialogHeader>
+            <DialogHeader>{ tQuat('addresses.qr_title') }</DialogHeader>
             <DialogBody>
               <AddressEntity
                 mb={ 3 }

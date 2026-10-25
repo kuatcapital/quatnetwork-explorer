@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Grid, chakra } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ClustersByAddressResponse } from 'types/api/clusters';
 
@@ -47,6 +49,8 @@ const ClustersGrid = ({ data }: ClustersGridProps) => {
 };
 
 const AddressClusters = ({ query, addressHash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data, isPending, isError } = query;
 
   const popover = useDisclosure();
@@ -75,13 +79,13 @@ const AddressClusters = ({ query, addressHash }: Props) => {
 
   return (
     <PopoverRoot open={ popover.open } onOpenChange={ popover.onOpenChange }>
-      <Tooltip content="List of clusters registered to this address" disabled={ popover.open } disableOnMobile closeOnClick>
+      <Tooltip content={ tQuat('addresses.clusters_hint') } disabled={ popover.open } disableOnMobile closeOnClick>
         <div>
           <PopoverTrigger>
             <Button
               size="sm"
               variant="dropdown"
-              aria-label="Address clusters"
+              aria-label={ tQuat('addresses.clusters') }
               fontWeight={ 500 }
               flexShrink={ 0 }
               columnGap={ 1 }
@@ -97,14 +101,14 @@ const AddressClusters = ({ query, addressHash }: Props) => {
       <PopoverContent w={{ lg: '500px' }}>
         <PopoverBody textStyle="sm" display="flex" flexDir="column" rowGap={ 5 } alignItems="flex-start">
           <div>
-            <chakra.span color="text.secondary" textStyle="xs">Attached to this address</chakra.span>
+            <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.attached_to_address') }</chakra.span>
             <ClustersGrid data={ ownedClusters }/>
           </div>
           { showMoreLink && (
             <Link
               href={ route({ pathname: '/name-services', query: { q: addressHash, tab: 'directories' } }) }
             >
-              <span>More results</span>
+              <span>{ tQuat('addresses.more_results') }</span>
               <chakra.span color="text.secondary"> ({ totalRecords })</chakra.span>
             </Link>
           ) }

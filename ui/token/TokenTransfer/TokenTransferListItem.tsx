@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize token transfer value captions. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInstance } from 'types/api/token';
 import type { TokenTransfer } from 'types/api/tokenTransfer';
@@ -32,6 +34,7 @@ const TokenTransferListItem = ({
   instance,
   chainData,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
   return (
     <ListItemMobile rowGap={ 3 }>
       <Flex justifyContent="space-between" alignItems="center" lineHeight="24px" width="100%">
@@ -76,7 +79,7 @@ const TokenTransferListItem = ({
             whiteSpace="pre"
             overflow="hidden"
           >
-            <span>Value </span>
+            <span>{ tQuat('tokenUi.value') }{ ' ' }</span>
             { token.symbol && <TruncatedText text={ token.symbol } loading={ isLoading }/> }
           </Skeleton>
           <AssetValue
@@ -100,7 +103,7 @@ const TokenTransferListItem = ({
             whiteSpace="pre"
             overflow="hidden"
           >
-            <span>Value </span>
+            <span>{ tQuat('tokenUi.value') }{ ' ' }</span>
             { token.symbol && <TruncatedText text={ token.symbol } loading={ isLoading }/> }
           </Skeleton>
           <ConfidentialValue

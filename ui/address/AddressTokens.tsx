@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localize address UI. GPL-3.0.
 import { Box, HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { PaginationParams } from 'ui/shared/pagination/types';
 
@@ -38,6 +40,8 @@ type Props = {
 };
 
 const AddressTokens = ({ shouldRender = true, isQueryEnabled = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMobile = useIsMobile();
   const isMounted = useIsMounted();
@@ -95,7 +99,7 @@ const AddressTokens = ({ shouldRender = true, isQueryEnabled = true }: Props) =>
     },
     {
       id: 'tokens_nfts',
-      title: 'NFTs',
+      title: tQuat('search.categories.nfts'),
       component: nftDisplayType === 'list' ?
         <AddressNFTs tokensQuery={ nftsQuery } tokenTypes={ nftTokenTypes } onTokenTypesChange={ onTokenTypesChange }/> :
         <AddressCollections collectionsQuery={ collectionsQuery } address={ hash } tokenTypes={ nftTokenTypes } onTokenTypesChange={ onTokenTypesChange }/>,

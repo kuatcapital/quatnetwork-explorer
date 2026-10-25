@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localized transaction type badges. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TransactionType } from 'types/api/transaction';
 
@@ -22,6 +24,7 @@ const TYPES_ORDER: Array<TransactionType> = [
 ];
 
 const TxType = ({ types, isLoading, ...rest }: Props) => {
+  const { t: tTx } = useTranslation();
   const typeToShow = types.sort((t1, t2) => TYPES_ORDER.indexOf(t1) - TYPES_ORDER.indexOf(t2))[0];
 
   let label;
@@ -29,27 +32,27 @@ const TxType = ({ types, isLoading, ...rest }: Props) => {
 
   switch (typeToShow) {
     case 'contract_call':
-      label = 'Contract call';
+      label = tTx('transactions.contract_call');
       colorPalette = 'blue';
       break;
     case 'blob_transaction':
-      label = 'Blob txn';
+      label = tTx('transactions.blob_txn');
       colorPalette = 'yellow';
       break;
     case 'contract_creation':
-      label = 'Contract creation';
+      label = tTx('transactions.contract_creation_type');
       colorPalette = 'blue';
       break;
     case 'token_transfer':
-      label = 'Token transfer';
+      label = tTx('transactions.token_transfer');
       colorPalette = 'orange';
       break;
     case 'token_creation':
-      label = 'Token creation';
+      label = tTx('transactions.token_creation');
       colorPalette = 'orange';
       break;
     case 'coin_transfer':
-      label = 'Coin transfer';
+      label = tTx('transactions.coin_transfer');
       colorPalette = 'orange';
       break;
     case 'rootstock_remasc':
@@ -57,11 +60,11 @@ const TxType = ({ types, isLoading, ...rest }: Props) => {
       colorPalette = 'blue';
       break;
     case 'rootstock_bridge':
-      label = 'Bridge';
+      label = tTx('transactions.bridge');
       colorPalette = 'blue';
       break;
     default:
-      label = 'Transaction';
+      label = tTx('common.transaction');
       colorPalette = 'purple';
   }
 

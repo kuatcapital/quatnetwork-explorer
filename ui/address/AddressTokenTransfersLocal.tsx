@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenType } from 'types/api/token';
 
@@ -30,6 +32,8 @@ interface Props {
 }
 
 const TokenTransfersLocal = ({ query, filters, addressHash, onTypeFilterChange, onAddressFilterChange, overloadCount }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { isError, isPlaceholderData, data, pagination } = query;
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
@@ -112,7 +116,7 @@ const TokenTransfersLocal = ({ query, filters, addressHash, onTypeFilterChange, 
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items?.length }
-      emptyText="There are no token transfers."
+      emptyText={ tQuat('addresses.no_token_transfers') }
       hasActiveFilters={ Boolean(numActiveFilters) }
       emptyStateProps={{
         term: 'token transfer',

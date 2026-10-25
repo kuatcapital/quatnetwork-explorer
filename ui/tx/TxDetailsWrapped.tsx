@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Flex, Grid } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 import type { ExcludeUndefined } from 'types/utils';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Badge } from 'toolkit/chakra/badge';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
 import DetailedInfoNativeCoinValue from 'ui/shared/DetailedInfo/DetailedInfoNativeCoinValue';
@@ -21,22 +25,22 @@ interface Props {
 }
 
 const TxDetailsWrapped = ({ data }: Props) => {
+  const { locale } = useLocale();
+  const { t: tTx } = useTranslation();
   return (
     <Grid columnGap={ 8 } rowGap={{ base: 3, lg: 3 }} templateColumns={{ base: 'minmax(0, 1fr)', lg: 'auto minmax(0, 1fr)' }}>
       <DetailedInfo.ItemLabel
-        hint="Unique character string (TxID) assigned to every verified transaction"
+        hint={ tTx('transactions.hash_hint') }
       >
-        Transaction hash
-      </DetailedInfo.ItemLabel>
+        { tTx('common.transaction_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <TxEntity hash={ data.hash } noIcon noLink/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Transaction method name"
+        hint={ tTx('transactions.method_hint') }
       >
-        Method
-      </DetailedInfo.ItemLabel>
+        { tTx('common.method') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Badge colorPalette="gray">
           { data.method }
@@ -48,9 +52,9 @@ const TxDetailsWrapped = ({ data }: Props) => {
       { data.to && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Address (external or contract) receiving the transaction"
+            hint={ tTx('transactions.receiver_hint') }
           >
-            { data.to.is_contract ? 'Interacted with contract' : 'To' }
+            { data.to.is_contract ? tTx('transactions.interacted_contract') : tTx('common.to') }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Flex flexWrap="nowrap" alignItems="center" maxW="100%">
@@ -63,19 +67,17 @@ const TxDetailsWrapped = ({ data }: Props) => {
       <DetailedInfo.ItemDivider/>
 
       <DetailedInfo.ItemLabel
-        hint="Value sent in the native token (and USD) if applicable"
+        hint={ tTx('transactions.value_hint') }
       >
-        Value
-      </DetailedInfo.ItemLabel>
+        { tTx('transactions.value_amount') }</DetailedInfo.ItemLabel>
       <DetailedInfoNativeCoinValue amount={ data.value }/>
 
       { data.fee.value !== null && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Total transaction fee"
+            hint={ tTx('transactions.total_fee_hint') }
           >
-            Transaction fee
-          </DetailedInfo.ItemLabel>
+            { tTx('common.transaction_fee') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <TxFee tx={ data } hasExchangeRateToggle/>
           </DetailedInfo.ItemValue>
@@ -87,12 +89,11 @@ const TxDetailsWrapped = ({ data }: Props) => {
       { data.gas_limit && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Maximum amount of gas that can be used by the transaction"
+            hint={ tTx('transactions.gas_limit_hint') }
           >
-            Gas limit
-          </DetailedInfo.ItemLabel>
+            { tTx('common.gas_limit') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
-            { BigNumber(data.gas_limit).toFormat() }
+            { formatBigNumber(BigNumber(data.gas_limit), locale) }
           </DetailedInfo.ItemValue>
         </>
       ) }
@@ -102,10 +103,9 @@ const TxDetailsWrapped = ({ data }: Props) => {
       <TxDetailsOther type={ data.type } nonce={ data.nonce } position={ null }/>
 
       <DetailedInfo.ItemLabel
-        hint="Binary data included with the transaction. See logs tab for additional info"
+        hint={ tTx('transactions.input_hint') }
       >
-        Raw input
-      </DetailedInfo.ItemLabel>
+        { tTx('transactions.raw_input') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <RawInputData hex={ data.raw_input }/>
       </DetailedInfo.ItemValue>
@@ -113,10 +113,9 @@ const TxDetailsWrapped = ({ data }: Props) => {
       { data.decoded_input && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Decoded input data"
+            hint={ tTx('transactions.decoded_input') }
           >
-            Decoded input data
-          </DetailedInfo.ItemLabel>
+            { tTx('transactions.decoded_input') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <LogDecodedInputData data={ data.decoded_input }/>
           </DetailedInfo.ItemValue>

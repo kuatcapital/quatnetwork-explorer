@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { get } from 'es-toolkit/compat';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -16,6 +18,8 @@ interface Props {
 }
 
 const ContractVerificationFieldGitHubRepo = ({ onCommitHashChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const repoErrorRef = React.useRef<string | undefined>(undefined);
   const fetch = useFetch();
   const { getValues, trigger, getFieldState } = useFormContext<FormFields>();
@@ -46,10 +50,10 @@ const ContractVerificationFieldGitHubRepo = ({ onCommitHashChange }: Props) => {
         onCommitHashChange(get(response, '[0].sha'));
         return;
       } catch (error) {
-        repoErrorRef.current = 'GitHub repository not found';
+        repoErrorRef.current = 'verification.repo_missing';
       }
     } else {
-      repoErrorRef.current = 'Invalid GitHub repository URL';
+      repoErrorRef.current = 'verification.repo_invalid';
     }
 
     trigger('repository_url');
@@ -57,8 +61,12 @@ const ContractVerificationFieldGitHubRepo = ({ onCommitHashChange }: Props) => {
   }, [ fetch, getValues, getFieldState, onCommitHashChange, trigger ]);
 
   const repoUrlValidator = React.useCallback(() => {
-    return repoErrorRef.current ? repoErrorRef.current : true;
-  }, []);
+    return repoErrorRef.current ? tQuat(repoErrorRef.current) : true;
+  }, [ tQuat ]);
+
+  React.useEffect(() => {
+    if (getFieldState('repository_url').error?.type === 'repoUrl') void trigger('repository_url');
+  }, [ getFieldState, trigger, tQuat ]);
 
   const rules = React.useMemo(() => {
     return {
@@ -72,7 +80,7 @@ const ContractVerificationFieldGitHubRepo = ({ onCommitHashChange }: Props) => {
     <ContractVerificationFormRow>
       <FormFieldUrl<FormFields>
         name="repository_url"
-        placeholder="GitHub repository URL"
+        placeholder={ tQuat('verification.repo_url') }
         required
         onBlur={ handleBlur }
         rules={ rules }

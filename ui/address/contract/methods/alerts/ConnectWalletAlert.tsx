@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -16,6 +18,8 @@ interface Props {
 }
 
 const ConnectWalletAlert = ({ isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const web3Wallet = useWeb3Wallet({ source: 'Smart contracts' });
   const isMobile = useIsMobile();
 
@@ -27,15 +31,13 @@ const ConnectWalletAlert = ({ isLoading }: Props) => {
     if (!web3Wallet.isConnected) {
       return (
         <Flex alignItems="center" flexWrap="wrap" columnGap={ 3 } rowGap={ 2 }>
-          <span>To interact with the contract, please</span>
+          <span>{ tQuat('contracts.connect_prompt') }</span>
           <Button
             onClick={ web3Wallet.connect }
             size="sm"
             loading={ web3Wallet.isOpen }
             loadingText="Connect your wallet"
-          >
-            Connect your wallet
-          </Button>
+          >{ tQuat('contracts.connect_wallet') }</Button>
         </Flex>
       );
     }
@@ -53,7 +55,7 @@ const ConnectWalletAlert = ({ isLoading }: Props) => {
         />
         { web3Wallet.isReconnecting ? <Spinner size="sm" m="2px" flexShrink={ 0 }/> : (
           <IconButton
-            aria-label="Open wallet"
+            aria-label={ tQuat('contracts.open_wallet') }
             variant="icon_secondary"
             size="2xs"
             onClick={ handleOpenWalletClick }

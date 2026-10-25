@@ -190,17 +190,17 @@ const TokenPageContent = () => {
   const tabs: Array<TabItemRegular> = [
     hasInventoryTab ? {
       id: 'inventory',
-      title: 'Inventory',
+      title: tQuat('tokenUi.inventory'),
       component: <TokenInventory inventoryQuery={ inventoryQuery } tokenQuery={ tokenQuery } ownerFilter={ ownerFilter } shouldRender={ !isLoading }/>,
     } : undefined,
     {
       id: 'token_transfers',
-      title: 'Token transfers',
+      title: tQuat('tokenUi.token_transfers'),
       component: <TokenTransfer transfersQuery={ transfersQuery } tokenQuery={ tokenQuery } shouldRender={ !isLoading }/>,
     },
     {
       id: 'holders',
-      title: 'Holders',
+      title: tQuat('tokenUi.holders'),
       component: <TokenHolders token={ tokenQuery.data } holdersQuery={ holdersQuery } shouldRender={ !isLoading }/>,
     },
     addressQuery.data?.is_contract ? {
@@ -215,14 +215,14 @@ const TokenPageContent = () => {
           );
         }
 
-        return 'Contract';
+        return tQuat('tokenUi.contract');
       },
       component: <AddressContract addressData={ addressQuery.data } isLoading={ isLoading }/>,
       subTabs: CONTRACT_TAB_IDS,
     } : undefined,
     (address3rdPartyWidgets.isEnabled && address3rdPartyWidgets.items.length > 0) ? {
       id: 'widgets',
-      title: 'Widgets',
+      title: tQuat('tokenUi.widgets'),
       count: address3rdPartyWidgets.items.length,
       component: <Address3rdPartyWidgets shouldRender={ !isLoading } addressType="token" showAll/>,
     } : undefined,

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressEpochRewardsItem } from 'types/api/address';
 
@@ -15,17 +17,17 @@ type Props = {
 };
 
 const AddressEpochRewardsTable = ({ items, isLoading, top }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <AddressHighlightProvider>
       <TableRoot minW="1000px" style={{ tableLayout: 'auto' }}>
         <TableHeaderSticky top={ top }>
           <TableRow>
-            <TableColumnHeader>
-              Epoch
-              <TimeFormatToggle/>
+            <TableColumnHeader>{ tQuat('addresses.epoch') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader>Reward type</TableColumnHeader>
-            <TableColumnHeader>Associated address</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('addresses.reward_type') }</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('addresses.associated_address') }</TableColumnHeader>
             <TableColumnHeader isNumeric>Value</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>

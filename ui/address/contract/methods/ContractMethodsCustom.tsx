@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContract } from 'types/api/contract';
 
@@ -27,6 +29,7 @@ interface Props {
 }
 
 const ContractMethodsCustom = ({ isLoading: isLoadingProp }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const modal = useDisclosure();
   const router = useRouter();
@@ -64,12 +67,10 @@ const ContractMethodsCustom = ({ isLoading: isLoadingProp }: Props) => {
           size="sm"
           variant="outline"
           onClick={ modal.onOpen }
-        >
-          Update
-        </Button>
+        >{ tQuat('contracts.update') }</Button>
       </Skeleton>
     );
-  }, [ isLoading, modal.onOpen ]);
+  }, [ isLoading, modal.onOpen, tQuat ]);
 
   return (
     <Flex flexDir="column" rowGap={ 6 }>
@@ -81,7 +82,7 @@ const ContractMethodsCustom = ({ isLoading: isLoadingProp }: Props) => {
           />
           <RawDataSnippet
             data={ JSON.stringify(abi) }
-            title="Contract ABI"
+            title={ tQuat('contracts.abi_title') }
             textareaMaxHeight="150px"
             isLoading={ isLoading }
             rightSlot={ updateButton }
@@ -98,19 +99,14 @@ const ContractMethodsCustom = ({ isLoading: isLoadingProp }: Props) => {
         </>
       ) : (
         <>
-          <Skeleton loading={ isLoading }>
-            Add custom ABIs for this contract and access when logged into your account. Helpful for debugging,
-            functional testing and contract interaction.
-          </Skeleton>
+          <Skeleton loading={ isLoading }>{ tQuat('contracts.custom_abi_hint') }</Skeleton>
           <AuthGuard onAuthSuccess={ modal.onOpen }>
             { ({ onClick }) => (
               <Skeleton loading={ isLoading } w="fit-content">
                 <Button
                   size="sm"
                   onClick={ onClick }
-                >
-                  Add custom ABI
-                </Button>
+                >{ tQuat('contracts.add_custom_abi') }</Button>
               </Skeleton>
             ) }
           </AuthGuard>

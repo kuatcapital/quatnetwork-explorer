@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Stat, Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressCoinBalanceHistoryItem } from 'types/api/address';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -22,6 +24,8 @@ type Props = AddressCoinBalanceHistoryItem & {
 };
 
 const AddressCoinBalanceListItem = (props: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const deltaBn = BigNumber(props.delta).div(WEI);
   const isPositiveDelta = deltaBn.gte(ZERO);
 
@@ -46,7 +50,7 @@ const AddressCoinBalanceListItem = (props: Props) => {
         </Skeleton>
       </Flex>
       <Flex columnGap={ 2 } w="100%">
-        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>Block</Skeleton>
+        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('common.block') }</Skeleton>
         <BlockEntity
           isLoading={ props.isLoading }
           number={ props.block_number }
@@ -68,7 +72,7 @@ const AddressCoinBalanceListItem = (props: Props) => {
         </Flex>
       ) }
       <Flex columnGap={ 2 } w="100%">
-        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>Age</Skeleton>
+        <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('common.age') }</Skeleton>
         <TimeWithTooltip
           timestamp={ props.block_timestamp }
           enableIncrement={ props.page === 1 }

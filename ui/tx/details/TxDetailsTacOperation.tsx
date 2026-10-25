@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as tac from '@blockscout/tac-operation-lifecycle-types';
 
@@ -16,17 +18,17 @@ interface Props {
 }
 
 const TxDetailsTacOperation = ({ tacOperations, isLoading, txHash }: Props) => {
-  const hasManyItems = tacOperations.length > 1;
+  const { t: tTx } = useTranslation();
   const [ hasScroll, setHasScroll ] = React.useState(false);
 
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint={ `Hash${ hasManyItems ? 'es' : '' } of the cross‑chain operation${ hasManyItems ? 's' : '' } that this transaction is part of` }
+        hint={ tTx('transactions.source_operation_hint_count', { count: tacOperations.length }) }
         isLoading={ isLoading }
         hasScroll={ hasScroll }
       >
-        Source operation{ hasManyItems ? 's' : '' }
+        { tTx('transactions.source_operation', { count: tacOperations.length }) }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValueWithScroll
         gradientHeight={ 48 }

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 
@@ -12,15 +14,15 @@ interface Props {
 }
 
 const AddressNameInfo = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (data.token) {
     return (
       <>
         <DetailedInfo.ItemLabel
-          hint="Token name and symbol"
+          hint={ tQuat('addresses.token_name_hint') }
           isLoading={ isLoading }
-        >
-          Token name
-        </DetailedInfo.ItemLabel>
+        >{ tQuat('addresses.token_name') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           <TokenEntity
             token={ data.token }
@@ -37,11 +39,9 @@ const AddressNameInfo = ({ data, isLoading }: Props) => {
     return (
       <>
         <DetailedInfo.ItemLabel
-          hint="The name found in the source code of the Contract"
+          hint={ tQuat('addresses.contract_name_hint') }
           isLoading={ isLoading }
-        >
-          Contract name
-        </DetailedInfo.ItemLabel>
+        >{ tQuat('addresses.contract_name') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           <Skeleton loading={ isLoading }>
             { data.name }
@@ -55,11 +55,9 @@ const AddressNameInfo = ({ data, isLoading }: Props) => {
     return (
       <>
         <DetailedInfo.ItemLabel
-          hint="The name of the validator"
+          hint={ tQuat('addresses.validator_name_hint') }
           isLoading={ isLoading }
-        >
-          Validator name
-        </DetailedInfo.ItemLabel>
+        >{ tQuat('addresses.validator_name') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           <Skeleton loading={ isLoading }>
             { data.name }

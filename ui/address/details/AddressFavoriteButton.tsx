@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localize address UI. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { getResourceKey } from 'lib/api/useApiQuery';
@@ -23,6 +25,8 @@ interface Props {
 }
 
 const AddressFavoriteButton = ({ className, hash, watchListId }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const addModalProps = useDisclosure();
   const deleteModalProps = useDisclosure();
   const queryClient = useQueryClient();
@@ -60,10 +64,10 @@ const AddressFavoriteButton = ({ className, hash, watchListId }: Props) => {
     <>
       <AuthGuard onAuthSuccess={ handleAddToFavorite }>
         { ({ onClick }) => (
-          <Tooltip content={ `${ watchListId ? 'Remove address from Watch list' : 'Add address to Watch list' }` } disableOnMobile>
+          <Tooltip content={ watchListId ? tQuat('addresses.remove_address_watchlist') : tQuat('addresses.add_address_watchlist') } disableOnMobile>
             <IconButton
               className={ className }
-              aria-label="edit"
+              aria-label={ tQuat('common.edit') }
               variant="icon_background"
               size="md"
               selected={ Boolean(watchListId) }

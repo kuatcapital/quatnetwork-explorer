@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 
@@ -16,17 +18,20 @@ interface Props {
 }
 
 const TOKEN_TRANSFERS_TYPES = [
-  { title: 'Tokens transferred', hint: 'List of tokens transferred in the transaction', type: 'token_transfer' },
-  { title: 'Tokens minted', hint: 'List of tokens minted in the transaction', type: 'token_minting' },
-  { title: 'Tokens burnt', hint: 'List of tokens burnt in the transaction', type: 'token_burning' },
-  { title: 'Tokens created', hint: 'List of tokens created in the transaction', type: 'token_spawning' },
+  { title: 'transactions.tokens_transferred', hint: 'transactions.tokens_transferred_hint', type: 'token_transfer' },
+  { title: 'transactions.tokens_minted', hint: 'transactions.tokens_minted_hint', type: 'token_minting' },
+  { title: 'transactions.tokens_burnt', hint: 'transactions.tokens_burnt_hint', type: 'token_burning' },
+  { title: 'transactions.tokens_created', hint: 'transactions.tokens_created_hint', type: 'token_spawning' },
 ];
 
 const TxDetailsTokenTransfers = ({ data, txHash, isOverflow }: Props) => {
+  const { t: tTx } = useTranslation();
   const viewAllUrl = route({ pathname: '/tx/[hash]', query: { hash: txHash, tab: 'token_transfers' } });
 
   const transferGroups = TOKEN_TRANSFERS_TYPES.map((group) => ({
     ...group,
+    title: tTx(group.title),
+    hint: tTx(group.hint),
     items: data?.filter((token) => token.type === group.type) || [],
   }));
 
@@ -58,8 +63,7 @@ const TxDetailsTokenTransfers = ({ data, txHash, isOverflow }: Props) => {
                   { /* FIXME use non-navigation icon */ }
                   <IconSvg name="navigation/tokens" boxSize={ 6 }/>
                   <Link href={ viewAllUrl }>
-                    View all
-                  </Link>
+                    { tTx('common.view_all') }</Link>
                 </>
               ) }
             </DetailedInfo.ItemValue>

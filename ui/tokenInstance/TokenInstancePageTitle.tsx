@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo, TokenInstance } from 'types/api/token';
 
@@ -22,6 +24,8 @@ interface Props {
 }
 
 const TokenInstancePageTitle = ({ isLoading, token, instance, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
 
   const title = (() => {
@@ -30,17 +34,17 @@ const TokenInstancePageTitle = ({ isLoading, token, instance, hash }: Props) => 
     }
 
     if (!instance) {
-      return `Unknown token instance`;
+      return tQuat('tokenUi.unknown_instance');
     }
 
     if (token?.name || token?.symbol) {
       return (token.name || token.symbol) + ' #' + instance.id;
     }
 
-    return `ID ${ instance.id }`;
+    return tQuat('tokenUi.instance_id', { id: instance.id });
   })();
 
-  const tokenTag = token ? <Tag loading={ isLoading }>{ getTokenTypeName(token.type) }</Tag> : null;
+  const tokenTag = token ? <Tag loading={ isLoading }>{ token.type === 'NATIVE' ? tQuat('tokenUi.native_token') : getTokenTypeName(token.type) }</Tag> : null;
 
   const appLink = (() => {
     if (!instance?.external_app_url) {
@@ -60,7 +64,7 @@ const TokenInstancePageTitle = ({ isLoading, token, instance, hash }: Props) => 
     } catch (error) {
       return (
         <Link external href={ instance.external_app_url } variant="underlaid" loading={ isLoading } ml={{ base: 0, lg: 'auto' }}>
-          View in app
+          { tQuat('tokenUi.view_app') }
         </Link>
       );
     }

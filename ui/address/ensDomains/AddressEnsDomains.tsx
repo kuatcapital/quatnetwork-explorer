@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Grid, chakra } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { clamp } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 
@@ -38,6 +40,8 @@ const DomainsGrid = ({ data }: { data: Array<bens.Domain> }) => {
 };
 
 const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data, isPending, isError } = query;
   const popover = useDisclosure();
 
@@ -85,19 +89,19 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
 
   return (
     <PopoverRoot open={ popover.open } onOpenChange={ popover.onOpenChange }>
-      <Tooltip content="List of names resolved or owned by this address" disabled={ popover.open } disableOnMobile closeOnClick>
+      <Tooltip content={ tQuat('addresses.domains_hint') } disabled={ popover.open } disableOnMobile closeOnClick>
         <div>
           <PopoverTrigger>
             <Button
               size="sm"
               variant="dropdown"
-              aria-label="Address domains"
+              aria-label={ tQuat('addresses.domains') }
               fontWeight={ 500 }
               flexShrink={ 0 }
               columnGap={ 1 }
             >
               <IconSvg name="ENS" boxSize={ 5 }/>
-              <chakra.span hideBelow="xl">{ totalRecords } Domain{ data.items.length > 1 ? 's' : '' }</chakra.span>
+              <chakra.span hideBelow="xl">{ totalRecords }{ ' ' }{ tQuat('addresses.domain_one') }{ data.items.length > 1 ? 's' : '' }</chakra.span>
               <chakra.span hideFrom="xl">{ totalRecords }</chakra.span>
             </Button>
           </PopoverTrigger>
@@ -107,7 +111,7 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
         <PopoverBody textStyle="sm" display="flex" flexDir="column" rowGap={ 5 } alignItems="flex-start">
           { mainDomain && (
             <Box w="100%">
-              <chakra.span color="text.secondary" textStyle="xs">Primary*</chakra.span>
+              <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.primary_domain') }</chakra.span>
               <Flex alignItems="center" textStyle="md" mt={ 2 }>
                 <EnsEntity domain={ mainDomain.name } protocol={ mainDomain.protocol } fontWeight={ 600 } noCopy/>
                 { mainDomain.expiry_date &&
@@ -117,13 +121,13 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
           ) }
           { ownedDomains.length > 0 && (
             <div>
-              <chakra.span color="text.secondary" textStyle="xs">Owned by this address</chakra.span>
+              <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.owned_by_address') }</chakra.span>
               <DomainsGrid data={ ownedDomains }/>
             </div>
           ) }
           { resolvedDomains.length > 0 && (
             <div>
-              <chakra.span color="text.secondary" textStyle="xs">Resolved to this address</chakra.span>
+              <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.resolved_to_address') }</chakra.span>
               <DomainsGrid data={ resolvedDomains }/>
             </div>
           ) }
@@ -131,14 +135,12 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
             <Link
               href={ route({ pathname: '/name-services', query: { tab: 'domains', owned_by: 'true', resolved_to: 'true', address: addressHash } }) }
             >
-              <span> More results</span>
+              <span>{ ' ' }{ tQuat('addresses.more_results') }</span>
               <chakra.span color="text.secondary"> ({ totalRecords })</chakra.span>
             </Link>
           ) }
           { mainDomain && (
-            <chakra.span textStyle="xs" mt={ -1 }>
-              *A domain name is not necessarily held by a person popularly associated with the name
-            </chakra.span>
+            <chakra.span textStyle="xs" mt={ -1 }>{ tQuat('addresses.domain_disclaimer') }</chakra.span>
           ) }
         </PopoverBody>
       </PopoverContent>

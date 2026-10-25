@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 import type { SmartContractVerificationConfig } from 'types/client/contract';
@@ -13,6 +15,8 @@ import ContractVerificationFormRow from '../ContractVerificationFormRow';
 import ContractVerificationMethod from '../ContractVerificationMethod';
 
 const ContractVerificationSolidityHardhat = ({ config: formConfig }: { config: SmartContractVerificationConfig }) => {
+  const { t: tQuat } = useTranslation();
+
   const chainNameSlug = config.chain.name?.toLowerCase().split(' ').join('-');
   const { watch } = useFormContext<FormFields>();
   const address = watch('address');
@@ -49,17 +53,17 @@ const ContractVerificationSolidityHardhat = ({ config: formConfig }: { config: S
   [...constructorArgs]`;
 
   return (
-    <ContractVerificationMethod title="Contract verification via Solidity Hardhat plugin">
+    <ContractVerificationMethod title={ tQuat('verification.hardhat_title') }>
       <ContractVerificationFormRow>
         <Flex flexDir="column" rowGap={ 3 }>
           <ContractVerificationFormCodeSnippet code={ firstCodeSnippet }/>
           <ContractVerificationFormCodeSnippet code={ secondCodeSnippet }/>
         </Flex>
         <Box whiteSpace="pre-wrap">
-          <span>Full tutorial about contract verification via Hardhat on Blockscout is available </span>
-          <Link href="https://docs.blockscout.com/devs/verification/hardhat-verification-plugin" external>
-            here
-          </Link>
+          <Trans
+            i18nKey="verification.hardhat_tutorial"
+            components={{ docs: <Link href="https://docs.blockscout.com/devs/verification/hardhat-verification-plugin" external/> }}
+          />
         </Box>
       </ContractVerificationFormRow>
     </ContractVerificationMethod>

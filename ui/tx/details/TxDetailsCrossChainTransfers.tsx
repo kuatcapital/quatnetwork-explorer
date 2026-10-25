@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const TxDetailsCrossChainTransfers = ({ hash, isLoading: isLoadingProp }: Props) => {
+  const { t: tTx } = useTranslation();
 
   const { data, isPending } = useTxCrossChainTransfersQuery({ hash });
 
@@ -34,11 +37,10 @@ const TxDetailsCrossChainTransfers = ({ hash, isLoading: isLoadingProp }: Props)
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Number of cross-chain transfers in this transaction"
+        hint={ tTx('transactions.cross_chain_count_hint') }
         isLoading={ isLoading }
       >
-        Cross-chain transfers
-      </DetailedInfo.ItemLabel>
+        { tTx('transactions.cross_chain_transfers') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Link
           href={ route({ pathname: '/tx/[hash]', query: { hash, tab: 'token_transfers_cross_chain' } }) }

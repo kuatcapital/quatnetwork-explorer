@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
 
 import type { ContractAbiItemInput } from '../types';
@@ -32,6 +34,8 @@ interface Props {
 }
 
 const ContractMethodFieldInput = ({ data, hideLabel, path: name, className, isDisabled, isOptional: isOptionalProp, level }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const ref = React.useRef<HTMLInputElement>(null);
 
   const [ intPower, setIntPower ] = React.useState<number>(18);
@@ -141,9 +145,7 @@ const ContractMethodFieldInput = ({ data, hideLabel, path: name, className, isDi
           ml={ 1 }
           onClick={ handleTimestampButtonClick }
           disabled={ isDisabled }
-        >
-          Now+1h
-        </Button>
+        >{ tQuat('contracts.now_hour') }</Button>
       ) : (
         <Button
           variant="subtle"
@@ -153,9 +155,7 @@ const ContractMethodFieldInput = ({ data, hideLabel, path: name, className, isDi
           ml={ 1 }
           onClick={ handleMaxIntButtonClick }
           disabled={ isDisabled }
-        >
-          Max
-        </Button>
+        >{ tQuat('contracts.max') }</Button>
       )) }
       { hasMultiplyButton && (
         <ContractMethodMultiplyButton

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -21,6 +23,8 @@ interface Props {
 }
 
 const ContractVerificationFieldLibraryItem = ({ index, fieldsLength, onAddFieldClick, onRemoveFieldClick, isDisabled }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const ref = React.useRef<HTMLDivElement>(null);
 
   const handleAddButtonClick = React.useCallback(() => {
@@ -39,7 +43,7 @@ const ContractVerificationFieldLibraryItem = ({ index, fieldsLength, onAddFieldC
     <>
       <ContractVerificationFormRow>
         <Flex alignItems="center" justifyContent="space-between" ref={ ref } mt={ index !== 0 ? 6 : 0 }>
-          <Text color="text.secondary" fontSize="sm">Contract library { index + 1 }</Text>
+          <Text color="text.secondary" fontSize="sm">{ tQuat('verification.library_number', { number: index + 1 }) }</Text>
           <Flex columnGap={ 5 }>
             { fieldsLength > 1 && (
               <RemoveButton
@@ -61,24 +65,20 @@ const ContractVerificationFieldLibraryItem = ({ index, fieldsLength, onAddFieldC
           name={ `libraries.${ index }.name` }
           required
           rules={{ maxLength: 255 }}
-          placeholder="Library name (.sol file)"
+          placeholder={ tQuat('verification.library_name') }
         />
         { index === 0 ? (
-          <>
-            A library name called in the .sol file. Multiple libraries (up to 10) may be added for each contract.
-          </>
+          <>{ tQuat('verification.library_hint') }</>
         ) : null }
       </ContractVerificationFormRow>
       <ContractVerificationFormRow>
         <FormFieldAddress<FormFields>
           name={ `libraries.${ index }.address` }
           required
-          placeholder="Library address (0x...)"
+          placeholder={ tQuat('verification.library_address') }
         />
         { index === 0 ? (
-          <>
-            The 0x library address. This can be found in the generated json file or Truffle output (if using truffle).
-          </>
+          <>{ tQuat('verification.library_address_hint') }</>
         ) : null }
       </ContractVerificationFormRow>
     </>

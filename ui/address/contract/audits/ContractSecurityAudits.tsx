@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractSecurityAuditSubmission } from 'types/api/contract';
 
@@ -18,6 +20,8 @@ type Props = {
 };
 
 const ContractSecurityAudits = ({ addressHash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data, isPlaceholderData } = useApiQuery('general:contract_security_audits', {
     pathParams: { hash: addressHash },
     queryOptions: {
@@ -54,7 +58,7 @@ const ContractSecurityAudits = ({ addressHash }: Props) => {
           </ContainerWithScrollY>
         </Box>
       ) }
-      <Button variant="outline" size="sm" onClick={ modalProps.onOpen }>Submit audit</Button>
+      <Button variant="outline" size="sm" onClick={ modalProps.onOpen }>{ tQuat('contracts.submit_audit') }</Button>
       <FormModal<SmartContractSecurityAuditSubmission>
         open={ modalProps.open }
         onOpenChange={ modalProps.onOpenChange }

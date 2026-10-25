@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { PaginationParams } from 'ui/shared/pagination/types';
@@ -31,6 +33,8 @@ import TokenInstancePageTitle from 'ui/tokenInstance/TokenInstancePageTitle';
 export type TokenTabs = 'token_transfers' | 'holders';
 
 const TokenInstanceContent = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMobile = useIsMobile();
 
@@ -96,7 +100,7 @@ const TokenInstanceContent = () => {
   const tabs: Array<TabItemRegular> = [
     {
       id: 'token_transfers',
-      title: 'Token transfers',
+      title: tQuat('tokenUi.token_transfers'),
       component: (
         <TokenTransfer
           transfersQuery={ transfersQuery }
@@ -111,11 +115,11 @@ const TokenInstanceContent = () => {
     shouldFetchHolders ?
       {
         id: 'holders',
-        title: 'Holders',
+        title: tQuat('tokenUi.holders'),
         component: <TokenHolders holdersQuery={ holdersQuery } token={ tokenQuery.data } shouldRender={ !isLoading } tabsHeight={ 80 }/>,
       } :
       undefined,
-    { id: 'metadata', title: 'Metadata', component: (
+    { id: 'metadata', title: tQuat('tokenUi.metadata'), component: (
       <TokenInstanceMetadata
         data={ tokenInstanceQuery.data?.metadata }
         isPlaceholderData={ isLoading }

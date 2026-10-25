@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware state presentation. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -6,7 +7,7 @@ import type { TxStateChange } from 'types/api/txStateChanges';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 
-import { getStateElements } from './utils';
+import { useStateElements } from './utils';
 
 interface Props {
   data: TxStateChange;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const TxStateTableItem = ({ data, isLoading }: Props) => {
-  const { before, after, change, tag, tokenId } = getStateElements(data, isLoading);
+  const { before, after, change, tag, tokenId } = useStateElements(data, isLoading);
 
   return (
     <TableRow>

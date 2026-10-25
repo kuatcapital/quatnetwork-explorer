@@ -1,11 +1,11 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
-import getNetworkValidationActionText from 'lib/networks/getNetworkValidationActionText';
-import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import AddressCounterItem from 'ui/address/details/AddressCounterItem';
 import ServiceDegradationWarning from 'ui/shared/alerts/ServiceDegradationWarning';
@@ -29,6 +29,7 @@ import AddressNameInfo from './details/AddressNameInfo';
 import AddressNetWorth from './details/AddressNetWorth';
 import FilecoinActorTag from './filecoin/FilecoinActorTag';
 import TokenSelect from './tokenSelect/TokenSelect';
+import { useAddressValidationLabels } from './useAddressValidationLabels';
 import type { AddressCountersQuery } from './utils/useAddressCountersQuery';
 import type { AddressQuery } from './utils/useAddressQuery';
 
@@ -39,7 +40,10 @@ interface Props {
 }
 
 const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
+  const { blocksTitle, blocksHint } = useAddressValidationLabels();
 
   const addressHash = getQueryParamString(router.query.hash);
 
@@ -101,7 +105,7 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.filecoin?.id && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Short identifier of an address that may change with chain state updates"
+              hint={ tQuat('addresses.hints.short_id') }
             >
               ID
             </DetailedInfo.ItemLabel>
@@ -115,10 +119,8 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.filecoin?.actor_type && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Identifies the purpose and behavior of the address on the Filecoin network"
-            >
-              Actor
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('addresses.hints.actor') }
+            >{ tQuat('addresses.actor') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <FilecoinActorTag actorType={ data.filecoin.actor_type }/>
             </DetailedInfo.ItemValue>
@@ -128,10 +130,8 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { (data.filecoin?.actor_type === 'evm' || data.filecoin?.actor_type === 'ethaccount') && data?.filecoin?.robust && (
           <>
             <DetailedInfo.ItemLabel
-              hint="0x-style address to which the Filecoin address is assigned by the Ethereum Address Manager"
-            >
-              Ethereum Address
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('addresses.hints.ethereum_address') }
+            >{ tQuat('addresses.ethereum_address') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue flexWrap="nowrap">
               <AddressEntity
                 address={{ hash: data.hash }}
@@ -147,18 +147,16 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.is_contract && data.creation_transaction_hash && (creatorAddressHash) && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Transaction and address of creation"
+              hint={ tQuat('addresses.hints.creator') }
               isLoading={ isLoading }
-            >
-              Creator
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('addresses.creator') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <AddressEntity
                 address={{ hash: creatorAddressHash, filecoin: { robust: data.creator_filecoin_robust_address } }}
                 truncation="constant"
                 noIcon
               />
-              <Text whiteSpace="pre"> at txn </Text>
+              <Text whiteSpace="pre">{ tQuat('addresses.at_transaction') }</Text>
               <TxEntity hash={ data.creation_transaction_hash } truncation="constant" noIcon/>
               { data.creation_status && <ContractCreationStatus status={ data.creation_status } ml={{ base: 0, lg: 2 }}/> }
             </DetailedInfo.ItemValue>
@@ -177,10 +175,8 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.has_tokens && (
           <>
             <DetailedInfo.ItemLabel
-              hint="All tokens in the account and total value"
-            >
-              Tokens
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('addresses.hints.tokens') }
+            >{ tQuat('common.tokens') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue py={ addressQuery.data ? 0 : undefined }>
               { addressQuery.data ? <TokenSelect/> : <Box>0</Box> }
             </DetailedInfo.ItemValue>
@@ -189,11 +185,9 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { (config.features.multichainButton.isEnabled || (data.exchange_rate && data.has_tokens)) && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Total net worth in USD of all tokens for the address"
+              hint={ tQuat('addresses.hints.net_worth') }
               isLoading={ isLoading }
-            >
-              Net worth
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('addresses.net_worth') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue multiRow>
               <AddressNetWorth addressData={ addressQuery.data } addressHash={ addressHash } isLoading={ isLoading }/>
             </DetailedInfo.ItemValue>
@@ -202,11 +196,9 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         }
 
         <DetailedInfo.ItemLabel
-          hint="Number of transactions related to this address"
+          hint={ tQuat('addresses.hints.transaction_count') }
           isLoading={ isLoading || countersQuery.isPlaceholderData }
-        >
-          Transactions
-        </DetailedInfo.ItemLabel>
+        >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           { addressQuery.data ? (
             <AddressCounterItem
@@ -223,11 +215,9 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.has_token_transfers && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Number of transfers to/from this address"
+              hint={ tQuat('addresses.hints.transfer_count') }
               isLoading={ isLoading || countersQuery.isPlaceholderData }
-            >
-              Transfers
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('common.transfers') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               { addressQuery.data ? (
                 <AddressCounterItem
@@ -246,11 +236,9 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { countersQuery.data?.gas_usage_count && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Gas used by the address"
+              hint={ tQuat('addresses.hints.gas_usage') }
               isLoading={ isLoading || countersQuery.isPlaceholderData }
-            >
-              Gas used
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('common.gas_used') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue multiRow>
               { addressQuery.data ? (
                 <AddressCounterItem
@@ -269,10 +257,10 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.has_validated_blocks && (
           <>
             <DetailedInfo.ItemLabel
-              hint={ `Number of blocks ${ getNetworkValidationActionText() } by this ${ getNetworkValidatorTitle() }` }
+              hint={ blocksHint }
               isLoading={ isLoading || countersQuery.isPlaceholderData }
             >
-              { `Blocks ${ getNetworkValidationActionText() }` }
+              { blocksTitle }
             </DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               { addressQuery.data ? (
@@ -292,11 +280,9 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { data.block_number_balance_updated_at && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Block number in which the address was updated"
+              hint={ tQuat('addresses.hints.last_balance_update') }
               isLoading={ isLoading }
-            >
-              Last balance update
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('addresses.last_balance_update') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <BlockEntity
                 number={ data.block_number_balance_updated_at }
@@ -311,11 +297,9 @@ const AddressDetails = ({ addressQuery, countersQuery, isLoading }: Props) => {
         { (address3rdPartyWidgets.isEnabled && address3rdPartyWidgets.items.length > 0) && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Metrics provided by third party partners"
+              hint={ tQuat('addresses.hints.widgets') }
               isLoading={ address3rdPartyWidgets.configQuery.isPlaceholderData || addressQuery.isPlaceholderData }
-            >
-              Widgets
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('addresses.widgets') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <Address3rdPartyWidgets
                 addressType={ addressType }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Log } from 'types/api/log';
 
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const TxLogs = ({ txQuery, logsFilter }: Props) => {
+  const { t: tTx } = useTranslation();
   const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'general:tx_logs',
     pathParams: { hash: txQuery.data?.hash },
@@ -49,7 +52,7 @@ const TxLogs = ({ txQuery, logsFilter }: Props) => {
   }
 
   if (!items.length) {
-    return <Text as="span">There are no logs for this transaction.</Text>;
+    return <Text as="span">{ tTx('transactions.no_logs') }</Text>;
   }
 
   return (

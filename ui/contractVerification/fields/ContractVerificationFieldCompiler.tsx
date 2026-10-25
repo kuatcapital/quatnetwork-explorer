@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Code, createListCollection } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 import type { SmartContractVerificationConfig } from 'types/client/contract';
@@ -19,6 +21,8 @@ interface Props {
 }
 
 const ContractVerificationFieldCompiler = ({ isVyper, isStylus, config }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ isNightly, setIsNightly ] = React.useState(false);
   const { formState, getValues, resetField } = useFormContext<FormFields>();
 
@@ -69,27 +73,24 @@ const ContractVerificationFieldCompiler = ({ isVyper, isStylus, config }: Props)
       onCheckedChange={ handleCheckboxChange }
       disabled={ formState.isSubmitting }
       size="sm"
-    >
-      Include nightly builds
-    </Checkbox>
+    >{ tQuat('verification.include_nightly') }</Checkbox>
   ) : null;
 
   return (
     <ContractVerificationFormRow>
       <FormFieldSelectAsync<FormFields, 'compiler'>
         name="compiler"
-        placeholder="Compiler"
+        placeholder={ tQuat('verification.compiler') }
         loadOptions={ loadOptions }
         extraControls={ extraControls }
         required
       />
       { isVyper || isStylus ? null : (
         <chakra.div>
-          <span >The compiler version is specified in </span>
-          <Code color="text.secondary">pragma solidity X.X.X</Code>
-          <span>. Use the compiler version rather than the nightly build. If using the Solidity compiler, run </span>
-          <Code color="text.secondary">solc —version</Code>
-          <span> to check.</span>
+          <Trans
+            i18nKey="verification.compiler_hint"
+            components={{ pragma: <Code color="text.secondary"/>, command: <Code color="text.secondary"/> }}
+          />
         </chakra.div>
       ) }
     </ContractVerificationFormRow>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize contract verification interface. GPL-3.0.
 import { chakra, Code } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -12,20 +14,20 @@ interface Props {
 }
 
 const ContractVerificationFieldName = ({ hint }: Props) => {
+  const { t: tQuat } = useTranslation();
   return (
     <ContractVerificationFormRow>
       <FormFieldText<FormFields>
         name="name"
         required
-        placeholder="Contract name"
+        placeholder={ tQuat('verification.contract_name') }
         rules={{ maxLength: 255 }}
       />
       { hint ? <span>{ hint }</span> : (
-        <>
-          <span>Must match the name specified in the code. For example, in </span>
-          <Code color="text.secondary">{ `contract MyContract {..}` }</Code>
-          <span>. <chakra.span fontWeight={ 600 }>MyContract</chakra.span> is the contract name.</span>
-        </>
+        <Trans
+          i18nKey="verification.name_hint"
+          components={{ code: <Code color="text.secondary"/>, name: <chakra.span fontWeight={ 600 }/> }}
+        />
       ) }
     </ContractVerificationFormRow>
   );

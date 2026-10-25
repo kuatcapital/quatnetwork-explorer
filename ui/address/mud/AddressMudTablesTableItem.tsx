@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Text, VStack, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMudTableItem } from 'types/api/address';
 
@@ -11,6 +13,7 @@ import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableBody, TableCell, TableRoot, TableRow } from 'toolkit/chakra/table';
 import IconSvg from 'ui/shared/IconSvg';
+
 type Props = {
   item: AddressMudTableItem;
   isLoading: boolean;
@@ -18,6 +21,8 @@ type Props = {
 };
 
 const AddressMudTablesTableItem = ({ item, isLoading, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ isOpened, setIsOpened ] = React.useState(false);
 
   const router = useRouter();
@@ -59,7 +64,7 @@ const AddressMudTablesTableItem = ({ item, isLoading, hash }: Props) => {
                 cursor="pointer"
                 onClick={ handleIconClick }
                 transitionDuration="faster"
-                aria-label="View schema"
+                aria-label={ tQuat('addresses.view_schema') }
               />
             </Link>
           </Skeleton>
@@ -95,7 +100,7 @@ const AddressMudTablesTableItem = ({ item, isLoading, hash }: Props) => {
               <TableBody>
                 { Boolean(item.schema.key_names.length) && (
                   <TableRow>
-                    <TableCell width="80px" fontSize="sm" fontWeight={ 600 } py={ 2 } pl={ 0 } verticalAlign="middle">Key</TableCell>
+                    <TableCell width="80px" fontSize="sm" fontWeight={ 600 } py={ 2 } pl={ 0 } verticalAlign="middle">{ tQuat('addresses.key') }</TableCell>
                     <TableCell py={ 2 }>
                       <VStack gap={ 1 } alignItems="start">
                         { item.schema.key_names.map((name, index) => (

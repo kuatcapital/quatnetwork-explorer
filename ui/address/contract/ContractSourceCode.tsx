@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContract } from 'types/api/contract';
 
@@ -52,6 +54,7 @@ interface Props {
 }
 
 export const ContractSourceCode = ({ data, isLoading, sourceAddress }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const multichainContext = useMultichainContext();
 
@@ -61,7 +64,7 @@ export const ContractSourceCode = ({ data, isLoading, sourceAddress }: Props) =>
 
   const heading = (
     <Skeleton loading={ isLoading } fontWeight={ 500 }>
-      <span>Contract source code</span>
+      <span>{ tQuat('contracts.source_code') }</span>
       { data?.language &&
         <Text whiteSpace="pre" as="span" color="text.secondary"> ({ formatLanguageName(data.language) })</Text> }
     </Skeleton>
@@ -78,9 +81,7 @@ export const ContractSourceCode = ({ data, isLoading, sourceAddress }: Props) =>
         ml={{ base: '0', lg: 'auto' }}
         loading={ isLoading }
       >
-        <Skeleton loading={ isLoading }>
-          View UML diagram
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('contracts.view_uml') }</Skeleton>
       </Link>
     </Tooltip>
   ) : null;

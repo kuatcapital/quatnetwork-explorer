@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractMudSystemItem } from 'types/api/contract';
 
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const ContractMethodsMudSystem = ({ items }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const router = useRouter();
 
@@ -53,7 +56,7 @@ const ContractMethodsMudSystem = ({ items }: Props) => {
           items={ items }
           selectedItem={ selectedItem }
           onItemSelect={ handleItemSelect }
-          label="System address"
+          label={ tQuat('contracts.system_address') }
           mb={ 3 }
         />
         <ContractMethodsFilters

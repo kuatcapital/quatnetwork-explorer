@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import type BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressesItem } from 'types/api/addresses';
 
@@ -18,16 +20,18 @@ interface Props {
 }
 
 const AddressesTable = ({ items, totalSupply, pageStartIndex, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const hasPercentage = !totalSupply.eq(ZERO);
   return (
     <TableRoot>
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader width="64px">Rank</TableColumnHeader>
-          <TableColumnHeader width={ hasPercentage ? '50%' : '60%' }>Address</TableColumnHeader>
+          <TableColumnHeader width="64px">{ tQuat('addresses.rank') }</TableColumnHeader>
+          <TableColumnHeader width={ hasPercentage ? '50%' : '60%' }>{ tQuat('common.address') }</TableColumnHeader>
           <TableColumnHeader width={ hasPercentage ? '20%' : '25%' } isNumeric>{ `Balance ${ currencyUnits.ether }` }</TableColumnHeader>
-          { hasPercentage && <TableColumnHeader width="15%" isNumeric>Percentage</TableColumnHeader> }
-          <TableColumnHeader width="15%" isNumeric>Txn count</TableColumnHeader>
+          { hasPercentage && <TableColumnHeader width="15%" isNumeric>{ tQuat('addresses.percentage') }</TableColumnHeader> }
+          <TableColumnHeader width="15%" isNumeric>{ tQuat('addresses.transaction_count') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -14,6 +16,7 @@ interface Props extends LinkProps {
 }
 
 const ContractDetailsVerificationButton = ({ isLoading, addressHash, ...rest }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const multichainContext = useMultichainContext();
 
@@ -37,9 +40,7 @@ const ContractDetailsVerificationButton = ({ isLoading, addressHash, ...rest }: 
       <Button
         size="sm"
         loadingSkeleton={ isLoading }
-      >
-        Verify & publish
-      </Button>
+      >{ tQuat('contracts.verify_publish') }</Button>
     </Link>
   );
 };

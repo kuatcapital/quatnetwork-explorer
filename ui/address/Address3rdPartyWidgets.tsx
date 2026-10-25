@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Grid, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address3rdPartyWidget } from 'types/views/address';
 
@@ -24,6 +26,8 @@ type Props = {
 const NUMBER_OF_WIDGETS_TO_DISPLAY = 8;
 
 const Address3rdPartyWidgets = ({ shouldRender = true, isQueryEnabled = true, addressType, isLoading = false, showAll }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMounted = useIsMounted();
 
@@ -71,9 +75,7 @@ const Address3rdPartyWidgets = ({ shouldRender = true, isQueryEnabled = true, ad
           href={ route({ pathname: '/address/[hash]', query: { hash: addressHash, tab: 'widgets' } }) }
           textStyle="sm"
           ml={ 0.5 }
-        >
-          View all
-        </Link>
+        >{ tQuat('common.view_all') }</Link>
       ) }
     </Flex>
   );

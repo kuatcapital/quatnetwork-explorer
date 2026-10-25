@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import { useMultichainContext } from 'lib/contexts/multichain';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getStatsLabelFromTitle from 'lib/stats/getStatsLabelFromTitle';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 import { TXS_STATS, TXS_STATS_MICROSERVICE } from 'stubs/tx';
@@ -15,6 +19,8 @@ import calculateUsdValue from 'ui/shared/value/calculateUsdValue';
 interface Props extends BoxProps {}
 
 const TxsStats = (props: Props) => {
+  const { locale } = useLocale();
+  const { t: tTx } = useTranslation();
   const multichainContext = useMultichainContext();
 
   const chainConfig = multichainContext?.chain.app_config || config;
@@ -91,8 +97,8 @@ const TxsStats = (props: Props) => {
         <StatsWidget
           label={ txsStatsQuery.data?.transactions_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.transactions_24h?.title) :
-            'Transactions' }
-          value={ Number(txCount24h).toLocaleString() }
+            tTx('common.transactions') }
+          value={ formatNumber(Number(txCount24h), locale) }
           period="24h"
           isLoading={ isLoading }
           href={
@@ -106,8 +112,8 @@ const TxsStats = (props: Props) => {
         <StatsWidget
           label={ txsStatsQuery.data?.operational_transactions_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.operational_transactions_24h?.title) :
-            'Daily op txns' }
-          value={ Number(operationalTxns24hArbitrum).toLocaleString() }
+            tTx('home.daily_operational_transactions') }
+          value={ formatNumber(Number(operationalTxns24hArbitrum), locale) }
           period="24h"
           isLoading={ isLoading }
         />
@@ -116,8 +122,8 @@ const TxsStats = (props: Props) => {
         <StatsWidget
           label={ txsStatsQuery.data?.op_stack_operational_transactions_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.op_stack_operational_transactions_24h?.title) :
-            'Daily op txns' }
-          value={ Number(operationalTxns24hOptimistic).toLocaleString() }
+            tTx('home.daily_operational_transactions') }
+          value={ formatNumber(Number(operationalTxns24hOptimistic), locale) }
           period="24h"
           isLoading={ isLoading }
         />
@@ -126,8 +132,8 @@ const TxsStats = (props: Props) => {
         <StatsWidget
           label={ txsStatsQuery.data?.pending_transactions_30m?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.pending_transactions_30m?.title) :
-            'Pending transactions' }
-          value={ Number(pendingTxns).toLocaleString() }
+            tTx('transactions.pending_transactions') }
+          value={ formatNumber(Number(pendingTxns), locale) }
           period={ isStatsFeatureEnabled ? '30min' : '1h' }
           isLoading={ isLoading }
         />
@@ -136,8 +142,8 @@ const TxsStats = (props: Props) => {
         <StatsWidget
           label={ txsStatsQuery.data?.transactions_fee_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.transactions_fee_24h?.title) :
-            'Transactions fees' }
-          value={ txFeeSum24h.toLocaleString(undefined, { maximumFractionDigits: 2 }) }
+            tTx('transactions.transaction_fees') }
+          value={ formatNumber(txFeeSum24h, locale, { maximumFractionDigits: 2 }) }
           valuePostfix={ thinsp + chainConfig.chain.currency.symbol }
           period="24h"
           isLoading={ isLoading }
@@ -152,7 +158,7 @@ const TxsStats = (props: Props) => {
         <StatsWidget
           label={ txsStatsQuery.data?.average_transactions_fee_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.average_transactions_fee_24h?.title) :
-            'Avg. transaction fee' }
+            tTx('transactions.average_fee') }
           value={ txFeeAvg.usdStr ? txFeeAvg.usdStr : txFeeAvg.valueStr }
           valuePrefix={ txFeeAvg.usdStr ? '$' : undefined }
           valuePostfix={ txFeeAvg.usdStr ? undefined : thinsp + chainConfig.chain.currency.symbol }

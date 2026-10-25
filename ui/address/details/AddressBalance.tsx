@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { Address } from 'types/api/address';
@@ -18,6 +20,8 @@ interface Props {
 }
 
 const AddressBalance = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ lastBlockNumber, setLastBlockNumber ] = React.useState<number>(data.block_number_balance_updated_at || 0);
   const queryClient = useQueryClient();
 
@@ -67,11 +71,9 @@ const AddressBalance = ({ data, isLoading }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint={ `${ currencyUnits.ether } balance` }
+        hint={ tQuat('addresses.currency_balance', { currency: currencyUnits.ether }) }
         isLoading={ isLoading }
-      >
-        Balance
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.balance') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow>
         <NativeCoinValue
           amount={ data.coin_balance || '0' }

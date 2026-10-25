@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 
@@ -25,6 +27,8 @@ type Props = {
 };
 
 const TokenInventory = ({ inventoryQuery, tokenQuery, ownerFilter, shouldRender = true }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const isMounted = useIsMounted();
 
@@ -45,7 +49,7 @@ const TokenInventory = ({ inventoryQuery, tokenQuery, ownerFilter, shouldRender 
       mb={{ base: isActionBarHidden ? 3 : 6, lg: 3 }}
       mr={ 4 }
     >
-      <Text whiteSpace="nowrap" mr={ 2 } py={ 1 }>Filtered by owner</Text>
+      <Text whiteSpace="nowrap" mr={ 2 } py={ 1 }>{ tQuat('tokenUi.filtered_owner') }</Text>
       <Flex alignItems="center" py={ 1 }>
         <AddressEntity address={{ hash: ownerFilter }} truncation={ isMobile ? 'constant' : 'none' }/>
         <ResetIconButton onClick={ resetOwnerFilter }/>
@@ -89,10 +93,10 @@ const TokenInventory = ({ inventoryQuery, tokenQuery, ownerFilter, shouldRender 
     <DataListDisplay
       isError={ inventoryQuery.isError }
       itemsNum={ items?.length }
-      emptyText="There are no tokens."
+      emptyText={ tQuat('tokenUi.no_tokens') }
       hasActiveFilters={ Boolean(ownerFilter) }
       emptyStateProps={{
-        description: 'No tokens found for the selected owner.',
+        description: tQuat('tokenUi.no_owner_tokens'),
       }}
       actionBar={ actionBar }
     >

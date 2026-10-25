@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-25: request-aware state labels and precise locale display. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TxStateChange } from 'types/api/txStateChanges';
 
 import config from 'configs/app';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
 import { currencyUnits } from 'lib/units';
 import { Badge } from 'toolkit/chakra/badge';
@@ -17,13 +21,23 @@ import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 
 import TxStateTokenIdList from './TxStateTokenIdList';
 
-export function getStateElements(data: TxStateChange, isLoading?: boolean) {
+const PRODUCER_KEYS: Record<string, string> = {
+  miner: 'transactions.miner',
+  validator: 'common.validator',
+  poster: 'home.poster',
+  sequencer: 'home.sequencer',
+  'fee recipient': 'home.fee_recipient',
+};
+
+export function useStateElements(data: TxStateChange, isLoading?: boolean) {
+  const { t: tTx } = useTranslation();
+  const { locale } = useLocale();
   const tag = (() => {
     if (data.is_miner) {
       return (
-        <Tooltip content="A block producer who successfully included the block into the blockchain">
+        <Tooltip content={ tTx('transactions.block_producer_hint') }>
           <Badge textTransform="capitalize" colorPalette="yellow" loading={ isLoading }>
-            { getNetworkValidatorTitle() }
+            { tTx(PRODUCER_KEYS[getNetworkValidatorTitle()]) }
           </Badge>
         </Tooltip>
       );
@@ -39,10 +53,10 @@ export function getStateElements(data: TxStateChange, isLoading?: boolean) {
       })();
 
       if (changeDirection) {
-        const text = changeDirection === 'from' ? 'Mint' : 'Burn';
+        const text = tTx(changeDirection === 'from' ? 'transactions.mint_address' : 'transactions.burn_address');
         return (
-          <Tooltip content="Address used in tokens mintings and burnings">
-            <Badge textTransform="capitalize" colorPalette="yellow" loading={ isLoading }>{ text } address</Badge>
+          <Tooltip content={ tTx('transactions.mint_burn_address_hint') }>
+            <Badge textTransform="capitalize" colorPalette="yellow" loading={ isLoading }>{ text }</Badge>
           </Tooltip>
         );
       }
@@ -62,17 +76,17 @@ export function getStateElements(data: TxStateChange, isLoading?: boolean) {
       return {
         before: (
           <Skeleton loading={ isLoading } wordBreak="break-all" display="inline-block">
-            { beforeBn.toFormat() } { currencyUnits.ether }
+            { formatBigNumber(beforeBn, locale) } { currencyUnits.ether }
           </Skeleton>
         ),
         after: (
           <Skeleton loading={ isLoading } wordBreak="break-all" display="inline-block">
-            { afterBn.toFormat() } { currencyUnits.ether }
+            { formatBigNumber(afterBn, locale) } { currencyUnits.ether }
           </Skeleton>
         ),
         change: (
           <Skeleton loading={ isLoading } display="inline-block" color={ changeColor }>
-            <span>{ changeSign }{ nbsp }{ differenceBn.abs().toFormat() }</span>
+            <span>{ changeSign }{ nbsp }{ formatBigNumber(differenceBn.abs(), locale) }</span>
           </Skeleton>
         ),
         tag,
@@ -108,7 +122,7 @@ export function getStateElements(data: TxStateChange, isLoading?: boolean) {
 
         return (
           <Skeleton loading={ isLoading } display="inline-block" color={ changeColor } wordBreak="break-all">
-            <span>{ changeSign }{ nbsp }{ differenceBn.abs().toFormat() }</span>
+            <span>{ changeSign }{ nbsp }{ formatBigNumber(differenceBn.abs(), locale) }</span>
           </Skeleton>
         );
       })();
@@ -134,14 +148,14 @@ export function getStateElements(data: TxStateChange, isLoading?: boolean) {
       return {
         before: data.balance_before ? (
           <Flex whiteSpace="pre-wrap" justifyContent={{ base: 'flex-start', lg: 'flex-end' }} flexWrap="wrap">
-            <Skeleton loading={ isLoading } wordBreak="break-all">{ beforeBn.toFormat() }</Skeleton>
+            <Skeleton loading={ isLoading } wordBreak="break-all">{ formatBigNumber(beforeBn, locale) }</Skeleton>
             <span>{ space }</span>
             { tokenLink }
           </Flex>
         ) : null,
         after: data.balance_after ? (
           <Flex whiteSpace="pre-wrap" justifyContent={{ base: 'flex-start', lg: 'flex-end' }} flexWrap="wrap">
-            <Skeleton loading={ isLoading } wordBreak="break-all">{ afterBn.toFormat() }</Skeleton>
+            <Skeleton loading={ isLoading } wordBreak="break-all">{ formatBigNumber(afterBn, locale) }</Skeleton>
             <span>{ space }</span>
             { tokenLink }
           </Flex>

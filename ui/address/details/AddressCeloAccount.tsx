@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { upperFirst } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Address } from 'types/api/address';
 import type { ExcludeNull, ExcludeUndefined } from 'types/utils';
@@ -18,28 +20,28 @@ interface Props {
 }
 
 const AddressCeloAccount = ({ isLoading, data }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Celo account info (from the Accounts contract), including it's human-readable name"
+        hint={ tQuat('addresses.celo_hint') }
         isLoading={ isLoading }
-      >
-        Celo account
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('addresses.celo_account') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow>
         { data.name && <TruncatedText text={ data.name } mr={ 3 }/> }
         <DetailedInfoItemBreakdown.Container loading={ isLoading }>
           <DetailedInfoItemBreakdown.Row
-            label="Type"
-            hint="The role of the account: regular, validator, or validator group"
+            label={ tQuat('common.type') }
+            hint={ tQuat('addresses.account_role_hint') }
           >
             { upperFirst(data.type) }
           </DetailedInfoItemBreakdown.Row>
 
           { data.metadata_url && (
             <DetailedInfoItemBreakdown.Row
-              label="Metadata URL"
-              hint="Link to additional information published by the account owner"
+              label={ tQuat('addresses.metadata_url') }
+              hint={ tQuat('addresses.metadata_url_hint') }
             >
               <Link href={ data.metadata_url } external>
                 <TruncatedText text={ data.metadata_url }/>
@@ -48,23 +50,23 @@ const AddressCeloAccount = ({ isLoading, data }: Props) => {
           ) }
 
           <DetailedInfoItemBreakdown.Row
-            label={ `Locked ${ currencyUnits.ether }` }
-            hint="Total amount of CELO locked by this account (used for staking or governance)"
+            label={ tQuat('addresses.locked_currency', { currency: currencyUnits.ether }) }
+            hint={ tQuat('addresses.locked_celo_hint') }
           >
             <NativeCoinValue amount={ data.locked_celo } noSymbol/>
           </DetailedInfoItemBreakdown.Row>
 
           <DetailedInfoItemBreakdown.Row
-            label={ `Non-voting locked ${ currencyUnits.ether }` }
-            hint="Portion of locked CELO that is not currently used for voting"
+            label={ tQuat('addresses.nonvoting_locked_currency', { currency: currencyUnits.ether }) }
+            hint={ tQuat('addresses.nonvoting_celo_hint') }
           >
             <NativeCoinValue amount={ data.nonvoting_locked_celo } noSymbol/>
           </DetailedInfoItemBreakdown.Row>
 
           { data.vote_signer_address && (
             <DetailedInfoItemBreakdown.Row
-              label="Vote signer address"
-              hint="Address authorized to vote in governance and validator elections on behalf of this account"
+              label={ tQuat('addresses.vote_signer') }
+              hint={ tQuat('addresses.vote_signer_hint') }
             >
               <AddressEntity address={ data.vote_signer_address }/>
             </DetailedInfoItemBreakdown.Row>
@@ -72,8 +74,8 @@ const AddressCeloAccount = ({ isLoading, data }: Props) => {
 
           { data.validator_signer_address && (
             <DetailedInfoItemBreakdown.Row
-              label="Validator signer address"
-              hint="Address authorized to manage a validator or validator group and sign consensus messages for this account"
+              label={ tQuat('addresses.validator_signer') }
+              hint={ tQuat('addresses.validator_signer_hint') }
             >
               <AddressEntity address={ data.validator_signer_address }/>
             </DetailedInfoItemBreakdown.Row>
@@ -81,8 +83,8 @@ const AddressCeloAccount = ({ isLoading, data }: Props) => {
 
           { data.attestation_signer_address && (
             <DetailedInfoItemBreakdown.Row
-              label="Attestation signer address"
-              hint="Address whose key this account uses to sign attestations on the Attestations contract"
+              label={ tQuat('addresses.attestation_signer') }
+              hint={ tQuat('addresses.attestation_signer_hint') }
             >
               <AddressEntity address={ data.attestation_signer_address }/>
             </DetailedInfoItemBreakdown.Row>

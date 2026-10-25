@@ -1,13 +1,17 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware token ranks and exact holder counts. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 import type { AggregatedTokenInfo } from 'types/client/multichainAggregator';
 
 import config from 'configs/app';
 import multichainConfig from 'configs/multichain';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
 import getItemIndex from 'lib/getItemIndex';
+import { useLocale } from 'lib/i18n/provider';
 import { getTokenTypeName } from 'lib/token/tokenTypes';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
@@ -34,6 +38,8 @@ const TokensTableItem = ({
   index,
   isLoading,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const {
     address_hash: addressHash,
@@ -84,7 +90,7 @@ const TokensTableItem = ({
             mr={ 3 }
             minW="28px"
           >
-            { getItemIndex(index, page) }
+            { formatNumber(getItemIndex(index, page), locale) }
           </Skeleton>
           <Flex overflow="hidden" flexDir="column" rowGap={ 2 }>
             <TokenEntity
@@ -118,7 +124,7 @@ const TokensTableItem = ({
               </Flex>
             ) }
             <Flex columnGap={ 1 }>
-              <Tag loading={ isLoading }>{ getTokenTypeName(type, chainInfo?.app_config) }</Tag>
+              <Tag loading={ isLoading }>{ type === 'NATIVE' ? tQuat('tokenUi.native_token') : getTokenTypeName(type, chainInfo?.app_config) }</Tag>
               { bridgedChainTag && <Tag loading={ isLoading }>{ bridgedChainTag }</Tag> }
             </Flex>
           </Flex>
@@ -149,7 +155,7 @@ const TokensTableItem = ({
           loading={ isLoading }
           display="inline-block"
         >
-          { Number(holdersCount).toLocaleString() }
+          { formatBigNumber(BigNumber(holdersCount || 0), locale) }
         </Skeleton>
       </TableCell>
     </TableRow>

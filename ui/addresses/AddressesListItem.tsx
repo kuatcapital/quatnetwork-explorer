@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressesItem } from 'types/api/addresses';
 
@@ -25,6 +27,7 @@ const AddressesListItem = ({
   totalSupply,
   isLoading,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const addressBalance = BigNumber(item.coin_balance || 0).div(BigNumber(10 ** config.chain.currency.decimals));
 
@@ -53,14 +56,14 @@ const AddressesListItem = ({
       </HStack>
       { !totalSupply.eq(ZERO) && (
         <HStack gap={ 3 }>
-          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Percentage</Skeleton>
+          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.percentage') }</Skeleton>
           <Skeleton loading={ isLoading } fontSize="sm" color="text.secondary">
             <span>{ addressBalance.div(BigNumber(totalSupply)).multipliedBy(100).dp(8).toFormat() + '%' }</span>
           </Skeleton>
         </HStack>
       ) }
       <HStack gap={ 3 }>
-        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Txn count</Skeleton>
+        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.transaction_count') }</Skeleton>
         <Skeleton loading={ isLoading } fontSize="sm" color="text.secondary">
           <span>{ Number(item.transactions_count).toLocaleString() }</span>
         </Skeleton>

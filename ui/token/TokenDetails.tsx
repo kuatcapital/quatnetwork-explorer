@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { scroller } from 'react-scroll';
 
 import type { TokenInfo } from 'types/api/token';
@@ -12,7 +14,9 @@ import type { ResourceError } from 'lib/api/resources';
 import useApiQuery from 'lib/api/useApiQuery';
 import { useMultichainContext } from 'lib/contexts/multichain';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
 import useIsMounted from 'lib/hooks/useIsMounted';
+import { useLocale } from 'lib/i18n/provider';
 import { isConfidentialTokenType } from 'lib/token/tokenTypes';
 import { TOKEN_COUNTERS } from 'stubs/token';
 import { Link } from 'toolkit/chakra/link';
@@ -32,6 +36,9 @@ interface Props {
 }
 
 const TokenDetails = ({ tokenQuery }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const router = useRouter();
   const isMounted = useIsMounted();
 
@@ -65,7 +72,7 @@ const TokenDetails = ({ tokenQuery }: Props) => {
   const countersItem = useCallback((item: 'token_holders_count' | 'transfers_count') => {
     const itemValue = tokenCountersQuery.data?.[item];
     if (!itemValue) {
-      return 'N/A';
+      return tQuat('tokenUi.unavailable');
     }
     if (itemValue === '0') {
       return itemValue;
@@ -75,10 +82,10 @@ const TokenDetails = ({ tokenQuery }: Props) => {
 
     return (
       <Link onClick={ changeUrlAndScroll(tab) } loading={ tokenCountersQuery.isPlaceholderData }>
-        { Number(itemValue).toLocaleString() }
+        { formatBigNumber(BigNumber(itemValue), locale) }
       </Link>
     );
-  }, [ tokenCountersQuery.data, tokenCountersQuery.isPlaceholderData, changeUrlAndScroll ]);
+  }, [ tokenCountersQuery.data, tokenCountersQuery.isPlaceholderData, changeUrlAndScroll, tQuat, locale ]);
 
   throwOnResourceLoadError(tokenQuery);
 
@@ -101,11 +108,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       { zilliqa?.zrc2_address_hash && (
         <>
           <DetailedInfo.ItemLabel
-            hint="ZRC-2 address of the token"
+            hint={ tQuat('tokenUi.zrc_hint') }
             isLoading={ tokenQuery.isPlaceholderData }
-          >
-            ZRC-2 Address
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.zrc_address') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ tokenQuery.isPlaceholderData } display="inline-block">
               <AddressEntity address={{ hash: zilliqa.zrc2_address_hash }} isLoading={ tokenQuery.isPlaceholderData }/>
@@ -117,14 +122,12 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       { exchangeRate && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Price per token on the exchanges"
+            hint={ tQuat('tokenUi.price_hint') }
             isLoading={ tokenQuery.isPlaceholderData }
-          >
-            Price
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.price') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ tokenQuery.isPlaceholderData } display="inline-block">
-              <span>{ `$${ Number(exchangeRate).toLocaleString(undefined, { minimumSignificantDigits: 4 }) }` }</span>
+              <span>{ `$${ formatNumber(Number(exchangeRate), locale, { minimumSignificantDigits: 4 }) }` }</span>
             </Skeleton>
           </DetailedInfo.ItemValue>
         </>
@@ -133,14 +136,12 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       { marketCap && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Circulating supply * Price"
+            hint={ tQuat('tokenUi.market_cap_hint') }
             isLoading={ tokenQuery.isPlaceholderData }
-          >
-            Market cap
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.market_cap') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ tokenQuery.isPlaceholderData } display="inline-block">
-              <span>{ `$${ BigNumber(marketCap).toFormat() }` }</span>
+              <span>{ `$${ formatBigNumber(BigNumber(marketCap), locale) }` }</span>
             </Skeleton>
           </DetailedInfo.ItemValue>
         </>
@@ -148,11 +149,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       { type && !isConfidentialTokenType(type) && (
         <>
           <DetailedInfo.ItemLabel
-            hint="The total amount of tokens issued"
+            hint={ tQuat('tokenUi.supply_hint') }
             isLoading={ tokenQuery.isPlaceholderData }
-          >
-            Max total supply
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.max_supply') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue
             alignSelf="center"
             wordBreak="break-word"
@@ -171,11 +170,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       ) }
 
       <DetailedInfo.ItemLabel
-        hint="Number of accounts holding the token"
+        hint={ tQuat('tokenUi.holders_hint') }
         isLoading={ tokenQuery.isPlaceholderData }
-      >
-        Holders
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('tokenUi.holders') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ tokenCountersQuery.isPlaceholderData }>
           { countersItem('token_holders_count') }
@@ -183,11 +180,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Number of transfer for the token"
+        hint={ tQuat('tokenUi.transfers_hint') }
         isLoading={ tokenQuery.isPlaceholderData }
-      >
-        Transfers
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('tokenUi.transfers') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ tokenCountersQuery.isPlaceholderData }>
           { countersItem('transfers_count') }
@@ -197,11 +192,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       { decimals && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Number of digits that come after the decimal place when displaying token value"
+            hint={ tQuat('tokenUi.decimals_hint') }
             isLoading={ tokenQuery.isPlaceholderData }
-          >
-            Decimals
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('tokenUi.decimals') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ tokenQuery.isPlaceholderData } minW={ 6 }>
               { decimals }
@@ -222,10 +215,8 @@ const TokenDetails = ({ tokenQuery }: Props) => {
       { (type !== 'ERC-20' && config.UI.views.nft.marketplaces.length === 0 && appActionData) && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Link to the dapp"
-          >
-            Dapp
-          </DetailedInfo.ItemLabel>
+            hint={ tQuat('tokenUi.dapp_hint') }
+          >{ tQuat('tokenUi.dapp') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue
             py="1px"
           >

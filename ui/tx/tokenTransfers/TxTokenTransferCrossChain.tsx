@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import TokenTransfersCrossChainListItem from 'ui/crossChain/transfers/TokenTransfersCrossChainListItem';
 import TokenTransfersCrossChainTable from 'ui/crossChain/transfers/TokenTransfersCrossChainTable';
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const TxTokenTransferCrossChain = ({ txQuery, crossChainQuery, isLoading, tableTop }: Props) => {
+  const { t: tTx } = useTranslation();
   const content = crossChainQuery.data?.items ? (
     <>
       <Box hideFrom="lg">
@@ -42,7 +45,7 @@ const TxTokenTransferCrossChain = ({ txQuery, crossChainQuery, isLoading, tableT
     <DataListDisplay
       isError={ txQuery.isError || crossChainQuery.isError }
       itemsNum={ crossChainQuery.data?.items.length }
-      emptyText="There are no cross-chain token transfers."
+      emptyText={ tTx('transactions.no_cross_chain_transfers') }
       emptyStateProps={{
         term: 'token transfer',
       }}

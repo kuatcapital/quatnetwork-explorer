@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -16,17 +18,17 @@ type Props = {
 };
 
 export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
+  const { t: tTx } = useTranslation();
   return (
     <>
       { data.scroll?.l1_fee !== undefined && (
         <>
           <DetailedInfo.ItemLabel
 
-            hint={ `${ layerLabels.parent } fee that pays for rollup costs` }
+            hint={ tTx('transactions.rollup_fee_hint', { layer: layerLabels.parent }) }
             isLoading={ isLoading }
           >
-            { layerLabels.parent } data fee
-          </DetailedInfo.ItemLabel>
+            { tTx('transactions.layer_data_fee', { layer: layerLabels.parent }) }</DetailedInfo.ItemLabel>
           <DetailedInfoNativeCoinValue
             amount={ data.scroll?.l1_fee }
             exchangeRate={ data.exchange_rate }
@@ -40,11 +42,10 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
       { data.scroll?.l2_fee !== undefined && (
         <>
           <DetailedInfo.ItemLabel
-            hint={ `${ layerLabels.current } execution fee` }
+            hint={ tTx('transactions.execution_fee_hint', { layer: layerLabels.current }) }
             isLoading={ isLoading }
           >
-            Execution fee
-          </DetailedInfo.ItemLabel>
+            { tTx('transactions.execution_fee') }</DetailedInfo.ItemLabel>
           <DetailedInfoNativeCoinValue
             amount={ data.scroll?.l2_fee.value }
             exchangeRate={ data.exchange_rate }
@@ -58,11 +59,10 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
       { data.scroll?.l1_fee_commit_scalar !== undefined && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Commitment scalar"
+            hint={ tTx('transactions.commit_scalar_hint') }
             isLoading={ isLoading }
           >
-            { layerLabels.parent } commit scalar
-          </DetailedInfo.ItemLabel>
+            { tTx('transactions.layer_commit_scalar', { layer: layerLabels.parent }) }</DetailedInfo.ItemLabel>
           <DetailedInfoNativeCoinValue
             amount={ String(data.scroll?.l1_fee_commit_scalar) }
             exchangeRate={ data.exchange_rate }
@@ -76,11 +76,10 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
       { data.scroll?.l1_fee_overhead !== undefined && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Additional gas overhead of a data commitment transaction"
+            hint={ tTx('transactions.gas_overhead_hint') }
             isLoading={ isLoading }
           >
-            { layerLabels.parent } Fee Overhead
-          </DetailedInfo.ItemLabel>
+            { layerLabels.parent } { tTx('transactions.fee_overhead') }</DetailedInfo.ItemLabel>
           <DetailedInfoNativeCoinValue
             amount={ String(data.scroll?.l1_fee_overhead) }
             exchangeRate={ data.exchange_rate }
@@ -93,15 +92,15 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
       { (data.scroll?.l1_base_fee !== undefined || data.scroll?.l1_fee_scalar !== undefined) && (
         <>
           <DetailedInfo.ItemLabel
-            hint={ `${ layerLabels.parent } gas fees` }
+            hint={ tTx('transactions.layer_gas_fees', { layer: layerLabels.parent }) }
             isLoading={ isLoading }
           >
-            { layerLabels.parent } gas fees
+            { tTx('transactions.layer_gas_fees', { layer: layerLabels.parent }) }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             { data.scroll?.l1_base_fee !== undefined && (
               <Skeleton loading={ isLoading }>
-                <Text as="span" fontWeight="500">Base: </Text>
+                <Text as="span" fontWeight="500">{ tTx('transactions.base_label') }{ ' ' }</Text>
                 <NativeCoinValue
                   amount={ String(data.scroll?.l1_base_fee || 0) }
                   units="gwei"
@@ -114,7 +113,7 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
             { data.scroll?.l1_fee_scalar !== undefined && (
               <Skeleton loading={ isLoading }>
                 <TextSeparator/>
-                <Text as="span" fontWeight="500">Scalar: </Text>
+                <Text as="span" fontWeight="500">{ tTx('transactions.scalar_label') }{ ' ' }</Text>
                 <NativeCoinValue
                   amount={ String(data.scroll?.l1_fee_scalar || 0) }
                   units="gwei"
@@ -130,15 +129,15 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
       { (data.scroll?.l1_blob_base_fee !== undefined || data.scroll?.l1_fee_blob_scalar !== undefined) && (
         <>
           <DetailedInfo.ItemLabel
-            hint={ `${ layerLabels.parent } blob fees` }
+            hint={ tTx('transactions.layer_blob_fees', { layer: layerLabels.parent }) }
             isLoading={ isLoading }
           >
-            { layerLabels.parent } blob fees
+            { tTx('transactions.layer_blob_fees', { layer: layerLabels.parent }) }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             { data.scroll?.l1_blob_base_fee !== undefined && (
               <Skeleton loading={ isLoading }>
-                <Text as="span" fontWeight="500">Base: </Text>
+                <Text as="span" fontWeight="500">{ tTx('transactions.base_label') }{ ' ' }</Text>
                 <NativeCoinValue
                   amount={ String(data.scroll?.l1_blob_base_fee || 0) }
                   units="gwei"
@@ -151,7 +150,7 @@ export const TxInfoScrollFees = ({ data, isLoading }: Props) => {
             { data.scroll?.l1_fee_blob_scalar !== undefined && (
               <Skeleton loading={ isLoading }>
                 <TextSeparator/>
-                <Text as="span" fontWeight="500">Scalar: </Text>
+                <Text as="span" fontWeight="500">{ tTx('transactions.scalar_label') }{ ' ' }</Text>
                 <NativeCoinValue
                   amount={ String(data.scroll?.l1_fee_blob_scalar || 0) }
                   units="gwei"

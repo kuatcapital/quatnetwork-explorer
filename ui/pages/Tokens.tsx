@@ -1,14 +1,18 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { TokenType } from 'types/api/token';
 import type { TokensSortingValue, TokensSortingField, TokensSorting } from 'types/api/tokens';
 
 import config from 'configs/app';
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import useDebounce from 'lib/hooks/useDebounce';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { TOKEN_INFO_ERC_20 } from 'stubs/token';
 import { generateListStub } from 'stubs/utils';
@@ -42,6 +46,9 @@ const TABS_RIGHT_SLOT_PROPS: SlotProps = {
 const bridgedTokensFeature = config.features.bridgedTokens;
 
 const Tokens = () => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const router = useRouter();
   const isMobile = useIsMobile();
 
@@ -134,13 +141,12 @@ const Tokens = () => {
       return null;
     }
 
-    const bridgesListText = bridgedTokensFeature.bridges.map((item, index, array) => {
-      return item.title + (index < array.length - 2 ? ', ' : '') + (index === array.length - 2 ? ' and ' : '');
-    });
+    const bridgesListText = new Intl.ListFormat(NUMBER_LOCALES[locale], { style: 'long', type: 'conjunction' })
+      .format(bridgedTokensFeature.bridges.map(item => item.title));
 
     return (
       <Box fontSize="sm" mb={ 4 } mt={ 1 } whiteSpace="pre-wrap" flexWrap="wrap">
-        List of the tokens bridged through { bridgesListText } extensions
+        { tQuat('tokenUi.bridge_description', { bridges: bridgesListText }) }
       </Box>
     );
   })();
@@ -148,7 +154,7 @@ const Tokens = () => {
   const tabs: Array<TabItemRegular> = [
     {
       id: 'all',
-      title: 'All',
+      title: tQuat('tokenUi.all'),
       component: (
         <TokensList
           query={ tokensQuery }
@@ -162,7 +168,7 @@ const Tokens = () => {
     },
     bridgedTokensFeature.isEnabled ? {
       id: 'bridged',
-      title: 'Bridged',
+      title: tQuat('tokenUi.bridged'),
       component: (
         <TokensList
           query={ tokensQuery }
@@ -180,7 +186,7 @@ const Tokens = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `Tokens on ${ config.chain.name }` : 'Tokens' }
+        title={ config.meta.seo.enhancedDataEnabled ? tQuat('tokenUi.tokens_on', { chain: config.chain.name }) : tQuat('tokenUi.tokens') }
         withTextAd
       />
       { !hasMultipleTabs && !isMobile && actionBar }
