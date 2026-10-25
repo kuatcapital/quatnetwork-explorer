@@ -1,8 +1,12 @@
+// Modified by Quat Capital, 2026-10-25: localized batch transaction label (T18, GPL-3.0).
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import BatchEntityL2 from 'ui/shared/entities/block/BatchEntityL2';
@@ -18,6 +22,8 @@ type Props = {
 };
 
 const LatestBatchItem = ({ number, timestamp, txCount, status, isLoading, animation }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   return (
     <Box
       animation={ animation }
@@ -49,12 +55,12 @@ const LatestBatchItem = ({ number, timestamp, txCount, status, isLoading, animat
       </Flex>
       <Flex alignItems="center" justifyContent="space-between" w="100%" flexWrap="wrap" textStyle="sm">
         <Flex alignItems="center">
-          <Skeleton loading={ isLoading } mr={ 2 }>Txn</Skeleton>
+          <Skeleton loading={ isLoading } mr={ 2 }>{ t('home.txn') }</Skeleton>
           <Link
             href={ route({ pathname: '/batches/[number]', query: { number: number.toString(), tab: 'txs' } }) }
             loading={ isLoading }
           >
-            { txCount }
+            { formatNumber(txCount, locale) }
           </Link>
         </Flex>
         { status }

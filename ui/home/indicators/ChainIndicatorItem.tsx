@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-25: localized homepage percentage formatting (T18, GPL-3.0).
 import { Text, Flex, Box } from '@chakra-ui/react';
 import React from 'react';
 
 import type { TChainIndicator } from './types';
 import type { ChainIndicatorId } from 'types/homepage';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { mdash } from 'toolkit/utils/htmlEntities';
 interface Props {
@@ -14,6 +17,7 @@ interface Props {
 }
 
 const ChainIndicatorItem = ({ indicator, isSelected, onClick, isLoading }: Props) => {
+  const { locale } = useLocale();
   const handleClick = React.useCallback(() => {
     onClick(indicator.id);
   }, [ indicator.id, onClick ]);
@@ -40,7 +44,7 @@ const ChainIndicatorItem = ({ indicator, isSelected, onClick, isLoading }: Props
     return (
       <Skeleton loading={ isLoading } ml={ 1 } display="flex" alignItems="center" color={ diffColor }>
         <span>{ indicator.valueDiff >= 0 ? '+' : '-' }</span>
-        <Text color={ diffColor } fontWeight={ 600 }>{ Math.abs(indicator.valueDiff) }%</Text>
+        <Text color={ diffColor } fontWeight={ 600 }>{ formatNumber(Math.abs(indicator.valueDiff), locale, { maximumFractionDigits: 20 }) }%</Text>
       </Skeleton>
     );
   })();

@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-25: localize desktop search actions. GPL-3.0.
 import { useClickAway } from '@uidotdev/usehooks';
 import { debounce } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Route } from 'nextjs-routes';
 import { route } from 'nextjs-routes';
@@ -25,6 +27,7 @@ type Props = {
 };
 
 const SearchBarDesktop = ({ isHeroBanner }: Props) => {
+  const { t } = useTranslation();
   const inputRef = React.useRef<HTMLFormElement>(null);
   const menuWidth = React.useRef<number>(0);
 
@@ -198,7 +201,7 @@ const SearchBarDesktop = ({ isHeroBanner }: Props) => {
                 textStyle="sm"
                 onClick={ handleViewAllResultsClick }
               >
-                View all results
+                { t('search.view_all_results') }
               </Link>
             </PopoverFooter>
           ) }

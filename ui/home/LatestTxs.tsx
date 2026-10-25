@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized homepage transaction list (T18, GPL-3.0).
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -19,6 +21,7 @@ import LatestTxsItemMobile from './LatestTxsItemMobile';
 const zetachainFeature = config.features.zetachain;
 
 const LatestTxs = () => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   const txsCount = isMobile ? 2 : 5;
   const { data, isPlaceholderData, isError } = useApiQuery('general:homepage_txs', {
@@ -59,13 +62,13 @@ const LatestTxs = () => {
           </Box>
         </AddressHighlightProvider>
         <Flex justifyContent="center">
-          <Link textStyle="sm" loading={ isPlaceholderData } href={ txsUrl }>View all transactions</Link>
+          <Link textStyle="sm" loading={ isPlaceholderData } href={ txsUrl }>{ t('home.view_all_transactions') }</Link>
         </Flex>
       </>
     );
   }
 
-  return <Text>No latest transactions found.</Text>;
+  return <Text>{ t('home.no_transactions') }</Text>;
 };
 
 export default LatestTxs;

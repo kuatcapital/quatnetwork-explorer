@@ -1,13 +1,18 @@
+// Modified by Quat Capital, 2026-10-25: localize token quantities and labels without precision loss. GPL-3.0.
 import { Grid, Text, Flex } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import { mapValues } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemsProps } from './types';
 import type { SearchResultToken } from 'types/api/search';
 import type * as multichain from 'types/client/multichainAggregator';
 
 import { toBech32Address } from 'lib/address/bech32';
+import { formatBigNumber } from 'lib/format/localeNumbers';
 import highlightText from 'lib/highlightText';
+import { useLocale } from 'lib/i18n/provider';
 import * as contract from 'lib/multichain/contract';
 import ContractCertifiedLabel from 'ui/shared/ContractCertifiedLabel';
 import * as TokenEntity from 'ui/shared/entities/token/TokenEntity';
@@ -15,6 +20,8 @@ import HashStringShortenDynamic from 'ui/shared/HashStringShortenDynamic';
 import IconSvg from 'ui/shared/IconSvg';
 
 const SearchBarSuggestToken = ({ data, isMobile, searchTerm, addressFormat, chainInfo }: ItemsProps<SearchResultToken | multichain.QuickSearchResultToken>) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const icon = <TokenEntity.Icon token={{ ...data, type: data.token_type }} chain={ chainInfo }/>;
   const verifiedIcon = <IconSvg name="certified" boxSize={ 4 } color="green.500" ml={ 1 } flexShrink={ 0 }/>;
   const certifiedIcon = <ContractCertifiedLabel iconSize={ 4 } boxSize={ 4 } ml={ 1 } flexShrink={ 0 }/>;
@@ -52,8 +59,8 @@ const SearchBarSuggestToken = ({ data, isMobile, searchTerm, addressFormat, chai
   const contractVerifiedIcon = isVerified && <IconSvg name="status/success" boxSize="14px" color="green.500" ml={ 1 } flexShrink={ 0 }/>;
   const additionalInfo = (
     <Text overflow="hidden" whiteSpace="nowrap" fontWeight={ 700 }>
-      { data.token_type === 'ERC-20' && 'exchange_rate' in data && data.exchange_rate && `$${ Number(data.exchange_rate).toLocaleString() }` }
-      { data.token_type !== 'ERC-20' && data.total_supply && `Items ${ Number(data.total_supply).toLocaleString() }` }
+      { data.token_type === 'ERC-20' && 'exchange_rate' in data && data.exchange_rate && `$${ formatBigNumber(BigNumber(data.exchange_rate), locale) }` }
+      { data.token_type !== 'ERC-20' && data.total_supply && t('search.items', { value: formatBigNumber(BigNumber(data.total_supply), locale) }) }
     </Text>
   );
 

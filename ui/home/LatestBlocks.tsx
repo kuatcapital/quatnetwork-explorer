@@ -1,7 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localized blocks, utilization and epoch labels (T18, GPL-3.0).
 import { chakra, Box, Flex, Text, VStack, HStack } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { upperFirst } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { Block } from 'types/api/block';
@@ -10,8 +11,10 @@ import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
 import useApiQuery, { getResourceKey } from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
 import useInitialList from 'lib/hooks/useInitialList';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import getNetworkUtilizationParams from 'lib/networks/getNetworkUtilizationParams';
 import useSocketChannel from 'lib/socket/useSocketChannel';
 import useSocketMessage from 'lib/socket/useSocketMessage';
@@ -28,7 +31,15 @@ import LatestBlocksDegraded from './fallbacks/LatestBlocksDegraded';
 import { useHomeRpcDataContext } from './fallbacks/rpcDataContext';
 import LatestBlocksItem from './LatestBlocksItem';
 
+const NETWORK_LOAD_KEYS: Readonly<Record<string, string>> = {
+  low: 'home.load_low',
+  medium: 'home.load_medium',
+  high: 'home.load_high',
+};
+
 const LatestBlocks = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const isMobile = useIsMobile();
   // const blocksMaxCount = isMobile ? 2 : 3;
   let blocksMaxCount: number;
@@ -102,12 +113,12 @@ const LatestBlocks = () => {
             ))) }
           </VStack>
           <Flex justifyContent="center">
-            <Link textStyle="sm" href={ route({ pathname: '/blocks' }) } loading={ isPlaceholderData }>View all blocks</Link>
+            <Link textStyle="sm" href={ route({ pathname: '/blocks' }) } loading={ isPlaceholderData }>{ t('home.view_all_blocks') }</Link>
           </Flex>
         </>
       );
     }
-    return <Box textStyle="sm">No latest blocks found.</Box>;
+    return <Box textStyle="sm">{ t('home.no_blocks') }</Box>;
   })();
 
   const networkUtilization = getNetworkUtilizationParams(statsQueryResult.data?.network_utilization_percentage ?? 0);
@@ -115,24 +126,24 @@ const LatestBlocks = () => {
   return (
     <Box width={{ base: '100%', lg: '280px' }} flexShrink={ 0 }>
       <HStack alignItems="center">
-        <Heading level="3">Latest blocks</Heading>
+        <Heading level="3">{ t('home.latest_blocks') }</Heading>
         { isRpcData && <FallbackRpcIcon/> }
       </HStack>
       { statsQueryResult.data?.network_utilization_percentage !== undefined && (
         <Skeleton loading={ statsQueryResult.isPlaceholderData } mt={ 2 } display="inline-block" textStyle="sm">
           <Text as="span">
-            Network utilization:{ nbsp }
+            { t('home.network_utilization') }{ nbsp }
           </Text>
-          <Tooltip content={ `${ upperFirst(networkUtilization.load) } load` }>
+          <Tooltip content={ t(NETWORK_LOAD_KEYS[networkUtilization.load] ?? 'home.load_low') }>
             <Text as="span" color={ networkUtilization.color } fontWeight={ 700 }>
-              { statsQueryResult.data?.network_utilization_percentage.toFixed(2) }%
+              { formatNumber(statsQueryResult.data.network_utilization_percentage, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
             </Text>
           </Tooltip>
         </Skeleton>
       ) }
       { statsQueryResult.data?.celo && (
         <Box whiteSpace="pre-wrap" textStyle="sm" mt={ 2 }>
-          <span>Current epoch: </span>
+          <span>{ t('home.current_epoch') }</span>
           <chakra.span fontWeight={ 700 }>#{ statsQueryResult.data.celo.epoch_number }</chakra.span>
         </Box>
       ) }

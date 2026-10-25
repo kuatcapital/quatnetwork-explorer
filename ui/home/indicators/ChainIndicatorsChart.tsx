@@ -1,6 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localized homepage chart percentage formatting (T18, GPL-3.0).
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Hint } from 'toolkit/components/Hint/Hint';
 import { mdash } from 'toolkit/utils/htmlEntities';
@@ -20,6 +23,7 @@ interface Props {
 }
 
 const ChainIndicatorsChart = ({ isLoading: isLoadingProp, value, valueDiff, chartQuery, title, hint }: Props) => {
+  const { locale } = useLocale();
   const isLoading = isLoadingProp || chartQuery.isPending;
 
   const valueTitleElement = (() => {
@@ -48,7 +52,7 @@ const ChainIndicatorsChart = ({ isLoading: isLoadingProp, value, valueDiff, char
     return (
       <Skeleton loading={ isLoading } display="flex" alignItems="center" color={ diffColor } ml={ 2 }>
         <IconSvg name="arrows/up-head" boxSize={ 5 } mr={ 1 } transform={ valueDiff < 0 ? 'rotate(180deg)' : 'rotate(0)' }/>
-        <Text color={ diffColor } fontWeight={ 600 }>{ valueDiff }%</Text>
+        <Text color={ diffColor } fontWeight={ 600 }>{ formatNumber(valueDiff, locale, { maximumFractionDigits: 20 }) }%</Text>
       </Skeleton>
     );
   })();

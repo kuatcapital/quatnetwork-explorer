@@ -1,3 +1,4 @@
+// Quat Capital, 2026-10-25: initialize runtime localization before page metadata and application providers.
 import type { HTMLChakraProps } from '@chakra-ui/react';
 import { GrowthBookProvider } from '@growthbook/growthbook-react';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -20,6 +21,7 @@ import { MarketplaceContextProvider } from 'lib/contexts/marketplace';
 import { SettingsContextProvider } from 'lib/contexts/settings';
 import { initGrowthBook } from 'lib/growthbook/init';
 import useLoadFeatures from 'lib/growthbook/useLoadFeatures';
+import { LocaleProvider } from 'lib/i18n/provider';
 import { clientConfig as rollbarConfig, Provider as RollbarProvider } from 'lib/rollbar';
 import { SocketProvider } from 'lib/socket/context';
 import { Provider as ChakraProvider } from 'toolkit/chakra/provider';
@@ -34,7 +36,6 @@ const RewardsContextProvider = dynamic(() => import('lib/contexts/rewards').then
 const RewardsLoginModal = dynamic(() => import('ui/rewards/login/RewardsLoginModal'), { ssr: false });
 const RewardsActivityTracker = dynamic(() => import('ui/rewards/RewardsActivityTracker'), { ssr: false });
 
-import 'lib/setLocale';
 // import 'focus-visible/dist/focus-visible';
 import 'nextjs/global.css';
 
@@ -99,7 +100,7 @@ function MyApp({ Component, pageProps, router }: AppPropsWithLayout) {
   const socketUrl = !config.features.multichain.isEnabled ? getSocketUrl() : undefined;
 
   return (
-    <>
+    <LocaleProvider snapshot={ pageProps.i18n }>
       <PageMetadata pathname={ router.pathname as Route['pathname'] } query={ pageProps.query } apiData={ pageProps.apiData }/>
       <ChakraProvider>
         <RollbarProvider config={ rollbarConfig }>
@@ -129,7 +130,7 @@ function MyApp({ Component, pageProps, router }: AppPropsWithLayout) {
           </AppErrorBoundary>
         </RollbarProvider>
       </ChakraProvider>
-    </>
+    </LocaleProvider>
   );
 }
 

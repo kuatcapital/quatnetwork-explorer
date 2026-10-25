@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-25: localized transaction value and fee labels (T18, GPL-3.0).
 import {
   Box,
   Flex,
@@ -6,6 +7,7 @@ import {
   Grid,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -28,6 +30,7 @@ type Props = {
 };
 
 const LatestTxsItem = ({ tx, isLoading }: Props) => {
+  const { t } = useTranslation();
   const dataTo = tx.to ? tx.to : tx.created_contract;
   const columnNum = config.UI.views.tx.hiddenFields?.value && config.UI.views.tx.hiddenFields?.tx_fee ? 2 : 3;
 
@@ -96,7 +99,7 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
         <Flex flexDir="column" rowGap={ 3 }>
           { !config.UI.views.tx.hiddenFields?.value && (
             <Skeleton loading={ isLoading }>
-              <Text as="span" whiteSpace="pre">Value </Text>
+              <Text as="span" whiteSpace="pre">{ t('common.value') }{ ' ' }</Text>
               <NativeCoinValue
                 amount={ tx.value }
                 accuracy={ 5 }
@@ -107,7 +110,7 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
           ) }
           { !config.UI.views.tx.hiddenFields?.tx_fee && (
             <Skeleton loading={ isLoading } display="flex" whiteSpace="pre">
-              <Text as="span">Fee </Text>
+              <Text as="span">{ t('common.fee') }{ ' ' }</Text>
               <TxFee tx={ tx } accuracy={ 5 } color="text.secondary" noUsd/>
             </Skeleton>
           ) }

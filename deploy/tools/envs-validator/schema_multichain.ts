@@ -1,3 +1,4 @@
+// Quat Capital, 2026-10-25: support the same optional localization settings in multichain mode.
 declare module 'yup' {
     interface StringSchema {
       // Yup's URL validator is not perfect so we made our own
@@ -12,6 +13,7 @@ import * as uiSchemas from './schemas/ui';
 import * as featuresSchemas from './schemas/features';
 import servicesSchemas from './schemas/services';
 import { replaceQuotes } from 'configs/app/utils';
+import { i18nSchema } from './schemas/i18n';
 import { IDENTICON_TYPES } from 'types/views/address';
 
 const schema = yup
@@ -64,6 +66,7 @@ const schema = yup
     NEXT_PUBLIC_USE_NEXT_JS_PROXY: yup.boolean(),
   })
   .concat(uiSchemas.homepageSchema)
+  .concat(i18nSchema)
   .concat(uiSchemas.navigationSchema)
   .concat(uiSchemas.footerSchema)
   .concat(uiSchemas.miscSchema)

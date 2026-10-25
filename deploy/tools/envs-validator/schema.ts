@@ -1,3 +1,4 @@
+// Quat Capital, 2026-10-25: validate optional runtime localization settings; existing ENV fixtures are unchanged.
 /* eslint-disable max-len */
 declare module 'yup' {
   interface StringSchema {
@@ -25,6 +26,7 @@ import { urlTest, protocols } from './utils';
 import apisSchema from './schemas/apis';
 import chainSchema from './schemas/chain';
 import metaSchema from './schemas/meta';
+import { i18nSchema } from './schemas/i18n';
 import * as uiSchemas from './schemas/ui';
 import * as featuresSchemas from './schemas/features';
 import servicesSchema from './schemas/services';
@@ -140,6 +142,7 @@ const schema = yup
   .concat(apisSchema)
   .concat(chainSchema)
   .concat(metaSchema)
+  .concat(i18nSchema)
   .concat(uiSchemas.homepageSchema)
   .concat(uiSchemas.navigationSchema)
   .concat(uiSchemas.footerSchema)

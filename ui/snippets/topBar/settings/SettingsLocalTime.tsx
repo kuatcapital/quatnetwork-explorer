@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-25: localize local-time preference. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useSettingsContext } from 'lib/contexts/settings';
 import { Switch } from 'toolkit/chakra/switch';
 
 const SettingsLocalTime = () => {
+  const { t } = useTranslation();
   const settingsContext = useSettingsContext();
 
   if (!settingsContext) {
@@ -22,7 +25,7 @@ const SettingsLocalTime = () => {
       w="100%"
       minH="34px"
     >
-      Local time format
+      { t('common.local_time_format') }
     </Switch>
   );
 };

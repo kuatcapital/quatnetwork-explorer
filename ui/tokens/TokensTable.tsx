@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 import type { TokensSortingField, TokensSortingValue } from 'types/api/tokens';
@@ -28,6 +30,7 @@ type Props = {
 };
 
 const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const hasSorting = setSorting && sorting;
 
@@ -43,7 +46,7 @@ const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props
     <TableRoot>
       <TableHeaderSticky top={ top ?? ACTION_BAR_HEIGHT_DESKTOP }>
         <TableRow>
-          <TableColumnHeader w="50%">Token</TableColumnHeader>
+          <TableColumnHeader w="50%">{ tQuat('common.token') }</TableColumnHeader>
           { hasSorting ? (
             <TableColumnHeaderSortable
               isNumeric
@@ -52,12 +55,10 @@ const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props
               sortValue={ sorting }
               onSortToggle={ sort }
             >
-              Price
+              { tQuat('common.price') }
             </TableColumnHeaderSortable>
           ) : (
-            <TableColumnHeader isNumeric width="15%">
-              Price
-            </TableColumnHeader>
+            <TableColumnHeader isNumeric width="15%">{ tQuat('common.price') }</TableColumnHeader>
           ) }
           { hasSorting ? (
             <TableColumnHeaderSortable
@@ -67,11 +68,11 @@ const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props
               sortValue={ sorting }
               onSortToggle={ sort }
             >
-              On-chain market cap
+              { tQuat('tokens.on_chain_market_cap') }
             </TableColumnHeaderSortable>
           ) : (
             <TableColumnHeader isNumeric width="20%">
-              On-chain market cap
+              { tQuat('tokens.on_chain_market_cap') }
             </TableColumnHeader>
           ) }
           { hasSorting ? (
@@ -82,12 +83,10 @@ const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props
               sortValue={ sorting }
               onSortToggle={ sort }
             >
-              Holders
+              { tQuat('common.holders') }
             </TableColumnHeaderSortable>
           ) : (
-            <TableColumnHeader isNumeric width="15%">
-              Holders
-            </TableColumnHeader>
+            <TableColumnHeader isNumeric width="15%">{ tQuat('common.holders') }</TableColumnHeader>
           ) }
         </TableRow>
       </TableHeaderSticky>

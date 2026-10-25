@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize rate-limit guidance, duration units and actions. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import buildUrl from 'lib/api/buildUrl';
@@ -7,19 +9,22 @@ import * as cookies from 'lib/cookies';
 import { Button } from 'toolkit/chakra/button';
 import { toaster } from 'toolkit/chakra/toaster';
 import { DAY, SECOND } from 'toolkit/utils/consts';
-import { apos } from 'toolkit/utils/htmlEntities';
 import ReCaptcha from 'ui/shared/reCaptcha/ReCaptcha';
 import useReCaptcha from 'ui/shared/reCaptcha/useReCaptcha';
 
 import AppErrorIcon from '../AppErrorIcon';
 import AppErrorTitle from '../AppErrorTitle';
 
-function formatTimeLeft(timeLeft: number) {
+function getTimeLeftParts(timeLeft: number): { hours: string; minutes: string; seconds: string } {
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
 
-  return `${ hours.toString().padStart(2, '0') }h ${ minutes.toString().padStart(2, '0') }m ${ seconds.toString().padStart(2, '0') }s`;
+  return {
+    hours: hours.toString().padStart(2, '0'),
+    minutes: minutes.toString().padStart(2, '0'),
+    seconds: seconds.toString().padStart(2, '0'),
+  };
 }
 
 interface Props {
@@ -28,6 +33,7 @@ interface Props {
 }
 
 const AppErrorTooManyRequests = ({ bypassOptions, reset }: Props) => {
+  const { t } = useTranslation();
 
   const [ timeLeft, setTimeLeft ] = React.useState(reset ? Math.ceil(Number(reset) / SECOND) : undefined);
 
@@ -69,12 +75,12 @@ const AppErrorTooManyRequests = ({ bypassOptions, reset }: Props) => {
 
     } catch (error) {
       toaster.create({
-        title: 'Error',
-        description: 'Unable to get client key.',
+        title: t('common.error'),
+        description: t('errors.client_key_unavailable'),
         type: 'error',
       });
     }
-  }, [ recaptcha, reset ]);
+  }, [ recaptcha, reset, t ]);
 
   React.useEffect(() => {
     if (reset === undefined) {
@@ -104,26 +110,23 @@ const AppErrorTooManyRequests = ({ bypassOptions, reset }: Props) => {
   }
 
   const text = (() => {
-    if (timeLeft === undefined && bypassOptions === 'no_bypass') {
-      return 'Rate limit exceeded.';
+    if (timeLeft === undefined) {
+      return bypassOptions === 'no_bypass' ? t('errors.rate_exceeded') : t('errors.rate_verify');
     }
 
-    const timeLeftText = timeLeft !== undefined ? `wait ${ formatTimeLeft(timeLeft) } ` : '';
-    const bypassText = bypassOptions !== 'no_bypass' ? `verify you${ apos }re human ` : '';
-    const orText = timeLeft !== undefined && bypassOptions !== 'no_bypass' ? 'OR ' : '';
-
-    return `Rate limit exceeded. Please ${ timeLeftText }${ orText }${ bypassText }before making another request.`;
+    const time = t('errors.duration_hms', getTimeLeftParts(timeLeft));
+    return bypassOptions === 'no_bypass' ? t('errors.rate_wait', { time }) : t('errors.rate_wait_or_verify', { time });
   })();
 
   return (
     <>
       <AppErrorIcon statusCode={ 429 }/>
-      <AppErrorTitle title="Too many requests"/>
+      <AppErrorTitle title={ t('errors.too_many_requests') }/>
       <Text color="text.secondary" mt={ 3 }>
         { text }
       </Text>
       <ReCaptcha { ...recaptcha }/>
-      { bypassOptions !== 'no_bypass' && <Button onClick={ handleSubmit } disabled={ recaptcha.isInitError } mt={ 8 }>I'm not a robot</Button> }
+      { bypassOptions !== 'no_bypass' && <Button onClick={ handleSubmit } disabled={ recaptcha.isInitError } mt={ 8 }>{ t('errors.not_a_robot') }</Button> }
     </>
   );
 };

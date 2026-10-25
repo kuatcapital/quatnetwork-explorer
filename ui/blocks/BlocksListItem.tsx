@@ -1,7 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text, Box } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
-import { capitalize } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -10,6 +11,8 @@ import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
 import getBlockTotalReward from 'lib/block/getBlockTotalReward';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
 import { currencyUnits } from 'lib/units';
 import { Link } from 'toolkit/chakra/link';
@@ -36,6 +39,17 @@ interface Props {
 const isRollup = config.features.rollup.isEnabled;
 
 const BlocksListItem = ({ data, isLoading, enableTimeIncrement, animation, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
+  const validatorLabels = {
+    validator: tQuat('common.validator'),
+    miner: tQuat('home.miner'),
+    poster: tQuat('home.poster'),
+    sequencer: tQuat('home.sequencer'),
+    'fee recipient': tQuat('home.fee_recipient'),
+  };
+
   const totalReward = getBlockTotalReward(data);
   const burntFees = BigNumber(data.burnt_fees || 0);
   const txFees = BigNumber(data.transaction_fees || 0);
@@ -53,7 +67,10 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement, animation, chain
             isPendingUpdate={ data.is_pending_update }
           />
           { data.celo?.l1_era_finalized_epoch_number && (
-            <Tooltip content={ `Finalized epoch #${ data.celo.l1_era_finalized_epoch_number }` } disabled={ isLoading }>
+            <Tooltip
+              content={ tQuat('home.finalized_epoch', { number: formatNumber(data.celo.l1_era_finalized_epoch_number, locale) }) }
+              disabled={ isLoading }
+            >
               <IconSvg name="checkered_flag" boxSize={ 5 } p="1px" isLoading={ isLoading } flexShrink={ 0 }/>
             </Tooltip>
           ) }
@@ -69,15 +86,15 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement, animation, chain
       </Flex>
       { data.size && (
         <Flex columnGap={ 2 }>
-          <Text fontWeight={ 500 }>Size</Text>
+          <Text fontWeight={ 500 }>{ tQuat('blocks.size') }</Text>
           <Skeleton loading={ isLoading } display="inline-block" color="text.secondary">
-            <span>{ data.size?.toLocaleString() } bytes</span>
+            <span>{ tQuat('blocks.size_bytes_value', { value: formatNumber(data.size, locale) }) }</span>
           </Skeleton>
         </Flex>
       ) }
       { !config.UI.views.block.hiddenFields?.miner && (
         <Flex columnGap={ 2 } w="100%">
-          <Text fontWeight={ 500 }>{ capitalize(getNetworkValidatorTitle()) }</Text>
+          <Text fontWeight={ 500 }>{ validatorLabels[getNetworkValidatorTitle()] }</Text>
           <AddressEntity
             address={ data.miner }
             isLoading={ isLoading }
@@ -86,22 +103,22 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement, animation, chain
         </Flex>
       ) }
       <Flex columnGap={ 2 }>
-        <Text fontWeight={ 500 }>Txn</Text>
+        <Text fontWeight={ 500 }>{ tQuat('home.txn') }</Text>
         { data.transactions_count > 0 ? (
           <Skeleton loading={ isLoading } display="inline-block">
             <Link href={ route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: String(data.height), tab: 'txs' } }) }>
-              { data.transactions_count }
+              { formatNumber(data.transactions_count, locale) }
             </Link>
           </Skeleton>
         ) :
-          <Text color="text.secondary">{ data.transactions_count }</Text>
+          <Text color="text.secondary">{ formatNumber(data.transactions_count, locale) }</Text>
         }
       </Flex>
       <Box>
-        <Text fontWeight={ 500 }>Gas used</Text>
+        <Text fontWeight={ 500 }>{ tQuat('common.gas_used') }</Text>
         <Flex mt={ 2 }>
           <Skeleton loading={ isLoading } display="inline-block" color="text.secondary" mr={ 4 }>
-            <span>{ BigNumber(data.gas_used || 0).toFormat() }</span>
+            <span>{ formatBigNumber(BigNumber(data.gas_used || 0), locale) }</span>
           </Skeleton>
           <BlockGasUsed
             gasUsed={ data.gas_used || undefined }
@@ -113,13 +130,13 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement, animation, chain
       </Box>
       { !isRollup && !config.UI.views.block.hiddenFields?.total_reward && (
         <Flex columnGap={ 2 }>
-          <Text fontWeight={ 500 }>Reward { currencyUnits.ether }</Text>
+          <Text fontWeight={ 500 }>{ tQuat('blocks.reward_currency', { currency: currencyUnits.ether }) }</Text>
           <SimpleValue value={ totalReward } loading={ isLoading } color="text.secondary"/>
         </Flex>
       ) }
       { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
         <Box>
-          <Text fontWeight={ 500 }>Burnt fees</Text>
+          <Text fontWeight={ 500 }>{ tQuat('blocks.burnt_fees') }</Text>
           <Flex columnGap={ 4 } mt={ 2 }>
             <NativeCoinValue
               amount={ data.burnt_fees }
@@ -135,7 +152,7 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement, animation, chain
       ) }
       { !isRollup && !config.UI.views.block.hiddenFields?.base_fee && data.base_fee_per_gas && (
         <Flex columnGap={ 2 }>
-          <Text fontWeight={ 500 }>Base fee</Text>
+          <Text fontWeight={ 500 }>{ tQuat('blocks.base_fee') }</Text>
           <NativeCoinValue
             amount={ data.base_fee_per_gas }
             loading={ isLoading }

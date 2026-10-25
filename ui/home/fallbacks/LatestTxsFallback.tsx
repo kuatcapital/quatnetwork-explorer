@@ -1,15 +1,18 @@
+// Modified by Quat Capital, 2026-10-25: localized transaction-list error (T18, GPL-3.0).
 import type { BoxProps } from '@chakra-ui/react';
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { TableBody, TableCell, TableRoot, TableRow } from 'toolkit/chakra/table';
 import FallbackBox from 'ui/shared/fallbacks/FallbackBox';
 import IconSvg from 'ui/shared/IconSvg';
 
 const LatestTxsFallback = (props: BoxProps) => {
+  const { t } = useTranslation();
   return (
     <Box { ...props }>
-      <Box color="text.secondary" textStyle="sm">Failed to load data. Please try again later.</Box>
+      <Box color="text.secondary" textStyle="sm">{ t('home.load_failed') }</Box>
       <TableRoot mt={ 3 } borderTopWidth="1px" borderColor="border.divider">
         <TableBody>
           { Array.from({ length: 2 }).map((_, index) => (

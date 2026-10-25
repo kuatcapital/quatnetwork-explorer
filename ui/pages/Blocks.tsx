@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { upperFirst } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 
@@ -26,6 +28,8 @@ const TAB_LIST_PROPS = {
 };
 
 const BlocksPageContent = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMobile = useIsMobile();
   const tab = getQueryParamString(router.query.tab);
@@ -89,7 +93,7 @@ const BlocksPageContent = () => {
 
   return (
     <>
-      <PageTitle title="Blocks" withTextAd/>
+      <PageTitle title={ tQuat('common.blocks') } withTextAd/>
       <RoutedTabs
         tabs={ tabs }
         listProps={ isMobile ? undefined : TAB_LIST_PROPS }

@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localize search input text. GPL-3.0.
 import type { HTMLChakraProps } from '@chakra-ui/react';
 import { chakra, Center } from '@chakra-ui/react';
 import React from 'react';
 import type { ChangeEvent, FormEvent, FocusEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -31,6 +33,7 @@ const SearchBarInput = (
   { onChange, onSubmit, isHeroBanner, isSuggestOpen, onFocus, onBlur, onHide, onClear, onFormClick, value, readOnly, ...rest }: Props,
   ref: React.ForwardedRef<HTMLFormElement>,
 ) => {
+  const { t } = useTranslation();
   const innerRef = React.useRef<HTMLFormElement>(null);
   React.useImperativeHandle(ref, () => innerRef.current as HTMLFormElement, []);
   const isMobile = useIsMobile();
@@ -80,8 +83,8 @@ const SearchBarInput = (
   }, [ handleKeyPress ]);
 
   const getPlaceholder = () => {
-    const clusterText = nameServicesFeature.isEnabled && nameServicesFeature.clusters.isEnabled ? ' / cluster ' : '';
-    return `Search by address / txn hash / block / token${ clusterText }/... `;
+    return nameServicesFeature.isEnabled && nameServicesFeature.clusters.isEnabled ?
+      t('search.placeholder_with_cluster') : t('search.placeholder');
   };
 
   const startElement = (
@@ -94,7 +97,7 @@ const SearchBarInput = (
 
   const endElement = (
     <>
-      <ClearButton onClick={ onClear } visible={ Boolean(value?.length) } mx={ 2 }/>
+      <ClearButton onClick={ onClear } visible={ Boolean(value?.length) } mx={ 2 } aria-label={ t('common.clear') } title={ t('common.clear') }/>
       { !isMobile && (
         <Center
           boxSize="20px"
@@ -128,6 +131,7 @@ const SearchBarInput = (
         endElement={ endElement }
       >
         <Input
+          aria-label={ t('common.search') }
           size={{ base: isHeroBanner ? 'md' : 'sm', lg: 'md' }}
           placeholder={ getPlaceholder() }
           value={ value }

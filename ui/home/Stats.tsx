@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-25: localized own homepage metric labels (T18, GPL-3.0).
 import { Grid } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { HOMEPAGE_STATS, HOMEPAGE_STATS_MICROSERVICE } from 'stubs/stats';
 import GasInfoTooltip from 'ui/shared/gas/GasInfoTooltip';
@@ -22,6 +26,8 @@ const isArbitrumRollup = rollupFeature.isEnabled && rollupFeature.type === 'arbi
 const isStatsFeatureEnabled = config.features.stats.isEnabled;
 
 const Stats = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const [ hasGasTracker, setHasGasTracker ] = React.useState(config.features.gasTracker.isEnabled);
 
   // data from stats microservice is prioritized over data from stats api
@@ -118,58 +124,60 @@ const Stats = () => {
       latestBatchQuery?.data !== undefined && {
         id: 'latest_batch' as const,
         icon: 'txn_batches' as const,
-        label: 'Latest batch',
-        value: latestBatchQuery.data.toLocaleString(),
+        label: t('home.latest_batch'),
+        value: formatNumber(latestBatchQuery.data, locale),
         href: { pathname: '/batches' as const },
         isLoading,
       },
       (statsData?.total_blocks?.value || apiData?.total_blocks) && {
         id: 'total_blocks' as const,
         icon: 'block' as const,
-        label: statsData?.total_blocks?.title || 'Total blocks',
-        value: Number(statsData?.total_blocks?.value || apiData?.total_blocks).toLocaleString(),
+        label: t('home.total_blocks'),
+        value: formatNumber(Number(statsData?.total_blocks?.value || apiData?.total_blocks), locale),
         href: { pathname: '/blocks' as const },
         isLoading,
       },
       (statsData?.average_block_time?.value || apiData?.average_block_time) && {
         id: 'average_block_time' as const,
         icon: 'clock-light' as const,
-        label: statsData?.average_block_time?.title || 'Average block time',
-        value: `${
-          statsData?.average_block_time?.value ?
-            Number(statsData.average_block_time.value).toFixed(1) :
-            (apiData!.average_block_time / 1000).toFixed(1)
-        }s`,
+        label: t('home.average_block_time'),
+        value: t('home.seconds', {
+          value: formatNumber(
+            statsData?.average_block_time?.value ? Number(statsData.average_block_time.value) : apiData!.average_block_time / 1000,
+            locale,
+            { minimumFractionDigits: 1, maximumFractionDigits: 1 },
+          ),
+        }),
         isLoading,
       },
       (statsData?.total_transactions?.value || apiData?.total_transactions) && {
         id: 'total_txs' as const,
         icon: 'transactions' as const,
-        label: statsData?.total_transactions?.title || 'Total transactions',
-        value: Number(statsData?.total_transactions?.value || apiData?.total_transactions).toLocaleString(),
+        label: t('home.total_transactions'),
+        value: formatNumber(Number(statsData?.total_transactions?.value || apiData?.total_transactions), locale),
         href: { pathname: '/txs' as const },
         isLoading,
       },
       (isArbitrumRollup && statsData?.total_operational_transactions?.value) && {
         id: 'total_operational_txs' as const,
         icon: 'transactions' as const,
-        label: statsData?.total_operational_transactions?.title || 'Total operational transactions',
-        value: Number(statsData?.total_operational_transactions?.value).toLocaleString(),
+        label: t('home.total_operational_transactions'),
+        value: formatNumber(Number(statsData?.total_operational_transactions?.value), locale),
         href: { pathname: '/txs' as const },
         isLoading,
       },
       (isOptimisticRollup && statsData?.op_stack_total_operational_transactions?.value) && {
         id: 'total_operational_txs' as const,
         icon: 'transactions' as const,
-        label: statsData?.op_stack_total_operational_transactions?.title || 'Total operational transactions',
-        value: Number(statsData?.op_stack_total_operational_transactions?.value).toLocaleString(),
+        label: t('home.total_operational_transactions'),
+        value: formatNumber(Number(statsData?.op_stack_total_operational_transactions?.value), locale),
         href: { pathname: '/txs' as const },
         isLoading,
       },
       apiData?.last_output_root_size && {
         id: 'latest_l1_state_batch' as const,
         icon: 'txn_batches' as const,
-        label: `Latest ${ layerLabels.parent } state batch`,
+        label: t('home.latest_state_batch', { layer: layerLabels.parent }),
         value: apiData?.last_output_root_size,
         href: { pathname: '/batches' as const },
         isLoading,
@@ -177,29 +185,29 @@ const Stats = () => {
       (statsData?.total_addresses?.value || apiData?.total_addresses) && {
         id: 'wallet_addresses' as const,
         icon: 'wallet' as const,
-        label: statsData?.total_addresses?.title || 'Wallet addresses',
-        value: Number(statsData?.total_addresses?.value || apiData?.total_addresses).toLocaleString(),
+        label: t('home.wallet_addresses'),
+        value: formatNumber(Number(statsData?.total_addresses?.value || apiData?.total_addresses), locale),
         isLoading,
       },
       hasGasTracker && apiData?.gas_prices && {
         id: 'gas_tracker' as const,
         icon: 'gas' as const,
-        label: 'Gas tracker',
-        value: apiData.gas_prices.average ? <GasPrice data={ apiData.gas_prices.average }/> : 'N/A',
+        label: t('navigation.gas_tracker'),
+        value: apiData.gas_prices.average ? <GasPrice data={ apiData.gas_prices.average }/> : t('home.not_available'),
         hint: gasInfoTooltip,
         isLoading,
       },
       apiData?.rootstock_locked_btc && {
         id: 'btc_locked' as const,
         icon: 'coins/bitcoin' as const,
-        label: 'BTC Locked in 2WP',
-        value: `${ BigNumber(apiData.rootstock_locked_btc).div(WEI).dp(0).toFormat() } RBTC`,
+        label: t('home.btc_locked'),
+        value: `${ formatBigNumber(BigNumber(apiData.rootstock_locked_btc).div(WEI).dp(0), locale) } RBTC`,
         isLoading,
       },
       apiData?.celo && {
         id: 'current_epoch' as const,
         icon: 'hourglass' as const,
-        label: 'Current epoch',
+        label: t('home.current_epoch_label'),
         value: `#${ apiData.celo.epoch_number }`,
         href: { pathname: '/epochs/[number]' as const, query: { number: String(apiData.celo.epoch_number) } },
         isLoading,

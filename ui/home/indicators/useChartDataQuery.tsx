@@ -1,8 +1,13 @@
-import type { TimeChartData } from 'toolkit/components/charts/types';
+// Modified by Quat Capital, 2026-10-25: localized homepage chart series names (T18, GPL-3.0).
+import { useTranslation } from 'react-i18next';
+
+import type { TimeChartData, TimeChartItemRaw } from 'toolkit/components/charts/types';
 import type { ChainIndicatorId } from 'types/homepage';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 
 import { getChartData } from './utils/chart';
 
@@ -19,6 +24,37 @@ export type UseFetchChartDataResult = {
 };
 
 export default function useChartDataQuery(indicatorId: ChainIndicatorId): UseFetchChartDataResult {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
+
+  const localizedChartData = (id: ChainIndicatorId, items: Array<TimeChartItemRaw>): TimeChartData => {
+    const name = (() => {
+      switch (id) {
+        case 'daily_txs':
+        case 'daily_operational_txs':
+          return t('home.transactions_per_day');
+        case 'coin_price':
+          return t('home.coin_price', { symbol: config.features.multichain.isEnabled ? 'ETH' : config.chain.currency.symbol });
+        case 'secondary_coin_price':
+          return t('home.coin_price', { symbol: config.chain.currency.symbol });
+        case 'market_cap':
+          return t('common.market_cap');
+        case 'tvl':
+          return t('home.tvl_short');
+      }
+    })();
+    const valueFormatter = (value: number): string => {
+      if (id === 'coin_price' || id === 'secondary_coin_price') {
+        return '$' + formatNumber(value, locale, { minimumFractionDigits: 2, maximumFractionDigits: 6 });
+      }
+      if (id === 'market_cap') {
+        return '$' + formatNumber(value, locale, { maximumFractionDigits: 2 });
+      }
+      const formatted = formatNumber(value, locale, { maximumFractionDigits: 2, notation: 'compact' });
+      return id === 'tvl' ? '$' + formatted : formatted;
+    };
+    return getChartData(id, items).map((series) => ({ ...series, name, valueFormatter }));
+  };
   const statsDailyTxsQuery = useApiQuery('stats:pages_main', {
     queryOptions: {
       refetchOnMount: false,
@@ -104,42 +140,42 @@ export default function useChartDataQuery(indicatorId: ChainIndicatorId): UseFet
     case 'daily_txs': {
       const query = isStatsFeatureEnabled ? statsDailyTxsQuery : apiDailyTxsQuery;
       return {
-        data: getChartData(indicatorId, query.data || []),
+        data: localizedChartData(indicatorId, query.data || []),
         isError: query.isError,
         isPending: query.isPending,
       };
     }
     case 'daily_operational_txs': {
       return {
-        data: getChartData(indicatorId, statsDailyOperationalTxsQuery.data || []),
+        data: localizedChartData(indicatorId, statsDailyOperationalTxsQuery.data || []),
         isError: statsDailyOperationalTxsQuery.isError,
         isPending: statsDailyOperationalTxsQuery.isPending,
       };
     }
     case 'coin_price': {
       return {
-        data: getChartData(indicatorId, coinPriceQuery.data || []),
+        data: localizedChartData(indicatorId, coinPriceQuery.data || []),
         isError: coinPriceQuery.isError,
         isPending: coinPriceQuery.isPending,
       };
     }
     case 'secondary_coin_price': {
       return {
-        data: getChartData(indicatorId, secondaryCoinPriceQuery.data || []),
+        data: localizedChartData(indicatorId, secondaryCoinPriceQuery.data || []),
         isError: secondaryCoinPriceQuery.isError,
         isPending: secondaryCoinPriceQuery.isPending,
       };
     }
     case 'market_cap': {
       return {
-        data: getChartData(indicatorId, marketCapQuery.data || []),
+        data: localizedChartData(indicatorId, marketCapQuery.data || []),
         isError: marketCapQuery.isError,
         isPending: marketCapQuery.isPending,
       };
     }
     case 'tvl': {
       return {
-        data: getChartData(indicatorId, tvlQuery.data || []),
+        data: localizedChartData(indicatorId, tvlQuery.data || []),
         isError: tvlQuery.isError,
         isPending: tvlQuery.isPending,
       };

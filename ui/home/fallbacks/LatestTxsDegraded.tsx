@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localized RPC transaction-list fallback (T18, GPL-3.0).
 import { Box, Flex } from '@chakra-ui/react';
 import { clamp } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -23,6 +25,7 @@ interface Props {
 }
 
 const LatestTxsDegraded = ({ maxNum }: Props) => {
+  const { t } = useTranslation();
   const { txs, totalTxs, isError, isLoading, enable } = useHomeRpcDataContext();
 
   React.useEffect(() => {
@@ -39,7 +42,7 @@ const LatestTxsDegraded = ({ maxNum }: Props) => {
   const items = isLoading ? Array(maxNum).fill(TX) : txs.slice(0, maxNum);
 
   if (items.length === 0) {
-    return <Box textStyle="sm">No latest transactions found.</Box>;
+    return <Box textStyle="sm">{ t('home.no_transactions') }</Box>;
   }
 
   const txsUrl = route({ pathname: `/txs`, query: zetachainFeature.isEnabled ? { tab: 'evm' } : undefined });
@@ -69,7 +72,7 @@ const LatestTxsDegraded = ({ maxNum }: Props) => {
         </Box>
       </AddressHighlightProvider>
       <Flex justifyContent="center">
-        <Link textStyle="sm" loading={ isLoading } href={ txsUrl }>View all transactions</Link>
+        <Link textStyle="sm" loading={ isLoading } href={ txsUrl }>{ t('home.view_all_transactions') }</Link>
       </Flex>
     </>
   );

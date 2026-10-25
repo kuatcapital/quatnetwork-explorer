@@ -1,4 +1,5 @@
-import type { DocumentContext } from 'next/document';
+// Quat Capital, 2026-10-25: use the selected locale for the server-rendered document language.
+import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React from 'react';
 
@@ -6,12 +7,18 @@ import logRequestFromBot from 'nextjs/utils/logRequestFromBot';
 import * as serverTiming from 'nextjs/utils/serverTiming';
 
 import config from 'configs/app';
+import type { Locale } from 'configs/app/i18n';
+import { localeFromCookie } from 'lib/i18n/config';
 import * as svgSprite from 'ui/shared/IconSvg';
 
 const marketplaceFeature = config.features.marketplace;
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+interface Props {
+  readonly locale: Locale;
+}
+
+class MyDocument extends Document<Props> {
+  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
     const originalRenderPage = ctx.renderPage;
     ctx.renderPage = async() => {
       const start = Date.now();
@@ -27,12 +34,12 @@ class MyDocument extends Document {
 
     const initialProps = await Document.getInitialProps(ctx);
 
-    return initialProps;
+    return { ...initialProps, locale: localeFromCookie(ctx.req?.headers.cookie) };
   }
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang={ this.props.__NEXT_DATA__.props.pageProps?.i18n?.locale || this.props.locale }>
         <Head>
           { /* FONTS */ }
           <link

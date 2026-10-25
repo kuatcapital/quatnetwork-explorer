@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localize search categories and feedback. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { debounce } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ListCctxsResponse } from '@blockscout/zetachain-cctx-types';
 import type { QuickSearchResultItem } from 'types/client/search';
@@ -21,6 +23,7 @@ import ExternalSearchItem from 'ui/shared/search/ExternalSearchItem';
 import type { ApiCategory, Category, ItemsCategoriesMap } from 'ui/shared/search/utils';
 import { getItemCategory, searchCategories } from 'ui/shared/search/utils';
 
+import { useLocalizedSearchCategories } from '../useLocalizedSearchCategories';
 import SearchBarSuggestApp from './SearchBarSuggestApp';
 import SearchBarSuggestBlockCountdown from './SearchBarSuggestBlockCountdown';
 import SearchBarSuggestItem from './SearchBarSuggestItem';
@@ -37,6 +40,8 @@ interface Props {
 }
 
 const SearchBarSuggest = ({ query, zetaChainCCTXQuery, externalSearchItem, searchTerm, onItemClick }: Props) => {
+  const { t } = useTranslation();
+  const localizedCategories = useLocalizedSearchCategories();
   const isMobile = useIsMobile();
 
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
@@ -149,31 +154,31 @@ const SearchBarSuggest = ({ query, zetaChainCCTXQuery, externalSearchItem, searc
   }, []);
 
   const categoryTabs = React.useMemo(() => {
-    return searchCategories.filter(cat => itemsGroups[cat.id]).map(cat => ({
+    return localizedCategories.filter(cat => itemsGroups[cat.id]).map(cat => ({
       id: cat.id,
       value: cat.id,
       title: isMobile ? cat.tabTitle : cat.title,
       component: null,
     }));
-  }, [ itemsGroups, isMobile ]);
+  }, [ itemsGroups, isMobile, localizedCategories ]);
 
   const content = (() => {
     if (query.isPending || marketplaceApps.isPlaceholderData || (config.features.zetachain.isEnabled && zetaChainCCTXQuery.isPending)) {
-      return <ContentLoader text="We are searching, please wait... " fontSize="sm" maxW="250px"/>;
+      return <ContentLoader text={ t('search.searching') } fontSize="sm" maxW="250px"/>;
     }
 
     if (query.isError) {
-      return <Text>Something went wrong. Try refreshing the page or come back later.</Text>;
+      return <Text>{ t('search.load_error') }</Text>;
     }
 
-    const resultCategories = searchCategories.filter(cat => itemsGroups[cat.id]);
+    const resultCategories = localizedCategories.filter(cat => itemsGroups[cat.id]);
 
     if (resultCategories.length === 0 && !externalSearchItem) {
       if (regexp.BLOCK_HEIGHT.test(searchTerm)) {
         return <SearchBarSuggestBlockCountdown blockHeight={ searchTerm } isMultichain={ Boolean(multichainConfig()) } onClick={ onItemClick }/>;
       }
 
-      return <Text>No results found.</Text>;
+      return <Text>{ t('common.no_results') }</Text>;
     }
 
     return (

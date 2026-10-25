@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized RPC block-list fallback (T18, GPL-3.0).
 import { Box, Flex, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 
@@ -19,7 +21,7 @@ interface Props {
 }
 
 const LatestBlocksDegraded = ({ maxNum }: Props) => {
-
+  const { t } = useTranslation();
   const { blocks, isError, isLoading, enable } = useHomeRpcDataContext();
 
   React.useEffect(() => {
@@ -42,7 +44,7 @@ const LatestBlocksDegraded = ({ maxNum }: Props) => {
   const items = isLoading ? Array(maxNum).fill(BLOCK) : blocks.slice(0, maxNum);
 
   if (items.length === 0) {
-    return <Box textStyle="sm">No latest blocks found.</Box>;
+    return <Box textStyle="sm">{ t('home.no_blocks') }</Box>;
   }
 
   return (
@@ -58,7 +60,7 @@ const LatestBlocksDegraded = ({ maxNum }: Props) => {
         ))) }
       </VStack>
       <Flex justifyContent="center">
-        <Link textStyle="sm" href={ route({ pathname: '/blocks' }) } loading={ isLoading }>View all blocks</Link>
+        <Link textStyle="sm" href={ route({ pathname: '/blocks' }) } loading={ isLoading }>{ t('home.view_all_blocks') }</Link>
       </Flex>
     </>
   );

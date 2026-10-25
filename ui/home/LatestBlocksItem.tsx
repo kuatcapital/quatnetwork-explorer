@@ -1,11 +1,14 @@
+// Modified by Quat Capital, 2026-10-25: localized block card and producer labels (T18, GPL-3.0).
 import { Box, Flex, Grid } from '@chakra-ui/react';
-import { capitalize } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 
 import config from 'configs/app';
 import getBlockTotalReward from 'lib/block/getBlockTotalReward';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
 import { currencyUnits } from 'lib/units';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -23,7 +26,17 @@ type Props = {
   animation?: string;
 };
 
+const PRODUCER_KEYS = {
+  validator: 'common.validator',
+  miner: 'home.miner',
+  poster: 'home.poster',
+  sequencer: 'home.sequencer',
+  'fee recipient': 'home.fee_recipient',
+} as const;
+
 const LatestBlocksItem = ({ block, isLoading, animation }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const totalReward = getBlockTotalReward(block);
   return (
     <Box
@@ -43,7 +56,7 @@ const LatestBlocksItem = ({ block, isLoading, animation }: Props) => {
           mr="auto"
         />
         { block.celo?.l1_era_finalized_epoch_number && (
-          <Tooltip content={ `Finalized epoch #${ block.celo.l1_era_finalized_epoch_number }` }>
+          <Tooltip content={ t('home.finalized_epoch', { number: block.celo.l1_era_finalized_epoch_number }) }>
             <IconSvg name="checkered_flag" boxSize={ 5 } p="1px" ml={ 2 } isLoading={ isLoading } flexShrink={ 0 }/>
           </Tooltip>
         ) }
@@ -60,12 +73,12 @@ const LatestBlocksItem = ({ block, isLoading, animation }: Props) => {
         />
       </Flex>
       <Grid gridGap={ 2 } templateColumns="auto minmax(0, 1fr)" textStyle="sm">
-        <Skeleton loading={ isLoading }>Txn</Skeleton>
-        <Skeleton loading={ isLoading } color="text.secondary"><span>{ block.transactions_count }</span></Skeleton>
+        <Skeleton loading={ isLoading }>{ t('home.txn') }</Skeleton>
+        <Skeleton loading={ isLoading } color="text.secondary"><span>{ formatNumber(block.transactions_count, locale) }</span></Skeleton>
 
         { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.total_reward && (
           <>
-            <Skeleton loading={ isLoading }>Reward</Skeleton>
+            <Skeleton loading={ isLoading }>{ t('home.reward') }</Skeleton>
             <SimpleValue
               value={ totalReward }
               loading={ isLoading }
@@ -77,7 +90,7 @@ const LatestBlocksItem = ({ block, isLoading, animation }: Props) => {
 
         { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.miner && (
           <>
-            <Skeleton loading={ isLoading }>{ capitalize(getNetworkValidatorTitle()) }</Skeleton>
+            <Skeleton loading={ isLoading }>{ t(PRODUCER_KEYS[getNetworkValidatorTitle()]) }</Skeleton>
             <AddressEntity
               address={ block.miner }
               isLoading={ isLoading }

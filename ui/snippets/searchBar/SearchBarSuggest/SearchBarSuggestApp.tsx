@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localize app image description. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -20,13 +22,14 @@ interface Props {
 }
 
 const SearchBarSuggestApp = ({ data, isMobile, searchTerm, onClick }: Props) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const logo = (
     <Image
       borderRadius="base"
       boxSize={ 5 }
       src={ useColorModeValue(data.logo, data.logoDarkMode || data.logo) }
-      alt={ `${ data.title } app icon` }
+      alt={ t('search.app_icon', { name: data.title }) }
     />
   );
 

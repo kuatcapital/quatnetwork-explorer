@@ -1,8 +1,11 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware display; clipboard keeps raw values. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { Box, chakra } from '@chakra-ui/react';
 import type BigNumber from 'bignumber.js';
 import React from 'react';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
@@ -39,18 +42,19 @@ const SimpleValue = ({
   overflowed,
   ...rest
 }: Props) => {
+  const { locale } = useLocale();
 
   const tooltipContent = React.useMemo(() => {
     return (
       <>
         { tooltipContentBefore }
         <Box display="inline" whiteSpace="wrap" wordBreak="break-all">
-          { prefix ?? '' }{ value.toFormat() }{ postfix ?? '' }
+          { prefix ?? '' }{ formatBigNumber(value, locale) }{ postfix ?? '' }
           <CopyToClipboard text={ value.toFixed() } verticalAlign="bottom" noTooltip/>
         </Box>
       </>
     );
-  }, [ postfix, prefix, value, tooltipContentBefore ]);
+  }, [ postfix, prefix, value, tooltipContentBefore, locale ]);
 
   return (
     <Skeleton loading={ loading } display="inline-flex" alignItems="center" whiteSpace="pre" maxW="100%" overflow="hidden" { ...rest }>
@@ -62,7 +66,7 @@ const SimpleValue = ({
         interactive
       >
         <chakra.span display="inline-block" maxW="100%" overflow="hidden" textOverflow="ellipsis">
-          { formatBnValue({ value, accuracy, prefix, postfix, overflowed }) }
+          { formatBnValue({ value, accuracy, prefix, postfix, overflowed, locale }) }
         </chakra.span>
       </Tooltip>
       { typeof endElement === 'string' ? <span>{ endElement }</span> : endElement }

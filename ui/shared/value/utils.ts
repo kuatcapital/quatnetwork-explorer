@@ -1,6 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware BigNumber display, preserving precision. GPL-3.0.
 import BigNumber from 'bignumber.js';
 
 import config from 'configs/app';
+import type { Locale } from 'configs/app/i18n';
+import { formatBigNumber, getNumberSeparators } from 'lib/format/localeNumbers';
 import { currencyUnits } from 'lib/units';
 import { ZERO } from 'toolkit/utils/consts';
 import { thinsp } from 'toolkit/utils/htmlEntities';
@@ -13,19 +16,20 @@ interface FormatBnValueParams {
   prefix?: string;
   postfix?: string;
   overflowed?: boolean;
+  locale?: Locale;
 }
 
-export const formatBnValue = ({ value, accuracy, prefix, postfix, overflowed }: FormatBnValueParams) => {
+export const formatBnValue = ({ value, accuracy, prefix, postfix, overflowed, locale = 'en' }: FormatBnValueParams) => {
   const fullPrefix = `${ overflowed ? `>${ thinsp }` : '' }${ prefix ?? '' }`;
 
   if (!accuracy) {
-    return `${ fullPrefix }${ value.toFormat() }${ postfix ?? '' }`;
+    return `${ fullPrefix }${ formatBigNumber(value, locale) }${ postfix ?? '' }`;
   }
 
-  const formattedValue = value.dp(accuracy).toFormat();
+  const formattedValue = formatBigNumber(value, locale, accuracy);
 
   return formattedValue === '0' && !value.isEqualTo(ZERO) && !overflowed ?
-    `<${ thinsp }${ prefix ?? '' }0.${ '0'.repeat(accuracy - 1) }1${ postfix ?? '' }` :
+    `<${ thinsp }${ prefix ?? '' }0${ getNumberSeparators(locale).decimal }${ '0'.repeat(accuracy - 1) }1${ postfix ?? '' }` :
     `${ fullPrefix }${ formattedValue }${ postfix ?? '' }`;
 };
 

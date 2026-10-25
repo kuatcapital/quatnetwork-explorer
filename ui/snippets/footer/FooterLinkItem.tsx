@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized known Quat links and icon labels (T18, GPL-3.0).
 import { Center } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useColorModeValue } from 'toolkit/chakra/color-mode';
 import { Image } from 'toolkit/chakra/image';
@@ -17,7 +19,16 @@ type Props = {
   isLoading?: boolean;
 };
 
+const QUAT_LINK_KEYS: Readonly<Record<string, string>> = {
+  'О сети': 'quat.about',
+  'Запросить демо': 'quat.demo',
+  'Исходный код эксплорера (GPL-3.0)': 'quat.source',
+  'Чат тестнета (Telegram)': 'quat.testnet_chat',
+  'Блог основателя (Telegram)': 'quat.founder_blog',
+};
+
 const FooterLinkItemIconExternal = ({ iconUrl, text }: { iconUrl: Array<string>; text: string }) => {
+  const { t } = useTranslation();
   const [ lightIconUrl, darkIconUrl ] = iconUrl;
 
   const imageSrc = useColorModeValue(lightIconUrl, darkIconUrl || lightIconUrl);
@@ -25,7 +36,7 @@ const FooterLinkItemIconExternal = ({ iconUrl, text }: { iconUrl: Array<string>;
   return (
     <Image
       src={ imageSrc }
-      alt={ `${ text } icon` }
+      alt={ t('common.icon', { name: text }) }
       boxSize={ 5 }
       objectFit="contain"
     />
@@ -33,8 +44,11 @@ const FooterLinkItemIconExternal = ({ iconUrl, text }: { iconUrl: Array<string>;
 };
 
 const FooterLinkItem = ({ icon, iconSize, iconUrl, text, url, isLoading }: Props) => {
+  const { t } = useTranslation();
+  const translationKey = QUAT_LINK_KEYS[text];
+  const label = translationKey ? t(translationKey) : text;
   if (isLoading) {
-    return <Skeleton loading my="3px">{ text }</Skeleton>;
+    return <Skeleton loading my="3px">{ label }</Skeleton>;
   }
 
   const iconElement = (() => {
@@ -42,7 +56,7 @@ const FooterLinkItem = ({ icon, iconSize, iconUrl, text, url, isLoading }: Props
       const [ lightIconUrl, darkIconUrl ] = iconUrl;
 
       if (typeof lightIconUrl === 'string' && (typeof darkIconUrl === 'string' || !darkIconUrl)) {
-        return <FooterLinkItemIconExternal iconUrl={ iconUrl } text={ text }/>;
+        return <FooterLinkItemIconExternal iconUrl={ iconUrl } text={ label }/>;
       }
     }
 
@@ -60,7 +74,7 @@ const FooterLinkItem = ({ icon, iconSize, iconUrl, text, url, isLoading }: Props
   return (
     <Link href={ url } display="flex" alignItems="center" h="30px" variant="subtle" external noIcon textStyle="xs" columnGap={ 2 }>
       { iconElement }
-      { text }
+      { label }
     </Link>
   );
 };

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize chain reorganization feedback. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -13,16 +15,17 @@ interface Props {
 }
 
 const AppErrorBlockConsensus = ({ hash }: Props) => {
+  const { t } = useTranslation();
   return (
     <>
       <AppErrorIcon statusCode={ 404 }/>
-      <AppErrorTitle title="Block removed due to chain reorganization"/>
+      <AppErrorTitle title={ t('errors.block_reorganized') }/>
       <Link href={ hash ? route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: hash } }) : route({ pathname: '/' }) } asChild>
         <Button
           mt={ 8 }
           variant="outline"
         >
-          { hash ? 'View reorg' : 'Back to home' }
+          { hash ? t('errors.view_reorg') : t('errors.back_home') }
         </Button>
       </Link>
     </>

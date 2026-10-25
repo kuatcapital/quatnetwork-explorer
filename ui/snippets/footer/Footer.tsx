@@ -5,10 +5,12 @@
 // display full Appropriate Legal Notices); added a "Based on Blockscout · GPL-3.0" line linking to the
 // Corresponding Source; custom link groups from NEXT_PUBLIC_FOOTER_LINKS.
 // Distributed under GPL-3.0 (see LICENSE in the original repository).
+// Modified by Quat Capital, 2026-10-25: localized legal line and known Quat footer groups (T18).
 import type { GridProps, HTMLChakraProps } from '@chakra-ui/react';
 import { Box, Grid, Flex, Text, VStack } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CustomLinksGroup } from 'types/footerLinks';
 
@@ -27,6 +29,7 @@ const MAX_LINKS_COLUMNS = 4;
 const SOURCE_URL = 'https://github.com/kuatcapital/quatnetwork-explorer';
 
 const Footer = () => {
+  const { t } = useTranslation();
   const fetch = useFetch();
 
   const { isPlaceholderData, data: linksData } = useQuery<unknown, ResourceError<unknown>, Array<CustomLinksGroup>>({
@@ -72,7 +75,7 @@ const Footer = () => {
             { !config.features.multichain.isEnabled && <NetworkAddToWallet source="Footer"/> }
           </Flex>
           <Text textStyle="xs">
-            <Link href={ SOURCE_URL } external noIcon>На основе Blockscout · GPL-3.0</Link>
+            <Link href={ SOURCE_URL } external noIcon>{ t('quat.based_on') }</Link>
           </Text>
         </div>
 
@@ -89,7 +92,9 @@ const Footer = () => {
           >
             { groups.map(linkGroup => (
               <Box key={ linkGroup.title }>
-                <Skeleton fontWeight={ 500 } mb={ 3 } display="inline-block" loading={ isPlaceholderData }>{ linkGroup.title }</Skeleton>
+                <Skeleton fontWeight={ 500 } mb={ 3 } display="inline-block" loading={ isPlaceholderData }>
+                  { linkGroup.title === 'Сообщество' ? t('quat.community') : linkGroup.title }
+                </Skeleton>
                 <VStack gap={ 1 } alignItems="start">
                   { linkGroup.links.map(link => <FooterLinkItem { ...link } key={ link.text } isLoading={ isPlaceholderData }/>) }
                 </VStack>

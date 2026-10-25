@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize domain expiration details. GPL-3.0.
 import { Grid, Text, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemsProps } from './types';
 import type { SearchResultDomain } from 'types/api/search';
@@ -8,11 +10,14 @@ import type * as multichain from 'types/client/multichainAggregator';
 import { toBech32Address } from 'lib/address/bech32';
 import dayjs from 'lib/date/dayjs';
 import highlightText from 'lib/highlightText';
+import { useLocale } from 'lib/i18n/provider';
 import * as EnsEntity from 'ui/shared/entities/ens/EnsEntity';
 import HashStringShortenDynamic from 'ui/shared/HashStringShortenDynamic';
 import IconSvg from 'ui/shared/IconSvg';
 
 const SearchBarSuggestDomain = ({ data, isMobile, searchTerm, addressFormat }: ItemsProps<SearchResultDomain | multichain.QuickSearchResultDomain>) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const icon = <EnsEntity.Icon protocol={ data.ens_info.protocol }/>;
   const hash = (() => {
     if ('filecoin_robust_address' in data && data.filecoin_robust_address) {
@@ -47,7 +52,8 @@ const SearchBarSuggestDomain = ({ data, isMobile, searchTerm, addressFormat }: I
 
   const namesCount = 'names_count' in data.ens_info ? data.ens_info.names_count : 0;
 
-  const expiresText = data.ens_info?.expiry_date ? ` expires ${ dayjs(data.ens_info.expiry_date).fromNow() }` : '';
+  const expiresText = data.ens_info?.expiry_date ?
+    t('search.expires', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
   const ensNamesCount = namesCount > 39 ? '40+' : `+${ namesCount - 1 }`;
   const additionalInfo = (
     <Text color="text.secondary" textAlign={ isMobile ? 'start' : 'end' }>

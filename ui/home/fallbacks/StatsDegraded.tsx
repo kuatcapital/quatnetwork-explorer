@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-25: localized fallback metric labels (T18, GPL-3.0).
 import { Grid } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import dayjs from 'lib/date/dayjs';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { publicClient } from 'lib/web3/client';
 import { mdash } from 'toolkit/utils/htmlEntities';
 import FallbackRpcIcon from 'ui/shared/fallbacks/FallbackRpcIcon';
@@ -16,7 +20,8 @@ import { isHomeStatsItemEnabled, sortHomeStatsItems } from '../utils';
 import { useHomeRpcDataContext } from './rpcDataContext';
 
 const StatsDegraded = () => {
-
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const [ averageBlockTime, setAverageBlockTime ] = React.useState<number | undefined>(undefined);
 
   const { blocks, isLoading, enable } = useHomeRpcDataContext();
@@ -77,58 +82,60 @@ const StatsDegraded = () => {
       {
         id: 'latest_batch' as const,
         icon: 'txn_batches' as const,
-        label: 'Latest batch',
+        label: t('home.latest_batch'),
         value: mdash,
         isFallback: true,
       },
       {
         id: 'total_blocks' as const,
         icon: 'block' as const,
-        label: 'Total blocks',
-        value: blocks[0] ? blocks[0].height.toLocaleString() : mdash,
+        label: t('home.total_blocks'),
+        value: blocks[0] ? formatNumber(blocks[0].height, locale) : mdash,
         isFallback: blocks[0] === undefined,
         hint: blocks[0] && !isLoading ? <FallbackRpcIcon/> : undefined,
       },
       {
         id: 'average_block_time' as const,
         icon: 'clock-light' as const,
-        label: 'Average block time',
-        value: averageBlockTime ? `${ averageBlockTime.toFixed(1) }s` : mdash,
+        label: t('home.average_block_time'),
+        value: averageBlockTime ? t('home.seconds', {
+          value: formatNumber(averageBlockTime, locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+        }) : mdash,
         isFallback: averageBlockTime === undefined,
         hint: averageBlockTime && !isLoading ? <FallbackRpcIcon/> : undefined,
       },
       {
         id: 'total_txs' as const,
         icon: 'transactions' as const,
-        label: 'Total transactions',
+        label: t('home.total_transactions'),
         value: mdash,
         isFallback: true,
       },
       {
         id: 'total_operational_txs' as const,
         icon: 'transactions' as const,
-        label: 'Total operational transactions',
+        label: t('home.total_operational_transactions'),
         value: mdash,
         isFallback: true,
       },
       {
         id: 'latest_l1_state_batch' as const,
         icon: 'txn_batches' as const,
-        label: 'Latest L1 state batch',
+        label: t('home.latest_state_batch', { layer: 'L1' }),
         value: mdash,
         isFallback: true,
       },
       {
         id: 'wallet_addresses' as const,
         icon: 'wallet' as const,
-        label: 'Wallet addresses',
+        label: t('home.wallet_addresses'),
         value: mdash,
         isFallback: true,
       },
       {
         id: 'gas_tracker' as const,
         icon: 'gas' as const,
-        label: 'Gas tracker',
+        label: t('navigation.gas_tracker'),
         value: gasPriceQuery.data ? <GasPrice data={ gasPriceQuery.data }/> : mdash,
         isFallback: !gasPriceQuery.data,
         isLoading: gasPriceQuery.isLoading,
@@ -137,14 +144,14 @@ const StatsDegraded = () => {
       {
         id: 'btc_locked' as const,
         icon: 'coins/bitcoin' as const,
-        label: 'BTC Locked in 2WP',
+        label: t('home.btc_locked'),
         value: mdash,
         isFallback: true,
       },
       {
         id: 'current_epoch' as const,
         icon: 'hourglass' as const,
-        label: 'Current epoch',
+        label: t('home.current_epoch_label'),
         value: mdash,
         isFallback: true,
       },

@@ -1,3 +1,4 @@
+// Quat Capital, 2026-10-25: expose compact keyboard-accessible language selection on mobile.
 import { Box, Flex } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import React from 'react';
@@ -13,6 +14,7 @@ import RollupStageBadge from '../navigation/RollupStageBadge';
 import TestnetBadge from '../navigation/TestnetBadge';
 import SearchBarMobile from '../searchBar/SearchBarMobile';
 import Burger from './Burger';
+import { LanguageSelector } from './LanguageSelector';
 
 const UserProfileDynamic = dynamic(() => import('ui/snippets/user/profile/dynamic/UserProfile'), { ssr: false });
 
@@ -72,6 +74,7 @@ const HeaderMobile = ({ hideSearchButton, onGoToSearchResults }: Props) => {
           <RollupStageBadge ml={ 2 }/>
         </Flex>
         <Flex columnGap={ 2 }>
+          <LanguageSelector/>
           { !hideSearchButton && <SearchBarMobile onGoToSearchResults={ onGoToSearchResults }/> }
           { config.features.rewards.isEnabled && <RewardsButton/> }
           { userProfile }

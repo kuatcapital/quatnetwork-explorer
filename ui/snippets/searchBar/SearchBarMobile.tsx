@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localize mobile search controls. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Route } from 'nextjs-routes';
 import { route } from 'nextjs-routes';
@@ -34,6 +36,7 @@ type Props = {
 };
 
 const SearchBarMobile = ({ isHeroBanner, onGoToSearchResults }: Props) => {
+  const { t } = useTranslation();
   const inputRef = React.useRef<HTMLFormElement>(null);
   const router = useRouter();
 
@@ -103,7 +106,7 @@ const SearchBarMobile = ({ isHeroBanner, onGoToSearchResults }: Props) => {
         />
         <Box
           onClick={ handleOverlayClick }
-          aria-label="Search"
+          aria-label={ t('common.search') }
           cursor="pointer"
           zIndex={ 1 }
           position="absolute"
@@ -117,6 +120,7 @@ const SearchBarMobile = ({ isHeroBanner, onGoToSearchResults }: Props) => {
   } else {
     trigger = (
       <Button
+        aria-label={ t('common.search') }
         variant="header"
         flexShrink={ 0 }
         p={ 0 }
@@ -137,8 +141,8 @@ const SearchBarMobile = ({ isHeroBanner, onGoToSearchResults }: Props) => {
       </DrawerTrigger>
       <DrawerContent h="75vh" overflowY="hidden">
         <DrawerHeader>
-          <DrawerTitle>Search</DrawerTitle>
-          <DrawerCloseTrigger/>
+          <DrawerTitle>{ t('common.search') }</DrawerTitle>
+          <DrawerCloseTrigger aria-label={ t('common.close') } title={ t('common.close') }/>
         </DrawerHeader>
         <DrawerBody overflow="hidden" display="flex" flexDirection="column">
           <SearchBarInput
@@ -175,7 +179,7 @@ const SearchBarMobile = ({ isHeroBanner, onGoToSearchResults }: Props) => {
               onClick={ handleViewAllResultsClick }
               textStyle="sm"
             >
-              View all results
+              { t('search.view_all_results') }
             </Link>
           </DrawerFooter>
         ) }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize application error messages per request. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -23,26 +25,14 @@ interface Props {
   error: Error | undefined;
 }
 
-const ERROR_TEXTS: Record<string, { title: string; text: string }> = {
-  '403': {
-    title: 'Alert',
-    text: 'Access to this resource is restricted.',
-  },
-  '404': {
-    title: 'Page not found',
-    text: 'This page is no longer explorable! If you are lost, use the search bar to find what you are looking for.',
-  },
-  '422': {
-    title: 'Request cannot be processed',
-    text: 'Your request contained an error, perhaps a mistyped tx/block/address hash. Try again, and check the developer tools console for more info.',
-  },
-  '500': {
-    title: 'Oops! Something went wrong',
-    text: 'An unexpected error has occurred. Try reloading the page, or come back soon and try again.',
-  },
-};
-
 const AppError = ({ error, className }: Props) => {
+  const { t } = useTranslation();
+  const errorTexts: Record<string, { title: string; text: string }> = {
+    '403': { title: t('errors.alert'), text: t('errors.restricted') },
+    '404': { title: t('errors.page_not_found'), text: t('errors.page_not_found_description') },
+    '422': { title: t('errors.unprocessable'), text: t('errors.unprocessable_description') },
+    '500': { title: t('errors.unexpected'), text: t('errors.unexpected_description') },
+  };
   const content = (() => {
     const resourceErrorPayload = getResourceErrorPayload(error);
     const cause = getErrorCause(error);
@@ -86,7 +76,7 @@ const AppError = ({ error, className }: Props) => {
       }
 
       default: {
-        const { title, text } = ERROR_TEXTS[String(statusCode)] ?? ERROR_TEXTS[500];
+        const { title, text } = errorTexts[String(statusCode)] ?? errorTexts[500];
 
         return (
           <>
@@ -101,7 +91,7 @@ const AppError = ({ error, className }: Props) => {
                 mt={ 8 }
                 variant="outline"
               >
-                Back to home
+                { t('errors.back_home') }
               </Button>
             </Link>
             { statusCode === 404 && <AdBanner mt={ 12 }/> }

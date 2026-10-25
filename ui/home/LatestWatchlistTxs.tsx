@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized homepage watch list (T18, GPL-3.0).
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -14,6 +16,7 @@ import LatestTxsItem from './LatestTxsItem';
 import LatestTxsItemMobile from './LatestTxsItemMobile';
 
 const LatestWatchlistTxs = () => {
+  const { t } = useTranslation();
   useRedirectForInvalidAuthToken();
   const isMobile = useIsMobile();
   const txsCount = isMobile ? 2 : 5;
@@ -28,7 +31,7 @@ const LatestWatchlistTxs = () => {
   }
 
   if (!data?.length) {
-    return <Text>No latest transactions found.</Text>;
+    return <Text>{ t('home.no_transactions') }</Text>;
   }
 
   if (data) {
@@ -54,7 +57,7 @@ const LatestWatchlistTxs = () => {
           ))) }
         </Box>
         <Flex justifyContent="center">
-          <Link textStyle="sm" href={ txsUrl }>View all watch list transactions</Link>
+          <Link textStyle="sm" href={ txsUrl }>{ t('home.view_all_watchlist_transactions') }</Link>
         </Flex>
       </>
     );

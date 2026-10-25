@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: relative time reacts to language changes. GPL-3.0.
 import React from 'react';
 
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { DAY, HOUR, MINUTE, SECOND } from 'toolkit/utils/consts';
 
 function getUnits(diff: number) {
@@ -42,7 +44,8 @@ function getUpdateParams(ts: string | number) {
 }
 
 export default function useTimeAgoIncrement(ts: string | number | null, isEnabled?: boolean) {
-  const [ value, setValue ] = React.useState(ts ? dayjs(ts).fromNow() : null);
+  const { locale } = useLocale();
+  const [ value, setValue ] = React.useState(ts ? dayjs(ts).locale(locale).fromNow() : null);
 
   React.useEffect(() => {
     if (ts !== null) {
@@ -58,10 +61,10 @@ export default function useTimeAgoIncrement(ts: string | number | null, isEnable
         let intervalId: number;
 
         const startTimeoutId = window.setTimeout(() => {
-          setValue(dayjs(ts).fromNow());
+          setValue(dayjs(ts).locale(locale).fromNow());
 
           intervalId = window.setInterval(() => {
-            setValue(dayjs(ts).fromNow());
+            setValue(dayjs(ts).locale(locale).fromNow());
           }, interval);
 
           intervals.push(intervalId);
@@ -76,18 +79,18 @@ export default function useTimeAgoIncrement(ts: string | number | null, isEnable
         timeouts.push(endTimeoutId);
       };
 
-      setValue(dayjs(ts).fromNow());
+      setValue(dayjs(ts).locale(locale).fromNow());
 
       isEnabled && startIncrement();
 
-      !isEnabled && setValue(dayjs(ts).fromNow());
+      !isEnabled && setValue(dayjs(ts).locale(locale).fromNow());
 
       return () => {
         timeouts.forEach(window.clearTimeout);
         intervals.forEach(window.clearInterval);
       };
     }
-  }, [ isEnabled, ts ]);
+  }, [ isEnabled, ts, locale ]);
 
   return value;
 }

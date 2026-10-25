@@ -1,9 +1,11 @@
+// Modified by Quat Capital, 2026-10-25: localized L1/L2 transaction labels (T18, GPL-3.0).
 import {
   Box,
   Flex,
   Grid,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { layerLabels } from 'lib/rollups/utils';
@@ -22,6 +24,7 @@ type Props = {
 };
 
 const LatestDepositsItem = ({ l1BlockNumber, l1TxHash, l2TxHash, timestamp, isLoading }: Props) => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const l1BlockLink = (
@@ -67,13 +70,13 @@ const LatestDepositsItem = ({ l1BlockNumber, l1TxHash, l2TxHash, timestamp, isLo
               color="text.secondary"
             />
           </Flex>
-          <Grid gridTemplateColumns="56px auto">
+          <Grid gridTemplateColumns="max-content minmax(0, 1fr)" columnGap={ 2 }>
             <Skeleton loading={ isLoading } my="5px" w="fit-content">
-              { layerLabels.parent } txn
+              { t('home.layer_transaction', { layer: layerLabels.parent }) }
             </Skeleton>
             { l1TxLink }
             <Skeleton loading={ isLoading } my="3px" w="fit-content">
-              { layerLabels.current } txn
+              { t('home.layer_transaction', { layer: layerLabels.current }) }
             </Skeleton>
             { l2TxLink }
           </Grid>
@@ -85,7 +88,7 @@ const LatestDepositsItem = ({ l1BlockNumber, l1TxHash, l2TxHash, timestamp, isLo
       <Grid width="100%" columnGap={ 4 } rowGap={ 2 } templateColumns="max-content max-content auto" w="100%">
         { l1BlockLink }
         <Skeleton loading={ isLoading } w="fit-content" h="fit-content" my="5px">
-          { layerLabels.parent } txn
+          { t('home.layer_transaction', { layer: layerLabels.parent }) }
         </Skeleton>
         { l1TxLink }
         <TimeWithTooltip
@@ -98,7 +101,7 @@ const LatestDepositsItem = ({ l1BlockNumber, l1TxHash, l2TxHash, timestamp, isLo
           my="2px"
         />
         <Skeleton loading={ isLoading } w="fit-content" h="fit-content" my="2px">
-          { layerLabels.current } txn
+          { t('home.layer_transaction', { layer: layerLabels.current }) }
         </Skeleton>
         { l2TxLink }
       </Grid>

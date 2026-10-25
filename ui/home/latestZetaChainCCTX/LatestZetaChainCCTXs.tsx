@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localized ZetaChain homepage list (T18, GPL-3.0).
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Direction } from '@blockscout/zetachain-cctx-types';
 import type { ListCctxsResponse } from '@blockscout/zetachain-cctx-types';
@@ -24,6 +26,7 @@ import LatestTxsFallback from '../fallbacks/LatestTxsFallback';
 import LatestZetaChainCCTXItem from './LatestZetaChainCCTXItem';
 
 const LatestZetaChainCCTXs = () => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   const txsCount = isMobile ? 3 : 8;
   const { data, isPlaceholderData, isError } = useApiQuery('zetachain:transactions', {
@@ -147,13 +150,13 @@ const LatestZetaChainCCTXs = () => {
           </Box>
         </AddressHighlightProvider>
         <Flex justifyContent="center">
-          <Link textStyle="sm" href={ cctxsUrl }>View all cross chain transactions</Link>
+          <Link textStyle="sm" href={ cctxsUrl }>{ t('home.view_all_cross_chain_transactions') }</Link>
         </Flex>
       </>
     );
   }
 
-  return <Text>No latest cross chain transactions found.</Text>;
+  return <Text>{ t('home.no_cross_chain_transactions') }</Text>;
 };
 
 export default LatestZetaChainCCTXs;

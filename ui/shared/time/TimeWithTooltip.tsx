@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware date tooltips. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 
@@ -6,6 +7,7 @@ import type { TimeFormat } from 'types/settings';
 import { useSettingsContext } from 'lib/contexts/settings';
 import dayjs from 'lib/date/dayjs';
 import useTimeAgoIncrement from 'lib/hooks/useTimeAgoIncrement';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Tooltip } from 'toolkit/chakra/tooltip';
 
@@ -19,6 +21,7 @@ type Props = {
 };
 
 const TimeWithTooltip = ({ timestamp, fallbackText, isLoading, enableIncrement, className, timeFormat: timeFormatProp }: Props) => {
+  const { locale } = useLocale();
 
   const settings = useSettingsContext();
   const timeFormat = timeFormatProp || settings?.timeFormat || 'relative';
@@ -34,11 +37,11 @@ const TimeWithTooltip = ({ timestamp, fallbackText, isLoading, enableIncrement, 
     }
 
     if (timeFormat === 'relative') {
-      const content = settings?.isLocalTime ? dayjs(timestamp).format('llll') : dayjs(timestamp).utc().format('llll');
+      const content = settings?.isLocalTime ? dayjs(timestamp).locale(locale).format('llll') : dayjs(timestamp).locale(locale).utc().format('llll');
       return <Tooltip content={ content }><span>{ timeAgo }</span></Tooltip>;
     }
 
-    return <Tooltip content={ timeAgo }><span>{ dayjs(timestamp).utc(settings?.isLocalTime).format('lll') }</span></Tooltip>;
+    return <Tooltip content={ timeAgo }><span>{ dayjs(timestamp).locale(locale).utc(settings?.isLocalTime).format('lll') }</span></Tooltip>;
   })();
 
   return (

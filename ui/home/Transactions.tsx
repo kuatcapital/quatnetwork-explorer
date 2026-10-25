@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized homepage transaction tabs (T18, GPL-3.0).
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { layerLabels } from 'lib/rollups/utils';
@@ -22,7 +24,7 @@ const zetachainFeature = config.features.zetachain;
 const crossChainTxsFeature = config.features.crossChainTxs;
 
 const Transactions = () => {
-
+  const { t } = useTranslation();
   const isAuth = useAuth();
   const rpcDataContext = useHomeRpcDataContext();
   const isRpcData = rpcDataContext.isEnabled && !rpcDataContext.isLoading && !rpcDataContext.isError && rpcDataContext.subscriptions.includes('latest-txs');
@@ -31,24 +33,24 @@ const Transactions = () => {
     const tabs = [
       zetachainFeature.isEnabled && {
         id: 'cctx',
-        title: 'Cross-chain',
+        title: t('home.cross_chain'),
         component: (
           <SocketProvider url={ config.apis.zetachain?.socketEndpoint } name="zetachain">
             <LatestZetaChainCCTXs/>
           </SocketProvider>
         ),
       },
-      { id: 'txn', title: zetachainFeature.isEnabled ? 'ZetaChain EVM' : 'Latest txn', component: <LatestTxs/> },
+      { id: 'txn', title: zetachainFeature.isEnabled ? 'ZetaChain EVM' : t('home.latest_txn'), component: <LatestTxs/> },
       rollupFeature.isEnabled && rollupFeature.type === 'optimistic' &&
-        { id: 'deposits', title: `Deposits (${ layerLabels.parent }→${ layerLabels.current } txn)`, component: <LatestOptimisticDeposits/> },
+        { id: 'deposits', title: t('home.deposits_layers', { from: layerLabels.parent, to: layerLabels.current }), component: <LatestOptimisticDeposits/> },
       rollupFeature.isEnabled && rollupFeature.type === 'arbitrum' &&
-        { id: 'deposits', title: `Deposits (${ layerLabels.parent }→${ layerLabels.current } txn)`, component: <LatestArbitrumDeposits/> },
-      isAuth && { id: 'watchlist', title: 'Watch list', component: <LatestWatchlistTxs/> },
+        { id: 'deposits', title: t('home.deposits_layers', { from: layerLabels.parent, to: layerLabels.current }), component: <LatestArbitrumDeposits/> },
+      isAuth && { id: 'watchlist', title: t('navigation.watch_list'), component: <LatestWatchlistTxs/> },
     ].filter(Boolean);
     return (
       <>
         <HStack mb={ 3 }>
-          <Heading level="3" >Transactions</Heading>
+          <Heading level="3" >{ t('common.transactions') }</Heading>
           { isRpcData && <FallbackRpcIcon/> }
         </HStack>
         <AdaptiveTabs tabs={ tabs } unmountOnExit={ false } listProps={{ mb: 3 }}/>
@@ -58,14 +60,14 @@ const Transactions = () => {
 
   if (crossChainTxsFeature.isEnabled) {
     const tabs = [
-      { id: 'txs', title: 'Txns', component: <LatestTxs/> },
-      { id: 'cross_chain_txs', title: 'Cross-chain txns', component: <LatestCrossChainTxs/> },
+      { id: 'txs', title: t('home.txns'), component: <LatestTxs/> },
+      { id: 'cross_chain_txs', title: t('home.cross_chain_txns'), component: <LatestCrossChainTxs/> },
     ];
 
     return (
       <>
         <HStack mb={ 3 }>
-          <Heading level="3" >Latest transactions</Heading>
+          <Heading level="3" >{ t('home.latest_transactions') }</Heading>
           { isRpcData && <FallbackRpcIcon/> }
         </HStack>
         <AdaptiveTabs tabs={ tabs } unmountOnExit={ false } listProps={{ mb: 3 }}/>
@@ -76,7 +78,7 @@ const Transactions = () => {
   return (
     <>
       <HStack mb={ 3 }>
-        <Heading level="3" >Latest transactions</Heading>
+        <Heading level="3" >{ t('home.latest_transactions') }</Heading>
         { isRpcData && <FallbackRpcIcon/> }
       </HStack>
       <LatestTxs/>

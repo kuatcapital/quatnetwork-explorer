@@ -1,6 +1,8 @@
-/* eslint-disable max-len */
+// Modified by Quat Capital, 2026-10-25: localize transaction-not-found guidance with rich text. GPL-3.0.
+
 import { Box, Flex, List, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -11,6 +13,7 @@ import IconSvg from 'ui/shared/IconSvg';
 
 import AppErrorTitle from '../AppErrorTitle';
 const AppErrorTxNotFound = () => {
+  const { t } = useTranslation();
   const snippet = {
     borderColor: { _light: 'blackAlpha.300', _dark: 'whiteAlpha.300' },
     iconBg: { _light: 'blackAlpha.800', _dark: 'whiteAlpha.800' },
@@ -45,24 +48,22 @@ const AppErrorTxNotFound = () => {
           </Flex>
         </Flex>
       </Box>
-      <AppErrorTitle title="Sorry, we are unable to locate this transaction hash"/>
+      <AppErrorTitle title={ t('errors.transaction_not_found') }/>
       <List.Root mt={ 3 } gap={ 3 } as="ol" pl={ 5 }>
         <List.Item>
-          If you have just submitted this transaction please wait for at least 30 seconds before refreshing this page.
+          { t('errors.tx_wait') }
         </List.Item>
         <List.Item>
-          It could still be in the TX Pool of a different node, waiting to be broadcasted.
+          { t('errors.tx_pool') }
         </List.Item>
         <List.Item>
-          During times when the network is busy (i.e during ICOs) it can take a while for your transaction to propagate through the network and for us to index it.
+          { t('errors.tx_busy_network') }
         </List.Item>
         <List.Item>
-          <span>If it still does not show up after 1 hour, please check with your </span>
-          <chakra.span fontWeight={ 600 }>sender/exchange/wallet/transaction provider</chakra.span>
-          <span> for additional information.</span>
+          <Trans t={ t } i18nKey="errors.tx_contact_provider" components={{ provider: <chakra.span fontWeight={ 600 }/> }}/>
         </List.Item>
         <List.Item>
-          <span>If you don’t want to look for a txn and just want to have fun, <Link onClick={ showPuzzle }>solve the puzzle</Link>, and be rewarded with a secret prize.</span>
+          <span><Trans t={ t } i18nKey="errors.tx_puzzle" components={{ puzzle: <Link onClick={ showPuzzle }/> }}/></span>
         </List.Item>
       </List.Root>
       { isPuzzleOpen && <Puzzle15/> }
@@ -71,7 +72,7 @@ const AppErrorTxNotFound = () => {
           mt={ 8 }
           variant="outline"
         >
-          Back to home
+          { t('errors.back_home') }
         </Button>
       </Link>
     </>

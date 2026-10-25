@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized Arbitrum deposits empty state (T18, GPL-3.0).
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 
@@ -14,6 +16,7 @@ import LatestTxsFallback from '../fallbacks/LatestTxsFallback';
 import LatestDeposits from './LatestDeposits';
 
 const LatestArbitrumDeposits = () => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   const itemsCount = isMobile ? 2 : 5;
   const { data, isPlaceholderData, isError } = useApiQuery('general:homepage_arbitrum_deposits', {
@@ -72,7 +75,7 @@ const LatestArbitrumDeposits = () => {
     );
   }
 
-  return <Text>No latest deposits found.</Text>;
+  return <Text>{ t('home.no_deposits') }</Text>;
 };
 
 export default LatestArbitrumDeposits;

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localized clipboard actions (T18, GPL-3.0).
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { IconButtonProps } from 'toolkit/chakra/icon-button';
 import { IconButton } from 'toolkit/chakra/icon-button';
@@ -17,6 +19,7 @@ export interface Props extends Omit<IconButtonProps, 'type' | 'loading'> {
 }
 
 const CopyToClipboard = (props: Props) => {
+  const { t } = useTranslation();
   const { text, type = 'text', isLoading, onClick, boxSize = 5, noTooltip, tooltipInteractive, ...rest } = props;
 
   const { hasCopied, copy, disclosure } = useClipboard(text);
@@ -40,7 +43,7 @@ const CopyToClipboard = (props: Props) => {
 
   const button = (
     <IconButton
-      aria-label="copy"
+      aria-label={ t('common.copy') }
       boxSize={ boxSize }
       onClick={ handleClick }
       ml={ 2 }
@@ -60,14 +63,14 @@ const CopyToClipboard = (props: Props) => {
 
   const tooltipContent = (() => {
     if (hasCopied) {
-      return 'Copied';
+      return t('common.copied');
     }
 
     if (type === 'link') {
-      return 'Copy link to clipboard';
+      return t('common.copy_link_to_clipboard');
     }
 
-    return 'Copy to clipboard';
+    return t('common.copy_to_clipboard');
   })();
 
   return (

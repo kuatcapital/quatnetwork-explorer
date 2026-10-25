@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-25: localized mobile transaction labels (T18, GPL-3.0).
 import {
   Box,
   Flex,
@@ -6,6 +7,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from 'types/api/transaction';
 
@@ -28,6 +30,7 @@ type Props = {
 };
 
 const LatestTxsItem = ({ tx, isLoading }: Props) => {
+  const { t } = useTranslation();
   const dataTo = tx.to ? tx.to : tx.created_contract;
 
   const protocolTag = tx.to?.metadata?.tags?.find(tag => tag.tagType === 'protocol');
@@ -82,7 +85,7 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
         <VStack rowGap={ 2 } mt={ 3 } alignItems="flex-start">
           { !config.UI.views.tx.hiddenFields?.value && (
             <Skeleton loading={ isLoading } w="fit-content">
-              <Text as="span">Value </Text>
+              <Text as="span">{ t('common.value') }{ ' ' }</Text>
               <NativeCoinValue
                 amount={ tx.value }
                 accuracy={ 5 }
@@ -93,7 +96,7 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
           ) }
           { !config.UI.views.tx.hiddenFields?.tx_fee && (
             <Skeleton loading={ isLoading } w="fit-content" display="flex" whiteSpace="pre">
-              <Text as="span">Fee </Text>
+              <Text as="span">{ t('common.fee') }{ ' ' }</Text>
               <TxFee tx={ tx } accuracy={ 5 } color="text.secondary" noUsd/>
             </Skeleton>
           ) }

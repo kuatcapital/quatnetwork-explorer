@@ -1,5 +1,7 @@
 # Run-time environment variables
 
+<!-- Quat Capital, 2026-10-25: runtime localization configuration and standalone dictionary delivery. -->
+
 The app instance can be customized by passing the following variables to the Node.js environment at runtime. Some of these variables have been deprecated, and their full list can be found in the [file](./DEPRECATED_ENVS.md).
 
 ## Read before you run the app
@@ -93,6 +95,10 @@ All json-like values should be single-quoted. If it contains a hash (`#`) or a d
 | NEXT_PUBLIC_APP_PORT | `number` | Port where app is running | - | `3000` | `3001` | v1.0.x+ |
 | NEXT_PUBLIC_APP_ENV | `string` | App env (e.g development, staging, production, etc.). | - | `production` | `staging` | v1.0.x+ |
 | NEXT_PUBLIC_APP_INSTANCE | `string` | Name of app instance. Used for app monitoring purposes. If not provided, it will be constructed from `NEXT_PUBLIC_APP_HOST` | - | - | `wonderful_kepler` | v1.0.x+ |
+| NEXT_PUBLIC_DEFAULT_LOCALE | `ru \| kk \| en` | Язык первого открытия, если отсутствует допустимая cookie `quat_locale`. Язык браузера его не переопределяет. | Optional | `ru` | `ru` | Quat fork |
+| NEXT_PUBLIC_I18N_BASE_PATH | `string` | Абсолютный путь на текущем origin к runtime JSON-словарям. Внешние URL не допускаются; при недоступности assets используется `/api/i18n/<locale>`. | Optional | `/assets/i18n` | `/assets/i18n` | Quat fork |
+| QUAT_I18N_SERVER_BASE_URL | `string` | Серверный HTTP(S) адрес словарей, без завершающего имени файла. Используется SSR и standalone API; не публикуется в браузере. При его указании удалённый источник является авторитетным. | Optional | - | `http://assets/quat/i18n` | Quat fork |
+| QUAT_I18N_DIRECTORY | `string` | Runtime-каталог `ru.json`, `kk.json`, `en.json`, если `QUAT_I18N_SERVER_BASE_URL` не задан. В standalone deployment каталог нужно скопировать/смонтировать отдельно; JSON не включается в JS bundle. | Optional | `<process.cwd()>/locales` | `/app/locales` | Quat fork |
 | NEXT_PUBLIC_USE_NEXT_JS_PROXY | `boolean` | Tells the app to proxy all APIs request through the NextJS app. **We strongly advise not to use it in the production environment**, since it can lead to performance issues of the NodeJS server | - | `false` | `true` | v1.8.0+ |
 
 &nbsp;

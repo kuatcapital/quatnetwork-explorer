@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize the missing-token-name placeholder. GPL-3.0.
+import { useTranslation } from 'react-i18next';
+
 import type * as bens from '@blockscout/bens-types';
 import type { QuickSearchResultBlock, QuickSearchResultToken } from 'types/client/multichainAggregator';
 import type { QuickSearchResultItem } from 'types/client/search';
@@ -10,6 +13,7 @@ interface Props {
 }
 
 export default function useSearchMultichain({ searchTerm, enabled }: Props) {
+  const { t } = useTranslation();
   return useApiQuery<'multichainAggregator:quick_search', unknown, Array<QuickSearchResultItem>>('multichainAggregator:quick_search', {
     queryParams: { q: searchTerm, unlimited_per_chain: true },
     queryOptions: {
@@ -62,7 +66,7 @@ export default function useSearchMultichain({ searchTerm, enabled }: Props) {
             type: 'token' as const,
             token_type: item.type as unknown as QuickSearchResultToken['token_type'],
             address_hash: item.address_hash,
-            name: item.name ?? 'Unnamed token',
+            name: item.name ?? t('search.unnamed_token'),
             symbol: item.symbol ?? '',
             icon_url: item.icon_url ?? null,
             is_smart_contract_verified: false,

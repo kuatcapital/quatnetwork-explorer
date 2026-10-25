@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localized explorer heading (T18, GPL-3.0).
 // we use custom heading size for hero banner
 // eslint-disable-next-line no-restricted-imports
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -17,7 +19,7 @@ const TEXT_COLOR_DEFAULT = 'white';
 const BORDER_DEFAULT = 'none';
 
 const HeroBanner = () => {
-
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const background = {
@@ -70,8 +72,8 @@ const HeroBanner = () => {
           >
             {
               config.meta.seo.enhancedDataEnabled ?
-                `${ config.chain.name } blockchain explorer` :
-                `${ config.chain.name } explorer`
+                t('home.blockchain_explorer', { network: config.chain.name }) :
+                t('home.explorer', { network: config.chain.name })
             }
           </Heading>
           { config.UI.navigation.layout === 'vertical' && (

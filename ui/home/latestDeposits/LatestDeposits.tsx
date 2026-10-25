@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-25: localized deposit cards and list action (T18, GPL-3.0).
 import {
   Box,
   Flex,
@@ -5,6 +6,7 @@ import {
   GridItem,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -38,6 +40,7 @@ type ItemProps = {
 };
 
 const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const l1BlockLink = item.l1BlockNumber ? (
@@ -48,7 +51,7 @@ const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
     />
   ) : (
     <BlockEntityL1
-      number="TBD"
+      number={ t('home.to_be_determined_short') }
       isLoading={ isLoading }
       fontWeight={ 700 }
       noLink
@@ -65,7 +68,7 @@ const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
   ) : (
     <TxEntityL1
       isLoading={ isLoading }
-      hash="To be determined"
+      hash={ t('home.to_be_determined') }
       truncation="none"
       noLink
       noCopy
@@ -95,13 +98,13 @@ const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
               />
             ) : <GridItem/> }
           </Flex>
-          <Grid gridTemplateColumns="56px auto">
+          <Grid gridTemplateColumns="max-content minmax(0, 1fr)" columnGap={ 2 }>
             <Skeleton loading={ isLoading } my="5px" w="fit-content">
-              { layerLabels.parent } txn
+              { t('home.layer_transaction', { layer: layerLabels.parent }) }
             </Skeleton>
             { l1TxLink }
             <Skeleton loading={ isLoading } my="3px" w="fit-content">
-              { layerLabels.current } txn
+              { t('home.layer_transaction', { layer: layerLabels.current }) }
             </Skeleton>
             { l2TxLink }
           </Grid>
@@ -113,7 +116,7 @@ const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
       <Grid width="100%" columnGap={ 4 } rowGap={ 2 } templateColumns="max-content max-content auto" w="100%">
         { l1BlockLink }
         <Skeleton loading={ isLoading } w="fit-content" h="fit-content" my="5px">
-          { layerLabels.parent } txn
+          { t('home.layer_transaction', { layer: layerLabels.parent }) }
         </Skeleton>
         { l1TxLink }
         { item.timestamp ? (
@@ -128,7 +131,7 @@ const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
           />
         ) : <GridItem/> }
         <Skeleton loading={ isLoading } w="fit-content" h="fit-content" my="2px">
-          { layerLabels.current } txn
+          { t('home.layer_transaction', { layer: layerLabels.current }) }
         </Skeleton>
         { l2TxLink }
       </Grid>
@@ -150,6 +153,7 @@ const LatestDepositsItem = ({ item, isLoading }: ItemProps) => {
 };
 
 const LatestDeposits = ({ isLoading, items, showSocketErrorAlert, socketItemsNum }: Props) => {
+  const { t } = useTranslation();
   const depositsUrl = route({ pathname: '/deposits' });
   return (
     <>
@@ -171,7 +175,7 @@ const LatestDeposits = ({ isLoading, items, showSocketErrorAlert, socketItemsNum
         ))) }
       </Box>
       <Flex justifyContent="center">
-        <Link textStyle="sm" href={ depositsUrl }>View all deposits</Link>
+        <Link textStyle="sm" href={ depositsUrl }>{ t('home.view_all_deposits') }</Link>
       </Flex>
     </>
   );

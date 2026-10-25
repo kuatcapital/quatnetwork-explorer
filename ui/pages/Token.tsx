@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
@@ -48,6 +50,8 @@ const TABS_RIGHT_SLOT_PROPS = {
 };
 
 const TokenPageContent = () => {
+  const { t: tQuat } = useTranslation();
+
   const [ isQueryEnabled, setIsQueryEnabled ] = React.useState(false);
   const [ totalSupplySocket, setTotalSupplySocket ] = React.useState<number>();
   const router = useRouter();
@@ -205,7 +209,7 @@ const TokenPageContent = () => {
         if (addressQuery.data?.is_verified) {
           return (
             <>
-              <span>Contract</span>
+              <span>{ tQuat('common.contract') }</span>
               <IconSvg name="status/success" boxSize="14px" color="green.500"/>
             </>
           );

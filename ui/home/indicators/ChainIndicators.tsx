@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-25: localized own metric titles and fallback descriptions (T18, GPL-3.0).
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TChainIndicator } from './types';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { HOMEPAGE_STATS, HOMEPAGE_STATS_MICROSERVICE } from 'stubs/stats';
 import IconSvg from 'ui/shared/IconSvg';
 import NativeTokenIcon from 'ui/shared/NativeTokenIcon';
@@ -20,6 +24,8 @@ const isOptimisticRollup = rollupFeature.isEnabled && rollupFeature.type === 'op
 const isArbitrumRollup = rollupFeature.isEnabled && rollupFeature.type === 'arbitrum';
 
 const ChainIndicators = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const statsMicroserviceQueryResult = useApiQuery('stats:pages_main', {
     queryOptions: {
       refetchOnMount: false,
@@ -39,21 +45,16 @@ const ChainIndicators = () => {
     return [
       {
         id: 'daily_txs' as const,
-        title: (() => {
-          if (isStatsFeatureEnabled && statsMicroserviceQueryResult?.data?.daily_new_transactions?.info?.title) {
-            return statsMicroserviceQueryResult.data.daily_new_transactions.info.title;
-          }
-          return 'Daily transactions';
-        })(),
+        title: t('home.daily_transactions'),
         value: (() => {
           const STRING_FORMAT = { maximumFractionDigits: 2, notation: 'compact' as const };
           if (isStatsFeatureEnabled) {
             if (typeof statsMicroserviceQueryResult?.data?.yesterday_transactions?.value === 'string') {
-              return Number(statsMicroserviceQueryResult.data.yesterday_transactions.value).toLocaleString(undefined, STRING_FORMAT);
+              return formatNumber(Number(statsMicroserviceQueryResult.data.yesterday_transactions.value), locale, STRING_FORMAT);
             }
           } else {
             if (typeof statsApiQueryResult?.data?.transactions_today === 'string') {
-              return Number(statsApiQueryResult.data.transactions_today).toLocaleString(undefined, STRING_FORMAT);
+              return formatNumber(Number(statsApiQueryResult.data.transactions_today), locale, STRING_FORMAT);
             }
           }
           return 'N/A';
@@ -62,33 +63,23 @@ const ChainIndicators = () => {
           if (isStatsFeatureEnabled && statsMicroserviceQueryResult?.data?.daily_new_transactions?.info?.description) {
             return statsMicroserviceQueryResult.data.daily_new_transactions.info.description;
           }
-          return `Number of transactions yesterday (0:00 - 23:59 UTC). The chart displays daily transactions for the past 30 days.`;
+          return t('home.daily_transactions_hint');
         })(),
         // FIXME use non-navigation icon
         icon: <IconSvg name="navigation/transactions" boxSize={ 6 } bgColor="#56ACD1" borderRadius="base" color="white"/>,
       },
       {
         id: 'daily_operational_txs' as const,
-        title: (() => {
-          if (isStatsFeatureEnabled) {
-            if (isArbitrumRollup && statsMicroserviceQueryResult?.data?.daily_new_operational_transactions?.info?.title) {
-              return statsMicroserviceQueryResult.data.daily_new_operational_transactions.info.title;
-            }
-            if (isOptimisticRollup && statsMicroserviceQueryResult?.data?.op_stack_daily_new_operational_transactions?.info?.title) {
-              return statsMicroserviceQueryResult.data.op_stack_daily_new_operational_transactions.info.title;
-            }
-          }
-          return 'Daily op txns';
-        })(),
-        titleShort: 'Daily op txns',
+        title: t('home.daily_operational_transactions'),
+        titleShort: t('home.daily_operational_transactions'),
         value: (() => {
           const STRING_FORMAT = { maximumFractionDigits: 2, notation: 'compact' as const };
           if (isStatsFeatureEnabled) {
             if (isArbitrumRollup && typeof statsMicroserviceQueryResult?.data?.yesterday_operational_transactions?.value === 'string') {
-              return Number(statsMicroserviceQueryResult.data.yesterday_operational_transactions.value).toLocaleString(undefined, STRING_FORMAT);
+              return formatNumber(Number(statsMicroserviceQueryResult.data.yesterday_operational_transactions.value), locale, STRING_FORMAT);
             }
             if (isOptimisticRollup && typeof statsMicroserviceQueryResult?.data?.op_stack_yesterday_operational_transactions?.value === 'string') {
-              return Number(statsMicroserviceQueryResult.data.op_stack_yesterday_operational_transactions.value).toLocaleString(undefined, STRING_FORMAT);
+              return formatNumber(Number(statsMicroserviceQueryResult.data.op_stack_yesterday_operational_transactions.value), locale, STRING_FORMAT);
             }
           }
           return 'N/A';
@@ -102,55 +93,54 @@ const ChainIndicators = () => {
               return statsMicroserviceQueryResult.data.op_stack_daily_new_operational_transactions.info.description;
             }
           }
-          return `Number of operational transactions yesterday (0:00 - 23:59 UTC). The chart displays daily operational transactions for the past 30 days.`;
+          return t('home.daily_operational_transactions_hint');
         })(),
         // FIXME use non-navigation icon
         icon: <IconSvg name="navigation/transactions" boxSize={ 6 } bgColor="#56ACD1" borderRadius="base" color="white"/>,
       },
       {
         id: 'coin_price' as const,
-        title: `${ config.chain.currency.symbol } price`,
+        title: t('home.coin_price', { symbol: config.chain.currency.symbol }),
         value: typeof statsApiQueryResult.data?.coin_price !== 'string' ?
           '$N/A' :
-          '$' + Number(statsApiQueryResult.data?.coin_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }),
+          '$' + formatNumber(Number(statsApiQueryResult.data?.coin_price), locale, { minimumFractionDigits: 2, maximumFractionDigits: 6 }),
         valueDiff: typeof statsApiQueryResult.data?.coin_price_change_percentage === 'number' ?
           statsApiQueryResult.data.coin_price_change_percentage :
           undefined,
-        hint: `${ config.chain.currency.symbol } token daily price in USD.`,
+        hint: t('home.coin_price_hint', { symbol: config.chain.currency.symbol }),
         icon: <NativeTokenIcon boxSize={ 6 }/>,
       },
       {
         id: 'secondary_coin_price' as const,
-        title: `${ config.chain.secondaryCoin.symbol } price`,
+        title: t('home.coin_price', { symbol: config.chain.secondaryCoin.symbol }),
         value: typeof statsApiQueryResult.data?.secondary_coin_price !== 'string' ?
           '$N/A' :
-          '$' + Number(statsApiQueryResult.data?.secondary_coin_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }),
-        hint: `${ config.chain.secondaryCoin.symbol } token daily price in USD.`,
+          '$' + formatNumber(Number(statsApiQueryResult.data?.secondary_coin_price), locale, { minimumFractionDigits: 2, maximumFractionDigits: 6 }),
+        hint: t('home.coin_price_hint', { symbol: config.chain.secondaryCoin.symbol }),
         icon: <NativeTokenIcon boxSize={ 6 } type="secondary"/>,
       },
       {
         id: 'market_cap' as const,
-        title: 'Market cap',
+        title: t('common.market_cap'),
         value: typeof statsApiQueryResult.data?.market_cap !== 'string' ?
           '$N/A' :
-          '$' + Number(statsApiQueryResult.data.market_cap).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }),
-        // eslint-disable-next-line max-len
-        hint: 'The total market value of a cryptocurrency\'s circulating supply. It is analogous to the free-float capitalization in the stock market. Market Cap = Current Price x Circulating Supply.',
+          '$' + formatNumber(Number(statsApiQueryResult.data.market_cap), locale, { maximumFractionDigits: 2, notation: 'compact' }),
+        hint: t('home.market_cap_hint'),
         icon: <IconSvg name="globe" boxSize={ 6 } bgColor="#6A5DCC" borderRadius="base" color="white"/>,
       },
       {
         id: 'tvl' as const,
-        title: 'Total value locked',
+        title: t('home.total_value_locked'),
         value: typeof statsApiQueryResult.data?.tvl !== 'string' ?
           '$N/A' :
-          '$' + Number(statsApiQueryResult.data.tvl).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }),
-        hint: 'Total value of digital assets locked or staked in a chain',
+          '$' + formatNumber(Number(statsApiQueryResult.data.tvl), locale, { maximumFractionDigits: 2, notation: 'compact' }),
+        hint: t('home.total_value_locked_hint'),
         icon: <IconSvg name="lock" boxSize={ 6 } bgColor="#517FDB" borderRadius="base" color="white"/>,
       },
     ]
       .filter(isIndicatorEnabled)
       .sort(sortIndicators);
-  }, [ statsApiQueryResult?.data, statsMicroserviceQueryResult?.data ]);
+  }, [ statsApiQueryResult?.data, statsMicroserviceQueryResult?.data, t, locale ]);
 
   const [ selectedIndicatorId, selectIndicatorId ] = React.useState(indicators[0]?.id);
   const selectedIndicator = indicators.find(({ id }) => id === selectedIndicatorId);

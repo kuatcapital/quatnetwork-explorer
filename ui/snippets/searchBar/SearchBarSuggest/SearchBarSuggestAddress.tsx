@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize name-expiration details. GPL-3.0.
 import { chakra, Box, Text, Flex, Grid } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemsProps } from './types';
 import type { SearchResultAddressOrContract, SearchResultMetadataTag } from 'types/api/search';
@@ -8,6 +10,7 @@ import type * as multichain from 'types/client/multichainAggregator';
 import { toBech32Address } from 'lib/address/bech32';
 import dayjs from 'lib/date/dayjs';
 import highlightText from 'lib/highlightText';
+import { useLocale } from 'lib/i18n/provider';
 import * as contract from 'lib/multichain/contract';
 import { ADDRESS_REGEXP } from 'toolkit/utils/regexp';
 import SearchResultEntityTag from 'ui/searchResults/SearchResultEntityTag';
@@ -18,6 +21,8 @@ import HashStringShortenDynamic from 'ui/shared/HashStringShortenDynamic';
 type Props = ItemsProps<SearchResultAddressOrContract | SearchResultMetadataTag | multichain.QuickSearchResultAddress>;
 
 const SearchBarSuggestAddress = ({ data, isMobile, searchTerm, addressFormat }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const shouldHighlightHash = ADDRESS_REGEXP.test(searchTerm);
   const hash = 'filecoin_robust_address' in data ? data.filecoin_robust_address ||
     (addressFormat === 'bech32' ? toBech32Address(data.address_hash) : data.address_hash) : data.address_hash;
@@ -54,7 +59,8 @@ const SearchBarSuggestAddress = ({ data, isMobile, searchTerm, addressFormat }: 
     }
     return data.name || data.ens_info?.name;
   })();
-  const expiresText = 'ens_info' in data && data.ens_info?.expiry_date ? ` (expires ${ dayjs(data.ens_info.expiry_date).fromNow() })` : '';
+  const expiresText = 'ens_info' in data && data.ens_info?.expiry_date ?
+    t('search.expires_parenthesized', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
 
   const nameEl = addressName && (
     <Flex alignItems="center" overflow="hidden">

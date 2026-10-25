@@ -1,3 +1,4 @@
+// Quat Capital, 2026-10-25: include an isolated runtime translation snapshot in SSR page props.
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 
 import type { AdBannerProviders } from 'types/client/adProviders';
@@ -6,6 +7,8 @@ import type { Route } from 'nextjs-routes';
 
 import config from 'configs/app';
 import * as cookies from 'lib/cookies';
+import type { I18nSnapshot } from 'lib/i18n/config';
+import { loadServerSnapshot } from 'lib/i18n/server';
 import type * as metadata from 'lib/metadata';
 
 import { isLikelyHumanBrowser, isKnownBotRequest } from '../utils/checkRealBrowser';
@@ -21,11 +24,13 @@ export interface Props<Pathname extends Route['pathname'] = never> {
   // so we force it to be always present in the props but it can be null
   apiData: metadata.ApiData<Pathname> | null;
   uuid: string;
+  readonly i18n?: I18nSnapshot;
 }
 
 export const base = async <Pathname extends Route['pathname'] = never>({ req, res, query }: GetServerSidePropsContext):
 Promise<GetServerSidePropsResult<Props<Pathname>>> => {
   const appProfile = req.headers?.['x-app-profile'] || cookies.getFromCookieString(req.headers.cookie || '', cookies.NAMES.APP_PROFILE);
+  const i18n = await loadServerSnapshot(req.headers.cookie);
   const adBannerProvider = (() => {
     if (adBannerFeature.isEnabled) {
       if ('additionalProvider' in adBannerFeature && adBannerFeature.additionalProvider) {
@@ -80,6 +85,7 @@ Promise<GetServerSidePropsResult<Props<Pathname>>> => {
       adBannerProvider: adBannerProvider,
       apiData: null,
       uuid,
+      i18n,
     },
   };
 };

@@ -1,7 +1,10 @@
+// Modified by Quat Capital, 2026-10-25: locale-aware native coin tooltip. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { thinsp } from 'toolkit/utils/htmlEntities';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 
@@ -34,6 +37,7 @@ const NativeCoinValue = ({
   noTooltip,
   ...rest
 }: Props) => {
+  const { locale } = useLocale();
 
   const units = React.useMemo(() => {
     if (amount && gweiThreshold && unitsProp === 'wei') {
@@ -67,12 +71,12 @@ const NativeCoinValue = ({
 
       return (
         <Box display="inline" whiteSpace="wrap" wordBreak="break-all">
-          { displayedValue.toFormat() }{ thinsp }{ unitName }
+          { formatBigNumber(displayedValue, locale) }{ thinsp }{ unitName }
           <CopyToClipboard text={ valueToCopy } verticalAlign="bottom" noTooltip/>
         </Box>
       );
     }
-  }, [ unitsTooltip, units, amount, copyOriginalValue, decimals ]);
+  }, [ unitsTooltip, units, amount, copyOriginalValue, decimals, locale ]);
 
   return (
     <AssetValue

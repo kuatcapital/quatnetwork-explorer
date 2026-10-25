@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize recent search actions. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { clearRecentSearchKeywords, getRecentSearchKeywords, removeRecentSearchKeyword } from 'lib/recentSearchKeywords';
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const SearchBarRecentKeywords = ({ onClick, onClear }: Props) => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const [ keywords, setKeywords ] = React.useState<Array<string>>(getRecentSearchKeywords());
@@ -50,8 +53,8 @@ const SearchBarRecentKeywords = ({ onClick, onClear }: Props) => {
         </Box>
       ) }
       <Flex mb={ 3 } justifyContent="space-between" fontSize="sm">
-        <Text fontWeight={ 600 } color="text.secondary">Recent</Text>
-        <Link onClick={ clearKeywords } variant="secondary">Clear all</Link>
+        <Text fontWeight={ 600 } color="text.secondary">{ t('search.recent') }</Text>
+        <Link onClick={ clearKeywords } variant="secondary">{ t('search.clear_all') }</Link>
       </Flex>
       <Flex flexDirection="column" overflowY="auto">
         { keywords.map(kw => (
@@ -87,7 +90,7 @@ const SearchBarRecentKeywords = ({ onClick, onClear }: Props) => {
             ) :
               <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">{ kw }</Text>
             }
-            <ClearButton onClick={ removeKeyword(kw) }/>
+            <ClearButton onClick={ removeKeyword(kw) } aria-label={ t('common.clear') } title={ t('common.clear') }/>
           </Flex>
         )) }
       </Flex>

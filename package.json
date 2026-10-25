@@ -2,6 +2,11 @@
   "name": "blockscout-frontend",
   "version": "1.0.0",
   "private": false,
+  "quatModification": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-25",
+    "description": "Runtime RU/KK/EN localization; distributed under GPL-3.0"
+  },
   "homepage": "https://github.com/blockscout/frontend#readme",
   "engines": {
     "node": ">=22.14.0",
@@ -22,6 +27,9 @@
     "lint:eslint": "eslint .",
     "lint:eslint:fix": "eslint . --fix",
     "lint:tsc": "tsc -p ./tsconfig.json",
+    "i18n:inventory": "node tools/i18n/inventory.mjs",
+    "i18n:check": "node tools/i18n/check-locales.mjs",
+    "i18n:test": "vitest run --config vitest.i18n.config.mts",
     "lint:cspell": "cspell . --no-must-find-files",
     "lint:license:check": "license-report > ./license.json && license-report-check --source=./license.json --output=table --forbidden=n/a",
     "lint:envs-validator:test": "cd ./deploy/tools/envs-validator && ./test.sh",
@@ -104,6 +112,8 @@
     "graphiql": "^4.1.2",
     "graphql": "^16.8.1",
     "graphql-ws": "^5.11.3",
+    "i18next": "26.5.10",
+    "i18next-http-backend": "4.0.5",
     "js-cookie": "^3.0.1",
     "magic-bytes.js": "1.8.0",
     "mixpanel-browser": "2.67.0",
@@ -124,6 +134,7 @@
     "react-dom": "19.1.4",
     "react-google-recaptcha": "3.1.0",
     "react-hook-form": "7.52.1",
+    "react-i18next": "17.1.8",
     "react-icons": "5.4.0",
     "react-identicons": "^1.2.5",
     "react-intersection-observer": "^9.5.2",

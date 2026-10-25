@@ -1,5 +1,6 @@
-import { capitalize } from 'es-toolkit';
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -33,6 +34,16 @@ const FEES_COL_WEIGHT = 22;
 const isRollup = config.features.rollup.isEnabled;
 
 const BlocksTable = ({ data, isLoading, top, page, showSocketInfo, socketInfoNum, showSocketErrorAlert, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+
+  const validatorLabels = {
+    validator: tQuat('common.validator'),
+    miner: tQuat('home.miner'),
+    poster: tQuat('home.poster'),
+    sequencer: tQuat('home.sequencer'),
+    'fee recipient': tQuat('home.fee_recipient'),
+  };
+
   const initialList = useInitialList({
     data: data ?? [],
     idFn: (item) => item.height,
@@ -52,23 +63,29 @@ const BlocksTable = ({ data, isLoading, top, page, showSocketInfo, socketInfoNum
           <TableRow>
             { chainData && <TableColumnHeader width="38px"/> }
             <TableColumnHeader width="180px">
-              Block
+              { tQuat('common.block') }
               <TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader width="120px">Size, bytes</TableColumnHeader>
+            <TableColumnHeader width="120px">{ tQuat('blocks.size_bytes') }</TableColumnHeader>
             { !config.UI.views.block.hiddenFields?.miner && (
               <TableColumnHeader width={ `${ VALIDATOR_COL_WEIGHT / widthBase * 100 }%` } minW="160px">
-                { capitalize(getNetworkValidatorTitle()) }
+                { validatorLabels[getNetworkValidatorTitle()] }
               </TableColumnHeader>
             ) }
-            <TableColumnHeader width="64px" isNumeric>Txn</TableColumnHeader>
-            <TableColumnHeader width={ `${ GAS_COL_WEIGHT / widthBase * 100 }%` }>Gas used</TableColumnHeader>
-            { !isRollup && !config.UI.views.block.hiddenFields?.total_reward &&
-              <TableColumnHeader width={ `${ REWARD_COL_WEIGHT / widthBase * 100 }%` }>Reward { currencyUnits.ether }</TableColumnHeader> }
-            { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees &&
-              <TableColumnHeader width={ `${ FEES_COL_WEIGHT / widthBase * 100 }%` }>Burnt fees { currencyUnits.ether }</TableColumnHeader> }
+            <TableColumnHeader width="64px" isNumeric>{ tQuat('home.txn') }</TableColumnHeader>
+            <TableColumnHeader width={ `${ GAS_COL_WEIGHT / widthBase * 100 }%` }>{ tQuat('common.gas_used') }</TableColumnHeader>
+            { !isRollup && !config.UI.views.block.hiddenFields?.total_reward && (
+              <TableColumnHeader width={ `${ REWARD_COL_WEIGHT / widthBase * 100 }%` }>
+                { tQuat('blocks.reward_currency', { currency: currencyUnits.ether }) }
+              </TableColumnHeader>
+            ) }
+            { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
+              <TableColumnHeader width={ `${ FEES_COL_WEIGHT / widthBase * 100 }%` }>
+                { tQuat('blocks.burnt_fees_currency', { currency: currencyUnits.ether }) }
+              </TableColumnHeader>
+            ) }
             { !isRollup && !config.UI.views.block.hiddenFields?.base_fee &&
-              <TableColumnHeader width="150px" isNumeric>Base fee</TableColumnHeader> }
+              <TableColumnHeader width="150px" isNumeric>{ tQuat('blocks.base_fee') }</TableColumnHeader> }
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

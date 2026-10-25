@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized empty chart state (T18, GPL-3.0).
 import { chakra, Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TimeChartData } from 'toolkit/components/charts/types';
 
@@ -15,7 +17,7 @@ type Props = {
 };
 
 const ChainIndicatorChartContainer = ({ data, isError, isPending }: Props) => {
-
+  const { t } = useTranslation();
   if (isPending) {
     return <ContentLoader mt="auto" fontSize="xs"/>;
   }
@@ -25,7 +27,7 @@ const ChainIndicatorChartContainer = ({ data, isError, isPending }: Props) => {
   }
 
   if (data[0].items.length === 0) {
-    return <chakra.span fontSize="xs">no data</chakra.span>;
+    return <chakra.span fontSize="xs">{ t('home.no_data') }</chakra.span>;
   }
 
   return (

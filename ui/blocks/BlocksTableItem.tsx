@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localize block row tooltips and displayed numbers. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -9,6 +11,8 @@ import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
 import getBlockTotalReward from 'lib/block/getBlockTotalReward';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
@@ -35,6 +39,8 @@ interface Props {
 const isRollup = config.features.rollup.isEnabled;
 
 const BlocksTableItem = ({ data, isLoading, enableTimeIncrement, animation, chainData }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const totalReward = getBlockTotalReward(data);
   const burntFees = BigNumber(data.burnt_fees || 0);
   const txFees = BigNumber(data.transaction_fees || 0);
@@ -49,12 +55,12 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement, animation, chai
       <TableCell >
         <Flex columnGap={ 2 } alignItems="center" mb={ 2 }>
           { data.celo?.l1_era_finalized_epoch_number && (
-            <Tooltip content={ `Finalized epoch #${ data.celo.l1_era_finalized_epoch_number }` }>
+            <Tooltip content={ t('home.finalized_epoch', { number: formatNumber(data.celo.l1_era_finalized_epoch_number, locale) }) }>
               <IconSvg name="checkered_flag" boxSize={ 5 } p="1px" isLoading={ isLoading } flexShrink={ 0 }/>
             </Tooltip>
           ) }
           { data.is_pending_update && <BlockPendingUpdateHint/> }
-          <Tooltip disabled={ data.type !== 'reorg' } content="Chain reorganizations">
+          <Tooltip disabled={ data.type !== 'reorg' } content={ t('blocks.chain_reorganizations') }>
             <span>
               <BlockEntity
                 isLoading={ isLoading }
@@ -77,7 +83,7 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement, animation, chai
       </TableCell>
       <TableCell >
         <Skeleton loading={ isLoading } display="inline-block">
-          { data.size?.toLocaleString() || 'N/A' }
+          { data.size === null || data.size === undefined ? t('home.not_available') : formatNumber(data.size, locale) }
         </Skeleton>
       </TableCell>
       { !config.UI.views.block.hiddenFields?.miner && (
@@ -96,13 +102,13 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement, animation, chai
               pathname: '/block/[height_or_hash]',
               query: { height_or_hash: String(data.height), tab: 'txs' },
             }) }>
-              { data.transactions_count }
+              { formatNumber(data.transactions_count, locale) }
             </Link>
           </Skeleton>
-        ) : data.transactions_count }
+        ) : formatNumber(data.transactions_count, locale) }
       </TableCell>
       <TableCell >
-        <Skeleton loading={ isLoading } display="inline-block">{ BigNumber(data.gas_used || 0).toFormat() }</Skeleton>
+        <Skeleton loading={ isLoading } display="inline-block">{ formatBigNumber(BigNumber(data.gas_used || 0), locale) }</Skeleton>
         <Flex mt={ 2 }>
           <BlockGasUsed
             gasUsed={ data.gas_used || undefined }
@@ -126,7 +132,7 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement, animation, chai
             loading={ isLoading }
             display="flex"
           />
-          <Tooltip content="Burnt fees / Txn fees * 100%" disabled={ isLoading }>
+          <Tooltip content={ t('blocks.burnt_fees_ratio') } disabled={ isLoading }>
             <Utilization mt={ 2 } w="min-content" value={ burntFees.div(txFees).toNumber() } isLoading={ isLoading }/>
           </Tooltip>
         </TableCell>
