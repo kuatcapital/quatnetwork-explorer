@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { DepositsItem } from 'types/api/deposits';
 
@@ -20,6 +22,7 @@ type Props = {
 };
 
 const BeaconChainDepositsTable = ({ items, isLoading, top, view }: Props) => {
+  const { t } = useTranslation();
   const { cutRef, renderedItemsNum } = useLazyRenderedList(items, !isLoading);
 
   if (!feature.isEnabled || feature.withdrawalsOnly) {
@@ -31,14 +34,14 @@ const BeaconChainDepositsTable = ({ items, isLoading, top, view }: Props) => {
       <TableRoot minW="1100px">
         <TableHeaderSticky top={ top }>
           <TableRow>
-            <TableColumnHeader w="190px">Transaction hash</TableColumnHeader>
-            { view !== 'block' && <TableColumnHeader>Block</TableColumnHeader> }
-            { view !== 'block' && <TableColumnHeader w="180px">Timestamp<TimeFormatToggle/></TableColumnHeader> }
-            <TableColumnHeader>{ `Value ${ feature.currency.symbol }` }</TableColumnHeader>
-            { view !== 'address' && <TableColumnHeader w="200px">From</TableColumnHeader> }
-            <TableColumnHeader>PubKey</TableColumnHeader>
-            <TableColumnHeader>Signature</TableColumnHeader>
-            <TableColumnHeader>Status</TableColumnHeader>
+            <TableColumnHeader w="190px">{ t('networkTransfers.tx_hash') }</TableColumnHeader>
+            { view !== 'block' && <TableColumnHeader>{ t('networkTransfers.block') }</TableColumnHeader> }
+            { view !== 'block' && <TableColumnHeader w="180px">{ t('networkTransfers.timestamp') }<TimeFormatToggle/></TableColumnHeader> }
+            <TableColumnHeader>{ t('networkTransfers.value_currency', { symbol: feature.currency.symbol }) }</TableColumnHeader>
+            { view !== 'address' && <TableColumnHeader w="200px">{ t('networkTransfers.from') }</TableColumnHeader> }
+            <TableColumnHeader>{ t('networkTransfers.pubkey') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.signature') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.status') }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

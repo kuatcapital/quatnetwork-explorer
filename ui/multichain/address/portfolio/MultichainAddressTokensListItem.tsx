@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Grid } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTokensErc20Item } from 'ui/address/tokens/types';
 
@@ -21,6 +23,8 @@ interface Props {
 }
 
 const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const chainInfo = React.useMemo(() => {
     if (!data.chain_values) {
       return;
@@ -71,7 +75,7 @@ const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
         { data.token.exchange_rate ? (
           <>
             <Skeleton loading={ isLoading } fontWeight="500">
-              <span>Price</span>
+              <span>{ tQuat('common.price') }</span>
             </Skeleton>
             <SimpleValue
               value={ BigNumber(data.token.exchange_rate) }

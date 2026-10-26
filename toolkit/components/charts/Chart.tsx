@@ -5,6 +5,7 @@ import type { AxesConfigFn, ChartMargin, TimeChartData } from './types';
 import { Resolution } from './types';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 
 import { ChartArea } from './parts/ChartArea';
 import { ChartAxis } from './parts/ChartAxis';
@@ -39,6 +40,7 @@ export const Chart = React.memo(({
   zoomRange,
   axesConfig: axesConfigProps,
 }: ChartProps) => {
+  const { locale } = useLocale();
   const isMobile = useIsMobile();
 
   const overlayRef = React.useRef<SVGRectElement>(null);
@@ -59,10 +61,10 @@ export const Chart = React.memo(({
         .filter((item) => item.date >= range[0] && item.date <= range[1])
         .map((item) => (item.dateLabel ? item : {
           ...item,
-          dateLabel: getDateLabel(item.date, item.date_to, resolution),
+          dateLabel: getDateLabel(item.date, item.date_to, resolution, locale),
         })),
     }));
-  }, [ charts, range, resolution ]);
+  }, [ charts, range, resolution, locale ]);
 
   const margin: ChartMargin = React.useMemo(() => ({ ...DEFAULT_CHART_MARGIN, ...marginProps }), [ marginProps ]);
 
@@ -183,3 +185,4 @@ export const Chart = React.memo(({
     </svg>
   );
 });
+// Modified by Quat Capital, 2026-10-26: reactive localized chart date labels. GPL-3.0.

@@ -1,4 +1,4 @@
-// Modified by Quat Capital on 2026-10-25: T18 opt-in reviewed-literal codemod.
+// Modified by Quat Capital on 2026-10-26: T18 codemod with English plural-suffix protection.
 // Licensed under GNU GPL v3.0; see LICENSE.
 /* eslint-disable no-console */
 import fs from 'node:fs/promises';
@@ -9,13 +9,24 @@ import ts from 'typescript';
 
 import { literalText, nodeLocation, portablePath, PROJECT_ROOT, propertyName } from './sources.mjs';
 
-const NOTICE = '// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.';
+const NOTICE = '// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.';
 const ATTRIBUTE_NAMES = new Set([ 'title', 'label', 'placeholder', 'aria-label', 'alt', 'tooltip', 'description', 'emptyText' ]);
 const SKIP_VALUES = new Set([ 'Value', 'From', 'To' ]);
 const BLOCKED_TAGS = new Set([ 'trans', 'code', 'pre', 'script', 'style' ]);
 const OWNER_NAME = /^(?:[A-Z]|use[A-Z])/u;
 const PROTECTED_FILES =
   /^(?:ui\/home\/|ui\/snippets\/header\/|lib\/(?:i18n|date|format)\/|ui\/shared\/(?:[Tt]ime|NumberEntity)|nextjs\/|pages\/_|lib\/setLocale\.ts$)/u;
+
+function hasEnglishPluralSuffix(node) {
+  const children = node.parent?.children;
+  if (!children || !ts.isJsxText(node)) return false;
+  const index = children.indexOf(node);
+  const next = children.slice(index + 1).find((child) => !ts.isJsxText(child) || child.text.trim());
+  if (!next || !ts.isJsxExpression(next) || !next.expression) return false;
+  const expression = next.expression;
+  const branches = ts.isConditionalExpression(expression) ? [ expression.whenTrue, expression.whenFalse ] : [ expression ];
+  return branches.some((branch) => [ 's', 'es', 'ies', '\'s' ].includes(literalText(branch)));
+}
 
 function quoted(value) {
   return `'${ value.replace(/\\/gu, '\\\\').replace(/'/gu, '\\\'').replace(/\r/gu, '\\r').replace(/\n/gu, '\\n') }'`;
@@ -406,6 +417,8 @@ export function planReviewedLocalization(text, file, dictionary) {
 
       if (SKIP_VALUES.has(source)) {
         reason = 'context-sensitive-English-value';
+      } else if (hasEnglishPluralSuffix(node)) {
+        reason = 'English-plural-suffix';
       } else if (keys.length !== 1) {
         reason = 'ambiguous-dictionary-value';
       } else if (blockedContext(node, imports.transNames)) {

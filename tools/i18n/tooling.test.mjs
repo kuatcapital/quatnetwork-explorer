@@ -1,4 +1,4 @@
-// Modified by Quat Capital on 2026-10-25: T18 tooling regression fixtures.
+// Modified by Quat Capital on 2026-10-26: T18 tooling and plural-suffix regression fixtures.
 // Licensed under GNU GPL v3.0; see LICENSE.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -170,7 +170,7 @@ test('reviewed codemod localizes only exact JSX values and preserves visible inl
   assert.match(result.text, /const \{ t: tQuat \} = useTranslation\(\)/u);
   assert.ok(result.text.includes('{ \' \' }{ tQuat(\'common.save\') }{ \' \' }<b>'));
   assert.ok(result.text.includes('title={ tQuat(\'common.save\') }'));
-  assert.ok(result.text.startsWith('// Modified by Quat Capital, 2026-10-25'));
+  assert.ok(result.text.startsWith('// Modified by Quat Capital, 2026-10-26'));
   assert.ok(source.includes(' Save '));
 });
 
@@ -225,6 +225,21 @@ test('reviewed codemod skips implicit components, class methods, templates and u
   assert.ok(result.skip.some((item) => item.reason === 'no-block-body-component-or-hook'));
   assert.ok(result.skip.some((item) => item.reason === 'tQuat-scope-conflict'));
   assert.ok(result.skip.some((item) => item.reason === 'memo-without-literal-dependency-array'));
+});
+
+test('reviewed codemod leaves English noun/suffix combinations for a complete plural message', () => {
+  const source = [
+    'const Sample = () => {',
+    '  return <><span>{count} Domain{count > 1 ? "s" : ""}</span>',
+    '    <span>{count} transaction{count === 1 ? "" : "s"}</span><span>Address{count > 1 ? "es" : ""}</span></>;',
+    '};',
+  ].join('\n');
+  const result = planReviewedLocalization(source, 'ui/Sample.tsx', {
+    terms: { domain: 'Domain', transaction: 'transaction', address: 'Address' },
+  });
+  assert.equal(result.changed, false);
+  assert.equal(result.text, source);
+  assert.equal(result.skip.filter((item) => item.reason === 'English-plural-suffix').length, 3);
 });
 
 test('reviewed codemod reuses an existing tQuat hook and is idempotent', () => {

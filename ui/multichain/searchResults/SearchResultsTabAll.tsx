@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs/routes';
 
@@ -16,6 +18,8 @@ interface Props {
 }
 
 const SearchResultsTabAll = ({ queries }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <Flex flexDir="column" rowGap={ 8 }>
       { Object.entries(queries)
@@ -40,9 +44,7 @@ const SearchResultsTabAll = ({ queries }: Props) => {
                   textStyle="sm"
                   w="full"
                   href={ route({ pathname: '/search-results', query: { tab: SEARCH_TABS_IDS[queryType] } }) }
-                >
-                  View all
-                </Link>
+                >{ tQuat('common.view_all') }</Link>
               ) }
             </Box>
           );

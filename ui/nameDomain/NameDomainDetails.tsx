@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as bens from '@blockscout/bens-types';
 
@@ -27,6 +29,8 @@ interface Props {
 }
 
 const NameDomainDetails = ({ query }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isLoading = query.isPlaceholderData;
 
   const otherAddresses = Object.entries(query.data?.other_addresses ?? {});
@@ -123,9 +127,7 @@ const NameDomainDetails = ({ query }: Props) => {
             <DetailedInfo.ItemLabel
               hint="The account that owns the rights to edit the records of this domain name"
               isLoading={ isLoading }
-            >
-              Owner
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('tokenUi.owner') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue
               columnGap={ 2 }
               flexWrap="nowrap"

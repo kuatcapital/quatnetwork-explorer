@@ -1,8 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ValidatorZilliqa } from 'types/api/validators';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
@@ -19,26 +23,26 @@ interface Props {
 }
 
 const ValidatorDetails = ({ data, isLoading }: Props) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation();
   return (
     <DetailedInfo.Container>
       <DetailedInfo.ItemLabel
-        hint="Index of the staker in the committee"
+        hint={ t('networkTransfers.staker_index_hint') }
         isLoading={ isLoading }
       >
-        Index
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.index') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isLoading } display="inline">
-          { data.index }
+          { formatNumber(data.index, locale) }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Staker's balance"
+        hint={ t('networkTransfers.staker_balance_hint') }
         isLoading={ isLoading }
       >
-        Staked
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.staked') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <NativeCoinValue
           startElement={ <NativeTokenIcon isLoading={ isLoading } boxSize={ 5 } mr={ 2 }/> }
@@ -48,11 +52,10 @@ const ValidatorDetails = ({ data, isLoading }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="libp2p peer ID, corresponding to the staker's BLS public key"
+        hint={ t('networkTransfers.peer_hint') }
         isLoading={ isLoading }
       >
-        Peer ID
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.peer_id') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Flex alignItems="center" w="100%" minWidth={ 0 }>
           <Skeleton loading={ isLoading } maxW="calc(100% - 28px)" overflow="hidden">
@@ -63,51 +66,46 @@ const ValidatorDetails = ({ data, isLoading }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="The address used for authenticating requests from this staker to the deposit contract"
+        hint={ t('networkTransfers.control_hint') }
         isLoading={ isLoading }
       >
-        Control address
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.control_address') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressEntity address={ data.control_address } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="The address which rewards for this staker will be sent to"
+        hint={ t('networkTransfers.reward_address_hint') }
         isLoading={ isLoading }
       >
-        Reward address
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.reward_address') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressEntity address={ data.reward_address } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="The address whose key the validator uses to sign cross-chain events"
+        hint={ t('networkTransfers.signing_hint') }
         isLoading={ isLoading }
       >
-        Signing address
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.signing_address') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressEntity address={ data.signing_address } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Block number at which the staker was added"
+        hint={ t('networkTransfers.added_hint') }
         isLoading={ isLoading }
       >
-        Added at block
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.added_block') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <BlockEntity number={ data.added_at_block_number } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Block number at which the staker's stake was last updated"
+        hint={ t('networkTransfers.updated_hint') }
         isLoading={ isLoading }
       >
-        Stake updated
-      </DetailedInfo.ItemLabel>
+        { t('networkTransfers.stake_updated') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <BlockEntity number={ data.stake_updated_at_block_number } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>

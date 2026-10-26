@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text, Grid } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -19,6 +21,7 @@ const SOCIAL_LINKS: Array<Omit<SocialLinkProps, 'href'>> = [
 ];
 
 const Content = ({ data }: Props) => {
+  const { t: tEco } = useTranslation();
   const socialLinks: Array<SocialLinkProps> = [];
   SOCIAL_LINKS.forEach((link) => {
     const href = data?.[link.field];
@@ -34,13 +37,13 @@ const Content = ({ data }: Props) => {
   return (
     <Flex fontSize="sm" flexDir="column" rowGap={ 5 }>
       <div>
-        <Text color="text.secondary" textStyle="xs">Project info</Text>
+        <Text color="text.secondary" textStyle="xs">{ tEco('tokenInfoUI.project_info') }</Text>
         <Text fontSize="sm" mt={ 3 }>{ data?.shortDescription }</Text>
         <WebsiteLink url={ data?.site }/>
       </div>
       { socialLinks.length > 0 && (
         <div>
-          <Text color="text.secondary" textStyle="xs">Links</Text>
+          <Text color="text.secondary" textStyle="xs">{ tEco('marketplaceUI.links') }</Text>
           <Grid templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} columnGap={ 4 } rowGap={ 3 } mt={ 3 }>
             { socialLinks.map((link, index) => <SocialLink key={ index } { ...link }/>) }
           </Grid>

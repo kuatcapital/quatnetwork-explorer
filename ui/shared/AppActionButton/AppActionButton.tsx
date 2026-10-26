@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: translated shared interface labels. GPL-3.0.
 import { Text, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressMetadataTagFormatted } from 'types/client/addressMetadata';
 
@@ -18,6 +20,7 @@ type Props = {
 };
 
 const AppActionButton = ({ data, className, txHash, source }: Props) => {
+  const { t } = useTranslation();
   const { appID, textColor, bgColor, appActionButtonText, appLogoURL, appMarketplaceURL } = data;
 
   const actionURL = appMarketplaceURL?.replace('{chainId}', config.chain.id || '').replace('{txHash}', txHash || '');
@@ -38,7 +41,7 @@ const AppActionButton = ({ data, className, txHash, source }: Props) => {
       { appLogoURL && (
         <Image
           src={ appLogoURL }
-          alt={ `${ appActionButtonText } button` }
+          alt={ t('editorShared.action_button', { label: appActionButtonText || '' }) }
           boxSize={ 5 }
           borderRadius="sm"
           mr={ 2 }

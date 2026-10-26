@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2WithdrawalsItem } from 'types/api/optimisticL2';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -18,7 +21,10 @@ const rollupFeature = config.features.rollup;
 type Props = { item: OptimisticL2WithdrawalsItem; isLoading?: boolean };
 
 const OptimisticL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
-  const timeToEnd = item.challenge_period_end ? dayjs(item.challenge_period_end).fromNow(true) + ' left' : '';
+  const { locale } = useLocale();
+  const { t } = useTranslation();
+  const timeToEnd = item.challenge_period_end ?
+    t('networkTransfers.time_remaining', { duration: dayjs(item.challenge_period_end).locale(locale).fromNow(true) }) : '';
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'optimistic') {
     return null;
@@ -36,7 +42,7 @@ const OptimisticL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
             isLoading={ isLoading }
             truncation="constant"
           />
-        ) : 'N/A' }
+        ) : t('networkTransfers.unavailable') }
       </TableCell>
       <TableCell verticalAlign="middle">
         <TxEntity
@@ -49,7 +55,7 @@ const OptimisticL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
       <TableCell verticalAlign="middle" pr={ 12 }>
         <TimeWithTooltip
           timestamp={ item.l2_timestamp }
-          fallbackText="N/A"
+          fallbackText={ t('networkTransfers.unavailable') }
           isLoading={ isLoading }
           display="inline-block"
           color="text.secondary"
@@ -68,7 +74,7 @@ const OptimisticL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
             noCopy
           />
         ) :
-          'N/A'
+          t('networkTransfers.unavailable')
         }
       </TableCell>
       <TableCell verticalAlign="middle">

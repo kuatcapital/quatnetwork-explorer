@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import type { IconName } from 'ui/shared/IconSvg';
@@ -10,25 +12,26 @@ type Props = {
 };
 
 const MarketplaceAppIntegrationIcon = ({ external, internalWallet }: Props) => {
+  const { t: tEco } = useTranslation();
   const [ icon, iconColor, text, boxSize ] = React.useMemo(() => {
     let icon: IconName = 'integration/partial';
     let color = 'icon.secondary';
-    let text = 'This app opens in Blockscout without Blockscout wallet functionality. Use your external web3 wallet to connect directly to this application';
+    let text = tEco('marketplaceUI.app_external_wallet');
     let boxSize = 5;
 
     if (external) {
       icon = 'link_external';
       color = 'icon.secondary';
-      text = 'This app opens in a separate tab';
+      text = tEco('marketplaceUI.app_new_tab');
       boxSize = 4;
     } else if (internalWallet) {
       icon = 'integration/full';
       color = 'green.500';
-      text = 'This app opens in Blockscout and your Blockscout wallet connects automatically';
+      text = tEco('marketplaceUI.app_autoconnect');
     }
 
     return [ icon, color, text, boxSize ];
-  }, [ external, internalWallet ]);
+  }, [ external, internalWallet, tEco ]);
 
   return (
     <Tooltip

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ScrollL2TxnBatch } from 'types/api/scrollL2';
 
@@ -14,22 +16,22 @@ type Props = {
 };
 
 const ScrollL2TxnBatchesTable = ({ items, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot tableLayout="auto" minW="1000px">
       <TableHeaderSticky top={ top }>
         <TableRow>
           <TableColumnHeader>Batch #</TableColumnHeader>
           <TableColumnHeader>Container</TableColumnHeader>
-          <TableColumnHeader>Status</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('common.status') }</TableColumnHeader>
           <TableColumnHeader>Committed block</TableColumnHeader>
           <TableColumnHeader>Committed txn hash</TableColumnHeader>
-          <TableColumnHeader>
-            Timestamp
-            <TimeFormatToggle/>
+          <TableColumnHeader>{ tQuat('common.timestamp') }<TimeFormatToggle/>
           </TableColumnHeader>
           <TableColumnHeader>Finalized block</TableColumnHeader>
           <TableColumnHeader>Finalized txn hash</TableColumnHeader>
-          <TableColumnHeader isNumeric>Blocks</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ tQuat('common.blocks') }</TableColumnHeader>
           <TableColumnHeader isNumeric>Txn</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

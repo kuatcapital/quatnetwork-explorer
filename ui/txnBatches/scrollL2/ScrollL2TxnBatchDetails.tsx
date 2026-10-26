@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ScrollL2TxnBatch } from 'types/api/scrollL2';
 
@@ -8,6 +10,8 @@ import { route } from 'nextjs-routes';
 
 import type { ResourceError } from 'lib/api/resources';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -20,11 +24,15 @@ import BlockEntityL1 from 'ui/shared/entities/block/BlockEntityL1';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
 import PrevNext from 'ui/shared/PrevNext';
 import ScrollL2TxnBatchStatus from 'ui/shared/statusTag/ScrollL2TxnBatchStatus';
+
 interface Props {
   query: UseQueryResult<ScrollL2TxnBatch, ResourceError>;
 }
 
 const ScrollL2TxnBatchDetails = ({ query }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const router = useRouter();
 
   const { data, isPlaceholderData, isError, error } = query;
@@ -91,9 +99,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
         hint="Status of this batch"
-      >
-        Status
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <ScrollL2TxnBatchStatus status={ data.confirmation_transaction.hash ? 'Finalized' : 'Committed' } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
@@ -107,7 +113,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemValue>
         { data.confirmation_transaction.timestamp ?
           <DetailedInfoTimestamp timestamp={ data.confirmation_transaction.timestamp } isLoading={ isPlaceholderData }/> :
-          <Skeleton loading={ isPlaceholderData } display="inline-block">Pending</Skeleton>
+          <Skeleton loading={ isPlaceholderData } display="inline-block">{ tQuat('common.pending') }</Skeleton>
         }
       </DetailedInfo.ItemValue>
 
@@ -116,12 +122,13 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
           <DetailedInfo.ItemLabel
             isLoading={ isPlaceholderData }
             hint="Number of transactions in this batch"
-          >
-            Transactions
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
-              { data.transactions_count.toLocaleString() } transaction{ data.transactions_count === 1 ? '' : 's' }
+              { tQuat('sectionCounts.transactions', {
+                count: data.transactions_count,
+                value: formatNumber(data.transactions_count, locale),
+              }) }
             </Link>
           </DetailedInfo.ItemValue>
         </>
@@ -130,9 +137,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
         hint={ `Number of ${ layerLabels.current } blocks in this batch` }
-      >
-        Blocks
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.blocks') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }>
           { blocksCount.toLocaleString() } block{ blocksCount === 1 ? '' : 's' }
@@ -148,7 +153,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemValue>
         { data.commitment_transaction.timestamp ?
           <DetailedInfoTimestamp timestamp={ data.commitment_transaction.timestamp } isLoading={ isPlaceholderData }/> :
-          <Skeleton loading={ isPlaceholderData } display="inline-block">Pending</Skeleton>
+          <Skeleton loading={ isPlaceholderData } display="inline-block">{ tQuat('common.pending') }</Skeleton>
         }
       </DetailedInfo.ItemValue>
 
@@ -195,7 +200,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
             maxW="100%"
             noCopy
           />
-        ) : <Skeleton loading={ isPlaceholderData } display="inline-block">Pending</Skeleton> }
+        ) : <Skeleton loading={ isPlaceholderData } display="inline-block">{ tQuat('common.pending') }</Skeleton> }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
@@ -210,7 +215,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
             isLoading={ isPlaceholderData }
             number={ data.confirmation_transaction.block_number }
           />
-        ) : <Skeleton loading={ isPlaceholderData } display="inline-block">Pending</Skeleton> }
+        ) : <Skeleton loading={ isPlaceholderData } display="inline-block">{ tQuat('common.pending') }</Skeleton> }
       </DetailedInfo.ItemValue>
     </DetailedInfo.Container>
   );

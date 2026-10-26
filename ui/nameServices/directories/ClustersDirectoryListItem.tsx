@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ClustersDirectoryObject } from 'types/api/clusters';
 
@@ -17,6 +19,8 @@ interface Props {
 }
 
 const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ListItemMobileGrid.Container>
       <ListItemMobileGrid.Label isLoading={ isLoading }>
@@ -26,9 +30,7 @@ const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }:
         <ClustersEntity clusterName={ item.name } isLoading={ isLoading } fontWeight={ 500 }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>
-        Address
-      </ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.address') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { item.owner && (
           <AddressEntity

@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ZKSYNC_L2_TX_BATCH_STATUSES, type ZkSyncBatch } from 'types/api/zkSyncL2';
 
@@ -10,6 +12,8 @@ import { route } from 'nextjs-routes';
 import config from 'configs/app';
 import type { ResourceError } from 'lib/api/resources';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { formatZkSyncL2TxnBatchStatus, layerLabels } from 'lib/rollups/utils';
 import { currencyUnits } from 'lib/units';
 import { CollapsibleDetails } from 'toolkit/chakra/collapsible';
@@ -34,6 +38,9 @@ interface Props {
 }
 
 const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const router = useRouter();
 
   const { data, isPlaceholderData, isError, error } = query;
@@ -91,9 +98,7 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         hint="Status is the short interpretation of the batch lifecycle"
         isLoading={ isPlaceholderData }
-      >
-        Status
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <VerificationSteps
           steps={ ZKSYNC_L2_TX_BATCH_STATUSES.slice(1).map(formatZkSyncL2TxnBatchStatus) }
@@ -105,9 +110,7 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         hint="Date and time at which batch is produced"
         isLoading={ isPlaceholderData }
-      >
-        Timestamp
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.timestamp ? <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/> : 'Undefined' }
       </DetailedInfo.ItemValue>
@@ -115,13 +118,14 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         hint="Number of transactions inside the batch."
         isLoading={ isPlaceholderData }
-      >
-        Transactions
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
-            { txNum } transaction{ txNum === 1 ? '' : 's' }
+            { tQuat('sectionCounts.transactions', {
+              count: txNum,
+              value: formatNumber(txNum, locale),
+            }) }
           </Link>
         </Skeleton>
       </DetailedInfo.ItemValue>

@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimismL2TxnBatch } from 'types/api/optimisticL2';
 
@@ -8,6 +10,8 @@ import { route } from 'nextjs-routes';
 
 import type { ResourceError } from 'lib/api/resources';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -28,6 +32,9 @@ interface Props {
 }
 
 const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const router = useRouter();
 
   const { data, isError, error, isPlaceholderData } = query;
@@ -84,9 +91,7 @@ const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
         hint={ `Date and time at which batch is submitted to ${ layerLabels.parent }` }
-      >
-        Timestamp
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.l1_timestamp ?
           <DetailedInfoTimestamp timestamp={ data.l1_timestamp } isLoading={ isPlaceholderData }/> :
@@ -97,13 +102,14 @@ const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
         hint="Number of transactions in this batch"
-      >
-        Transactions
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
-            { data.transactions_count.toLocaleString() } transaction{ data.transactions_count === 1 ? '' : 's' }
+            { tQuat('sectionCounts.transactions', {
+              count: data.transactions_count,
+              value: formatNumber(data.transactions_count, locale),
+            }) }
           </Link>
           { ' ' }in this batch
         </Skeleton>
@@ -112,9 +118,7 @@ const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
         hint={ `Number of ${ layerLabels.current } blocks in this batch` }
-      >
-        Blocks
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.blocks') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }>

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Fields } from '../types';
 
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const TokenInfoFieldSupport = (props: Props) => {
+  const { t: tEco } = useTranslation();
   const validate = React.useCallback((newValue: string | undefined) => {
     if (typeof newValue !== 'string') {
       return true;
@@ -25,13 +28,13 @@ const TokenInfoFieldSupport = (props: Props) => {
       return true;
     }
 
-    return 'Invalid format';
-  }, []);
+    return tEco('tokenInfoUI.invalid_format');
+  }, [ tEco ]);
 
   return (
     <FormFieldText<Fields, 'support'>
       name="support"
-      placeholder="Support URL or email"
+      placeholder={ tEco('tokenInfoUI.support_url_email') }
       rules={{ validate }}
       { ...props }
     />

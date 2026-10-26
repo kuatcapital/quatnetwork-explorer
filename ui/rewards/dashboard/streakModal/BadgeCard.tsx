@@ -1,7 +1,11 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 import type { GetAvailableBadgesResponse } from '@blockscout/points-types';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Image } from 'toolkit/chakra/image';
 import { Link } from 'toolkit/chakra/link';
 import { Progress } from 'toolkit/chakra/progress';
@@ -27,6 +31,8 @@ type Props = {
 };
 
 export default function BadgeCard({ badge, currentStreak, index }: Props) {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const target = Number(badge.requirements?.streak || 0);
   const isUnlocked = badge.is_whitelisted || badge.is_minted;
   const progress = Math.min(currentStreak, target);
@@ -44,12 +50,12 @@ export default function BadgeCard({ badge, currentStreak, index }: Props) {
       >
         <Image
           src={ isUnlocked ? BADGES[index] : GHOST_BADGES[index] }
-          alt="Streak badge"
+          alt={ tEco('rewardsUI.streak_badge') }
           h={{ base: '54px', lg: '82px' }}
         />
       </Flex>
       <Flex direction="column" gap={ 3 } w="full" alignItems={{ base: 'flex-start', lg: 'center' }}>
-        <Text textStyle="sm">{ target } Day streak</Text>
+        <Text textStyle="sm">{ tEco('rewardsUI.streak_target', { count: target, value: formatNumber(target, locale) }) }</Text>
         <Flex
           w="full"
           alignItems="center"
@@ -62,8 +68,7 @@ export default function BadgeCard({ badge, currentStreak, index }: Props) {
             if (badge.is_minted) {
               return (
                 <Text textStyle="xs" color="green.500">
-                  Minted
-                </Text>
+                  { tEco('rewardsUI.minted') }</Text>
               );
             }
             if (badge.is_whitelisted) {
@@ -73,14 +78,13 @@ export default function BadgeCard({ badge, currentStreak, index }: Props) {
                   external
                   textStyle="sm"
                 >
-                  Mint a badge
-                </Link>
+                  { tEco('rewardsUI.mint_badge') }</Link>
               );
             }
             return (
               <>
                 <Text textStyle="xs" color="text.secondary" minW="50px">
-                  { progress }/{ target }
+                  { formatNumber(progress, locale) }/{ formatNumber(target, locale) }
                 </Text>
                 <Progress
                   value={ progress }

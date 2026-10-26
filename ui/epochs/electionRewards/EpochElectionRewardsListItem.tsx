@@ -1,8 +1,11 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CeloEpochElectionReward, CeloEpochDetails } from 'types/api/epochs';
 
+import { useLocale } from 'lib/i18n/provider';
 import { IconButton } from 'toolkit/chakra/icon-button';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { useDisclosure } from 'toolkit/hooks/useDisclosure';
@@ -20,6 +23,8 @@ interface Props {
 }
 
 const EpochElectionRewardsListItem = ({ data, isLoading, type }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const section = useDisclosure();
 
   return (
@@ -35,7 +40,7 @@ const EpochElectionRewardsListItem = ({ data, isLoading, type }: Props) => {
         { data.count ? (
           <Skeleton loading={ isLoading } display="flex" borderRadius="sm">
             <IconButton
-              aria-label={ section.open ? 'Collapse section' : 'Expand section' }
+              aria-label={ section.open ? t('networkTransfers.collapse') : t('networkTransfers.expand') }
               variant="link"
               boxSize={ 6 }
             >
@@ -49,7 +54,7 @@ const EpochElectionRewardsListItem = ({ data, isLoading, type }: Props) => {
           </Skeleton>
         ) : <Box boxSize={ 6 }/> }
         <EpochRewardTypeTag type={ type } isLoading={ isLoading }/>
-        <Skeleton loading={ isLoading } ml="auto">{ getRewardNumText(type, data.count) }</Skeleton>
+        <Skeleton loading={ isLoading } ml="auto">{ getRewardNumText(type, data.count, t, locale) }</Skeleton>
         <TokenValue
           amount={ data.total }
           token={ data.token }

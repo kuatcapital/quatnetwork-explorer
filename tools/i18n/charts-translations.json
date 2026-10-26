@@ -1,0 +1,86 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-26",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "charts": {
+      "reset_zoom": "Reset zoom",
+      "load_error": "The data didn’t load. Please, <reload>try to reload the page.</reload>",
+      "no_data": "No data",
+      "open_menu": "Open chart options menu",
+      "share": "Share",
+      "copy_link": "Copy link",
+      "fullscreen": "View fullscreen",
+      "save_png": "Save as PNG",
+      "save_csv": "Save as CSV",
+      "date": "Date",
+      "dates": "Dates",
+      "month": "Month",
+      "year": "Year",
+      "day": "Day",
+      "week": "Week",
+      "incomplete_day": "Incomplete day",
+      "incomplete_week": "Incomplete week",
+      "incomplete_month": "Incomplete month",
+      "incomplete_year": "Incomplete year",
+      "chain_postfix": " on {{chain}}",
+      "png_filename": "{{title}}{{chain}} (Blockscout chart).png",
+      "csv_filename": "{{title}}{{chain}} (Blockscout stats)"
+    }
+  },
+  "ru": {
+    "charts": {
+      "reset_zoom": "Сбросить масштаб",
+      "load_error": "Данные не загрузились. <reload>Попробуйте обновить страницу.</reload>",
+      "no_data": "Нет данных",
+      "open_menu": "Открыть меню графика",
+      "share": "Поделиться",
+      "copy_link": "Копировать ссылку",
+      "fullscreen": "На весь экран",
+      "save_png": "Сохранить как PNG",
+      "save_csv": "Сохранить как CSV",
+      "date": "Дата",
+      "dates": "Даты",
+      "month": "Месяц",
+      "year": "Год",
+      "day": "День",
+      "week": "Неделя",
+      "incomplete_day": "Неполный день",
+      "incomplete_week": "Неполная неделя",
+      "incomplete_month": "Неполный месяц",
+      "incomplete_year": "Неполный год",
+      "chain_postfix": " в сети {{chain}}",
+      "png_filename": "{{title}}{{chain}} (график Blockscout).png",
+      "csv_filename": "{{title}}{{chain}} (статистика Blockscout)"
+    }
+  },
+  "kk": {
+    "charts": {
+      "reset_zoom": "Масштабты қалпына келтіру",
+      "load_error": "Деректер жүктелмеді. <reload>Бетті жаңартып көріңіз.</reload>",
+      "no_data": "Деректер жоқ",
+      "open_menu": "График мәзірін ашу",
+      "share": "Бөлісу",
+      "copy_link": "Сілтемені көшіру",
+      "fullscreen": "Толық экранда көру",
+      "save_png": "PNG ретінде сақтау",
+      "save_csv": "CSV ретінде сақтау",
+      "date": "Күні",
+      "dates": "Күндер",
+      "month": "Ай",
+      "year": "Жыл",
+      "day": "Күн",
+      "week": "Апта",
+      "incomplete_day": "Толық емес күн",
+      "incomplete_week": "Толық емес апта",
+      "incomplete_month": "Толық емес ай",
+      "incomplete_year": "Толық емес жыл",
+      "chain_postfix": " ({{chain}} желісі)",
+      "png_filename": "{{title}}{{chain}} (Blockscout графигі).png",
+      "csv_filename": "{{title}}{{chain}} (Blockscout статистикасы)"
+    }
+  }
+}

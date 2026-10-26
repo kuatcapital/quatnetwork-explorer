@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2TxnBatchDACelestia } from 'types/api/arbitrumL2';
 
@@ -16,6 +18,8 @@ interface Props {
 }
 
 const ArbitrumL2TxnBatchDetailsCelestiaDA = ({ data }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <>
       <DetailedInfo.ItemLabel
@@ -29,9 +33,7 @@ const ArbitrumL2TxnBatchDetailsCelestiaDA = ({ data }: Props) => {
 
       <DetailedInfo.ItemLabel
         hint="The Data Availability blob’s unique cryptographic proof"
-      >
-        Commitment
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('blobUI.commitment') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexWrap="nowrap">
         <Flex overflow="hidden" minW="0">
           <HashStringShortenDynamic hash={ data.transaction_commitment }/>

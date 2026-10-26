@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, Grid, GridItem, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CeloEpochDetails } from 'types/api/epochs';
 import type { TokenInfo } from 'types/api/token';
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const CeloEpochElectionRewardDetailsDesktop = ({ type, token }: Props) => {
+  const { t } = useTranslation();
   const rootRef = React.useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -33,7 +36,7 @@ const CeloEpochElectionRewardDetailsDesktop = ({ type, token }: Props) => {
     },
   });
 
-  const titles = getRewardDetailsTableTitles(type);
+  const titles = getRewardDetailsTableTitles(type, t);
 
   return (
     <Box
@@ -55,7 +58,7 @@ const CeloEpochElectionRewardDetailsDesktop = ({ type, token }: Props) => {
             { titles[0] }
           </GridItem>
           <GridItem fontWeight={ 600 } mb={ 1 } whiteSpace="nowrap" textAlign="right">
-            Amount { token.symbol }
+            { t('networkTransfers.amount') }{ token.symbol }
           </GridItem>
           <GridItem fontWeight={ 600 } mb={ 1 } whiteSpace="nowrap">
             { titles[1] }
@@ -87,7 +90,7 @@ const CeloEpochElectionRewardDetailsDesktop = ({ type, token }: Props) => {
 
       { query.isFetching && <ContentLoader maxW="200px" mt={ 3 }/> }
 
-      { query.isError && <Text color="text.error" mt={ 3 }>Something went wrong. Unable to load next page.</Text> }
+      { query.isError && <Text color="text.error" mt={ 3 }>{ t('networkTransfers.next_page_error') }</Text> }
 
       <Box h="0" w="100px" ref={ cutRef }/>
     </Box>

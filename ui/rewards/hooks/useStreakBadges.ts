@@ -1,14 +1,20 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { GetAvailableBadgesResponse } from '@blockscout/points-types';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import { useRewardsContext } from 'lib/contexts/rewards';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 
 const feature = config.features.rewards;
 
 export default function useStreakBadges() {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const { isAuth, dailyRewardQuery } = useRewardsContext();
 
   const badgesQuery = useApiQuery<'rewards:user_badges', unknown, GetAvailableBadgesResponse>('rewards:user_badges', {
@@ -26,7 +32,7 @@ export default function useStreakBadges() {
   const nextAchievementText = useMemo(() => {
     try {
       if (badgesQuery.isPending || dailyRewardQuery.isPending) {
-        return 'Next achievement in N/A day'; // for skeleton
+        return tEco('rewardsUI.next_achievement_loading'); // for skeleton
       }
       if (!badgesQuery.data?.items || !dailyRewardQuery.data?.streak) {
         return undefined;
@@ -37,15 +43,15 @@ export default function useStreakBadges() {
         Number(b.requirements?.streak) > currentStreak,
       );
       if (!next) {
-        return 'All achievements are earned';
+        return tEco('rewardsUI.all_achievements');
       }
       const target = Number(next.requirements?.streak || 0);
       const diff = target - currentStreak;
-      return `Next achievement in ${ diff } day${ diff === 1 ? '' : 's' }`;
+      return tEco('rewardsUI.next_achievement', { count: diff, value: formatNumber(diff, locale) });
     } catch {
       return undefined;
     }
-  }, [ badgesQuery, dailyRewardQuery ]);
+  }, [ badgesQuery, dailyRewardQuery, tEco, locale ]);
 
   return {
     badgesQuery,

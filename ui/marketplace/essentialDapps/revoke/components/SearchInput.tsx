@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { chakra, Spinner } from '@chakra-ui/react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Input } from 'toolkit/chakra/input';
 import { InputGroup } from 'toolkit/chakra/input-group';
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export default function SearchInput({ value, onChange, onSubmit }: Props) {
+  const { t: tEco } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const [ isLoading, setIsLoading ] = useState(false);
 
@@ -55,7 +58,7 @@ export default function SearchInput({ value, onChange, onSubmit }: Props) {
           size="sm"
           value={ value }
           onChange={ handleValueChange }
-          placeholder="Search accounts by address or domain..."
+          placeholder={ tEco('marketplaceUI.search_accounts') }
           borderWidth="2px"
           textOverflow="ellipsis"
           whiteSpace="nowrap"

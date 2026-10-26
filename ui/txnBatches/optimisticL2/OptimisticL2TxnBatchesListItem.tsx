@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2TxnBatchesItem } from 'types/api/optimisticL2';
 
@@ -18,6 +20,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: OptimisticL2TxnBatchesItem; isLoading?: boolean };
 
 const OptimisticL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'optimistic') {
     return null;
   }
@@ -41,7 +45,7 @@ const OptimisticL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.age') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.l1_timestamp }

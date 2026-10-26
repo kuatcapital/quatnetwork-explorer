@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Text, Flex, Spinner } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiFetch from 'lib/api/useApiFetch';
@@ -10,8 +12,6 @@ import { Rating } from 'toolkit/chakra/rating';
 import { toaster } from 'toolkit/chakra/toaster';
 import IconSvg from 'ui/shared/IconSvg';
 
-const ratingDescriptions = [ 'Very bad', 'Bad', 'Average', 'Good', 'Excellent' ];
-
 type Props = {
   appId: string;
   userRating?: number;
@@ -19,6 +19,11 @@ type Props = {
 };
 
 const PopoverContent = ({ appId, userRating, source }: Props) => {
+  const { t: tEco } = useTranslation();
+  const ratingDescriptions = [
+    tEco('marketplaceUI.very_bad'), tEco('marketplaceUI.bad'), tEco('marketplaceUI.average'),
+    tEco('marketplaceUI.good'), tEco('marketplaceUI.excellent'),
+  ];
   const apiFetch = useApiFetch();
   const [ isSending, setIsSending ] = React.useState(false);
   const [ ratingValue, setRatingValue ] = React.useState(userRating);
@@ -40,8 +45,8 @@ const PopoverContent = ({ appId, userRating, source }: Props) => {
       queryClient.invalidateQueries({ queryKey: [ 'marketplace-dapps' ] });
 
       toaster.success({
-        title: 'Awesome! Thank you 💜',
-        description: 'Your rating improves the service',
+        title: tEco('marketplaceUI.rating_thanks'),
+        description: tEco('marketplaceUI.rating_description'),
       });
 
       mixpanel.logEvent(
@@ -50,19 +55,19 @@ const PopoverContent = ({ appId, userRating, source }: Props) => {
       );
     } catch (error) {
       toaster.error({
-        title: 'Oops! Something went wrong',
-        description: 'Please try again later',
+        title: tEco('accountUI.oops_error'),
+        description: tEco('accountUI.try_again_later'),
       });
     }
 
     setIsSending(false);
-  }, [ appId, source, apiFetch, queryClient ]);
+  }, [ appId, source, apiFetch, queryClient, tEco ]);
 
   if (isSending) {
     return (
       <Flex alignItems="center">
         <Spinner size="md"/>
-        <Text fontSize="md" ml={ 3 }>Sending your feedback</Text>
+        <Text fontSize="md" ml={ 3 }>{ tEco('marketplaceUI.feedback_sending') }</Text>
       </Flex>
     );
   }
@@ -75,7 +80,7 @@ const PopoverContent = ({ appId, userRating, source }: Props) => {
           <IconSvg name="navigation/verified_contracts" color="green.400" boxSize="30px" mr={ 1 } ml="-5px"/>
         ) }
         <Text fontWeight="500" textStyle="xs" color="text.secondary">
-          { ratingValue ? 'App is already rated by you' : 'How was your experience?' }
+          { ratingValue ? tEco('marketplaceUI.already_rated') : tEco('marketplaceUI.rate_question') }
         </Text>
       </Flex>
       <Rating

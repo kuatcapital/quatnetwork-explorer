@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CeloEpochDetails } from 'types/api/epochs';
 
@@ -20,11 +22,12 @@ interface Props {
 }
 
 const EpochDetails = ({ data, isLoading }: Props) => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const processingRange = (() => {
     if (!data.start_processing_block_number || !data.end_processing_block_number) {
-      return <Box color="text.secondary">N/A</Box>;
+      return <Box color="text.secondary">{ t('networkTransfers.unavailable') }</Box>;
     }
 
     if (data.start_processing_block_number === data.end_processing_block_number) {
@@ -42,7 +45,7 @@ const EpochDetails = ({ data, isLoading }: Props) => {
 
   const totalFundRewards = (() => {
     if (!data.distribution?.transfers_total?.total?.value) {
-      return <Box color="text.secondary">N/A</Box>;
+      return <Box color="text.secondary">{ t('networkTransfers.unavailable') }</Box>;
     }
 
     if (data.distribution?.transfers_total?.token) {
@@ -70,11 +73,10 @@ const EpochDetails = ({ data, isLoading }: Props) => {
     <>
       <DetailedInfo.Container>
         <DetailedInfo.ItemLabel
-          hint="Current status of the epoch"
+          hint={ t('networkTransfers.epoch_status_hint') }
           isLoading={ isLoading }
         >
-          Status
-        </DetailedInfo.ItemLabel>
+          { t('networkTransfers.status') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           <CeloEpochStatus
             isFinalized={ data.is_finalized }
@@ -82,32 +84,28 @@ const EpochDetails = ({ data, isLoading }: Props) => {
           />
         </DetailedInfo.ItemValue>
         <DetailedInfo.ItemLabel
-          hint="Timestamp of the block where the epoch processing completed"
+          hint={ t('networkTransfers.epoch_time_hint') }
           isLoading={ isLoading }
         >
-          Timestamp
-        </DetailedInfo.ItemLabel>
+          { t('networkTransfers.timestamp') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           { data.timestamp ?
             <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isLoading }/> :
-            <Box color="text.secondary" whiteSpace="pre-wrap">Epochs are finalized approximately once a day</Box> }
+            <Box color="text.secondary" whiteSpace="pre-wrap">{ t('networkTransfers.epoch_daily') }</Box> }
         </DetailedInfo.ItemValue>
         <DetailedInfo.ItemLabel
-        // eslint-disable-next-line max-len
-          hint={ `The range of blocks during which the epoch is processed — i.e., from the block where the "EpochProcessingStarted" event is emitted to the block where the "EpochProcessingEnded" event is emitted` }
+          hint={ t('networkTransfers.processing_hint') }
           isLoading={ isLoading }
         >
-          Processing range
-        </DetailedInfo.ItemLabel>
+          { t('networkTransfers.processing_range') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           { processingRange }
         </DetailedInfo.ItemValue>
         <DetailedInfo.ItemLabel
-          hint="Funds allocation to support Celo projects and community initiatives"
+          hint={ t('networkTransfers.community_hint') }
           isLoading={ isLoading }
         >
-          Community fund
-        </DetailedInfo.ItemLabel>
+          { t('networkTransfers.community_fund') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue multiRow>
           { data.distribution?.community_transfer ? (
             <TokenTransferSnippet
@@ -116,15 +114,14 @@ const EpochDetails = ({ data, isLoading }: Props) => {
               noAddressIcons={ isMobile }
             />
           ) : (
-            <Box color="text.secondary">N/A</Box>
+            <Box color="text.secondary">{ t('networkTransfers.unavailable') }</Box>
           ) }
         </DetailedInfo.ItemValue>
         <DetailedInfo.ItemLabel
-          hint="Funds allocation to support projects that make Celo carbon-negative"
+          hint={ t('networkTransfers.carbon_hint') }
           isLoading={ isLoading }
         >
-          Carbon offset fund
-        </DetailedInfo.ItemLabel>
+          { t('networkTransfers.carbon_fund') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue multiRow>
           { data.distribution?.carbon_offsetting_transfer ? (
             <TokenTransferSnippet
@@ -133,15 +130,14 @@ const EpochDetails = ({ data, isLoading }: Props) => {
               noAddressIcons={ isMobile }
             />
           ) : (
-            <Box color="text.secondary">N/A</Box>
+            <Box color="text.secondary">{ t('networkTransfers.unavailable') }</Box>
           ) }
         </DetailedInfo.ItemValue>
         <DetailedInfo.ItemLabel
-          hint="Sum of all fund allocations"
+          hint={ t('networkTransfers.total_fund_hint') }
           isLoading={ isLoading }
         >
-          Total fund rewards
-        </DetailedInfo.ItemLabel>
+          { t('networkTransfers.total_fund') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           { totalFundRewards }
         </DetailedInfo.ItemValue>

@@ -5,6 +5,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { Link } from 'toolkit/chakra/link';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const MarketplaceAppGraphLinks = ({ className, links }: Props) => {
+  const { t: tEco } = useTranslation();
   const isMobile = useIsMobile();
 
   const handleButtonClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -29,7 +31,7 @@ const MarketplaceAppGraphLinks = ({ className, links }: Props) => {
 
   const content = (
     <VStack gap={ 4 } align="start" textStyle="sm" w="260px">
-      <Text>{ `This dapp uses ${ links.length > 1 ? 'several subgraphs' : 'a subgraph' } powered by The Graph` }</Text>
+      <Text>{ tEco('marketplaceUI.graph_description', { count: links.length }) }</Text>
       { links.map(link => (
         <Link external key={ link.url } href={ link.url }>{ link.title }</Link>
       )) }
@@ -51,3 +53,4 @@ const MarketplaceAppGraphLinks = ({ className, links }: Props) => {
 };
 
 export default React.memo(chakra(MarketplaceAppGraphLinks));
+// Modified by Quat Capital, 2026-10-26: pluralized subgraph descriptions. GPL-3.0.

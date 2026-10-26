@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainMessage } from '@blockscout/interchain-indexer-types';
 
@@ -28,6 +30,7 @@ interface Props {
 }
 
 const TransactionsCrossChainTableItem = ({ data, isLoading, currentAddress }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const firstTransfer = data.transfers.length > 0 ? data.transfers[0] : null;
   const txHashWithTransfers = (() => {
@@ -183,9 +186,7 @@ const TransactionsCrossChainTableItem = ({ data, isLoading, currentAddress }: Pr
               mt={ 2 }
               href={ route({ pathname: '/cross-chain-tx/[id]', query: { id: data.message_id, tab: 'transfers' } }) }
               textStyle="xs"
-            >
-              View all
-            </Link>
+            >{ tQuat('common.view_all') }</Link>
           ) }
         </VStack>
       </TableCell>

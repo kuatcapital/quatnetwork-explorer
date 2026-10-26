@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2TxnBatchesItem } from 'types/api/optimisticL2';
 
@@ -15,15 +17,15 @@ type Props = {
 };
 
 const OptimisticL2TxnBatchesTable = ({ items, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot tableLayout="auto" minW="850px">
       <TableHeaderSticky top={ top }>
         <TableRow>
           <TableColumnHeader>Batch ID</TableColumnHeader>
           <TableColumnHeader>Storage</TableColumnHeader>
-          <TableColumnHeader>
-            Timestamp
-            <TimeFormatToggle/>
+          <TableColumnHeader>{ tQuat('common.timestamp') }<TimeFormatToggle/>
           </TableColumnHeader>
           <TableColumnHeader isNumeric>{ layerLabels.parent } txn count</TableColumnHeader>
           <TableColumnHeader isNumeric>{ layerLabels.current } blocks</TableColumnHeader>

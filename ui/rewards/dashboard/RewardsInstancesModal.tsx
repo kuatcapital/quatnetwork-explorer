@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { GetInstancesResponse } from '@blockscout/points-types';
 
@@ -15,6 +17,7 @@ type Props = {
 };
 
 const RewardsInstancesModal = ({ isOpen, onClose, items }: Props) => {
+  const { t: tEco } = useTranslation();
   const handleOpenChange = React.useCallback(({ open }: { open: boolean }) => {
     if (!open) {
       onClose();
@@ -29,14 +32,11 @@ const RewardsInstancesModal = ({ isOpen, onClose, items }: Props) => {
     >
       <DialogContent>
         <DialogHeader>
-          Choose explorer
-        </DialogHeader>
+          { tEco('rewardsUI.choose_explorer') }</DialogHeader>
         <DialogBody>
           <Flex flexDir="column" gap={ 6 }>
             <Text>
-              Choose Blockscout explorer that you want to interact with and earn
-              Merits
-            </Text>
+              { tEco('rewardsUI.choose_explorer_description') }</Text>
             <Flex flexWrap="wrap" gap={ 2 }>
               { items?.map((instance) => (
                 <Link

@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import { isEqual } from 'es-toolkit';
 import type { ChangeEvent } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ADVANCED_FILTER_AGES, type AdvancedFilterAge } from 'types/api/advancedFilter';
 
@@ -12,6 +14,7 @@ import { ndash } from 'toolkit/utils/htmlEntities';
 import TableColumnFilter from 'ui/shared/filters/TableColumnFilter';
 import TagGroupSelect from 'ui/shared/tagGroupSelect/TagGroupSelect';
 
+import { getAdvancedFilterAgeLabel } from '../constants';
 import { getDurationFromAge } from '../lib';
 
 const defaultValue = { age: '', from: '', to: '' } as const;
@@ -72,6 +75,9 @@ function BaseAgeFilter<T>({
   fieldNames,
   dateConverter,
 }: Props<T>) {
+  const { t: tQuat } = useTranslation();
+  const agePresets = React.useMemo(() => ADVANCED_FILTER_AGES.map(id => ({ id, title: getAdvancedFilterAgeLabel(id, tQuat) })), [ tQuat ]);
+
   const getFromValue = () => {
     if (value.age) return '';
     return value.from ? dateConverter.getCurrentValue(value.from) : '';
@@ -157,7 +163,7 @@ function BaseAgeFilter<T>({
 
   return (
     <TableColumnFilter
-      title="Set last duration"
+      title={ tQuat('advancedFilterUi.duration') }
       isFilled={ Boolean(currentValue.from || currentValue.to || currentValue.age) }
       isTouched={ isTouched }
       onFilter={ onFilter }
@@ -167,7 +173,7 @@ function BaseAgeFilter<T>({
       <Flex gap={ 3 }>
         <PopoverCloseTriggerWrapper>
           <TagGroupSelect<AdvancedFilterAge>
-            items={ ADVANCED_FILTER_AGES.map(val => ({ id: val, title: val })) }
+            items={ agePresets }
             onChange={ onPresetChange }
             value={ currentValue.age || undefined }
           />
@@ -177,14 +183,14 @@ function BaseAgeFilter<T>({
         <DateInput
           value={ currentValue.age ? '' : currentValue.from }
           onChange={ handleFromChange }
-          placeholder="From"
+          placeholder={ tQuat('advancedFilterUi.range_from') }
           max={ dayjs().format('YYYY-MM-DD') }
         />
         <Text mx={ 3 }>{ ndash }</Text>
         <DateInput
           value={ currentValue.age ? '' : currentValue.to }
           onChange={ handleToChange }
-          placeholder="To"
+          placeholder={ tQuat('advancedFilterUi.range_to') }
           max={ dayjs().format('YYYY-MM-DD') }
         />
       </Flex>

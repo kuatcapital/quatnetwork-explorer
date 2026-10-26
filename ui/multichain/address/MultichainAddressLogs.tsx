@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 
@@ -25,6 +27,8 @@ interface Props {
 }
 
 const MultichainAddressLogs = ({ addressData, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const chainIds = React.useMemo(() => getAvailableChainIds(addressData), [ addressData ]);
   const isMobile = useIsMobile();
@@ -87,7 +91,7 @@ const MultichainAddressLogs = ({ addressData, isLoading }: Props) => {
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items?.length }
-      emptyText="There are no logs for this address."
+      emptyText={ tQuat('addresses.no_logs') }
       showActionBarIfEmpty
       showActionBarIfError
       actionBar={ actionBar }

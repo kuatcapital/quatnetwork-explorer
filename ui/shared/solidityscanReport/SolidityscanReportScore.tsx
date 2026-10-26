@@ -1,6 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: translated shared interface labels. GPL-3.0.
 import { Box, Flex, Text, chakra, Center } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import IconSvg from 'ui/shared/IconSvg';
 
 import useScoreLevelAndColor from './useScoreLevelAndColor';
@@ -11,6 +15,8 @@ interface Props {
 }
 
 const SolidityscanReportScore = ({ className, score }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { scoreLevel, scoreColor } = useScoreLevelAndColor(score);
 
   const yetAnotherGrayColor = { _light: 'gray.400', _dark: 'gray.500' };
@@ -34,10 +40,10 @@ const SolidityscanReportScore = ({ className, score }: Props) => {
       </Box>
       <Box>
         <Flex>
-          <Text color={ scoreColor } fontSize="lg" fontWeight={ 500 }>{ score }</Text>
+          <Text color={ scoreColor } fontSize="lg" fontWeight={ 500 }>{ formatNumber(score, locale) }</Text>
           <Text color={ yetAnotherGrayColor } fontSize="lg" fontWeight={ 500 } whiteSpace="pre"> / 100</Text>
         </Flex>
-        <Text color={ scoreColor } fontWeight={ 500 }>Security score is { scoreLevel }</Text>
+        <Text color={ scoreColor } fontWeight={ 500 }>{ t('editorShared.score_is', { level: scoreLevel }) }</Text>
       </Box>
     </Flex>
   );

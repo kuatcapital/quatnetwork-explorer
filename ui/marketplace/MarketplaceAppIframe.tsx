@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: runtime marketplace labels. GPL-3.0.
 import { Center, chakra } from '@chakra-ui/react';
 import { DappscoutIframeProvider, useDappscoutIframe } from 'dappscout-iframe';
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import essentialDappsChainsConfig from 'configs/essential-dapps-chains';
@@ -25,6 +27,7 @@ type ContentProps = {
 };
 
 const Content = chakra(({ appUrl, address, message, isEssentialDapp, className }: ContentProps) => {
+  const { t: tEco } = useTranslation();
   const { iframeRef, isReady } = useDappscoutIframe();
   const web3Wallet = useWeb3Wallet({ source: 'Essential dapps' });
 
@@ -89,7 +92,7 @@ const Content = chakra(({ appUrl, address, message, isEssentialDapp, className }
           w="100%"
           display={ isFrameLoading ? 'none' : 'block' }
           src={ appUrl }
-          title="Marketplace dapp"
+          title={ tEco('marketplaceUI.iframe') }
           onLoad={ handleIframeLoad }
           background="transparent"
           allowTransparency={ true }

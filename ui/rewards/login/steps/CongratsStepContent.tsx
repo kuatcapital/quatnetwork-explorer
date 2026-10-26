@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Text, Box, Flex, Center } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
 import { useRewardsContext } from 'lib/contexts/rewards';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import IconSvg from 'ui/shared/IconSvg';
@@ -17,6 +21,8 @@ type Props = {
 };
 
 const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const { referralsQuery, rewardsConfigQuery } = useRewardsContext();
 
   const registrationReward = Number(rewardsConfigQuery.data?.rewards?.registration);
@@ -26,7 +32,9 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
   const referralReward = registrationWithReferralReward - registrationReward;
 
   const refLink = referralsQuery.data?.link || 'N/A';
-  const shareText = `I joined the @blockscout Merits Program and got my first ${ registrationReward || 'N/A' } #Merits! Use this link for a sign-up bonus and start earning rewards with @blockscout block explorer.\n\n${ refLink }`; // eslint-disable-line max-len
+  const shareText = tEco('rewardsUI.share_message', {
+    reward: registrationReward ? formatNumber(registrationReward, locale) : 'N/A', link: refLink,
+  });
 
   const textColor = { _light: 'blue.700', _dark: 'blue.100' };
 
@@ -44,7 +52,8 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
         <MeritsIcon boxSize={{ base: isReferral ? 8 : 12, md: 12 }} mr={{ base: isReferral ? 1 : 2, md: 2 }}/>
         <Skeleton loading={ rewardsConfigQuery.isLoading }>
           <Text fontSize={{ base: isReferral ? '24px' : '30px', md: '30px' }} fontWeight="700" color={ textColor }>
-            +{ (isReferral ? registrationWithReferralReward : registrationReward) || 'N/A' }
+            +{ (isReferral ? registrationWithReferralReward : registrationReward) ?
+              formatNumber(isReferral ? registrationWithReferralReward : registrationReward, locale) : 'N/A' }
           </Text>
         </Skeleton>
         { isReferral && (
@@ -53,11 +62,11 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
             <Flex flexDirection="column" justifyContent="space-between" gap={ 2 }>
               { [
                 {
-                  title: 'Registration',
+                  title: tEco('rewardsUI.registration'),
                   value: registrationReward || 'N/A',
                 },
                 {
-                  title: 'Referral program',
+                  title: tEco('rewardsUI.referral_program'),
                   value: referralReward || 'N/A',
                 },
               ].map(({ title, value }) => (
@@ -65,7 +74,7 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
                   <MeritsIcon boxSize={{ base: 5, md: 6 }}/>
                   <Skeleton loading={ rewardsConfigQuery.isLoading }>
                     <Text fontSize="sm" fontWeight="700" color={ textColor }>
-                      +{ value }
+                      +{ typeof value === 'number' ? formatNumber(value, locale) : value }
                     </Text>
                   </Skeleton>
                   <Text fontSize="sm" color={ textColor }>
@@ -88,21 +97,21 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
             <IconSvg name="profile" boxSize={ 5 }/>
           </Center>
           <Text fontSize="lg" fontWeight="500">
-            Referral program
-          </Text>
+            { tEco('rewardsUI.referral_program') }</Text>
         </Flex>
         <Text fontSize="md" mt={ 2 }>
-          Receive a{ ' ' }
-          <Skeleton as="span" loading={ rewardsConfigQuery.isLoading }>
-            { rewardsConfigQuery.data?.rewards?.referral_share ?
-              `${ Number(rewardsConfigQuery.data.rewards.referral_share) * 100 }%` :
-              'N/A'
-            }
-          </Skeleton>
-          { ' ' }bonus on all Merits earned by your referrals
+          <Trans
+            t={ tEco }
+            i18nKey="rewardsUI.referrals_bonus"
+            values={{
+              value: rewardsConfigQuery.data?.rewards?.referral_share ?
+                formatNumber(Number(rewardsConfigQuery.data.rewards.referral_share), locale, { style: 'percent' }) : 'N/A',
+            }}
+            components={{ bonus: <Skeleton as="span" loading={ rewardsConfigQuery.isLoading }/> }}
+          />
         </Text>
         <RewardsReadOnlyInputWithCopy
-          label="Referral link"
+          label={ tEco('rewardsUI.referral_link') }
           value={ refLink }
           isLoading={ referralsQuery.isLoading }
           mt={ 3 }
@@ -111,7 +120,7 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
         <Skeleton loading={ referralsQuery.isLoading } mt={ 6 }>
           <Button asChild>
             <a href={ `https://x.com/intent/tweet?text=${ encodeURIComponent(shareText) }` } target="_blank" rel="noopener noreferrer">
-              Share on <IconSvg name="social/twitter" boxSize={ 6 } ml={ 1 }/>
+              { tEco('rewardsUI.share_on') }<IconSvg name="social/twitter" boxSize={ 6 } ml={ 1 }/>
             </a>
           </Button>
         </Skeleton>
@@ -128,15 +137,12 @@ const CongratsStepContent = ({ isReferral, customReferralReward }: Props) => {
             <IconSvg name="navigation/stats" boxSize={ 6 }/>
           </Center>
           <Text fontSize="lg" fontWeight="500">
-            Dashboard
-          </Text>
+            { tEco('rewardsUI.dashboard') }</Text>
         </Flex>
         <Text fontSize="md" mt={ 2 }>
-          Explore your current Merits balance, find activities to boost your Merits,
-          and view your capybara NFT badge collection on the dashboard
-        </Text>
+          { tEco('rewardsUI.dashboard_description') }</Text>
         <Button asChild mt={ 3 }>
-          <a href={ route({ pathname: '/account/merits' }) }>Open</a>
+          <a href={ route({ pathname: '/account/merits' }) }>{ tEco('rewardsUI.open') }</a>
         </Button>
       </Flex>
     </>

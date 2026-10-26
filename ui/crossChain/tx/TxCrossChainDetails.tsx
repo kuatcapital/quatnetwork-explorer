@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainMessage } from '@blockscout/interchain-indexer-types';
 
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const TxCrossChainDetails = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   if (!data) {
     return <DataFetchAlert/>;
@@ -31,9 +34,7 @@ const TxCrossChainDetails = ({ data, isLoading }: Props) => {
           <DetailedInfo.ItemLabel
             hint="Address that initiated the cross-chain operation on the source chain"
             isLoading={ isLoading }
-          >
-            Sender
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('transactions.sender') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <AddressEntityInterchain
               address={ data.sender }
@@ -48,9 +49,7 @@ const TxCrossChainDetails = ({ data, isLoading }: Props) => {
           <DetailedInfo.ItemLabel
             hint="Recipient address on the destination chain, usually the account or contract that receives tokens or the message"
             isLoading={ isLoading }
-          >
-            Target
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('transactions.target') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <AddressEntityInterchain
               address={ data.recipient }
@@ -75,18 +74,14 @@ const TxCrossChainDetails = ({ data, isLoading }: Props) => {
       <DetailedInfo.ItemLabel
         hint="Current state of the cross-chain operation"
         isLoading={ isLoading }
-      >
-        Status
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <CrossChainTxsStatusTag status={ data.status } loading={ isLoading } mode="full"/>
       </DetailedInfo.ItemValue>
       <DetailedInfo.ItemLabel
         hint="Date and time when the cross-chain operation was completed or initiated"
         isLoading={ isLoading }
-      >
-        Timestamp
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <DetailedInfoTimestamp timestamp={ data.receive_timestamp || data.send_timestamp } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
@@ -104,9 +99,7 @@ const TxCrossChainDetails = ({ data, isLoading }: Props) => {
           <DetailedInfo.ItemLabel
             hint="Message data sent as part of the cross-chain operation"
             isLoading={ isLoading }
-          >
-            Payload
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('transactions.payload') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <RawInputData hex={ data.payload } isLoading={ isLoading }/>
           </DetailedInfo.ItemValue>

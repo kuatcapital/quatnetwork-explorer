@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterParams } from 'types/api/advancedFilter';
 
@@ -19,6 +21,8 @@ type Props = {
 };
 
 const ExportCSV = ({ filters }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
   const recaptcha = useReCaptcha();
 
@@ -60,13 +64,13 @@ const ExportCSV = ({ filters }: Props) => {
 
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: (error as Error)?.message || 'Something went wrong. Try again later.',
+        title: tQuat('common.error'),
+        description: (error as Error)?.message || tQuat('advancedFilterUi.later_error'),
       });
     } finally {
       setIsLoading(false);
     }
-  }, [ apiFetchFactory, recaptcha, multichainContext?.chain ]);
+  }, [ apiFetchFactory, recaptcha, multichainContext?.chain, tQuat ]);
 
   const chainConfig = multichainContext?.chain.app_config || config;
 
@@ -77,7 +81,7 @@ const ExportCSV = ({ filters }: Props) => {
   return (
     <>
       <Tooltip
-        content="This feature is not available due to a reCAPTCHA initialization error. Please contact the project team on Discord to report this issue."
+        content={ tQuat('advancedFilterUi.recaptcha_error') }
         disabled={ !recaptcha.isInitError }
       >
         <Button
@@ -87,9 +91,7 @@ const ExportCSV = ({ filters }: Props) => {
           size="sm"
           mr={ 3 }
           disabled={ recaptcha.isInitError }
-        >
-          Export to CSV
-        </Button>
+        >{ tQuat('advancedFilterUi.export_csv') }</Button>
       </Tooltip>
       <ReCaptcha { ...recaptcha } hideWarning/>
     </>

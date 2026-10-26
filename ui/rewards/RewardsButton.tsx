@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -16,6 +18,7 @@ type Props = {
 };
 
 const RewardsButton = ({ variant = 'header', size }: Props) => {
+  const { t: tEco } = useTranslation();
   const { isInitialized, isAuth, openLoginModal, dailyRewardQuery, balancesQuery } = useRewardsContext();
   const isMobile = useIsMobile();
   const isLoading = !isInitialized || dailyRewardQuery.isLoading || balancesQuery.isLoading;
@@ -26,7 +29,7 @@ const RewardsButton = ({ variant = 'header', size }: Props) => {
 
   return (
     <Tooltip
-      content="Earn Merits for using Blockscout"
+      content={ tEco('rewardsUI.earn_merits_hint') }
       openDelay={ 500 }
       disabled={ isMobile || isLoading || isAuth }
     >

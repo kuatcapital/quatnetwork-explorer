@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZkSyncBatchesItem } from 'types/api/zkSyncL2';
 
@@ -18,6 +20,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ZkSyncBatchesItem; isLoading?: boolean };
 
 const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkSync') {
     return null;
   }
@@ -35,12 +39,12 @@ const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.status') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <ZkSyncL2TxnBatchStatus status={ item.status } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.age') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.timestamp }
@@ -50,7 +54,7 @@ const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Txn count</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.transaction_count') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Link
           href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'txs' } }) }
@@ -72,7 +76,7 @@ const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
             truncation="constant_long"
             noCopy
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>{ tQuat('common.pending') }</Text> }
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>Prove tx</ListItemMobileGrid.Label>
@@ -85,7 +89,7 @@ const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
             truncation="constant_long"
             noCopy
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>{ tQuat('common.pending') }</Text> }
       </ListItemMobileGrid.Value>
 
     </ListItemMobileGrid.Container>

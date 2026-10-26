@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Grid, HStack, type JsxStyleProps } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainTransfer } from '@blockscout/interchain-indexer-types';
 
@@ -25,6 +27,7 @@ interface Props extends JsxStyleProps {
 }
 
 const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAddress, ...rest }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const timestamp = data.send_timestamp || data.receive_timestamp;
 
@@ -60,9 +63,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
             loading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Sender
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('transactions.sender') }</Skeleton>
         { data.sender ? (
           <AddressEntityInterchain
             chain={ data.source_chain }
@@ -95,9 +96,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
             currentAddress={ currentAddress }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Source tx
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('transactions.source_tx') }</Skeleton>
         { data.source_transaction_hash ? (
           <TxEntityInterchain
             chain={ data.source_chain }
@@ -105,9 +104,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
             isLoading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Destination tx
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('transactions.destination_tx') }</Skeleton>
         { data.destination_transaction_hash ? (
           <TxEntityInterchain
             chain={ data.destination_chain }

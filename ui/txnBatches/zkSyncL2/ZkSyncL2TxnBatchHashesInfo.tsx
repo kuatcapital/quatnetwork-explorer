@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZkSyncBatch } from 'types/api/zkSyncL2';
 
@@ -22,6 +24,8 @@ interface Props {
 }
 
 const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <>
       <DetailedInfo.ItemLabel
@@ -42,7 +46,7 @@ const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
               <DetailedInfoTimestamp timestamp={ data.commit_transaction_timestamp } isLoading={ isLoading }/>
             ) }
           </>
-        ) : <Skeleton loading={ isLoading }>Pending</Skeleton> }
+        ) : <Skeleton loading={ isLoading }>{ tQuat('common.pending') }</Skeleton> }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
@@ -63,7 +67,7 @@ const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
               <DetailedInfoTimestamp timestamp={ data.prove_transaction_timestamp } isLoading={ isLoading }/>
             ) }
           </>
-        ) : <Skeleton loading={ isLoading }>Pending</Skeleton> }
+        ) : <Skeleton loading={ isLoading }>{ tQuat('common.pending') }</Skeleton> }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
@@ -84,7 +88,7 @@ const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
               <DetailedInfoTimestamp timestamp={ data.execute_transaction_timestamp } isLoading={ isLoading }/>
             ) }
           </>
-        ) : <Skeleton loading={ isLoading }>Pending</Skeleton> }
+        ) : <Skeleton loading={ isLoading }>{ tQuat('common.pending') }</Skeleton> }
       </DetailedInfo.ItemValue>
     </>
   );

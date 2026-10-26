@@ -1,7 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: explicit locale presentation; API values unchanged. GPL-3.0.
 import React from 'react';
 
 import type { ValidatorsZilliqaItem } from 'types/api/validators';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import ValidatorEntity from 'ui/shared/entities/validator/ValidatorEntity';
@@ -13,6 +16,7 @@ interface Props {
 }
 
 const ValidatorsTableItem = ({ data, isLoading }: Props) => {
+  const { locale } = useLocale();
   return (
     <TableRow>
       <TableCell verticalAlign="middle">
@@ -20,7 +24,7 @@ const ValidatorsTableItem = ({ data, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading } display="inline-block">
-          { data.index }
+          { formatNumber(data.index, locale) }
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>

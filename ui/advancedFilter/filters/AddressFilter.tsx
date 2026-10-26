@@ -1,7 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { createListCollection, Flex, VStack } from '@chakra-ui/react';
 import { isEqual } from 'es-toolkit';
+import type { TFunction } from 'i18next';
 import type { ChangeEvent } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterParams } from 'types/api/advancedFilter';
 
@@ -21,10 +24,10 @@ const FILTER_PARAM_FROM_EXCLUDE = 'from_address_hashes_to_exclude';
 
 export type AddressFilterMode = 'include' | 'exclude';
 
-const collection = createListCollection({
+const getModeCollection = (t: TFunction) => createListCollection({
   items: [
-    { label: 'Include', value: 'include' },
-    { label: 'Exclude', value: 'exclude' },
+    { label: t('advancedFilterUi.include'), value: 'include' },
+    { label: t('advancedFilterUi.exclude'), value: 'exclude' },
   ],
 });
 
@@ -60,11 +63,14 @@ function addressFilterToKey(filter: AddressFilter) {
 }
 
 const AddressFilterInput = ({ address, mode, onModeChange, onChange, onBlur, onClear, isLast, onAddFieldClick, isInvalid }: InputProps) => {
+  const { t: tQuat } = useTranslation();
+  const collection = React.useMemo(() => getModeCollection(tQuat), [ tQuat ]);
+
   return (
     <Flex alignItems="flex-start" w="100%">
       <Select
         collection={ collection }
-        placeholder="Select mode"
+        placeholder={ tQuat('advancedFilterUi.select_mode') }
         defaultValue={ [ mode || 'include' ] }
         onValueChange={ onModeChange }
         portalled={ false }
@@ -75,12 +81,15 @@ const AddressFilterInput = ({ address, mode, onModeChange, onChange, onBlur, onC
       <Field
         flexGrow={ 1 }
         invalid={ isInvalid }
-        errorText="Invalid address format"
+        errorText={ tQuat('advancedFilterUi.invalid_address') }
       >
         <InputGroup
           endElement={ <ClearButton onClick={ onClear } mx={ 2 } disabled={ !address }/> }
         >
-          <Input value={ address } onChange={ onChange } onBlur={ onBlur } placeholder="Smart contract / Address (0x...)*" size="sm" autoComplete="off"/>
+          <Input
+            value={ address } onChange={ onChange } onBlur={ onBlur }
+            placeholder={ tQuat('advancedFilterUi.address_placeholder') } size="sm" autoComplete="off"
+          />
         </InputGroup>
       </Field>
       { isLast && (
@@ -96,6 +105,7 @@ const AddressFilterInput = ({ address, mode, onModeChange, onChange, onBlur, onC
 const emptyItem = { address: '', mode: 'include' as AddressFilterMode };
 
 const AddressFilter = ({ type, value = [], handleFilterChange }: Props) => {
+  const { t: tQuat } = useTranslation();
   const [ currentValue, setCurrentValue ] =
     React.useState<Array<AddressFilter>>([ ...value, emptyItem ]);
   const [ touched, setTouched ] = React.useState<Array<boolean>>(value.map(() => true).concat(false));
@@ -163,7 +173,7 @@ const AddressFilter = ({ type, value = [], handleFilterChange }: Props) => {
 
   return (
     <TableColumnFilter
-      title={ type === 'from' ? 'From address' : 'To address' }
+      title={ type === 'from' ? tQuat('advancedFilterUi.from_address') : tQuat('advancedFilterUi.to_address') }
       isFilled={ Boolean(currentValue[0].address) }
       isTouched={ isTouched && !hasErrors }
       onFilter={ onFilter }

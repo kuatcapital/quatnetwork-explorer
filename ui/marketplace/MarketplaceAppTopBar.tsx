@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -26,6 +28,7 @@ type Props = {
 };
 
 const MarketplaceAppTopBar = ({ appId, data, isLoading }: Props) => {
+  const { t: tEco } = useTranslation();
   const appProps = useAppContext();
   const isMobile = useIsMobile();
 
@@ -45,7 +48,7 @@ const MarketplaceAppTopBar = ({ appId, data, isLoading }: Props) => {
       { !isMobile && <NetworkIcon mr={ 4 }/> }
       <BackToButton
         href={ goBackUrl }
-        hint="Back to dApps list"
+        hint={ tEco('marketplaceUI.back_dapps') }
         loading={ isLoading }
         onClick={ handleBackToClick }
       />

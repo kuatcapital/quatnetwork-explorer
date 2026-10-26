@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-26",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "sectionCounts": {
+      "transactions_one": "{{value}} transaction",
+      "transactions_other": "{{value}} transactions",
+      "domains_one": "{{value}} Domain",
+      "domains_other": "{{value}} Domains",
+      "chains_one": "{{value}} Chain",
+      "chains_other": "{{value}} Chains"
+    }
+  },
+  "ru": {
+    "sectionCounts": {
+      "transactions_one": "{{value}} транзакция",
+      "transactions_few": "{{value}} транзакции",
+      "transactions_many": "{{value}} транзакций",
+      "transactions_other": "{{value}} транзакции",
+      "domains_one": "{{value}} домен",
+      "domains_few": "{{value}} домена",
+      "domains_many": "{{value}} доменов",
+      "domains_other": "{{value}} домена",
+      "chains_one": "{{value}} сеть",
+      "chains_few": "{{value}} сети",
+      "chains_many": "{{value}} сетей",
+      "chains_other": "{{value}} сети"
+    }
+  },
+  "kk": {
+    "sectionCounts": {
+      "transactions_one": "{{value}} транзакция",
+      "transactions_other": "{{value}} транзакция",
+      "domains_one": "{{value}} домен",
+      "domains_other": "{{value}} домен",
+      "chains_one": "{{value}} желі",
+      "chains_other": "{{value}} желі"
+    }
+  }
+}

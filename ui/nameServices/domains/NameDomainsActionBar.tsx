@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, Fieldset, Flex, HStack, Text, chakra, createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 import type { EnsDomainLookupFiltersOptions } from 'types/api/ens';
@@ -50,6 +52,8 @@ const NameDomainsActionBar = ({
   protocolsFilterValue,
   onProtocolsFilterChange,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isInitialLoading = useIsInitialLoading(isLoading);
 
   const searchInput = (
@@ -92,9 +96,7 @@ const NameDomainsActionBar = ({
                 onClick={ handleProtocolReset }
                 disabled={ protocolsFilterValue.length === 0 }
                 textStyle="sm"
-              >
-                Reset
-              </Button>
+              >{ tQuat('common.reset') }</Button>
             </Flex>
             <CheckboxGroup defaultValue={ protocolsFilterValue } onValueChange={ onProtocolsFilterChange } value={ protocolsFilterValue } name="token_type">
               { protocolsData.map((protocol) => {
@@ -123,7 +125,7 @@ const NameDomainsActionBar = ({
         <Fieldset.Root>
           <CheckboxGroup defaultValue={ filterValue } onValueChange={ handleFilterValueChange } value={ filterValue } name="token_type">
             <Fieldset.Content gap={ 0 }>
-              <Text color="text.secondary" fontWeight={ 600 } mb={ 3 } textStyle="sm">Address</Text>
+              <Text color="text.secondary" fontWeight={ 600 } mb={ 3 } textStyle="sm">{ tQuat('common.address') }</Text>
               <Checkbox value="owned_by" disabled={ !isAddressSearch }>
                 Owned by
               </Checkbox>
@@ -135,7 +137,7 @@ const NameDomainsActionBar = ({
                 Resolved to address
               </Checkbox>
               { filterGroupDivider }
-              <Text color="text.secondary" fontWeight={ 600 } mb={ 3 } textStyle="sm">Status</Text>
+              <Text color="text.secondary" fontWeight={ 600 } mb={ 3 } textStyle="sm">{ tQuat('common.status') }</Text>
               <Checkbox value="with_inactive">
                 Include expired
               </Checkbox>

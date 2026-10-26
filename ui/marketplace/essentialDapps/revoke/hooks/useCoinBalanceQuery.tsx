@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: locale-aware rewards or approvals display. GPL-3.0.
+import BigNumber from 'bignumber.js';
 import React from 'react';
 import { formatUnits } from 'viem';
 
 import type { EssentialDappsChainConfig } from 'types/client/marketplace';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 
 const PLACEHOLDER_DATA = {
   balance: '10000',
@@ -13,6 +17,7 @@ const PLACEHOLDER_DATA = {
 };
 
 export default function useCoinBalanceQuery(chain: EssentialDappsChainConfig | undefined, userAddress: string) {
+  const { locale } = useLocale();
   const addressQuery = useApiQuery('general:address', {
     pathParams: { hash: userAddress },
     chain,
@@ -36,9 +41,9 @@ export default function useCoinBalanceQuery(chain: EssentialDappsChainConfig | u
       ),
     );
 
-    const balanceUsd = Number(
+    const balanceUsd = formatNumber(Number(
       (balance * parseFloat(addressQuery.data.exchange_rate || '0')).toFixed(2),
-    ).toLocaleString();
+    ), locale);
 
     let balanceString;
 
@@ -46,9 +51,7 @@ export default function useCoinBalanceQuery(chain: EssentialDappsChainConfig | u
       balance = Number(
         balance >= 1 ? balance.toFixed(2) : balance.toPrecision(5),
       );
-      const [ integer, decimal ] = balance.toString().split('.');
-      balanceString = Number(integer).toLocaleString();
-      balanceString += decimal ? `.${ decimal }` : '';
+      balanceString = formatBigNumber(new BigNumber(balance), locale);
     }
 
     return {
@@ -60,5 +63,5 @@ export default function useCoinBalanceQuery(chain: EssentialDappsChainConfig | u
         coinImage,
       },
     };
-  }, [ addressQuery.data, statsQuery.data, chain?.app_config?.chain.currency.decimals, chain?.app_config?.chain.currency.symbol ]);
+  }, [ addressQuery.data, statsQuery.data, chain?.app_config?.chain.currency.decimals, chain?.app_config?.chain.currency.symbol, locale ]);
 }

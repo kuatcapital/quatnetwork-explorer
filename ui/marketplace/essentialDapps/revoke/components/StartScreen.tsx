@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 import { Heading } from 'toolkit/chakra/heading';
 import IconSvg from 'ui/shared/IconSvg';
@@ -20,11 +22,11 @@ const STEPS = [
 ];
 
 export default function StartScreen() {
+  const { t: tEco } = useTranslation();
   return (
     <Flex flexDir="column" w="full" gap={{ base: 3, md: 6 }}>
       <Heading level="3">
-        How to revoke your approvals
-      </Heading>
+        { tEco('marketplaceUI.revoke_instructions') }</Heading>
       <Flex flexDir={{ base: 'column', md: 'row' }} gap={{ base: 2, md: 6 }}>
         { STEPS.map((step, index) => (
           <Flex

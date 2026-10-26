@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 
@@ -22,16 +24,18 @@ const NameDomainsListItem = ({
   expiry_date: expiryDate,
   protocol,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ListItemMobileGrid.Container>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Domain</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.domain_one') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <EnsEntity domain={ name } protocol={ protocol } isLoading={ isLoading } fontWeight={ 500 }/>
       </ListItemMobileGrid.Value>
 
       { resolvedAddress && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Address</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.address') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <AddressEntity address={ resolvedAddress } isLoading={ isLoading } fontWeight={ 500 }/>
           </ListItemMobileGrid.Value>

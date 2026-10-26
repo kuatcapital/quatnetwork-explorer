@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: translated shared interface labels. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import type { FC } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NovesResponseData } from 'types/api/noves';
 
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const NovesFromTo: FC<Props> = ({ isLoaded, txData, currentAddress = '', item }) => {
+  const { t } = useTranslation();
   const data = React.useMemo(() => {
     if (txData) {
       return getFromTo(txData, currentAddress);
@@ -44,7 +47,7 @@ const NovesFromTo: FC<Props> = ({ isLoaded, txData, currentAddress = '', item })
           flexShrink={ 0 }
           justifyContent="center"
         >
-          { data.text }
+          { isSent ? t('editorShared.sent_to') : t('editorShared.received_from') }
         </Badge>
 
         <AddressEntity

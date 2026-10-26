@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import React, { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Screen } from 'ui/snippets/auth/types';
 
@@ -21,6 +23,7 @@ const MIXPANEL_CONFIG = {
 };
 
 const RewardsLoginModal = () => {
+  const { t: tEco } = useTranslation();
   const { isOpen: isWalletModalOpen } = useWallet({ source: 'Merits' });
   const { isLoginModalOpen, closeLoginModal, openLoginModal } = useRewardsContext();
 
@@ -74,7 +77,7 @@ const RewardsLoginModal = () => {
       >
         <DialogContent>
           <DialogHeader>
-            { isLoginStep ? 'Login' : 'Congratulations' }
+            { isLoginStep ? tEco('rewardsUI.login') : tEco('rewardsUI.congratulations') }
           </DialogHeader>
           <DialogBody>
             { isLoginStep ?

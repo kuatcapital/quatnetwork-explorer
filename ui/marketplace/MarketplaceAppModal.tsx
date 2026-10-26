@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -44,6 +46,7 @@ const MarketplaceAppModal = ({
   data,
   graphLinks,
 }: Props) => {
+  const { t: tEco } = useTranslation();
   const {
     id,
     title,
@@ -122,7 +125,7 @@ const MarketplaceAppModal = ({
           >
             <Image
               src={ logoUrl }
-              alt={ `${ title } app icon` }
+              alt={ tEco('marketplaceUI.app_icon', { app: title }) }
               borderRadius="md"
             />
           </Flex>
@@ -146,7 +149,7 @@ const MarketplaceAppModal = ({
             textStyle={{ base: 'sm', md: 'md' }}
             fontWeight="normal"
           >
-            By{ nbsp }{ author }
+            { tEco('marketplaceUI.by') }{ nbsp }{ author }
           </Text>
 
           { isRatingEnabled && (
@@ -176,13 +179,12 @@ const MarketplaceAppModal = ({
               <Flex width={{ base: '100%', md: 'auto' }} gap={ 2 }>
                 <Link href={ external ? url : route({ pathname: '/apps/[id]', query: { id: data.id } }) } external={ external } noIcon>
                   <Button size="sm">
-                    Launch app
-                  </Button>
+                    { tEco('marketplaceUI.launch_app') }</Button>
                 </Link>
 
                 <IconButton
-                  aria-label="Mark as favorite"
-                  title="Mark as favorite"
+                  aria-label={ tEco('marketplaceUI.favorite') }
+                  title={ tEco('marketplaceUI.favorite') }
                   variant="icon_background"
                   size="md"
                   onClick={ handleFavoriteClick }
@@ -257,7 +259,7 @@ const MarketplaceAppModal = ({
 
             { socialLinks.map(({ icon, url }) => (
               <Link
-                aria-label={ `Link to ${ url }` }
+                aria-label={ tEco('marketplaceUI.social_link', { url }) }
                 title={ url }
                 key={ url }
                 href={ url }

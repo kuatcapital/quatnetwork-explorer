@@ -1,11 +1,15 @@
+// Modified by Quat Capital, 2026-10-26: reactive editor and shared translations. GPL-3.0.
 import type { HTMLChakraProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { File, Monaco, SearchResult } from './types';
 
+import { formatNumber } from 'lib/format/localeNumbers';
 import useDebounce from 'lib/hooks/useDebounce';
+import { useLocale } from 'lib/i18n/provider';
 import { AccordionRoot } from 'toolkit/chakra/accordion';
 import { Input } from 'toolkit/chakra/input';
 import { InputGroup } from 'toolkit/chakra/input-group';
@@ -25,6 +29,8 @@ interface Props {
 }
 
 const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, setActionBarRenderer, defaultValue }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const [ searchTerm, changeSearchTerm ] = React.useState('');
   const [ searchResults, setSearchResults ] = React.useState<Array<SearchResult>>([]);
   const [ expandedSections, setExpandedSections ] = React.useState<Array<string>>([]);
@@ -62,16 +68,18 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
       setSearchResults([]);
     }
 
-    const models = monaco.editor.getModels();
+    const filePaths = new Set(data.map(file => file.file_path));
+    const models = monaco.editor.getModels().filter(model => filePaths.has(model.uri.path));
+    const modelDecorations = decorations.current;
     const matches = models.map((model) => model.findMatches(debouncedSearchTerm, false, isMatchRegex, isMatchCase, isMatchWholeWord ? 'true' : null, false));
 
     models.forEach((model, index) => {
       const filePath = model.uri.path;
-      const prevDecorations = decorations.current[filePath] || [];
+      const prevDecorations = modelDecorations[filePath] || [];
       const newDecorations: Array<monaco.editor.IModelDeltaDecoration> = matches[index].map(({ range }) => ({ range, options: { className: 'highlight' } }));
 
       const newDecorationsIds = model.deltaDecorations(prevDecorations, newDecorations);
-      decorations.current[filePath] = newDecorationsIds;
+      modelDecorations[filePath] = newDecorationsIds;
     });
 
     const result: Array<SearchResult> = matches
@@ -85,7 +93,14 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
       .filter(({ matches }) => matches.length > 0);
 
     setSearchResults(result.length > 0 ? result : []);
-  }, [ debouncedSearchTerm, isMatchCase, isMatchRegex, isMatchWholeWord, monaco ]);
+    return () => {
+      models.forEach(model => {
+        const filePath = model.uri.path;
+        if (!model.isDisposed()) model.deltaDecorations(modelDecorations[filePath] || [], []);
+        delete modelDecorations[filePath];
+      });
+    };
+  }, [ data, debouncedSearchTerm, isMatchCase, isMatchRegex, isMatchWholeWord, monaco ]);
 
   React.useEffect(() => {
     setExpandedSections(searchResults.map((item) => item.file_path));
@@ -118,12 +133,12 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
     return (
       <CoderEditorCollapseButton
         onClick={ handleToggleCollapseClick }
-        label={ expandedSections.length === 0 ? 'Expand all' : 'Collapse all' }
+        label={ expandedSections.length === 0 ? t('editorShared.expand_all') : t('editorShared.collapse_all') }
         isDisabled={ searchResults.length === 0 }
         isCollapsed={ expandedSections.length === 0 }
       />
     );
-  }, [ expandedSections.length, handleToggleCollapseClick, searchResults.length ]);
+  }, [ expandedSections.length, handleToggleCollapseClick, searchResults.length, t ]);
 
   React.useEffect(() => {
     isActive && setActionBarRenderer(() => renderActionBar);
@@ -149,14 +164,17 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
     if (!totalResults) {
       return (
         <Box px="8px" fontSize="13px" lineHeight="18px" mb="8px">
-          No results found. Review your settings for configured exclusions.
+          { t('editorShared.no_results') }
         </Box>
       );
     }
 
     return (
       <Box px="8px" fontSize="13px" lineHeight="18px" mb="8px">
-        { totalResults } result{ totalResults > 1 ? 's' : '' } in { searchResults.length } file{ searchResults.length > 1 ? 's' : '' }
+        { t('editorShared.search_summary', {
+          results: t('editorShared.results', { count: totalResults, value: formatNumber(totalResults, locale) }),
+          files: t('editorShared.files', { count: searchResults.length, value: formatNumber(searchResults.length, locale) }),
+        }) }
       </Box>
     );
   })();
@@ -169,8 +187,8 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
         onClick={ handleMatchCaseChange }
         bgColor={ isMatchCase ? themeColors['custom.inputOption.activeBackground'] : 'transparent' }
         _hover={{ bgColor: isMatchCase ? themeColors['custom.inputOption.activeBackground'] : themeColors['custom.inputOption.hoverBackground'] }}
-        title="Match Case"
-        aria-label="Match Case"
+        title={ t('editorShared.match_case') }
+        aria-label={ t('editorShared.match_case') }
       />
       <Box
         { ...buttonProps }
@@ -178,8 +196,8 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
         bgColor={ isMatchWholeWord ? themeColors['custom.inputOption.activeBackground'] : 'transparent' }
         onClick={ handleMatchWholeWordChange }
         _hover={{ bgColor: isMatchWholeWord ? themeColors['custom.inputOption.activeBackground'] : themeColors['custom.inputOption.hoverBackground'] }}
-        title="Match Whole Word"
-        aria-label="Match Whole Word"
+        title={ t('editorShared.match_whole_word') }
+        aria-label={ t('editorShared.match_whole_word') }
       />
       <Box
         { ...buttonProps }
@@ -187,8 +205,8 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
         bgColor={ isMatchRegex ? themeColors['custom.inputOption.activeBackground'] : 'transparent' }
         onClick={ handleMatchRegexChange }
         _hover={{ bgColor: isMatchRegex ? themeColors['custom.inputOption.activeBackground'] : themeColors['custom.inputOption.hoverBackground'] }}
-        title="Use Regular Expression"
-        aria-label="Use Regular Expression"
+        title={ t('editorShared.regex') }
+        aria-label={ t('editorShared.regex') }
       />
     </>
   );
@@ -211,7 +229,7 @@ const CodeEditorSearch = ({ monaco, data, onFileSelect, isInputStuck, isActive, 
           size="xs"
           onChange={ handleSearchTermChange }
           value={ searchTerm }
-          placeholder="Search"
+          placeholder={ t('common.search') }
           color={ themeColors['input.foreground'] }
           bgColor={ themeColors['input.background'] }
           borderRadius="none"

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CeloEpochDetails } from 'types/api/epochs';
 
@@ -15,21 +17,22 @@ interface Props {
 }
 
 const EpochElectionRewards = ({ data, isLoading }: Props) => {
+  const { t } = useTranslation();
   if (!data.aggregated_election_rewards) {
     return null;
   }
 
   return (
     <Box mt={ 6 }>
-      <Heading level="3" mb={ 3 }>Election rewards</Heading>
+      <Heading level="3" mb={ 3 }>{ t('networkTransfers.election_rewards') }</Heading>
       <Box hideBelow="lg">
         <TableRoot style={{ tableLayout: 'auto' }}>
           <TableHeaderSticky>
             <TableRow>
               <TableColumnHeader width="24px"/>
-              <TableColumnHeader width="180px">Reward type</TableColumnHeader>
+              <TableColumnHeader width="180px">{ t('networkTransfers.reward_type') }</TableColumnHeader>
               <TableColumnHeader/>
-              <TableColumnHeader isNumeric>Value</TableColumnHeader>
+              <TableColumnHeader isNumeric>{ t('networkTransfers.value') }</TableColumnHeader>
             </TableRow>
           </TableHeaderSticky>
           <TableBody>

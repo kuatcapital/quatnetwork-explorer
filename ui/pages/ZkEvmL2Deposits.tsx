@@ -1,12 +1,15 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { generateListStub } from 'stubs/utils';
 import { ZKEVM_DEPOSITS_ITEM } from 'stubs/zkEvmL2';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { rightLineArrow, nbsp } from 'toolkit/utils/htmlEntities';
 import ZkEvmL2DepositsListItem from 'ui/deposits/zkEvmL2/ZkEvmL2DepositsListItem';
 import ZkEvmL2DepositsTable from 'ui/deposits/zkEvmL2/ZkEvmL2DepositsTable';
 import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
@@ -16,6 +19,8 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 
 const ZkEvmL2Deposits = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:zkevm_l2_deposits',
     options: {
@@ -60,7 +65,7 @@ const ZkEvmL2Deposits = () => {
         loading={ countersQuery.isPlaceholderData }
         display="inline-block"
       >
-        A total of { countersQuery.data?.toLocaleString() } deposits found
+        { t('networkTransfers.deposits_found', { value: countersQuery.data === undefined ? '' : formatNumber(countersQuery.data, locale) }) }
       </Skeleton>
     );
   })();
@@ -69,11 +74,11 @@ const ZkEvmL2Deposits = () => {
 
   return (
     <>
-      <PageTitle title={ `Deposits (${ layerLabels.parent }${ nbsp }${ rightLineArrow }${ nbsp }${ layerLabels.current })` } withTextAd/>
+      <PageTitle title={ t('networkTransfers.deposits_route', { from: layerLabels.parent, to: layerLabels.current }) } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no deposits."
+        emptyText={ t('networkTransfers.no_deposits') }
         actionBar={ actionBar }
       >
         { content }

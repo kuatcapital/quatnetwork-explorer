@@ -1,11 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: complete translated loading/error messages. GPL-3.0.
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { AxesConfigFn, Resolution, TimeChartData } from './types';
 
 import { Link } from '../../chakra/link';
 import { Skeleton } from '../../chakra/skeleton';
-import { apos } from '../../utils/htmlEntities';
 import { Chart } from './Chart';
 import { ChartWatermark } from './parts/ChartWatermark';
 
@@ -38,6 +39,11 @@ export const ChartWidgetContent = React.memo(({
   axesConfig,
   noWatermark,
 }: ChartWidgetContentProps) => {
+  const { t } = useTranslation();
+  const handleReload = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.location.reload();
+  }, []);
   if (isError) {
     return (
       <Flex
@@ -51,8 +57,11 @@ export const ChartWidgetContent = React.memo(({
           fontSize="sm"
           textAlign="center"
         >
-          { `The data didn${ apos }t load. Please, ` }
-          <Link href={ window.document.location.href }>try to reload the page.</Link>
+          <Trans
+            t={ t }
+            i18nKey="charts.load_error"
+            components={{ reload: <Link href="" onClick={ handleReload }/> }}
+          />
         </Text>
       </Flex>
     );
@@ -65,7 +74,7 @@ export const ChartWidgetContent = React.memo(({
   if (empty || charts.length === 0) {
     return (
       <Center flexGrow={ 1 }>
-        <Text color="text.secondary" fontSize="sm">{ emptyText || 'No data' }</Text>
+        <Text color="text.secondary" fontSize="sm">{ emptyText || t('charts.no_data') }</Text>
       </Center>
     );
   }

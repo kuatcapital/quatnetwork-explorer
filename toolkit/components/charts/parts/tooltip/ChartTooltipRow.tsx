@@ -1,9 +1,14 @@
+// Modified by Quat Capital, 2026-10-26: selected-locale tooltip dates and numeric values. GPL-3.0.
 import { useToken } from '@chakra-ui/react';
 import * as d3 from 'd3';
 import React from 'react';
 
 import type { TimeChartData } from '../../types';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+
+import { getDateLabel } from '../../utils/getDateLabel';
 import type { CurrentPoint } from './ChartTooltipPoint';
 import { calculateRowTransformValue, LABEL_WIDTH, PADDING } from './utils';
 
@@ -52,6 +57,7 @@ interface UseRenderRowsReturnType {
 }
 
 export function useRenderRows(ref: React.RefObject<SVGGElement | null>, { data, xScale, minWidth }: UseRenderRowsParams) {
+  const { locale } = useLocale();
   return React.useCallback((x: number, currentPoints: Array<CurrentPoint>): UseRenderRowsReturnType => {
 
     // update "transform" prop of all rows
@@ -70,7 +76,7 @@ export function useRenderRows(ref: React.RefObject<SVGGElement | null>, { data, 
         if (index === 0) {
           const date = xScale.invert(x);
           const dateValue = data[0].items.find((item) => item.date.getTime() === date.getTime())?.dateLabel;
-          const dateValueFallback = d3.utcFormat('%e %b %Y')(xScale.invert(x));
+          const dateValueFallback = getDateLabel(xScale.invert(x), undefined, undefined, locale);
           return dateValue || dateValueFallback;
         }
 
@@ -79,7 +85,7 @@ export function useRenderRows(ref: React.RefObject<SVGGElement | null>, { data, 
           return null;
         }
 
-        const value = data[datumIndex]?.valueFormatter?.(item.value) ?? item.value.toLocaleString(undefined, { minimumSignificantDigits: 1 });
+        const value = data[datumIndex]?.valueFormatter?.(item.value) ?? formatNumber(item.value, locale, { minimumSignificantDigits: 1 });
         const units = data[datumIndex]?.units ? ` ${ data[datumIndex]?.units }` : '';
 
         return value + units;
@@ -92,5 +98,5 @@ export function useRenderRows(ref: React.RefObject<SVGGElement | null>, { data, 
 
     return { width: maxRowWidth };
 
-  }, [ data, minWidth, ref, xScale ]);
+  }, [ data, minWidth, ref, xScale, locale ]);
 }

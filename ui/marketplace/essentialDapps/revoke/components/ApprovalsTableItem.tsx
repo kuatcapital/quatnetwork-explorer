@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EssentialDappsChainConfig } from 'types/client/marketplace';
 import type { AllowanceType } from 'types/client/revoke';
@@ -30,6 +32,7 @@ export default function ApprovalsTableItem({
   isAddressMatch,
   hideApproval,
 }: Props) {
+  const { t: tEco } = useTranslation();
   const revoke = useRevoke();
   const [ isPending, setIsPending ] = useState(false);
 
@@ -88,7 +91,7 @@ export default function ApprovalsTableItem({
       <TableCell isNumeric verticalAlign="middle">
         <Skeleton loading={ isLoading } display="inline-block">
           <NumberEntity
-            value={ allowance }
+            value={ allowance === 'Unlimited' ? tEco('marketplaceUI.unlimited') : allowance }
             postfix={
               [ 'Unlimited', 'N/A' ].includes(allowance) ? '' : approval.symbol
             }
@@ -117,8 +120,7 @@ export default function ApprovalsTableItem({
             loading={ isLoading || isPending }
             onClick={ handleRevoke }
           >
-            Revoke
-          </Button>
+            { tEco('marketplaceUI.revoke') }</Button>
         </TableCell>
       ) }
     </TableRow>

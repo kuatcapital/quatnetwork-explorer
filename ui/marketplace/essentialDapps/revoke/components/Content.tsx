@@ -1,12 +1,16 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text, Separator } from '@chakra-ui/react';
 import React, { useState, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EssentialDappsChainConfig } from 'types/client/marketplace';
 import type { AllowanceType } from 'types/client/revoke';
 
 import { route } from 'nextjs/routes';
 
+import { formatNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import { Badge } from 'toolkit/chakra/badge';
 import { Heading } from 'toolkit/chakra/heading';
 import { Image } from 'toolkit/chakra/image';
@@ -35,6 +39,8 @@ const Content = ({
   coinBalanceQuery,
   approvalsQuery,
 }: Props) => {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const isMobile = useIsMobile();
   const [ hiddenApprovals, setHiddenApprovals ] = useState<Array<AllowanceType>>([]);
 
@@ -62,8 +68,8 @@ const Content = ({
 
     const sum = Object.values(maxValues).reduce((sum, val) => sum + val, 0);
 
-    return Number(sum.toFixed(2)).toLocaleString();
-  }, [ approvalsQuery.isPlaceholderData, approvals ]);
+    return formatNumber(Number(sum.toFixed(2)), locale);
+  }, [ approvalsQuery.isPlaceholderData, approvals, locale ]);
 
   const hideApproval = useCallback((approval: AllowanceType) => {
     setHiddenApprovals((prev) => [ ...prev, approval ]);
@@ -108,9 +114,9 @@ const Content = ({
                 icon={{ size: isMobile ? undefined : 30 }}
                 noLink
               />
-              <Tooltip content="Connect a wallet to revoke approvals" disabled={ isAddressMatch } disableOnMobile>
+              <Tooltip content={ tEco('marketplaceUI.connect_to_revoke') } disabled={ isAddressMatch } disableOnMobile>
                 <Badge colorPalette={ isAddressMatch ? 'green' : 'gray' }>
-                  { isAddressMatch ? 'Connected' : 'Not connected' }
+                  { isAddressMatch ? tEco('marketplaceUI.connected') : tEco('marketplaceUI.not_connected') }
                 </Badge>
               </Tooltip>
             </Flex>
@@ -149,8 +155,7 @@ const Content = ({
               fontWeight="500"
               noIcon
             >
-              View details
-            </Link>
+              { tEco('marketplaceUI.view_details') }</Link>
           </Flex>
         </Flex>
         <Flex
@@ -167,8 +172,7 @@ const Content = ({
             gap={ 2 }
           >
             <Text textStyle="sm" fontWeight="500" color="text.secondary">
-              Total approvals
-            </Text>
+              { tEco('marketplaceUI.total_approvals') }</Text>
             <Skeleton
               loading={ approvalsQuery.isPlaceholderData }
               minW="40px"
@@ -191,8 +195,7 @@ const Content = ({
             gap={ 2 }
           >
             <Text textStyle="sm" fontWeight="500" color="text.secondary">
-              Total value at risk
-            </Text>
+              { tEco('marketplaceUI.total_risk') }</Text>
             <Skeleton
               loading={ approvalsQuery.isPlaceholderData }
               minW="40px"

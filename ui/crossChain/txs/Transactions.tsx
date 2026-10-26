@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 
@@ -19,6 +21,8 @@ const LOCAL_TAB_ID = 'txs_local';
 const LOCAL_SUB_TABS = [ getTabId('validated', LOCAL_TAB_ID), getTabId('pending', LOCAL_TAB_ID), getTabId('blob_txs', LOCAL_TAB_ID) ];
 
 const Transactions = () => {
+  const { t: tQuat } = useTranslation();
+
   const tabs: Array<TabItemRegular> = React.useMemo(() => {
     return [
       {
@@ -48,7 +52,7 @@ const Transactions = () => {
 
   return (
     <>
-      <PageTitle withTextAd title="Transactions"/>
+      <PageTitle withTextAd title={ tQuat('common.transactions') }/>
       <RoutedTabs tabs={ tabs }/>
     </>
   );

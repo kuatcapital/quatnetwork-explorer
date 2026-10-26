@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2TxnBatchesItem } from 'types/api/arbitrumL2';
 
@@ -15,6 +17,8 @@ type Props = {
 };
 
 const ArbitrumL2TxnBatchesTable = ({ items, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot tableLayout="auto" minW="1000px">
       <TableHeaderSticky top={ top }>
@@ -23,12 +27,10 @@ const ArbitrumL2TxnBatchesTable = ({ items, top, isLoading }: Props) => {
           <TableColumnHeader>{ layerLabels.parent } status</TableColumnHeader>
           <TableColumnHeader>{ layerLabels.parent } block</TableColumnHeader>
           <TableColumnHeader>Block count</TableColumnHeader>
-          <TableColumnHeader>{ layerLabels.parent } transaction</TableColumnHeader>
-          <TableColumnHeader>
-            Timestamp
-            <TimeFormatToggle/>
+          <TableColumnHeader>{ layerLabels.parent }{ ' ' }{ tQuat('toolkit.term_transaction') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('common.timestamp') }<TimeFormatToggle/>
           </TableColumnHeader>
-          <TableColumnHeader>Txn count</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('addresses.transaction_count') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

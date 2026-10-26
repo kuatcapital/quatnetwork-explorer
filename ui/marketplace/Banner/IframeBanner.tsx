@@ -1,11 +1,14 @@
+// Modified by Quat Capital, 2026-10-26: runtime marketplace labels. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as mixpanel from 'lib/mixpanel/index';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 
 const IframeBanner = ({ contentUrl, linkUrl }: { contentUrl: string; linkUrl: string }) => {
+  const { t: tEco } = useTranslation();
   const [ isFrameLoading, setIsFrameLoading ] = useState(true);
 
   const handleIframeLoad = useCallback(() => {
@@ -41,7 +44,7 @@ const IframeBanner = ({ contentUrl, linkUrl }: { contentUrl: string; linkUrl: st
         h="100%"
         w="100%"
         src={ contentUrl }
-        title="Marketplace banner"
+        title={ tEco('marketplaceUI.banner') }
         onLoad={ handleIframeLoad }
       />
     </Skeleton>

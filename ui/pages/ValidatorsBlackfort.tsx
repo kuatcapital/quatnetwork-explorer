@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, createListCollection, HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type {
   ValidatorsBlackfortSorting,
@@ -19,20 +21,19 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import getSortParamsFromValue from 'ui/shared/sort/getSortParamsFromValue';
 import getSortValueFromQuery from 'ui/shared/sort/getSortValueFromQuery';
 import Sort from 'ui/shared/sort/Sort';
-import { VALIDATORS_BLACKFORT_SORT_OPTIONS } from 'ui/validators/blackfort/utils';
+import { getBlackfortSortOptions } from 'ui/validators/blackfort/utils';
 import ValidatorsCounters from 'ui/validators/blackfort/ValidatorsCounters';
 import ValidatorsList from 'ui/validators/blackfort/ValidatorsList';
 import ValidatorsTable from 'ui/validators/blackfort/ValidatorsTable';
 
-const sortCollection = createListCollection({
-  items: VALIDATORS_BLACKFORT_SORT_OPTIONS,
-});
-
 const ValidatorsBlackfort = () => {
+  const { t } = useTranslation();
+  const sortOptions = React.useMemo(() => getBlackfortSortOptions(t), [ t ]);
+  const sortCollection = React.useMemo(() => createListCollection({ items: sortOptions }), [ sortOptions ]);
   const router = useRouter();
   const [ sort, setSort ] =
     React.useState<ValidatorsBlackfortSortingValue>(
-      getSortValueFromQuery<ValidatorsBlackfortSortingValue>(router.query, VALIDATORS_BLACKFORT_SORT_OPTIONS) ?? 'default',
+      getSortValueFromQuery<ValidatorsBlackfortSortingValue>(router.query, sortOptions) ?? 'default',
     );
 
   const { isError, isPlaceholderData, data, pagination, onSortingChange } = useQueryWithPages({
@@ -95,12 +96,12 @@ const ValidatorsBlackfort = () => {
 
   return (
     <Box>
-      <PageTitle title="Validators" withTextAd/>
+      <PageTitle title={ t('networkTransfers.validators') } withTextAd/>
       <ValidatorsCounters/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no validators."
+        emptyText={ t('networkTransfers.no_validators') }
         actionBar={ actionBar }
       >
         { content }

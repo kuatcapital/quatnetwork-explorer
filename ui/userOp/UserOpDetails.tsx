@@ -2,12 +2,18 @@ import { GridItem } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserOp } from 'types/api/userOps';
+
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 
 import config from 'configs/app';
 import type { ResourceError } from 'lib/api/resources';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { CollapsibleDetails } from 'toolkit/chakra/collapsible';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import isCustomAppError from 'ui/shared/AppError/isCustomAppError';
@@ -34,6 +40,9 @@ interface Props {
 }
 
 const UserOpDetails = ({ query }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const { data, isPlaceholderData, isError, error } = query;
 
   if (isError) {
@@ -53,11 +62,9 @@ const UserOpDetails = ({ query }: Props) => {
       templateColumns={{ base: 'minmax(0, 1fr)', lg: 'minmax(min-content, 220px) minmax(0, 1fr)' }}
     >
       <DetailedInfo.ItemLabel
-        hint="Unique character string assigned to every User operation"
+        hint={ tQuat('operationsUi.hash_hint') }
         isLoading={ isPlaceholderData }
-      >
-        User operation hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('operationsUi.hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData } overflow="hidden">
           <UserOpEntity hash={ data.hash } noIcon noLink/>
@@ -65,11 +72,9 @@ const UserOpDetails = ({ query }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="The address of the smart contract account"
+        hint={ tQuat('operationsUi.sender_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Sender
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('transactions.sender') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressStringOrParam address={ data.sender } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
@@ -77,11 +82,9 @@ const UserOpDetails = ({ query }: Props) => {
       { data.execute_target && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Target smart contract called by the User operation"
+            hint={ tQuat('operationsUi.target_hint') }
             isLoading={ isPlaceholderData }
-          >
-            Target
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('transactions.target') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <AddressEntity address={ data.execute_target } isLoading={ isPlaceholderData }/>
           </DetailedInfo.ItemValue>
@@ -89,11 +92,9 @@ const UserOpDetails = ({ query }: Props) => {
       ) }
 
       <DetailedInfo.ItemLabel
-        hint="Current User operation state"
+        hint={ tQuat('operationsUi.state_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Status
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <UserOpStatus status={ data.status } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
@@ -101,11 +102,9 @@ const UserOpDetails = ({ query }: Props) => {
       { data.revert_reason && (
         <>
           <DetailedInfo.ItemLabel
-            hint="The revert reason of the User operation"
+            hint={ tQuat('operationsUi.revert_hint') }
             isLoading={ isPlaceholderData }
-          >
-            Revert reason
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('transactions.revert_reason') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue
             wordBreak="break-all"
             whiteSpace="normal"
@@ -120,11 +119,9 @@ const UserOpDetails = ({ query }: Props) => {
       { data.timestamp && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Date and time of User operation"
+            hint={ tQuat('operationsUi.time_hint') }
             isLoading={ isPlaceholderData }
-          >
-            Timestamp
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/>
           </DetailedInfo.ItemValue>
@@ -134,11 +131,9 @@ const UserOpDetails = ({ query }: Props) => {
       { !config.UI.views.tx.hiddenFields?.tx_fee && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Total User operation fee"
+            hint={ tQuat('operationsUi.fee_hint') }
             isLoading={ isPlaceholderData }
-          >
-            Fee
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('common.fee') }</DetailedInfo.ItemLabel>
           <DetailedInfoNativeCoinValue
             amount={ data.fee }
             loading={ isPlaceholderData }
@@ -147,26 +142,22 @@ const UserOpDetails = ({ query }: Props) => {
       ) }
 
       <DetailedInfo.ItemLabel
-        hint="Gas limit for the User operation"
+        hint={ tQuat('operationsUi.gas_limit_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Gas limit
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.gas_limit') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
-          { BigNumber(data.gas).toFormat() }
+          { formatBigNumber(BigNumber(data.gas), locale) }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Actual gas amount used by the User operation"
+        hint={ tQuat('operationsUi.gas_used_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Gas used
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.gas_used') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
-          { BigNumber(data.gas_used).toFormat() }
+          { formatBigNumber(BigNumber(data.gas_used), locale) }
         </Skeleton>
         <Utilization
           ml={ 4 }
@@ -177,31 +168,25 @@ const UserOpDetails = ({ query }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Hash of the transaction this User operation belongs to"
+        hint={ tQuat('operationsUi.tx_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Transaction hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.transaction_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <TxEntity hash={ data.transaction_hash } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Block number containing this User operation"
+        hint={ tQuat('operationsUi.block_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Block
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.block') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <BlockEntity number={ Number(data.block_number) } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Contract that executes bundles of User operations"
+        hint={ tQuat('operationsUi.entry_hint') }
         isLoading={ isPlaceholderData }
-      >
-        Entry point
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('operationsUi.entry_point') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressStringOrParam address={ data.entry_point } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
@@ -213,48 +198,38 @@ const UserOpDetails = ({ query }: Props) => {
         <GridItem colSpan={{ base: undefined, lg: 2 }} mt={{ base: 1, lg: 4 }}/>
 
         <DetailedInfo.ItemLabel
-          hint="Gas limit for execution phase"
-        >
-          Call gas limit
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.call_gas_hint') }
+        >{ tQuat('operationsUi.call_gas') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
-          { BigNumber(data.call_gas_limit).toFormat() }
+          { formatBigNumber(BigNumber(data.call_gas_limit), locale) }
         </DetailedInfo.ItemValue>
 
         <DetailedInfo.ItemLabel
-          hint="Gas limit for verification phase"
-        >
-          Verification gas limit
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.verification_gas_hint') }
+        >{ tQuat('operationsUi.verification_gas') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
-          { BigNumber(data.verification_gas_limit).toFormat() }
+          { formatBigNumber(BigNumber(data.verification_gas_limit), locale) }
         </DetailedInfo.ItemValue>
 
         <DetailedInfo.ItemLabel
-          hint="Gas to compensate the bundler"
-        >
-          Pre-verification gas
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.pre_gas_hint') }
+        >{ tQuat('operationsUi.pre_gas') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
-          { BigNumber(data.pre_verification_gas).toFormat() }
+          { formatBigNumber(BigNumber(data.pre_verification_gas), locale) }
         </DetailedInfo.ItemValue>
 
         { !config.UI.views.tx.hiddenFields?.gas_fees && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Maximum fee per gas "
-            >
-              Max fee per gas
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('operationsUi.max_fee_hint') }
+            >{ tQuat('operationsUi.max_fee') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue multiRow>
               <GasPriceValue amount={ data.max_fee_per_gas }/>
             </DetailedInfo.ItemValue>
 
             <DetailedInfo.ItemLabel
-              hint="Maximum priority fee per gas"
-            >
-              Max priority fee per gas
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('operationsUi.priority_hint') }
+            >{ tQuat('operationsUi.priority_fee') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue multiRow>
               <GasPriceValue amount={ data.max_priority_fee_per_gas }/>
             </DetailedInfo.ItemValue>
@@ -266,10 +241,8 @@ const UserOpDetails = ({ query }: Props) => {
         { data.aggregator && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Helper contract to validate an aggregated signature"
-            >
-              Aggregator
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('operationsUi.aggregator_hint') }
+            >{ tQuat('operationsUi.aggregator') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <AddressStringOrParam address={ data.aggregator }/>
             </DetailedInfo.ItemValue>
@@ -279,10 +252,8 @@ const UserOpDetails = ({ query }: Props) => {
         { data.aggregator_signature && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Aggregator signature"
-            >
-              Aggregator signature
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('operationsUi.aggregator_signature') }
+            >{ tQuat('operationsUi.aggregator_signature') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               { data.aggregator_signature }
             </DetailedInfo.ItemValue>
@@ -290,10 +261,8 @@ const UserOpDetails = ({ query }: Props) => {
         ) }
 
         <DetailedInfo.ItemLabel
-          hint="A node (block builder) that handles User operations"
-        >
-          Bundler
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.bundler_hint') }
+        >{ tQuat('operationsUi.bundler') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           <AddressStringOrParam address={ data.bundler }/>
         </DetailedInfo.ItemValue>
@@ -301,10 +270,8 @@ const UserOpDetails = ({ query }: Props) => {
         { data.factory && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Smart contract that deploys new smart contract wallets for users"
-            >
-              Factory
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('operationsUi.factory_hint') }
+            >{ tQuat('operationsUi.factory') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <AddressStringOrParam address={ data.factory }/>
             </DetailedInfo.ItemValue>
@@ -314,10 +281,8 @@ const UserOpDetails = ({ query }: Props) => {
         { data.paymaster && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Contract to sponsor the gas fees for User operations"
-            >
-              Paymaster
-            </DetailedInfo.ItemLabel>
+              hint={ tQuat('operationsUi.paymaster_hint') }
+            >{ tQuat('operationsUi.paymaster') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <AddressStringOrParam address={ data.paymaster }/>
             </DetailedInfo.ItemValue>
@@ -325,10 +290,8 @@ const UserOpDetails = ({ query }: Props) => {
         ) }
 
         <DetailedInfo.ItemLabel
-          hint="Type of the gas fees sponsor"
-        >
-          Sponsor type
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.sponsor_hint') }
+        >{ tQuat('operationsUi.sponsor_type') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue>
           <UserOpSponsorType sponsorType={ data.sponsor_type }/>
         </DetailedInfo.ItemValue>
@@ -336,10 +299,8 @@ const UserOpDetails = ({ query }: Props) => {
         <DetailedInfo.ItemDivider/>
 
         <DetailedInfo.ItemLabel
-          hint="Used to validate a User operation along with the nonce during verification"
-        >
-          Signature
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.signature_hint') }
+        >{ tQuat('blockDetails.signature') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue
           wordBreak="break-all"
           whiteSpace="normal"
@@ -348,10 +309,8 @@ const UserOpDetails = ({ query }: Props) => {
         </DetailedInfo.ItemValue>
 
         <DetailedInfo.ItemLabel
-          hint="Anti-replay protection; also used as the salt for first-time account creation"
-        >
-          Nonce
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('operationsUi.nonce_hint') }
+        >{ tQuat('operationsUi.nonce') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue
           wordBreak="break-all"
           whiteSpace="normal"

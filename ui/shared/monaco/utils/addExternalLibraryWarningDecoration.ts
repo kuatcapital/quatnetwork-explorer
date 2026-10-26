@@ -1,30 +1,32 @@
+// Modified by Quat Capital, 2026-10-26: translated library warnings with tracked decoration ids. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 import type { SmartContractExternalLibrary } from 'types/api/contract';
 
 import sortByEndLineNumberAsc from './sortByEndLineNumberAsc';
 
-export default function addExternalLibraryWarningDecoration(model: monaco.editor.ITextModel, libraries: Array<SmartContractExternalLibrary>) {
+export default function addExternalLibraryWarningDecoration(
+  model: monaco.editor.ITextModel, libraries: Array<SmartContractExternalLibrary>, t: TFunction,
+): Array<string> {
   const options: monaco.editor.IModelDecorationOptions = {
     isWholeLine: true,
     hoverMessage: [
-      { value: '**This is an external library linked to the verified contract**' },
-      // eslint-disable-next-line max-len
-      { value: 'The linked library source code only affects the bytecode part with external `DELEGATECALL` to the library and it is not possible to automatically ensure that provided library is really the one deployed at specified address. If you want to be sure, check the source code of the library at the given address. (See [issue](https://github.com/blockscout/blockscout-rs/issues/532) for more details)',
-      },
+      { value: t('editorShared.library_heading'), isTrusted: false, supportHtml: false },
+      { value: t('editorShared.library_hint'), isTrusted: false, supportHtml: false },
     ],
   };
 
   const names = libraries.map(getLibraryName(model)).filter(Boolean).join('|');
 
   if (!names) {
-    return;
+    return [];
   }
 
   const [ firstLineMatch ] = model.findMatches(`(^library ${ names })\\s?\\{`, false, true, false, null, true);
 
   if (!firstLineMatch) {
-    return;
+    return [];
   }
 
   const firstLineDecoration: monaco.editor.IModelDeltaDecoration = {
@@ -51,7 +53,7 @@ export default function addExternalLibraryWarningDecoration(model: monaco.editor
     .findMatches(`^\\}`, lastLineRange, true, false, null, true)
     .sort(sortByEndLineNumberAsc);
 
-  const restDecoration: monaco.editor.IModelDeltaDecoration = {
+  const restDecoration: monaco.editor.IModelDeltaDecoration | undefined = lastLineMatch ? {
     range: {
       startLineNumber: firstLineMatch.range.startLineNumber + 1,
       endLineNumber: lastLineMatch.range.startLineNumber,
@@ -63,9 +65,9 @@ export default function addExternalLibraryWarningDecoration(model: monaco.editor
       className: '.risk-warning',
       marginClassName: '.risk-warning',
     },
-  };
+  } : undefined;
 
-  model.deltaDecorations([], [ firstLineDecoration, restDecoration ]);
+  return model.deltaDecorations([], [ firstLineDecoration, restDecoration ].filter(Boolean));
 }
 
 const getLibraryName = (model: monaco.editor.ITextModel) => (library: SmartContractExternalLibrary) => {

@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: runtime chart controls. GPL-3.0.
 import { Icon } from '@chakra-ui/react';
 import { useCopyToClipboard } from '@uidotdev/usehooks';
-import dayjs from 'dayjs';
 import domToImage from 'dom-to-image';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Resolution, TimeChartData } from '../types';
 
@@ -13,6 +14,7 @@ import ImageIcon from 'icons/files/image.svg';
 import ScopeIcon from 'icons/scope.svg';
 import ShareIcon from 'icons/share.svg';
 import { useMultichainContext } from 'lib/contexts/multichain';
+import dayjs from 'lib/date/dayjs';
 
 import { useColorModeValue } from '../../../chakra/color-mode';
 import { IconButton } from '../../../chakra/icon-button';
@@ -60,6 +62,7 @@ const ChartMenu = ({
   handleZoom,
   handleZoomReset,
 }: Props) => {
+  const { t } = useTranslation();
   const pngBackgroundColor = useColorModeValue('white', 'black');
   const fullscreenDialog = useDisclosure();
 
@@ -70,8 +73,8 @@ const ChartMenu = ({
   const multichainContext = useMultichainContext();
 
   const chainPostfix = React.useMemo(() => {
-    return multichainContext?.chain.name ? ` on ${ multichainContext.chain.name }` : '';
-  }, [ multichainContext?.chain.name ]);
+    return multichainContext?.chain.name ? t('charts.chain_postfix', { chain: multichainContext.chain.name }) : '';
+  }, [ multichainContext?.chain.name, t ]);
 
   const showChartFullscreen = React.useCallback(() => {
     fullscreenDialog.onOpenChange({ open: true });
@@ -96,25 +99,25 @@ const ChartMenu = ({
           })
           .then((dataUrl) => {
             const link = document.createElement('a');
-            link.download = `${ title }${ chainPostfix } (Blockscout chart).png`;
+            link.download = t('charts.png_filename', { title, chain: chainPostfix });
             link.href = dataUrl;
             link.click();
             link.remove();
           });
       }
     }, 100);
-  }, [ pngBackgroundColor, title, chainPostfix, chartRef ]);
+  }, [ pngBackgroundColor, title, chainPostfix, chartRef, t ]);
 
   const handleSVGSavingClick = React.useCallback(() => {
     const headerRows = [
-      'Date', ...charts.map((chart) => chart.name),
+      t('charts.date'), ...charts.map((chart) => chart.name),
     ];
     const dataRows = charts[0].items.map((item, index) => [
       item.dateLabel ?? dayjs(item.date).format('YYYY-MM-DD'),
       ...charts.map((chart) => String(chart.items[index].value)),
     ]);
-    saveAsCsv(headerRows, dataRows, `${ title }${ chainPostfix } (Blockscout stats)`);
-  }, [ charts, title, chainPostfix ]);
+    saveAsCsv(headerRows, dataRows, t('charts.csv_filename', { title, chain: chainPostfix }));
+  }, [ charts, title, chainPostfix, t ]);
 
   // TS thinks window.navigator.share can't be undefined, but it can
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -138,7 +141,7 @@ const ChartMenu = ({
     <>
       <MenuRoot>
         <MenuTrigger asChild>
-          <IconButton variant="icon_background" size="md" aria-label="Open chart options menu" loadingSkeleton={ isLoading }>
+          <IconButton variant="icon_background" size="md" aria-label={ t('charts.open_menu') } loadingSkeleton={ isLoading }>
             <Icon><DotsIcon/></Icon>
           </IconButton>
         </MenuTrigger>
@@ -150,7 +153,7 @@ const ChartMenu = ({
               closeOnSelect={ hasShare ? false : true }
             >
               <Icon boxSize={ 5 }>{ hasShare ? <ShareIcon/> : <CopyIcon/> }</Icon>
-              { hasShare ? 'Share' : 'Copy link' }
+              { hasShare ? t('charts.share') : t('charts.copy_link') }
             </MenuItem>
           ) }
           { itemIds.includes('fullscreen') && (
@@ -159,7 +162,7 @@ const ChartMenu = ({
               onClick={ showChartFullscreen }
             >
               <Icon boxSize={ 5 }><ScopeIcon/></Icon>
-              View fullscreen
+              { t('charts.fullscreen') }
             </MenuItem>
           ) }
           { itemIds.includes('save_png') && (
@@ -168,7 +171,7 @@ const ChartMenu = ({
               onClick={ handleFileSaveClick }
             >
               <Icon boxSize={ 5 }><ImageIcon/></Icon>
-              Save as PNG
+              { t('charts.save_png') }
             </MenuItem>
           ) }
           { itemIds.includes('save_csv') && (
@@ -177,7 +180,7 @@ const ChartMenu = ({
               onClick={ handleSVGSavingClick }
             >
               <Icon boxSize={ 5 }><CsvIcon/></Icon>
-              Save as CSV
+              { t('charts.save_csv') }
             </MenuItem>
           ) }
         </MenuContent>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Grid, Text, Flex, Box, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2TxnBatchDAAnytrust } from 'types/api/arbitrumL2';
 
@@ -16,13 +18,13 @@ type Props = {
 };
 
 const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <>
       <DetailedInfo.ItemLabel
         hint="Aggregated BLS signature of AnyTrust committee members"
-      >
-        Signature
-      </DetailedInfo.ItemLabel><DetailedInfo.ItemValue wordBreak="break-all" whiteSpace="break-spaces">
+      >{ tQuat('blockDetails.signature') }</DetailedInfo.ItemLabel><DetailedInfo.ItemValue wordBreak="break-all" whiteSpace="break-spaces">
         { data.bls_signature }
       </DetailedInfo.ItemValue><DetailedInfo.ItemLabel
         hint="The hash of the data blob stored by the AnyTrust committee"
@@ -50,9 +52,7 @@ const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
       </DetailedInfo.ItemValue>
       <DetailedInfo.ItemLabel
         hint="Members of AnyTrust committee"
-      >
-        Signers
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('blockDetails.signers') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue overflowX="scroll" fontSize="sm">
         <Grid
           hideBelow="lg"
@@ -63,9 +63,9 @@ const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
           borderRadius="md"
           minW="600px"
         >
-          <Text fontWeight={ 600 }>Key</Text>
+          <Text fontWeight={ 600 }>{ tQuat('addresses.key') }</Text>
           <Text fontWeight={ 600 }>Trusted</Text>
-          <Text fontWeight={ 600 }>Proof</Text>
+          <Text fontWeight={ 600 }>{ tQuat('blobUI.proof') }</Text>
           { data.signers.map(signer => (
             <>
               <Flex justifyContent="space-between">
@@ -89,7 +89,7 @@ const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
           { data.signers.map(signer => (
             <VStack padding={ 4 } key={ signer.key } gap={ 2 }>
               <Flex w="100%" justifyContent="space-between">
-                <Text fontWeight={ 600 }>Key</Text>
+                <Text fontWeight={ 600 }>{ tQuat('addresses.key') }</Text>
                 <CopyToClipboard text={ signer.key }/>
               </Flex>
               <Text wordBreak="break-all" whiteSpace="break-spaces">{ signer.key }</Text>
@@ -99,7 +99,7 @@ const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
                   { signer.trusted ? <IconSvg name="check" boxSize={ 6 }/> : <IconSvg name="cross" boxSize={ 6 }/> }
                 </Flex>
                 <Flex alignItems="center" w="50%">
-                  <Text fontWeight={ 600 } mr={ 2 }>Proof</Text>
+                  <Text fontWeight={ 600 } mr={ 2 }>{ tQuat('blobUI.proof') }</Text>
                   { signer.proof ? (
                     <Flex>
                       <HashStringShorten hash={ signer.proof }/>

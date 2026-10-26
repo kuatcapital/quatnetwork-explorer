@@ -1,4 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserOpsItem } from 'types/api/userOps';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -23,18 +26,20 @@ type Props = {
 };
 
 const UserOpsListItem = ({ item, isLoading, showTx, showSender, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
   const chainConfig = (multichainContext?.chain.app_config || config);
 
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="100px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>User op hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('operationsUi.short_hash') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <UserOpEntity hash={ item.hash } isLoading={ isLoading } fontWeight="700" noIcon={ !chainData } truncation="constant_long" chain={ chainData } noCopy/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.age') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.timestamp }
@@ -44,14 +49,14 @@ const UserOpsListItem = ({ item, isLoading, showTx, showSender, chainData }: Pro
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.status') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <UserOpStatus status={ item.status } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
       { showSender && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Sender</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('transactions.sender') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <AddressStringOrParam
               address={ item.address }
@@ -64,7 +69,7 @@ const UserOpsListItem = ({ item, isLoading, showTx, showSender, chainData }: Pro
 
       { showTx && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Tx hash</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('operationsUi.tx_hash') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <TxEntity
               hash={ item.transaction_hash }
@@ -76,7 +81,7 @@ const UserOpsListItem = ({ item, isLoading, showTx, showSender, chainData }: Pro
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Block</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.block') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BlockEntity
           number={ Number(item.block_number) }
@@ -88,7 +93,7 @@ const UserOpsListItem = ({ item, isLoading, showTx, showSender, chainData }: Pro
 
       { !chainConfig.UI.views.tx.hiddenFields?.tx_fee && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Fee</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.fee') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <NativeCoinValue
               amount={ item.fee }

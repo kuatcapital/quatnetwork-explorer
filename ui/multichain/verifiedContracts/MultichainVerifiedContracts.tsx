@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, createListCollection, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { MultichainProvider } from 'lib/contexts/multichain';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -22,6 +24,8 @@ const sortCollection = createListCollection({
 });
 
 const MultichainVerifiedContracts = () => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
 
   const { query, type, searchTerm, sort, onSearchTermChange, onTypeChange, onSortChange } = useVerifiedContractsQuery({ isMultichain: true });
@@ -40,7 +44,7 @@ const MultichainVerifiedContracts = () => {
       w={{ base: '100%', lg: '350px' }}
       size="sm"
       onChange={ onSearchTermChange }
-      placeholder="Search by contract name or address"
+      placeholder={ tQuat('verification.search_contract') }
       initialValue={ searchTerm }
     />
   );
@@ -102,7 +106,7 @@ const MultichainVerifiedContracts = () => {
         <DataListDisplay
           isError={ isError }
           itemsNum={ data?.items.length }
-          emptyText="There are no verified contracts."
+          emptyText={ tQuat('verification.no_verified_contracts') }
           hasActiveFilters={ Boolean(searchTerm || type) }
           emptyStateProps={{
             term: 'contract',

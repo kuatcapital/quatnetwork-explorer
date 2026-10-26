@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 // import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 // import type { UserOp } from 'types/api/userOps';
 
@@ -20,6 +22,8 @@ type Props = {
 };
 
 const UserOpSubHeading = ({ hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
 
   const hasInterpretationFeature = config.features.txInterpretation.isEnabled;
@@ -49,7 +53,7 @@ const UserOpSubHeading = ({ hash }: Props) => {
           chainData={ multichainContext?.chain }
         />
         { hasViewAllInterpretationsLink &&
-          <Link href={ `#${ TX_ACTIONS_BLOCK_ID }` }>View all</Link> }
+          <Link href={ `#${ TX_ACTIONS_BLOCK_ID }` }>{ tQuat('common.view_all') }</Link> }
       </Flex>
     );
     // fallback will be added later

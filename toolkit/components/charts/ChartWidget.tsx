@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: runtime chart controls. GPL-3.0.
 import type { FlexProps } from '@chakra-ui/react';
 import { Flex, Icon } from '@chakra-ui/react';
 import { range } from 'es-toolkit';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AxesConfigFn, TimeChartData } from './types';
 
@@ -47,6 +49,7 @@ export const ChartWidget = React.memo(({
   noWatermark,
   ...rest
 }: ChartWidgetProps) => {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
 
   const { zoomRange, handleZoom, handleZoomReset } = useChartZoom();
@@ -151,10 +154,10 @@ export const ChartWidget = React.memo(({
           </Link>
         ) : chartHeader }
         <Flex ml="auto" columnGap={ 2 }>
-          <Tooltip content="Reset zoom">
+          <Tooltip content={ t('charts.reset_zoom') }>
             <IconButton
               hidden={ !zoomRange }
-              aria-label="Reset zoom"
+              aria-label={ t('charts.reset_zoom') }
               size="md"
               variant="icon_background"
               onClick={ handleZoomReset }

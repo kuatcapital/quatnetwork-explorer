@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { chakra, Flex, Text } from '@chakra-ui/react';
 import type { MouseEvent } from 'react';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -49,6 +51,7 @@ const MarketplaceAppCard = ({
   userRating,
   graphLinks,
 }: Props) => {
+  const { t: tEco } = useTranslation();
   const categoriesLabel = categories.join(', ');
 
   const handleInfoClick = useCallback((event: MouseEvent) => {
@@ -94,7 +97,7 @@ const MarketplaceAppCard = ({
           >
             <Image
               src={ isLoading ? undefined : logoUrl }
-              alt={ `${ title } app icon` }
+              alt={ tEco('marketplaceUI.app_icon', { app: title }) }
               borderRadius="8px"
             />
           </Skeleton>
@@ -157,8 +160,7 @@ const MarketplaceAppCard = ({
               href="#"
               onClick={ handleInfoClick }
             >
-              Info
-            </Link>
+              { tEco('marketplaceUI.info') }</Link>
             <Flex alignItems="center" gap={ 3 }>
               <Rating
                 appId={ id }
@@ -170,8 +172,8 @@ const MarketplaceAppCard = ({
               />
               <Flex gap={ 2 }>
                 <IconButton
-                  aria-label="Mark as favorite"
-                  title="Mark as favorite"
+                  aria-label={ tEco('marketplaceUI.favorite') }
+                  title={ tEco('marketplaceUI.favorite') }
                   variant="icon_background"
                   size="md"
                   onClick={ handleFavoriteClick }

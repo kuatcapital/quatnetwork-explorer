@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type {
   ValidatorBlackfort,
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const ValidatorsTable = ({ data, sort, setSorting, isLoading, top }: Props) => {
+  const { t } = useTranslation();
 
   const onSortToggle = React.useCallback((field: ValidatorsBlackfortSortingField) => {
     const value = getNextSortValue<ValidatorsBlackfortSortingField, ValidatorsBlackfortSortingValue>(VALIDATORS_BLACKFORT_SORT_SEQUENCE, field)(sort);
@@ -38,12 +41,11 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading, top }: Props) => {
             onSortToggle={ onSortToggle }
             indicatorPosition="right"
           >
-            Validator’s address
-          </TableColumnHeaderSortable>
-          <TableColumnHeader>Name</TableColumnHeader>
-          <TableColumnHeader isNumeric>Commission</TableColumnHeader>
-          <TableColumnHeader isNumeric>{ `Self bonded ${ currencyUnits.ether }` }</TableColumnHeader>
-          <TableColumnHeader isNumeric>{ `Delegated amount ${ currencyUnits.ether }` }</TableColumnHeader>
+            { t('networkTransfers.validator_address') }</TableColumnHeaderSortable>
+          <TableColumnHeader>{ t('networkTransfers.name') }</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ t('networkTransfers.commission') }</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ t('networkTransfers.self_bonded_currency', { symbol: currencyUnits.ether }) }</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ t('networkTransfers.delegated_currency', { symbol: currencyUnits.ether }) }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

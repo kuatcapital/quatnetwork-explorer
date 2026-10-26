@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2WithdrawalsItem } from 'types/api/optimisticL2';
 
@@ -16,21 +18,21 @@ type Props = {
 };
 
 const OptimisticL2WithdrawalsTable = ({ items, top, isLoading }: Props) => {
+  const { t } = useTranslation();
   return (
     <AddressHighlightProvider>
       <TableRoot tableLayout="auto" minW="950px">
         <TableHeaderSticky top={ top }>
           <TableRow>
-            <TableColumnHeader>Msg nonce</TableColumnHeader>
-            <TableColumnHeader>From</TableColumnHeader>
-            <TableColumnHeader>{ layerLabels.current } txn hash</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.msg_nonce') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.from') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.layer_tx_hash', { layer: layerLabels.current }) }</TableColumnHeader>
             <TableColumnHeader>
-              Timestamp
-              <TimeFormatToggle/>
+              { t('networkTransfers.timestamp') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader>Status</TableColumnHeader>
-            <TableColumnHeader>{ layerLabels.parent } txn hash</TableColumnHeader>
-            <TableColumnHeader>Time left</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.status') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.layer_tx_hash', { layer: layerLabels.parent }) }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.time_left') }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

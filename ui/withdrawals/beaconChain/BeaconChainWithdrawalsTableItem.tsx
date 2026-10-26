@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: explicit locale presentation; API values unchanged. GPL-3.0.
 import React from 'react';
 
 import type { AddressWithdrawalsItem } from 'types/api/address';
 import type { BlockWithdrawalsItem } from 'types/api/block';
 import type { WithdrawalsItem } from 'types/api/withdrawals';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -23,10 +26,11 @@ type Props = ({
 }) & { isLoading?: boolean };
 
 const BeaconChainWithdrawalsTableItem = ({ item, view, isLoading }: Props) => {
+  const { locale } = useLocale();
   return (
     <TableRow>
       <TableCell verticalAlign="middle">
-        <Skeleton loading={ isLoading } display="inline-block">{ item.index }</Skeleton>
+        <Skeleton loading={ isLoading } display="inline-block">{ formatNumber(item.index, locale) }</Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading } display="inline-block">{ item.validator_index }</Skeleton>

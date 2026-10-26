@@ -1,10 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EssentialDappsChainConfig } from 'types/client/marketplace';
 import type { AllowanceType } from 'types/client/revoke';
 
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -31,6 +34,8 @@ export default function ApprovalsListItem({
   isAddressMatch,
   hideApproval,
 }: Props) {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const revoke = useRevoke();
   const [ isPending, setIsPending ] = useState(false);
 
@@ -58,7 +63,7 @@ export default function ApprovalsListItem({
         paddingBottom: 0,
       }}
     >
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Token</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tEco('marketplaceUI.token') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value display="flex" flexDir="column" gap={ 2 } color="inherit">
         <TokenEntity
           token={{
@@ -84,7 +89,7 @@ export default function ApprovalsListItem({
           link={{ noIcon: true, external: true }}
         />
       </ListItemMobileGrid.Value>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Approved spender</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tEco('marketplaceUI.approved_spender') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity
           address={{ hash: approval.spender }}
@@ -95,18 +100,18 @@ export default function ApprovalsListItem({
           link={{ noIcon: true, external: true }}
         />
       </ListItemMobileGrid.Value>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Approved amount</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tEco('marketplaceUI.approved_amount') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value color="inherit">
         <Skeleton loading={ isLoading }>
           <NumberEntity
-            value={ allowance }
+            value={ allowance === 'Unlimited' ? tEco('marketplaceUI.unlimited') : allowance }
             postfix={
               [ 'Unlimited', 'N/A' ].includes(allowance) ? '' : approval.symbol
             }
           />
         </Skeleton>
       </ListItemMobileGrid.Value>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Value at risk</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tEco('marketplaceUI.value_at_risk') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value color="inherit">
         <Skeleton loading={ isLoading }>
           { approval.valueAtRiskUsd ? (
@@ -117,11 +122,11 @@ export default function ApprovalsListItem({
           ) : '-' }
         </Skeleton>
       </ListItemMobileGrid.Value>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Last updated</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tEco('marketplaceUI.last_updated') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value color="inherit">
         <Skeleton loading={ isLoading } display="flex" flexDir="column" rowGap={ 2 }>
           <Time timestamp={ approval.timestamp }/>
-          <Text>{ dayjs(approval.timestamp).fromNow() }</Text>
+          <Text>{ dayjs(approval.timestamp).locale(locale).fromNow() }</Text>
         </Skeleton>
       </ListItemMobileGrid.Value>
       { isAddressMatch && (
@@ -132,8 +137,7 @@ export default function ApprovalsListItem({
           onClick={ handleRevoke }
           gridColumn="span 2"
         >
-          Revoke
-        </Button>
+          { tEco('marketplaceUI.revoke') }</Button>
       ) }
     </ListItemMobileGrid.Container>
   );

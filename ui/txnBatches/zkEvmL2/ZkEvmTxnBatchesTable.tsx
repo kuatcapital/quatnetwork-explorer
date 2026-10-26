@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZkEvmL2TxnBatchesItem } from 'types/api/zkEvmL2';
 
@@ -14,18 +16,18 @@ type Props = {
 };
 
 const ZkEvmTxnBatchesTable = ({ items, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot minW="1100px">
       <TableHeaderSticky top={ top }>
         <TableRow>
           <TableColumnHeader width="40%">Batch #</TableColumnHeader>
-          <TableColumnHeader width="60%">Status</TableColumnHeader>
-          <TableColumnHeader width="180px">
-            Timestamp
-            <TimeFormatToggle/>
+          <TableColumnHeader width="60%">{ tQuat('common.status') }</TableColumnHeader>
+          <TableColumnHeader width="180px">{ tQuat('common.timestamp') }<TimeFormatToggle/>
           </TableColumnHeader>
-          <TableColumnHeader width="100px">Txn count</TableColumnHeader>
-          <TableColumnHeader width="230px">Verify tx hash</TableColumnHeader>
+          <TableColumnHeader width="100px">{ tQuat('addresses.transaction_count') }</TableColumnHeader>
+          <TableColumnHeader width="230px">{ tQuat('transactions.verify_hash') }</TableColumnHeader>
           <TableColumnHeader width="230px">Sequence hash</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import useRoutedChainSelect from 'lib/multichain/useRoutedChainSelect';
@@ -31,6 +33,8 @@ const TAB_LIST_PROPS = {
 const PRESERVED_PARAMS = [ 'q', 'tab', 'chain_id' ];
 
 const SearchResults = () => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
 
   const chainSelect = useRoutedChainSelect({
@@ -124,7 +128,7 @@ const SearchResults = () => {
     <ContentLoader/> :
     (
       <>
-        <PageTitle title="Search results"/>
+        <PageTitle title={ tQuat('common.search_results') }/>
         <Skeleton loading={ totalResults === undefined } mb={ 6 } w="fit-content">
           Found <chakra.span fontWeight={ 700 }>{ totalResults?.num }{ totalResults?.isOverflow ? '+' : '' }</chakra.span> matching results
         </Skeleton>

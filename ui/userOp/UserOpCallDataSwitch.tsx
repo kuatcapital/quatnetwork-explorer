@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Switch } from 'toolkit/chakra/switch';
 import { Hint } from 'toolkit/components/Hint/Hint';
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const UserOpCallDataSwitch = ({ className, initialValue, isDisabled, onChange, id }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ isChecked, setIsChecked ] = React.useState(initialValue ?? false);
 
   const handleChange = React.useCallback(() => {
@@ -34,10 +38,10 @@ const UserOpCallDataSwitch = ({ className, initialValue, isDisabled, onChange, i
         direction="rtl"
         labelProps={{ fontWeight: '600', textStyle: 'sm' }}
       >
-        <chakra.span hideBelow="lg">Show external call data</chakra.span>
-        <chakra.span hideFrom="lg">External call data</chakra.span>
+        <chakra.span hideBelow="lg">{ tQuat('operationsUi.show_external') }</chakra.span>
+        <chakra.span hideFrom="lg">{ tQuat('operationsUi.external_data') }</chakra.span>
       </Switch>
-      <Hint label="Inner call data is a predicted decoded call from this user operation"/>
+      <Hint label={ tQuat('operationsUi.inner_hint') }/>
     </Flex>
   );
 };

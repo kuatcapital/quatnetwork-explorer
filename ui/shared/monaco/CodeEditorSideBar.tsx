@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: reactive editor and shared translations. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { throttle } from 'es-toolkit';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { File, Monaco } from './types';
 
@@ -25,6 +27,7 @@ interface Props {
 export const CONTAINER_WIDTH = 250;
 
 const CodeEditorSideBar = ({ onFileSelect, data, monaco, editor, selectedFile, mainFile }: Props) => {
+  const { t } = useTranslation();
 
   const [ isStuck, setIsStuck ] = React.useState(false);
   const [ isDrawerOpen, setIsDrawerOpen ] = React.useState(false);
@@ -67,9 +70,9 @@ const CodeEditorSideBar = ({ onFileSelect, data, monaco, editor, selectedFile, m
 
   React.useEffect(() => {
     if (editor && monaco) {
-      editor.addAction({
+      const explorerAction = editor.addAction({
         id: 'file-explorer',
-        label: 'Show File Explorer',
+        label: t('editorShared.show_explorer'),
         keybindings: [
           monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyE,
         ],
@@ -80,9 +83,9 @@ const CodeEditorSideBar = ({ onFileSelect, data, monaco, editor, selectedFile, m
         },
       });
 
-      editor.addAction({
+      const searchAction = editor.addAction({
         id: 'search-in-files',
-        label: 'Show Search in Files',
+        label: t('editorShared.show_search'),
         keybindings: [
           monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyF,
         ],
@@ -95,8 +98,11 @@ const CodeEditorSideBar = ({ onFileSelect, data, monaco, editor, selectedFile, m
           setSearchValue(selectedValue || '');
         },
       });
+      return () => {
+        explorerAction.dispose(); searchAction.dispose();
+      };
     }
-  }, [ editor, monaco ]);
+  }, [ editor, monaco, t ]);
 
   return (
     <>
@@ -134,8 +140,12 @@ const CodeEditorSideBar = ({ onFileSelect, data, monaco, editor, selectedFile, m
             boxShadow={ isStuck ? 'md' : 'none' }
             borderTopRightRadius="md"
           >
-            <TabsTrigger value="explorer" { ...tabProps } title={ `File explorer (${ shift + cmd }E)` }>Explorer</TabsTrigger>
-            <TabsTrigger value="search" { ...tabProps } title={ `Search in files (${ shift + cmd }F)` }>Search</TabsTrigger>
+            <TabsTrigger value="explorer" { ...tabProps } title={ t('editorShared.explorer_shortcut', { shortcut: `${ shift + cmd }E` }) }>
+              { t('editorShared.explorer') }
+            </TabsTrigger>
+            <TabsTrigger value="search" { ...tabProps } title={ t('editorShared.search_shortcut', { shortcut: `${ shift + cmd }F` }) }>
+              { t('common.search') }
+            </TabsTrigger>
             { actionBarRenderer?.() }
           </TabsList>
           <TabsContent value="explorer" p={ 0 }>
@@ -177,8 +187,8 @@ const CodeEditorSideBar = ({ onFileSelect, data, monaco, editor, selectedFile, m
         transitionProperty="right"
         transitionDuration="normal"
         transitionTimingFunction="ease-in-out"
-        title={ isDrawerOpen ? 'Open sidebar' : 'Close sidebar' }
-        aria-label={ isDrawerOpen ? 'Open sidebar' : 'Close sidebar' }
+        title={ isDrawerOpen ? t('editorShared.close_sidebar') : t('editorShared.open_sidebar') }
+        aria-label={ isDrawerOpen ? t('editorShared.close_sidebar') : t('editorShared.open_sidebar') }
       >
         <Box
           className="codicon codicon-tree-item-expanded"

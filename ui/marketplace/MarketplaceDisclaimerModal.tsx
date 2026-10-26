@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -15,6 +17,7 @@ type Props = {
 };
 
 const MarketplaceDisclaimerModal = ({ isOpen, onClose, appId }: Props) => {
+  const { t: tEco } = useTranslation();
 
   const isMobile = useIsMobile();
 
@@ -30,16 +33,13 @@ const MarketplaceDisclaimerModal = ({ isOpen, onClose, appId }: Props) => {
     >
       <DialogContent>
         <DialogHeader>
-          Disclaimer
-        </DialogHeader>
+          { tEco('marketplaceUI.disclaimer') }</DialogHeader>
 
         <DialogBody>
           <Text color={{ _light: 'gray.800', _dark: 'whiteAlpha.800' }}>
-            You are now accessing a third-party app. Blockscout does not own, control, maintain, or audit 3rd party apps,{ ' ' }
-            and is not liable for any losses associated with these interactions. Please do so at your own risk.
+            { tEco('marketplaceUI.disclaimer_body') }
             <br/><br/>
-            By clicking continue, you agree that you understand the risks and have read the Disclaimer.
-          </Text>
+            { tEco('marketplaceUI.disclaimer_agreement') }</Text>
         </DialogBody>
 
         <DialogFooter
@@ -49,15 +49,13 @@ const MarketplaceDisclaimerModal = ({ isOpen, onClose, appId }: Props) => {
         >
           <Link href={ route({ pathname: '/apps/[id]', query: { id: appId } }) } asChild>
             <Button onClick={ handleContinueClick } >
-              Continue to app
-            </Button>
+              { tEco('marketplaceUI.continue_app') }</Button>
           </Link>
           <Button
             variant="outline"
             onClick={ onClose }
           >
-            Cancel
-          </Button>
+            { tEco('common.cancel') }</Button>
         </DialogFooter>
       </DialogContent>
     </DialogRoot>

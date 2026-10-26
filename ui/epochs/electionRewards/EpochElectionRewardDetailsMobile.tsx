@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { CeloEpochDetails } from 'types/api/epochs';
 import type { TokenInfo } from 'types/api/token';
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const CeloEpochElectionRewardDetailsMobile = ({ type, token }: Props) => {
+  const { t } = useTranslation();
   const rootRef = React.useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -50,24 +53,24 @@ const CeloEpochElectionRewardDetailsMobile = ({ type, token }: Props) => {
         .map((item, index) => {
           return (
             <Flex key={ index } flexDir="column" alignItems="flex-start" rowGap={ 1 } fontWeight={ 400 }>
-              <AddressEntity address={ item.account } noIcon w="100%"/>
-              <TokenValue
-                amount={ item.amount }
-                token={ token }
-                tokenEntityProps={{ noIcon: true, ml: 1 }}
-                startElement={ <Box flexShrink={ 0 } color="text.secondary">got </Box> }
+              <Trans
+                t={ t }
+                i18nKey="networkTransfers.reward_received"
+                components={{
+                  account: <AddressEntity address={ item.account } noIcon w="100%"/>,
+                  payment: <Flex columnGap={ 1 } alignItems="center" color="text.secondary"/>,
+                  amount: <TokenValue amount={ item.amount } token={ token } tokenEntityProps={{ noIcon: true, ml: 1 }}/>,
+                  association: <Flex columnGap={ 1 } alignItems="center" w="100%" color="text.secondary"/>,
+                  associated: <AddressEntity address={ item.associated_account } noIcon/>,
+                }}
               />
-              <Flex columnGap={ 1 } alignItems="center" w="100%">
-                <Box flexShrink={ 0 } color="text.secondary">on behalf of</Box>
-                <AddressEntity address={ item.associated_account } noIcon/>
-              </Flex>
             </Flex>
           );
         }) }
 
       { query.isFetching && <ContentLoader maxW="200px" mt={ 3 }/> }
 
-      { query.isError && <Text color="text.error" mt={ 3 }>Something went wrong. Unable to load next page.</Text> }
+      { query.isError && <Text color="text.error" mt={ 3 }>{ t('networkTransfers.next_page_error') }</Text> }
 
       <Box h="0" w="100px" mt="-12px" ref={ cutRef }/>
     </Flex>

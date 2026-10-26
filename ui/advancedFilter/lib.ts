@@ -1,12 +1,17 @@
+// Modified by Quat Capital, 2026-10-26: localize filter tag labels without changing API parameters. GPL-3.0.
+import BigNumber from 'bignumber.js';
 import { castArray } from 'es-toolkit/compat';
+import type { TFunction } from 'i18next';
 
 import type { AdvancedFilterAge, AdvancedFilterParams } from 'types/api/advancedFilter';
 import type { ClusterChainConfig } from 'types/multichain';
 
+import type { Locale } from 'configs/app/i18n';
 import dayjs from 'lib/date/dayjs';
+import { formatBigNumber } from 'lib/format/localeNumbers';
 import { HOUR, DAY, MONTH } from 'toolkit/utils/consts';
 
-import { getAdvancedFilterTypes } from './constants';
+import { getAdvancedFilterTypes, getAdvancedFilterAgeLabel } from './constants';
 
 export function getDurationFromAge(age: AdvancedFilterAge) {
   switch (age) {
@@ -35,28 +40,31 @@ function getFilterValueWithNames(values?: Array<string>, names?: Array<string>) 
   }
 }
 
-const filterParamNames: Record<keyof AdvancedFilterParams, string> = {
+const getFilterParamNames = (t: TFunction): Record<keyof AdvancedFilterParams, string> => ({
   // we don't show address_relation as filter tag
   address_relation: '',
-  age: 'Age',
-  age_from: 'Date from',
-  age_to: 'Date to',
-  amount_from: 'Amount from',
-  amount_to: 'Amount to',
-  from_address_hashes_to_exclude: 'From Exc',
-  from_address_hashes_to_include: 'From',
-  methods: 'Methods',
+  age: t('common.age'),
+  age_from: t('advancedFilterUi.date_from'),
+  age_to: t('advancedFilterUi.date_to'),
+  amount_from: t('advancedFilterUi.amount_from'),
+  amount_to: t('advancedFilterUi.amount_to'),
+  from_address_hashes_to_exclude: t('advancedFilterUi.from_exclude'),
+  from_address_hashes_to_include: t('common.from'),
+  methods: t('advancedFilterUi.methods'),
   methods_names: '',
-  to_address_hashes_to_exclude: 'To Exc',
-  to_address_hashes_to_include: 'To',
-  token_contract_address_hashes_to_exclude: 'Asset Exc',
+  to_address_hashes_to_exclude: t('advancedFilterUi.to_exclude'),
+  to_address_hashes_to_include: t('common.to'),
+  token_contract_address_hashes_to_exclude: t('advancedFilterUi.asset_exclude'),
   token_contract_symbols_to_exclude: '',
-  token_contract_address_hashes_to_include: 'Asset',
+  token_contract_address_hashes_to_include: t('advancedFilterUi.asset'),
   token_contract_symbols_to_include: '',
-  transaction_types: 'Type',
-};
+  transaction_types: t('common.type'),
+});
 
-export function getFilterTags(filters: AdvancedFilterParams, chainConfig?: ClusterChainConfig['app_config']) {
+export function getFilterTags(
+  filters: AdvancedFilterParams, chainConfig: ClusterChainConfig['app_config'] | undefined, t: TFunction, locale: Locale,
+) {
+  const filterParamNames = getFilterParamNames(t);
   const filtersToShow = { ...filters };
   if (filtersToShow.age) {
     filtersToShow.age_from = undefined;
@@ -73,12 +81,22 @@ export function getFilterTags(filters: AdvancedFilterParams, chainConfig?: Clust
     }
     let valueStr;
     switch (key) {
+      case 'age': {
+        valueStr = filtersToShow.age ? getAdvancedFilterAgeLabel(filtersToShow.age, t) : '';
+        break;
+      }
+      case 'amount_from':
+      case 'amount_to': {
+        const number = BigNumber(String(value));
+        valueStr = number.isFinite() ? formatBigNumber(number, locale) : String(value);
+        break;
+      }
       case 'methods': {
         valueStr = getFilterValueWithNames(filtersToShow.methods, filtersToShow.methods_names);
         break;
       }
       case 'transaction_types': {
-        const advancedFilterTypes = getAdvancedFilterTypes(chainConfig);
+        const advancedFilterTypes = getAdvancedFilterTypes(chainConfig, false, t);
         valueStr = castArray(value).map(i => advancedFilterTypes.find(t => t.id === i)?.name).filter(Boolean).join(', ');
         break;
       }
@@ -91,11 +109,11 @@ export function getFilterTags(filters: AdvancedFilterParams, chainConfig?: Clust
         break;
       }
       case 'age_from': {
-        valueStr = dayjs(filtersToShow.age_from).format('YYYY-MM-DD');
+        valueStr = dayjs(filtersToShow.age_from).locale(locale).format('ll');
         break;
       }
       case 'age_to': {
-        valueStr = dayjs(filtersToShow.age_to).format('YYYY-MM-DD');
+        valueStr = dayjs(filtersToShow.age_to).locale(locale).format('ll');
         break;
       }
       default: {

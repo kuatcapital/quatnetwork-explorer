@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, createListCollection } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ChainMetricsSorting, ChainMetricsSortingField, ChainMetricsSortingValue } from 'types/client/multichainAggregator';
 
@@ -23,6 +25,8 @@ const sortCollection = createListCollection({
 });
 
 const MultichainEcosystems = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
 
   const [ sort, setSort ] =
@@ -76,7 +80,7 @@ const MultichainEcosystems = () => {
   return (
     <>
       <PageTitle
-        title="Ecosystems"
+        title={ tQuat('navigation.ecosystems') }
         withTextAd
       />
       <DataListDisplay

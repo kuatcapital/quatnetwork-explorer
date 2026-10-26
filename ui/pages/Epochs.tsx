@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CELO_EPOCH_ITEM } from 'stubs/epoch';
 import { generateListStub } from 'stubs/utils';
@@ -13,6 +15,7 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 
 const EpochsPageContent = () => {
+  const { t } = useTranslation();
   const epochsQuery = useQueryWithPages({
     resourceName: 'general:epochs_celo',
     options: {
@@ -60,11 +63,11 @@ const EpochsPageContent = () => {
 
   return (
     <>
-      <PageTitle title="Epochs" withTextAd/>
+      <PageTitle title={ t('networkTransfers.epochs') } withTextAd/>
       <DataListDisplay
         isError={ epochsQuery.isError }
         itemsNum={ epochsQuery.data?.items?.length }
-        emptyText="There are no epochs."
+        emptyText={ t('networkTransfers.no_epochs') }
         actionBar={ actionBar }
       >
         { content }

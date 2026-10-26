@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Badge } from 'toolkit/chakra/badge';
 import { Heading } from 'toolkit/chakra/heading';
@@ -24,6 +26,7 @@ const RewardsDashboardCard = ({
   title, description, availableSoon, contentAfter, cardValueStyle, hint,
   contentDirection = 'column', children, blurFilter, label, isLoading,
 }: Props) => {
+  const { t: tEco } = useTranslation();
   return (
     <Flex
       as="section"
@@ -51,7 +54,7 @@ const RewardsDashboardCard = ({
           <Flex alignItems="center" gap={ 2 }>
             <Heading level="3">{ title }</Heading>
             { hint && <Hint label={ hint } tooltipProps={{ interactive: true }}/> }
-            { availableSoon && <Badge colorPalette="blue">Available soon</Badge> }
+            { availableSoon && <Badge colorPalette="blue">{ tEco('rewardsUI.available_soon') }</Badge> }
           </Flex>
         ) }
         <Text as="div" fontSize="sm">

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { type AdvancedFilterParams } from 'types/api/advancedFilter';
 
@@ -20,6 +22,8 @@ type Props = {
 };
 
 const AddressRelationFilter = ({ value = DEFAULT_VALUE, handleFilterChange, onClose }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const onFilter = React.useCallback(({ value }: { value: string | null }) => {
     if (!value) {
       return;
@@ -32,8 +36,8 @@ const AddressRelationFilter = ({ value = DEFAULT_VALUE, handleFilterChange, onCl
   return (
     <Box w="120px">
       <RadioGroup onValueChange={ onFilter } value={ value } orientation="vertical">
-        <Radio value="or">OR</Radio>
-        <Radio value="and">AND</Radio>
+        <Radio value="or">{ tQuat('advancedFilterUi.or') }</Radio>
+        <Radio value="and">{ tQuat('advancedFilterUi.and') }</Radio>
       </RadioGroup>
     </Box>
   );

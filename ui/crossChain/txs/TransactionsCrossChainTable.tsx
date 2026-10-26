@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainMessage } from '@blockscout/interchain-indexer-types';
 
@@ -18,6 +20,8 @@ interface Props {
 }
 
 const TransactionsCrossChainTable = ({ data, isLoading, top, stickyHeader, currentAddress }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const TableHeaderComponent = stickyHeader ? TableHeaderSticky : TableHeader;
 
   return (
@@ -29,16 +33,14 @@ const TransactionsCrossChainTable = ({ data, isLoading, top, stickyHeader, curre
             { currentAddress && <TableColumnHeader w="44px"/> }
             <TableColumnHeader>Message</TableColumnHeader>
             <TableColumnHeader>
-              <Flex alignItems="center" flexWrap="nowrap">
-                Timestamp
-                <TimeFormatToggle/>
+              <Flex alignItems="center" flexWrap="nowrap">{ tQuat('common.timestamp') }<TimeFormatToggle/>
               </Flex>
             </TableColumnHeader>
             <TableColumnHeader>Msg sender</TableColumnHeader>
-            <TableColumnHeader>Source tx</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('transactions.source_tx') }</TableColumnHeader>
             <TableColumnHeader>Dest tx</TableColumnHeader>
             <TableColumnHeader>Transf</TableColumnHeader>
-            <TableColumnHeader>Sender</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('transactions.sender') }</TableColumnHeader>
             <TableColumnHeader/>
             <TableColumnHeader>Recipient</TableColumnHeader>
             <TableColumnHeader>Protocol</TableColumnHeader>

@@ -1,4 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: reactive full epoch reward labels and hints. GPL-3.0.
+import type { TFunction } from 'i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CeloEpochRewardsType } from 'types/api/epochs';
 
@@ -11,33 +14,32 @@ type Props = {
   isLoading?: boolean;
 };
 
-const TYPE_TAGS: Record<CeloEpochRewardsType, { text: string; label: string; color: BadgeProps['colorPalette'] }> = {
+const getTypeTags = (t: TFunction): Record<CeloEpochRewardsType, { text: string; label: string; color: BadgeProps['colorPalette'] }> => ({
   group: {
-    text: 'Validator group rewards',
-    // eslint-disable-next-line max-len
-    label: 'Reward given to a validator group. The address being viewed is the group\'s address; the associated address is the validator\'s address on whose behalf the reward was paid.',
+    text: t('editorShared.group_rewards'),
+    label: t('editorShared.group_rewards_hint'),
     color: 'teal',
   },
   validator: {
-    text: 'Validator rewards',
-    label: 'Reward given to a validator. The address being viewed is the validator\'s address; the associated address is the validator group\'s address.',
+    text: t('editorShared.validator_rewards'),
+    label: t('editorShared.validator_rewards_hint'),
     color: 'purple',
   },
   delegated_payment: {
-    text: 'Delegated payments',
-    // eslint-disable-next-line max-len
-    label: 'Reward portion delegated by a validator to another address. The address being viewed is the beneficiary receiving the reward; the associated address is the validator who set the delegation.',
+    text: t('editorShared.delegated_payments'),
+    label: t('editorShared.delegated_payments_hint'),
     color: 'blue',
   },
   voter: {
-    text: 'Voting rewards',
-    label: 'Reward given to a voter. The address being viewed is the voter\'s address; the associated address is the group address.',
+    text: t('editorShared.voting_rewards'),
+    label: t('editorShared.voting_rewards_hint'),
     color: 'yellow',
   },
-};
+});
 
 const EpochRewardTypeTag = ({ type, isLoading }: Props) => {
-  const { text, label, color } = TYPE_TAGS[type];
+  const { t } = useTranslation();
+  const { text, label, color } = getTypeTags(t)[type];
 
   return (
     <Tooltip content={ label }>

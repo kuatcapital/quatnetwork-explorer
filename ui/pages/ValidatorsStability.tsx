@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, createListCollection, HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type {
   ValidatorsStabilityFilters,
@@ -24,23 +26,22 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import getSortParamsFromValue from 'ui/shared/sort/getSortParamsFromValue';
 import getSortValueFromQuery from 'ui/shared/sort/getSortValueFromQuery';
 import Sort from 'ui/shared/sort/Sort';
-import { VALIDATORS_STABILITY_SORT_OPTIONS } from 'ui/validators/stability/utils';
+import { getStabilitySortOptions } from 'ui/validators/stability/utils';
 import ValidatorsCounters from 'ui/validators/stability/ValidatorsCounters';
 import ValidatorsFilter from 'ui/validators/stability/ValidatorsFilter';
 import ValidatorsList from 'ui/validators/stability/ValidatorsList';
 import ValidatorsTable from 'ui/validators/stability/ValidatorsTable';
 
-const sortCollection = createListCollection({
-  items: VALIDATORS_STABILITY_SORT_OPTIONS,
-});
-
 const ValidatorsStability = () => {
+  const { t } = useTranslation();
+  const sortOptions = React.useMemo(() => getStabilitySortOptions(t), [ t ]);
+  const sortCollection = React.useMemo(() => createListCollection({ items: sortOptions }), [ sortOptions ]);
   const router = useRouter();
   // const [ searchTerm, setSearchTerm ] = React.useState(getQueryParamString(router.query.address_hash) || undefined);
   const [ statusFilter, setStatusFilter ] =
     React.useState(getQueryParamString(router.query.state_filter) as ValidatorsStabilityFilters['state_filter'] || undefined);
   const [ sort, setSort ] = React.useState<ValidatorsStabilitySortingValue>(
-    getSortValueFromQuery<ValidatorsStabilitySortingValue>(router.query, VALIDATORS_STABILITY_SORT_OPTIONS) ?? 'default',
+    getSortValueFromQuery<ValidatorsStabilitySortingValue>(router.query, sortOptions) ?? 'default',
   );
 
   // const debouncedSearchTerm = useDebounce(searchTerm || '', 300);
@@ -146,12 +147,12 @@ const ValidatorsStability = () => {
 
   return (
     <Box>
-      <PageTitle title="Validators" withTextAd/>
+      <PageTitle title={ t('networkTransfers.validators') } withTextAd/>
       <ValidatorsCounters/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no validators."
+        emptyText={ t('networkTransfers.no_validators') }
         hasActiveFilters={ Boolean(
           // searchTerm ||
           statusFilter,

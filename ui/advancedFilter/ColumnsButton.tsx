@@ -1,11 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from 'toolkit/chakra/button';
 import { Checkbox, CheckboxGroup } from 'toolkit/chakra/checkbox';
 import { PopoverBody, PopoverContent, PopoverRoot, PopoverTrigger } from 'toolkit/chakra/popover';
 import type { ColumnsIds } from 'ui/advancedFilter/constants';
-import { TABLE_COLUMNS } from 'ui/advancedFilter/constants';
+import { getTableColumns } from 'ui/advancedFilter/constants';
 import IconSvg from 'ui/shared/IconSvg';
 
 interface Props {
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const ColumnsButton = ({ columns, onChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const handleValueChange = React.useCallback((value: Array<string>) => {
     const newCols = value.reduce((acc, key) => {
       acc[key as ColumnsIds] = true;
@@ -31,7 +35,7 @@ const ColumnsButton = ({ columns, onChange }: Props) => {
           px={{ base: 1, lg: 3 }}
         >
           <IconSvg name="columns" boxSize={ 5 } color="inherit"/>
-          <chakra.span hideBelow="lg">Columns</chakra.span>
+          <chakra.span hideBelow="lg">{ tQuat('advancedFilterUi.columns') }</chakra.span>
         </Button>
       </PopoverTrigger>
       <PopoverContent>
@@ -43,13 +47,13 @@ const ColumnsButton = ({ columns, onChange }: Props) => {
             gridTemplateColumns="160px 160px"
             gap={ 3 }
           >
-            { TABLE_COLUMNS.map(col => (
+            { getTableColumns(tQuat).map(col => (
               <Checkbox
                 key={ col.id }
                 value={ col.id }
                 size="md"
               >
-                { col.id === 'or_and' ? 'And/Or' : col.name }
+                { col.id === 'or_and' ? tQuat('advancedFilterUi.and_or') : col.name }
               </Checkbox>
             )) }
           </CheckboxGroup>

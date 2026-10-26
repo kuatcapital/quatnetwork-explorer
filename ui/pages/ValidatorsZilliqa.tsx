@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { generateListStub } from 'stubs/utils';
@@ -13,6 +15,7 @@ import ValidatorsList from 'ui/validators/zilliqa/ValidatorsList';
 import ValidatorsTable from 'ui/validators/zilliqa/ValidatorsTable';
 
 const ValidatorsZilliqa = () => {
+  const { t } = useTranslation();
   const { isError, isPlaceholderData, data, pagination } = useQueryWithPages({
     resourceName: 'general:validators_zilliqa',
     options: {
@@ -44,11 +47,11 @@ const ValidatorsZilliqa = () => {
 
   return (
     <Box>
-      <PageTitle title="Validators" withTextAd/>
+      <PageTitle title={ t('networkTransfers.validators') } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no validators."
+        emptyText={ t('networkTransfers.no_validators') }
         actionBar={ actionBar }
       >
         { content }

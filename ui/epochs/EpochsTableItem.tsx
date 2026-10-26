@@ -1,8 +1,11 @@
+// Modified by Quat Capital, 2026-10-26: explicit locale presentation; API values unchanged. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
 
 import type { CeloEpochListItem } from 'types/api/epochs';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import EpochEntity from 'ui/shared/entities/epoch/EpochEntity';
@@ -16,6 +19,7 @@ interface Props {
 };
 
 const EpochsTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   return (
     <TableRow>
       <TableCell verticalAlign="middle">
@@ -39,7 +43,7 @@ const EpochsTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          { item.start_block_number } - { item.end_block_number || '' }
+          { formatNumber(item.start_block_number, locale) } - { item.end_block_number ? formatNumber(item.end_block_number, locale) : '' }
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>

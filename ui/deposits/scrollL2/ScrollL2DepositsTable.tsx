@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ScrollL2MessageItem } from 'types/api/scrollL2';
 
@@ -17,20 +19,20 @@ type Props = {
 };
 
 const ScrollL2DepositsTable = ({ items, top, isLoading }: Props) => {
+  const { t } = useTranslation();
   return (
     <AddressHighlightProvider>
       <TableRoot tableLayout="auto" minW="950px">
         <TableHeaderSticky top={ top }>
           <TableRow>
-            <TableColumnHeader>{ layerLabels.parent } block</TableColumnHeader>
-            <TableColumnHeader>Index</TableColumnHeader>
-            <TableColumnHeader>{ layerLabels.parent } txn hash</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.layer_block', { layer: layerLabels.parent }) }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.index') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.layer_tx_hash', { layer: layerLabels.parent }) }</TableColumnHeader>
             <TableColumnHeader>
-              Timestamp
-              <TimeFormatToggle/>
+              { t('networkTransfers.timestamp') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader>{ layerLabels.current } txn hash</TableColumnHeader>
-            <TableColumnHeader isNumeric>Value { config.chain.currency.symbol }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.layer_tx_hash', { layer: layerLabels.current }) }</TableColumnHeader>
+            <TableColumnHeader isNumeric>{ t('networkTransfers.value') }{ config.chain.currency.symbol }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

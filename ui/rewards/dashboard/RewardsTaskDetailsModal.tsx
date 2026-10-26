@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DialogBody, DialogContent, DialogRoot, DialogHeader } from 'toolkit/chakra/dialog';
 
@@ -11,6 +13,7 @@ type Props = {
 };
 
 const RewardsTaskDetailsModal = ({ isOpen, onClose, title, children }: Props) => {
+  const { t: tEco } = useTranslation();
   const handleOpenChange = React.useCallback(({ open }: { open: boolean }) => {
     if (!open) {
       onClose();
@@ -30,8 +33,7 @@ const RewardsTaskDetailsModal = ({ isOpen, onClose, title, children }: Props) =>
         <DialogBody>
           <Text>{ children }</Text>
           <Text textStyle="sm" color="text.secondary" mt={ 3 }>
-            Note: Merits are only earned on supported networks where the program is active.
-          </Text>
+            { tEco('rewardsUI.supported_networks') }</Text>
         </DialogBody>
       </DialogContent>
     </DialogRoot>

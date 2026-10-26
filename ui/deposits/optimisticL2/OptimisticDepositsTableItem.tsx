@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: explicit locale presentation; API values unchanged. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { OptimisticL2DepositsItem } from 'types/api/optimisticL2';
 
 import config from 'configs/app';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import AddressEntityL1 from 'ui/shared/entities/address/AddressEntityL1';
@@ -17,6 +20,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: OptimisticL2DepositsItem; isLoading?: boolean };
 
 const OptimisticDepositsTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'optimistic') {
     return null;
@@ -67,7 +71,7 @@ const OptimisticDepositsTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
         <Skeleton loading={ isLoading } color="text.secondary" display="inline-block">
-          <span>{ BigNumber(item.l2_transaction_gas_limit).toFormat() }</span>
+          <span>{ formatBigNumber(BigNumber(item.l2_transaction_gas_limit), locale) }</span>
         </Skeleton>
       </TableCell>
     </TableRow>

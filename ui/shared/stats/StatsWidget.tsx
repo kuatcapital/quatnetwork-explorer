@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: locale-aware widget periods and numeric differences. GPL-3.0.
 import { Box, Flex, Text, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Route } from 'nextjs-routes';
 import { route } from 'nextjs-routes';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Hint } from 'toolkit/components/Hint/Hint';
@@ -55,6 +59,15 @@ const StatsWidget = ({
   href,
   isFallback,
 }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
+  const periodLabel = (periodValue: NonNullable<Props['period']>) => {
+    switch (periodValue) {
+      case '1h': return t('editorShared.period_1h');
+      case '24h': return t('editorShared.period_24h');
+      case '30min': return t('editorShared.period_30min');
+    }
+  };
   return (
     <Container href={ !isLoading ? href : undefined } className={ href ? className : undefined }>
       <Flex
@@ -112,12 +125,12 @@ const StatsWidget = ({
             { diff && Number(diff) > 0 && (
               <>
                 <Text ml={ 2 } mr={ 1 } color="green.500">
-                  +{ diffFormatted || Number(diff).toLocaleString() }
+                  +{ diffFormatted || formatNumber(Number(diff), locale) }
                 </Text>
-                <Text color="text.secondary" textStyle="sm">({ diffPeriod })</Text>
+                <Text color="text.secondary" textStyle="sm">({ periodLabel(diffPeriod) })</Text>
               </>
             ) }
-            { period && <Text color="text.secondary" textStyle="xs" fontWeight={ 400 } ml={ 1 }>({ period })</Text> }
+            { period && <Text color="text.secondary" textStyle="xs" fontWeight={ 400 } ml={ 1 }>({ periodLabel(period) })</Text> }
           </Skeleton>
         </Box>
         { typeof hint === 'string' ? (

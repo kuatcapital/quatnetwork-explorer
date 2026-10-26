@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSendTransaction, useSwitchChain } from 'wagmi';
 
 import type { ArbitrumL2MessageClaimResponse, ArbitrumL2TxnWithdrawalsResponse } from 'types/api/arbitrumL2';
@@ -29,6 +31,7 @@ interface Props {
 }
 
 const ArbitrumL2TxnWithdrawalsClaimButton = ({ messageId, txHash, completionTxHash, isLoading: isDataLoading }: Props) => {
+  const { t } = useTranslation();
   const [ isPending, setIsPending ] = React.useState(false);
   const [ claimTxHash, setClaimTxHash ] = React.useState<string | undefined>(completionTxHash);
   const apiFetch = useApiFetch();
@@ -63,14 +66,15 @@ const ArbitrumL2TxnWithdrawalsClaimButton = ({ messageId, txHash, completionTxHa
       }
     } catch (error) {
       const apiError = getErrorObjPayload<{ message: string }>(error);
-      const message = capitalizeFirstLetter(apiError?.message || getErrorProp(error, 'shortMessage') || getErrorMessage(error) || 'Something went wrong');
+      const errorMessage = apiError?.message || getErrorProp(error, 'shortMessage') || getErrorMessage(error) || t('networkTransfers.unexpected_error');
+      const message = capitalizeFirstLetter(errorMessage);
       toaster.error({
-        title: 'Error',
+        title: t('networkTransfers.error'),
         description: message,
       });
       setIsPending(false);
     }
-  }, [ apiFetch, messageId, sendTransactionAsync, switchChainAsync ]);
+  }, [ apiFetch, messageId, sendTransactionAsync, switchChainAsync, t ]);
 
   const web3Wallet = useWallet({ source: 'Smart contracts', onConnect: sendClaimTx });
 
@@ -102,11 +106,11 @@ const ArbitrumL2TxnWithdrawalsClaimButton = ({ messageId, txHash, completionTxHa
 
   const handleError = React.useCallback((error: Error) => {
     toaster.error({
-      title: 'Error',
+      title: t('networkTransfers.error'),
       description: error.message,
     });
     setIsPending(false);
-  }, [ ]);
+  }, [ t ]);
 
   if (claimTxHash) {
     return (
@@ -128,10 +132,9 @@ const ArbitrumL2TxnWithdrawalsClaimButton = ({ messageId, txHash, completionTxHa
         variant="outline"
         onClick={ handleClaimClick }
         loading={ isLoading }
-        loadingText="Claim"
+        loadingText={ t('networkTransfers.claim') }
       >
-        Claim
-      </Button>
+        { t('networkTransfers.claim') }</Button>
     </Skeleton>
   );
 };

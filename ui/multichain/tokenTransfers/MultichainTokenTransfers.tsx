@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { TokenType } from 'types/api/token';
@@ -34,6 +36,8 @@ const TAB_LIST_PROPS = {
 };
 
 const MultichainTokenTransfers = () => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const router = useRouter();
   const tab = getQueryParamString(router.query.tab);
@@ -106,7 +110,7 @@ const MultichainTokenTransfers = () => {
     <>
       <PageTitle
         withTextAd
-        title="Token transfers"
+        title={ tQuat('common.token_transfers') }
       />
       <RoutedTabs
         tabs={ tabs }

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EssentialDappsChainConfig } from 'types/client/marketplace';
 import type { AllowanceType } from 'types/client/revoke';
@@ -23,22 +25,20 @@ export default function ApprovalsTable({
   isAddressMatch,
   hideApproval,
 }: Props) {
+  const { t: tEco } = useTranslation();
   return (
     <TableRoot>
       <TableHeaderSticky top={ 136 }>
         <TableRow>
-          <TableColumnHeader w="30%">Token</TableColumnHeader>
-          <TableColumnHeader w="15%">Approved spender</TableColumnHeader>
+          <TableColumnHeader w="30%">{ tEco('marketplaceUI.token') }</TableColumnHeader>
+          <TableColumnHeader w="15%">{ tEco('marketplaceUI.approved_spender') }</TableColumnHeader>
           <TableColumnHeader w="20%" isNumeric>
-            Approved amount
-          </TableColumnHeader>
+            { tEco('marketplaceUI.approved_amount') }</TableColumnHeader>
           <TableColumnHeader w="17%" isNumeric>
-            Value at risk
-          </TableColumnHeader>
+            { tEco('marketplaceUI.value_at_risk') }</TableColumnHeader>
           <TableColumnHeader w={ isAddressMatch ? '30px' : '50px' }/>
           <TableColumnHeader w="18%">
-            Last updated
-            <TimeFormatToggle/>
+            { tEco('marketplaceUI.last_updated') }<TimeFormatToggle/>
           </TableColumnHeader>
           { isAddressMatch && <TableColumnHeader w="95px" isNumeric/> }
         </TableRow>

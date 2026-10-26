@@ -1,10 +1,15 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, HStack } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatBigNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { CELO_EPOCH } from 'stubs/epoch';
 import { Tag } from 'toolkit/chakra/tag';
@@ -15,6 +20,8 @@ import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
 const EpochPageContent = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const isMobile = useIsMobile();
   const router = useRouter();
   const number = getQueryParamString(router.query.number);
@@ -36,13 +43,13 @@ const EpochPageContent = () => {
     switch (epochQuery.data?.type) {
       case 'L1':
         return (
-          <Tooltip content="Epoch finalized while Celo was still an L1 network">
+          <Tooltip content={ t('networkTransfers.l1_epoch_hint') }>
             <Tag loading={ isLoading }>{ epochQuery.data.type }</Tag>
           </Tooltip>
         );
       case 'L2':
         return (
-          <Tooltip content="Epoch finalized after Celo migrated to the OP‐stack, when it became an L2 rollup">
+          <Tooltip content={ t('networkTransfers.l2_epoch_hint') }>
             <Tag loading={ isLoading }>{ epochQuery.data.type }</Tag>
           </Tooltip>
         );
@@ -61,18 +68,15 @@ const EpochPageContent = () => {
 
     return (
       <HStack textStyle={{ base: 'heading.sm', lg: 'heading.md' }} flexWrap="wrap">
-        <Box color="text.secondary">Ranging from</Box>
-        <BlockEntity
-          number={ epochQuery.data.start_block_number }
-          variant="subheading"
-          { ...truncationProps }
+        <Trans
+          t={ t }
+          i18nKey={ epochQuery.data.end_block_number ? 'networkTransfers.epoch_range' : 'networkTransfers.epoch_from' }
+          components={{
+            muted: <Box color="text.secondary"/>,
+            start: <BlockEntity number={ epochQuery.data.start_block_number } variant="subheading" { ...truncationProps }/>,
+            end: <BlockEntity number={ epochQuery.data.end_block_number || 0 } variant="subheading" { ...truncationProps }/>,
+          }}
         />
-        { epochQuery.data.end_block_number && (
-          <>
-            <Box color="text.secondary">to</Box>
-            <BlockEntity number={ epochQuery.data.end_block_number } variant="subheading" { ...truncationProps }/>
-          </>
-        ) }
       </HStack>
     );
   })();
@@ -81,7 +85,7 @@ const EpochPageContent = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title={ `Epoch #${ number }` }
+        title={ t('networkTransfers.epoch_title', { number: /^\d+$/.test(number) ? formatBigNumber(BigNumber(number), locale) : number }) }
         contentAfter={ titleContentAfter }
         secondRow={ titleSecondRow }
         isLoading={ isLoading }

@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { DEPOSIT } from 'stubs/deposits';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -18,6 +22,8 @@ import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 const feature = config.features.beaconChain;
 
 const BeaconChainDeposits = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:deposits',
     options: {
@@ -68,7 +74,7 @@ const BeaconChainDeposits = () => {
       <Skeleton loading={ countersQuery.isPlaceholderData || isPlaceholderData } display="flex" flexWrap="wrap">
         { countersQuery.data && (
           <Text lineHeight={{ base: '24px', lg: '32px' }}>
-            { BigNumber(countersQuery.data.deposits_count).toFormat() } deposits processed
+            { t('networkTransfers.deposits_processed', { value: formatBigNumber(BigNumber(countersQuery.data.deposits_count), locale) }) }
           </Text>
         ) }
       </Skeleton>
@@ -80,13 +86,13 @@ const BeaconChainDeposits = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } deposits` : 'Deposits' }
+        title={ config.meta.seo.enhancedDataEnabled ? t('networkTransfers.chain_deposits', { chain: config.chain.name }) : t('networkTransfers.deposits') }
         withTextAd
       />
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no deposits."
+        emptyText={ t('networkTransfers.no_deposits') }
         actionBar={ actionBar }
       >
         { content }

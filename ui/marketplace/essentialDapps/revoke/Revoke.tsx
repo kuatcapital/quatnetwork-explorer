@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import { getEnsAddress } from '@wagmi/core';
 import { useRouter } from 'next/router';
 import React, { useMemo, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { isAddress } from 'viem';
 import { mainnet } from 'viem/chains';
 import { normalize } from 'viem/ens';
@@ -37,6 +39,7 @@ const defaultChainId = (
 ) as string;
 
 const Revoke = () => {
+  const { t: tEco } = useTranslation();
   const router = useRouter();
   const { updateQuery } = useQueryParams();
   const chainIdFromQuery: string | undefined = getQueryParamString(router.query.chainId);
@@ -118,7 +121,7 @@ const Revoke = () => {
       />
     ) : (
       <EmptyState
-        description={ `The input "${ searchAddress }" is not correct. Enter a correct 0x address to search` }
+        description={ tEco('marketplaceUI.invalid_search', { input: searchAddress }) }
       />
     );
   }
@@ -146,8 +149,7 @@ const Revoke = () => {
             }}
           >
             <Text textStyle="sm" fontWeight="500" color="text.secondary">
-              Examples
-            </Text>
+              { tEco('marketplaceUI.examples') }</Text>
             { [
               '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
               '0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7',
@@ -174,8 +176,8 @@ const Revoke = () => {
           <Flex gap={ 3 } w={{ base: 'full', md: 'auto' }}>
             { connectedAddress ? (
               <Flex gap={ 2 } alignItems="center" flexShrink={ 0 }>
-                <Text textStyle="sm" fontWeight="500" color="text.secondary">My wallet</Text>
-                <Tooltip content="Click to see your approvals" disableOnMobile>
+                <Text textStyle="sm" fontWeight="500" color="text.secondary">{ tEco('accountUI.my_wallet') }</Text>
+                <Tooltip content={ tEco('marketplaceUI.see_approvals') } disableOnMobile>
                   <Button
                     variant="plain"
                     size="sm"
@@ -200,11 +202,10 @@ const Revoke = () => {
                 variant="outline"
                 onClick={ web3Wallet.connect }
                 loading={ web3Wallet.isOpen }
-                loadingText="Connect wallet"
+                loadingText={ tEco('accountUI.connect_wallet') }
                 flexShrink={ 0 }
               >
-                Connect wallet
-              </Button>
+                { tEco('accountUI.connect_wallet') }</Button>
             ) }
             <ChainSelect
               value={ selectedChainId }

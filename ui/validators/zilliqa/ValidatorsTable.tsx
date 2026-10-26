@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ValidatorsZilliqaItem } from 'types/api/validators';
 
@@ -14,14 +16,15 @@ interface Props {
 }
 
 const ValidatorsTable = ({ data, isLoading, top }: Props) => {
+  const { t } = useTranslation();
   return (
     <TableRoot>
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader width="50%">BLS public key</TableColumnHeader>
-          <TableColumnHeader width="15%">Index</TableColumnHeader>
+          <TableColumnHeader width="50%">{ t('networkTransfers.bls_key') }</TableColumnHeader>
+          <TableColumnHeader width="15%">{ t('networkTransfers.index') }</TableColumnHeader>
           <TableColumnHeader width="35%" isNumeric>
-            Staked { config.chain.currency.symbol }
+            { t('networkTransfers.staked') }{ config.chain.currency.symbol }
           </TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

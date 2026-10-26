@@ -1,4 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserOpsItem } from 'types/api/userOps';
 
@@ -19,6 +22,8 @@ type Props = {
 };
 
 const UserOpsTable = ({ items, isLoading, top, showTx, showSender }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const multichainContext = useMultichainContext();
   const chainData = multichainContext?.chain;
   const chainConfig = (multichainContext?.chain.app_config || config);
@@ -29,17 +34,15 @@ const UserOpsTable = ({ items, isLoading, top, showTx, showSender }: Props) => {
         <TableHeaderSticky top={ top }>
           <TableRow>
             { chainData && <TableColumnHeader width="38px"></TableColumnHeader> }
-            <TableColumnHeader w="60%">User op hash</TableColumnHeader>
-            <TableColumnHeader w="180px">
-              Timestamp
-              <TimeFormatToggle/>
+            <TableColumnHeader w="60%">{ tQuat('operationsUi.short_hash') }</TableColumnHeader>
+            <TableColumnHeader w="180px">{ tQuat('common.timestamp') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader w="140px">Status</TableColumnHeader>
-            { showSender && <TableColumnHeader w="160px">Sender</TableColumnHeader> }
-            { showTx && <TableColumnHeader w="160px">Tx hash</TableColumnHeader> }
-            <TableColumnHeader w="40%">Block</TableColumnHeader>
+            <TableColumnHeader w="140px">{ tQuat('common.status') }</TableColumnHeader>
+            { showSender && <TableColumnHeader w="160px">{ tQuat('transactions.sender') }</TableColumnHeader> }
+            { showTx && <TableColumnHeader w="160px">{ tQuat('operationsUi.tx_hash') }</TableColumnHeader> }
+            <TableColumnHeader w="40%">{ tQuat('common.block') }</TableColumnHeader>
             { !chainConfig.UI.views.tx.hiddenFields?.tx_fee &&
-          <TableColumnHeader w="120px" isNumeric>{ `Fee ${ chainConfig.chain.currency.symbol }` }</TableColumnHeader> }
+          <TableColumnHeader w="120px" isNumeric>{ tQuat('operationsUi.fee_currency', { currency: chainConfig.chain.currency.symbol }) }</TableColumnHeader> }
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

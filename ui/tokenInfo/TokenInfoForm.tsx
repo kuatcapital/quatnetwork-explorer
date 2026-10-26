@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Grid, GridItem, Text } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { Fields } from './types';
 import type { TokenInfoApplication } from 'types/api/account';
@@ -38,6 +40,7 @@ interface Props {
 }
 
 const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => {
+  const { t: tEco } = useTranslation();
 
   const containerRef = React.useRef<HTMLFormElement>(null);
   const openEventSent = React.useRef<boolean>(false);
@@ -86,11 +89,11 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
       }
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: (error as ResourceError<{ message: string }>)?.payload?.message || 'Something went wrong. Try again later.',
+        title: tEco('accountUI.error'),
+        description: (error as ResourceError<{ message: string }>)?.payload?.message || tEco('marketplaceUI.retry_error'),
       });
     }
-  }, [ apiFetch, application?.id, application?.status, onSubmit ]);
+  }, [ apiFetch, application?.id, application?.status, onSubmit, tEco ]);
 
   useUpdateEffect(() => {
     if (formState.submitCount > 0 && !formState.isValid) {
@@ -124,17 +127,17 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
         <TokenInfoFormStatusText application={ application }/>
         <Grid mt={ 8 } gridTemplateColumns={{ base: '1fr', lg: '1fr 1fr' }} columnGap={ 5 } rowGap={ 5 }>
 
-          <FormFieldText<Fields> name="token_name" required placeholder="Token name" { ...fieldProps } readOnly/>
-          <FormFieldAddress<Fields> name="address" required placeholder="Token contract address" { ...fieldProps } readOnly/>
-          <FormFieldText<Fields> name="requester_name" required placeholder="Requester name" { ...fieldProps }/>
-          <FormFieldEmail<Fields> name="requester_email" required placeholder="Requester email" { ...fieldProps }/>
+          <FormFieldText<Fields> name="token_name" required placeholder={ tEco('tokenInfoUI.token_name') } { ...fieldProps } readOnly/>
+          <FormFieldAddress<Fields> name="address" required placeholder={ tEco('tokenInfoUI.contract_address') } { ...fieldProps } readOnly/>
+          <FormFieldText<Fields> name="requester_name" required placeholder={ tEco('tokenInfoUI.requester_name') } { ...fieldProps }/>
+          <FormFieldEmail<Fields> name="requester_email" required placeholder={ tEco('tokenInfoUI.requester_email') } { ...fieldProps }/>
 
-          <TokenInfoFormSectionHeader>Project info</TokenInfoFormSectionHeader>
-          <FormFieldText<Fields> name="project_name" placeholder="Project name" { ...fieldProps } rules={ nonWhitespaceFieldRules }/>
+          <TokenInfoFormSectionHeader>{ tEco('tokenInfoUI.project_info') }</TokenInfoFormSectionHeader>
+          <FormFieldText<Fields> name="project_name" placeholder={ tEco('accountUI.project_name') } { ...fieldProps } rules={ nonWhitespaceFieldRules }/>
           <TokenInfoFieldProjectSector { ...fieldProps } config={ configQuery.data.projectSectors }/>
-          <FormFieldEmail<Fields> name="project_email" required placeholder="Official project email address" { ...fieldProps }/>
-          <FormFieldUrl<Fields> name="project_website" required placeholder="Official project website" { ...fieldProps }/>
-          <FormFieldUrl<Fields> name="docs" placeholder="Docs" { ...fieldProps }/>
+          <FormFieldEmail<Fields> name="project_email" required placeholder={ tEco('tokenInfoUI.official_email') } { ...fieldProps }/>
+          <FormFieldUrl<Fields> name="project_website" required placeholder={ tEco('tokenInfoUI.official_website') } { ...fieldProps }/>
+          <FormFieldUrl<Fields> name="docs" placeholder={ tEco('tokenInfoUI.docs') } { ...fieldProps }/>
           <TokenInfoFieldSupport { ...fieldProps }/>
           <GridItem colSpan={{ base: 1, lg: 2 }}>
             <TokenInfoFieldIconUrl { ...fieldProps }/>
@@ -143,19 +146,17 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
             <FormFieldText<Fields>
               name="project_description"
               required
-              placeholder="Project description"
+              placeholder={ tEco('tokenInfoUI.description') }
               maxH="160px"
               rules={{ maxLength: 300, ...nonWhitespaceFieldRules }}
               asComponent="Textarea"
               { ...fieldProps }
             />
             <Text color="text.secondary" fontSize="sm" mt={ 1 }>
-              Introduce or summarize the project’s operation/goals in a maximum of 300 characters.
-              The description should be written in a neutral point of view and must exclude unsubstantiated claims unless proven otherwise.
-            </Text>
+              { tEco('tokenInfoUI.description_hint') }</Text>
           </GridItem>
 
-          <TokenInfoFormSectionHeader>Links</TokenInfoFormSectionHeader>
+          <TokenInfoFormSectionHeader>{ tEco('marketplaceUI.links') }</TokenInfoFormSectionHeader>
           <TokenInfoFieldSocialLink { ...fieldProps } name="github"/>
           <TokenInfoFieldSocialLink { ...fieldProps } name="twitter"/>
           <TokenInfoFieldSocialLink { ...fieldProps } name="telegram"/>
@@ -167,17 +168,17 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
           <TokenInfoFieldSocialLink { ...fieldProps } name="slack"/>
           <TokenInfoFieldSocialLink { ...fieldProps } name="reddit"/>
 
-          <TokenInfoFormSectionHeader>Price data</TokenInfoFormSectionHeader>
-          <FormFieldUrl<Fields> name="ticker_coin_market_cap" placeholder="CoinMarketCap URL" { ...fieldProps }/>
-          <FormFieldUrl<Fields> name="ticker_coin_gecko" placeholder="CoinGecko URL" { ...fieldProps }/>
+          <TokenInfoFormSectionHeader>{ tEco('tokenInfoUI.price_data') }</TokenInfoFormSectionHeader>
+          <FormFieldUrl<Fields> name="ticker_coin_market_cap" placeholder={ tEco('tokenInfoUI.coinmarketcap_url') } { ...fieldProps }/>
+          <FormFieldUrl<Fields> name="ticker_coin_gecko" placeholder={ tEco('tokenInfoUI.coingecko_url') } { ...fieldProps }/>
           <GridItem colSpan={{ base: 1, lg: 2 }}>
-            <FormFieldUrl<Fields> name="ticker_defi_llama" placeholder="DefiLlama URL" { ...fieldProps }/>
+            <FormFieldUrl<Fields> name="ticker_defi_llama" placeholder={ tEco('tokenInfoUI.defillama_url') } { ...fieldProps }/>
           </GridItem>
 
           <GridItem colSpan={{ base: 1, lg: 2 }}>
             <FormFieldText<Fields>
               name="comment"
-              placeholder="Comment"
+              placeholder={ tEco('tokenInfoUI.comment') }
               maxH="160px"
               rules={{ maxLength: 300 }}
               asComponent="Textarea"
@@ -189,11 +190,10 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
           type="submit"
           mt={ 8 }
           loading={ formState.isSubmitting }
-          loadingText="Send request"
+          loadingText={ tEco('accountUI.send_request') }
           disabled={ application?.status === 'IN_PROCESS' }
         >
-          Send request
-        </Button>
+          { tEco('accountUI.send_request') }</Button>
       </form>
     </FormProvider>
   );

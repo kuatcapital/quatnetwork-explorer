@@ -1,11 +1,16 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { chakra, Text } from '@chakra-ui/react';
+import type { TFunction } from 'i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { getFeaturePayload } from 'configs/app/features/types';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import usePreventFocusAfterModalClosing from 'lib/hooks/usePreventFocusAfterModalClosing';
+import { useLocale } from 'lib/i18n/provider';
 import type { ButtonProps } from 'toolkit/chakra/button';
 import { Button } from 'toolkit/chakra/button';
 import { PopoverTrigger } from 'toolkit/chakra/popover';
@@ -19,23 +24,27 @@ interface Props extends ButtonProps {
   canRate: boolean;
 };
 
-const getTooltipText = (canRate: boolean) => {
+const getTooltipText = (tEco: TFunction, canRate: boolean) => {
   if (!canRate) {
-    return <>Please log in to Blockscout to rate this { (getFeaturePayload(config.features.marketplace)?.titles.entity_name ?? '').toLowerCase() }.</>;
+    const entity = getFeaturePayload(config.features.marketplace)?.titles.entity_name || 'Dapp';
+    return /^(?:dapp|app)$/i.test(entity) ?
+      tEco('marketplaceUI.rating_login_default') : tEco('marketplaceUI.rating_login_custom', { entity });
   }
-  return <>Ratings come from verified users.<br/>Click here to rate!</>;
+  return <>{ tEco('marketplaceUI.rating_verified') }<br/>{ tEco('marketplaceUI.click_rate') }</>;
 };
 
 const TriggerButton = (
   { rating, count, fullView, canRate, onClick, ...rest }: Props,
   ref: React.ForwardedRef<HTMLButtonElement>,
 ) => {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const onFocusCapture = usePreventFocusAfterModalClosing();
   const isMobile = useIsMobile();
 
   return (
     <Tooltip
-      content={ getTooltipText(canRate) }
+      content={ getTooltipText(tEco, canRate) }
       closeOnClick={ Boolean(canRate) || isMobile }
       disableOnMobile={ canRate }
     >
@@ -64,11 +73,11 @@ const TriggerButton = (
             ) }
             { (rating && !fullView) ? (
               <chakra.span color="text.primary" transition="inherit" display="inline-flex">
-                { rating }
-                <Text color="text.secondary" ml={ 1 }>({ count })</Text>
+                { formatNumber(rating, locale) }
+                <Text color="text.secondary" ml={ 1 }>({ count === undefined ? '' : formatNumber(count, locale) })</Text>
               </chakra.span>
             ) : (
-              'Rate it!'
+              tEco('marketplaceUI.rate_it')
             ) }
           </Button>
         </PopoverTrigger>

@@ -1,8 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: complete localized NFT phrases and exact quantities. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { TokenInfo, TokenInstance } from 'types/api/token';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import NftEntity from 'ui/shared/entities/nft/NftEntity';
 import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 
@@ -14,6 +19,8 @@ interface Props {
 }
 
 const NftTokenTransferSnippet = ({ value, token, tokenId, instance }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const num = value === '1' ? '' : value;
 
   const tokenIdContent = (() => {
@@ -22,7 +29,7 @@ const NftTokenTransferSnippet = ({ value, token, tokenId, instance }: Props) => 
       if (token.type === 'ERC-404') {
         return null;
       }
-      return <chakra.span color="text.secondary"> N/A </chakra.span>;
+      return <chakra.span color="text.secondary">{ t('editorShared.not_available') }</chakra.span>;
     }
 
     return (
@@ -40,25 +47,17 @@ const NftTokenTransferSnippet = ({ value, token, tokenId, instance }: Props) => 
   })();
 
   return (
-    <>
-      { num ? (
-        <>
-          <chakra.span color="text.secondary">for</chakra.span>
-          <span>{ num }</span>
-          <chakra.span color="text.secondary">token ID</chakra.span>
-        </>
-      ) : (
-        <chakra.span color="text.secondary">for token ID</chakra.span>
-      ) }
-      { tokenIdContent }
-      <chakra.span color="text.secondary">of</chakra.span>
-      <TokenEntity
-        token={ token }
-        noCopy
-        w="auto"
-        flexGrow={ 1 }
-      />
-    </>
+    <Trans
+      t={ t }
+      i18nKey={ num ? 'editorShared.nft_many_for' : 'editorShared.nft_for' }
+      values={{ value: num ? formatBigNumber(BigNumber(num), locale) : '' }}
+      components={{
+        'for': <chakra.span color="text.secondary"/>,
+        of: <chakra.span color="text.secondary"/>,
+        id: tokenIdContent || <span/>,
+        token: <TokenEntity token={ token } noCopy w="auto" flexGrow={ 1 }/>,
+      }}
+    />
   );
 };
 

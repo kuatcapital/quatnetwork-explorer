@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import type { MouseEvent } from 'react';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -31,6 +33,7 @@ const FeaturedApp = ({
   app, isFavorite, isLoading, onAppClick,
   onInfoClick, onFavoriteClick,
 }: FeaturedAppProps) => {
+  const { t: tEco } = useTranslation();
   const isMobile = useIsMobile();
 
   const { id, url, external, title, logo, logoDarkMode, shortDescription, categories, internalWallet } = app;
@@ -79,7 +82,7 @@ const FeaturedApp = ({
         >
           <Image
             src={ isLoading ? undefined : logoUrl }
-            alt={ `${ title } app icon` }
+            alt={ tEco('marketplaceUI.app_icon', { app: title }) }
             borderRadius="md"
           />
         </Skeleton>
@@ -115,14 +118,13 @@ const FeaturedApp = ({
                 href="#"
                 onClick={ handleInfoClick }
               >
-                More info
-              </Link>
+                { tEco('marketplaceUI.more_info') }</Link>
             ) }
 
             { !isLoading && (
               <IconButton
-                aria-label="Mark as favorite"
-                title="Mark as favorite"
+                aria-label={ tEco('marketplaceUI.favorite') }
+                title={ tEco('marketplaceUI.favorite') }
                 variant="icon_background"
                 size="md"
                 onClick={ handleFavoriteClick }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: runtime marketplace labels. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Fields } from '../types';
 
@@ -7,7 +9,6 @@ import type { FieldProps } from 'toolkit/chakra/field';
 import { FormFieldUrl } from 'toolkit/components/forms/fields/FormFieldUrl';
 import { FormFieldImagePreview } from 'toolkit/components/forms/fields/image/FormFieldImagePreview';
 import { useImageField } from 'toolkit/components/forms/fields/image/useImageField';
-import { times } from 'toolkit/utils/htmlEntities';
 import TokenLogoPlaceholder from 'ui/shared/TokenLogoPlaceholder';
 
 import TokenInfoIconPreview from '../TokenInfoIconPreview';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const TokenInfoFieldIconUrl = ({ readOnly, size }: Props) => {
+  const { t: tEco } = useTranslation();
 
   const imageField = useImageField({ name: 'icon_url', isRequired: true });
 
@@ -25,7 +27,7 @@ const TokenInfoFieldIconUrl = ({ readOnly, size }: Props) => {
     <Flex columnGap={ 5 }>
       <FormFieldUrl<Fields>
         name="icon_url"
-        placeholder={ `Link to icon URL, link to download a SVG or 48${ times }48 PNG icon logo` }
+        placeholder={ tEco('tokenInfoUI.icon_hint') }
         readOnly={ readOnly }
         size={ size }
         { ...imageField.input }

@@ -1,5 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: translated chart tooltip headings. GPL-3.0.
 import * as d3 from 'd3';
+import type { TFunction } from 'i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Resolution } from '../types';
 import type { TimeChartData } from '../types';
@@ -37,6 +40,7 @@ export const ChartTooltip = React.memo(({
   resolution,
   ...props
 }: ChartTooltipProps) => {
+  const { t } = useTranslation();
   const ref = React.useRef<SVGGElement>(null);
   const trackerId = React.useRef<number>(undefined);
   const isVisible = React.useRef(false);
@@ -175,22 +179,22 @@ export const ChartTooltip = React.memo(({
       <ChartTooltipContent>
         <ChartTooltipBackdrop/>
         <ChartTooltipTitle resolution={ resolution }/>
-        <ChartTooltipRow label={ getDateLabel(resolution) } lineNum={ 1 }/>
+        <ChartTooltipRow label={ getDateLabel(t, resolution) } lineNum={ 1 }/>
         { data.map(({ name }, index) => <ChartTooltipRow key={ name } label={ name } lineNum={ index + 1 }/>) }
       </ChartTooltipContent>
     </g>
   );
 });
 
-function getDateLabel(resolution?: Resolution): string {
+function getDateLabel(t: TFunction, resolution?: Resolution): string {
   switch (resolution) {
     case Resolution.WEEK:
-      return 'Dates';
+      return t('charts.dates');
     case Resolution.MONTH:
-      return 'Month';
+      return t('charts.month');
     case Resolution.YEAR:
-      return 'Year';
+      return t('charts.year');
     default:
-      return 'Date';
+      return t('charts.date');
   }
 }

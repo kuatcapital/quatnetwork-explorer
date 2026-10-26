@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Text, Box, Flex, Separator } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import type { ChangeEvent } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useRewardsContext } from 'lib/contexts/rewards';
 import * as cookies from 'lib/cookies';
@@ -14,7 +16,6 @@ import { Input } from 'toolkit/chakra/input';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Switch } from 'toolkit/chakra/switch';
-import { apos } from 'toolkit/utils/htmlEntities';
 import useProfileQuery from 'ui/snippets/auth/useProfileQuery';
 
 type Props = {
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const LoginStepContent = ({ goNext, closeModal, openAuthModal }: Props) => {
+  const { t: tEco } = useTranslation();
   const router = useRouter();
   const { connect, isConnected, address } = useWallet({ source: 'Merits' });
   const savedRefCode = cookies.get(cookies.NAMES.REWARDS_REFERRAL_CODE);
@@ -100,54 +102,51 @@ const LoginStepContent = ({ goNext, closeModal, openAuthModal }: Props) => {
 
   const buttonText = React.useMemo(() => {
     if (canTrySharedLogin) {
-      return 'Continue with wallet';
+      return tEco('accountUI.continue_wallet');
     }
 
     if (!isConnected) {
-      return 'Connect wallet';
+      return tEco('accountUI.connect_wallet');
     }
     if (isLoggedIntoAccountWithWallet) {
-      return isSignUp ? 'Get started' : 'Continue';
+      return isSignUp ? tEco('marketplaceUI.get_started') : tEco('rewardsUI.continue');
     }
-    return profileQuery.data?.email ? 'Add wallet to account' : 'Log in to account';
-  }, [ canTrySharedLogin, isConnected, isLoggedIntoAccountWithWallet, profileQuery.data?.email, isSignUp ]);
+    return profileQuery.data?.email ? tEco('rewardsUI.add_wallet_account') : tEco('rewardsUI.login_account');
+  }, [ canTrySharedLogin, isConnected, isLoggedIntoAccountWithWallet, profileQuery.data?.email, isSignUp, tEco ]);
 
   return (
     <>
       <Image
         src="/static/merits/merits_program.png"
-        alt="Merits program"
+        alt={ tEco('rewardsUI.merits_program') }
         mb={ 3 }
         fallback={ <Skeleton loading w="full" h="120px"/> }
       />
       <Box mb={ 6 }>
-        Merits are awarded for a variety of different Blockscout activities. Connect a wallet to get started.
-        <Link external href="https://docs.blockscout.com/using-blockscout/merits" ml={ 1 } fontWeight="500">
-          More about Blockscout Merits
-        </Link>
+        { tEco('rewardsUI.merits_description') }<Link external href="https://docs.blockscout.com/using-blockscout/merits" ml={ 1 } fontWeight="500">
+          { tEco('rewardsUI.about_merits') }</Link>
       </Box>
       { isSignUp && isLoggedIntoAccountWithWallet && (
         <Box mb={ 6 }>
           <Separator mb={ 6 }/>
           <Flex w="full" alignItems="center" justifyContent="space-between">
-            I have a referral code
-            <Switch
+            { tEco('rewardsUI.have_referral_code') }<Switch
               size="md"
               checked={ isRefCodeUsed }
               onCheckedChange={ handleToggleChange }
-              aria-label="Referral code switch"
+              aria-label={ tEco('rewardsUI.referral_code_switch') }
             />
           </Flex>
           { isRefCodeUsed && (
             <Field
-              label="Code"
+              label={ tEco('rewardsUI.code') }
               floating
               id="referral-code"
               size="lg"
               mt={ 3 }
               invalid={ refCodeError }
-              helperText="The code should be in format XXXXXX"
-              errorText={ refCodeError ? 'Incorrect code or format (6 or 12 characters)' : undefined }
+              helperText={ tEco('rewardsUI.code_format') }
+              errorText={ refCodeError ? tEco('rewardsUI.incorrect_code') : undefined }
             >
               <Input
                 value={ refCode }
@@ -159,7 +158,7 @@ const LoginStepContent = ({ goNext, closeModal, openAuthModal }: Props) => {
       ) }
       { isAddressMismatch && (
         <Alert status="warning" mb={ 4 }>
-          Your wallet address doesn{ apos }t match the one in your Blockscout account. Please connect the correct wallet.
+          { tEco('rewardsUI.wallet_mismatch') }
         </Alert>
       ) }
       <Button
@@ -169,14 +168,13 @@ const LoginStepContent = ({ goNext, closeModal, openAuthModal }: Props) => {
         mb={ 4 }
         onClick={ handleButtonClick }
         loading={ isLoading || profileQuery.isLoading || checkUserQuery.isFetching }
-        loadingText={ isLoading ? 'Sign message in your wallet' : undefined }
+        loadingText={ isLoading ? tEco('rewardsUI.sign_wallet_message') : undefined }
         disabled={ isAddressMismatch || refCodeError }
       >
         { buttonText }
       </Button>
       <Text textStyle="sm" color="text.secondary" textAlign="center">
-        Already registered for Blockscout Merits on another network or chain? Connect the same wallet here.
-      </Text>
+        { tEco('rewardsUI.same_wallet') }</Text>
     </>
   );
 };

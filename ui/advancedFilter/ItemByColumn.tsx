@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: reactive advanced-filter labels. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterResponseItem } from 'types/api/advancedFilter';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -28,11 +30,12 @@ type Props = {
 };
 
 const ItemByColumn = ({ item, column, isLoading, chainConfig }: Props) => {
+  const { t } = useTranslation();
   switch (column) {
     case 'tx_hash':
       return <TxEntity truncation="constant" hash={ item.hash } isLoading={ isLoading } noIcon fontWeight={ 700 }/>;
     case 'type': {
-      const type = getAdvancedFilterTypes(chainConfig).find(t => t.id === item.type);
+      const type = getAdvancedFilterTypes(chainConfig, false, t).find(type => type.id === item.type);
       if (!type) {
         return null;
       }

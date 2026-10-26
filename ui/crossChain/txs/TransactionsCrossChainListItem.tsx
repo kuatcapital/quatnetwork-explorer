@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import type { JsxStyleProps } from '@chakra-ui/react';
 import { chakra, Grid, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainMessage } from '@blockscout/interchain-indexer-types';
 
@@ -29,6 +31,8 @@ interface Props extends JsxStyleProps {
 }
 
 const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAddress, ...rest }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const timestamp = data.send_timestamp || data.receive_timestamp;
   const firstTransfer = data.transfers.length > 0 ? data.transfers[0] : null;
   const txHashWithTransfers = (() => {
@@ -67,9 +71,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
         </Skeleton>
       ) }
       <Grid templateColumns="120px minmax(0, 1fr)" columnGap={ 2 } rowGap={ rowGap }>
-        <Skeleton loading={ isLoading }>
-          Source tx
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('transactions.source_tx') }</Skeleton>
         { data.source_transaction_hash ? (
           <TxEntityInterchain
             chain={ data.source_chain }
@@ -77,9 +79,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             isLoading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Destination tx
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('transactions.destination_tx') }</Skeleton>
         { data.destination_transaction_hash ? (
           <TxEntityInterchain
             chain={ data.destination_chain }
@@ -112,9 +112,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
         ) : (
           <Skeleton loading={ isLoading } color="text.secondary">{ data.transfers.length }</Skeleton>
         ) }
-        <Skeleton loading={ isLoading }>
-          Sender
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('transactions.sender') }</Skeleton>
         { firstTransfer?.sender ? (
           <AddressEntityInterchain
             chain={ data.source_chain }

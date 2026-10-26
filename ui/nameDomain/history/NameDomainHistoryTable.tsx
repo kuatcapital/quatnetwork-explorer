@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 
@@ -18,11 +20,13 @@ interface Props {
 }
 
 const NameDomainHistoryTable = ({ history, domain, isLoading, sort, onSortToggle }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot>
       <TableHeaderSticky top={ 0 }>
         <TableRow>
-          <TableColumnHeader width="25%">Txn hash</TableColumnHeader>
+          <TableColumnHeader width="25%">{ tQuat('common.txn_hash') }</TableColumnHeader>
           <TableColumnHeaderSortable
             width="25%"
             pl={ 9 }
@@ -30,11 +34,9 @@ const NameDomainHistoryTable = ({ history, domain, isLoading, sort, onSortToggle
             sortValue={ sort }
             onSortToggle={ onSortToggle }
             contentAfter={ <TimeFormatToggle/> }
-          >
-            Timestamp
-          </TableColumnHeaderSortable>
+          >{ tQuat('common.timestamp') }</TableColumnHeaderSortable>
           <TableColumnHeader width="25%">From</TableColumnHeader>
-          <TableColumnHeader width="25%">Method</TableColumnHeader>
+          <TableColumnHeader width="25%">{ tQuat('common.method') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

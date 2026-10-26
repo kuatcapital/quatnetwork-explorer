@@ -1,10 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: translated import hints with tracked decoration ids. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
-export default function addFileImportDecorations(model: monaco.editor.ITextModel) {
+export default function addFileImportDecorations(model: monaco.editor.ITextModel, t: TFunction): Array<string> {
   const options: monaco.editor.IModelDecorationOptions = {
     inlineClassName: 'import-link',
     hoverMessage: {
-      value: 'Cmd/Win + click to open file',
+      value: t('editorShared.import_hover'), isTrusted: false, supportHtml: false,
     },
   };
 
@@ -31,5 +33,5 @@ export default function addFileImportDecorations(model: monaco.editor.ITextModel
   // TODO: add support for "import * as" - https://docs.soliditylang.org/en/latest/grammar.html#a4.SolidityParser.importDirective
   // but we need a live example first to test it
 
-  model.deltaDecorations([], regularImportDecorations.concat(namedImportDecorations));
+  return model.deltaDecorations([], regularImportDecorations.concat(namedImportDecorations));
 }

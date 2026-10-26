@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localized user-operation details and values. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserOp } from 'types/api/userOps';
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const UserOpDecodedCallData = ({ data }: Props) => {
+  const { t: tQuat } = useTranslation();
   const isMobile = useIsMobile();
   const [ callData, setCallData ] = React.useState(data.decoded_execute_call_data || data.decoded_call_data);
 
@@ -34,7 +37,7 @@ const UserOpDecodedCallData = ({ data }: Props) => {
     />
   ) : null;
 
-  const labelText = data.call_data && !data.execute_call_data ? 'Decoded external call data' : 'Decoded call data';
+  const labelText = data.call_data && !data.execute_call_data ? tQuat('operationsUi.decoded_external') : tQuat('operationsUi.decoded_data');
 
   return (
     <>

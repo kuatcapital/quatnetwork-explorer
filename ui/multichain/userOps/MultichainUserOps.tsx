@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import multichainConfig from 'configs/multichain';
 import { MultichainProvider } from 'lib/contexts/multichain';
@@ -15,6 +17,7 @@ import UserOpsListItem from 'ui/userOps/UserOpsListItem';
 import UserOpsTable from 'ui/userOps/UserOpsTable';
 
 const MultichainUserOps = () => {
+  const { t: tQuat } = useTranslation();
 
   const chains = React.useMemo(() => (multichainConfig()?.chains || []).filter(chain => chain.app_config.features.userOps.isEnabled), []);
   const chainIds = React.useMemo(() => chains.map(chain => chain.id).filter(Boolean), [ chains ]);
@@ -73,7 +76,7 @@ const MultichainUserOps = () => {
   return (
     <>
       <PageTitle
-        title="User operations"
+        title={ tQuat('navigation.user_operations') }
         withTextAd
       />
       <DataListDisplay

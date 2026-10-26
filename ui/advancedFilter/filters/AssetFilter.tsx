@@ -1,6 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text, Spinner, createListCollection } from '@chakra-ui/react';
 import { isEqual } from 'es-toolkit';
+import type { TFunction } from 'i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterParams } from 'types/api/advancedFilter';
 import type { TokenInfo } from 'types/api/token';
@@ -25,10 +28,10 @@ const NAME_PARAM_EXCLUDE = 'token_contract_symbols_to_exclude';
 
 export type AssetFilterMode = 'include' | 'exclude';
 
-const collection = createListCollection({
+const getModeCollection = (t: TFunction) => createListCollection({
   items: [
-    { label: 'Include', value: 'include' },
-    { label: 'Exclude', value: 'exclude' },
+    { label: t('advancedFilterUi.include'), value: 'include' },
+    { label: t('advancedFilterUi.exclude'), value: 'exclude' },
   ],
 });
 
@@ -43,6 +46,9 @@ type Props = {
 };
 
 const AssetFilter = ({ value = [], handleFilterChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const collection = React.useMemo(() => getModeCollection(tQuat), [ tQuat ]);
+
   const [ currentValue, setCurrentValue ] = React.useState<Value>([ ...value ]);
   const [ searchTerm, setSearchTerm ] = React.useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -90,7 +96,7 @@ const AssetFilter = ({ value = [], handleFilterChange }: Props) => {
 
   return (
     <TableColumnFilter
-      title="Asset"
+      title={ tQuat('addresses.asset') }
       isFilled={ Boolean(currentValue.length) }
       isTouched={ !isEqual(currentValue.map(i => JSON.stringify(i)).sort(), value.map(i => JSON.stringify(i)).sort()) }
       onFilter={ onFilter }
@@ -100,14 +106,14 @@ const AssetFilter = ({ value = [], handleFilterChange }: Props) => {
       <FilterInput
         size="sm"
         onChange={ onSearchChange }
-        placeholder="Token name or symbol"
+        placeholder={ tQuat('tokenUi.search_placeholder') }
         initialValue={ searchTerm }
       />
       { !searchTerm && currentValue.map((item, index) => (
         <Flex key={ item.token.address_hash } alignItems="center">
           <Select
             collection={ collection }
-            placeholder="Select mode"
+            placeholder={ tQuat('advancedFilterUi.select_mode') }
             defaultValue={ [ item.mode || 'include' ] }
             onValueChange={ handleModeSelectChange(index) }
             portalled={ false }
@@ -122,7 +128,7 @@ const AssetFilter = ({ value = [], handleFilterChange }: Props) => {
       { tokensQuery.isLoading && <Spinner display="block" mt={ 3 }/> }
       { tokensQuery.data && !searchTerm && (
         <>
-          <Text color="text.secondary" fontWeight="600" mt={ 3 }>Popular</Text>
+          <Text color="text.secondary" fontWeight="600" mt={ 3 }>{ tQuat('advancedFilterUi.popular') }</Text>
           <Flex rowGap={ 3 } flexWrap="wrap" gap={ 3 } mb={ 2 }>
             { [ NATIVE_TOKEN, ...tokensQuery.data.items ].map(token => (
               <Tag
@@ -140,7 +146,7 @@ const AssetFilter = ({ value = [], handleFilterChange }: Props) => {
           </Flex>
         </>
       ) }
-      { searchTerm && tokensQuery.data && !tokensQuery.data?.items.length && <Text>No tokens found</Text> }
+      { searchTerm && tokensQuery.data && !tokensQuery.data?.items.length && <Text>{ tQuat('advancedFilterUi.no_tokens') }</Text> }
       { searchTerm && tokensQuery.data && Boolean(tokensQuery.data?.items.length) && (
         <Flex display="flex" flexDir="column" rowGap={ 3 } maxH="250px" overflowY="scroll" mt={ 3 } ml="-4px">
           <CheckboxGroup value={ currentValue.map(i => i.token.address_hash) } orientation="vertical">

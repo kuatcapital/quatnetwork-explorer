@@ -1,8 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: translate the main-contract hover and return decoration ids. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 import sortByEndLineNumberAsc from './sortByEndLineNumberAsc';
 
-export default function addMainContractCodeDecoration(model: monaco.editor.ITextModel, contractName: string, editor: monaco.editor.IStandaloneCodeEditor) {
+export default function addMainContractCodeDecoration(
+  model: monaco.editor.ITextModel, contractName: string, editor: monaco.editor.IStandaloneCodeEditor, t: TFunction,
+): Array<string> {
   const options: monaco.editor.IModelDecorationOptions = {
     isWholeLine: true,
   };
@@ -10,13 +14,13 @@ export default function addMainContractCodeDecoration(model: monaco.editor.IText
   const contractBlockMatches = model.findMatches(`^contract\\s`, false, true, false, null, true);
 
   if (contractBlockMatches.length < 2) {
-    return;
+    return [];
   }
 
   const [ firstLineMatch ] = model.findMatches(`(^contract ${ contractName })(\\sis\\s.+(\\s?,.+)*)?((\\s?\\{)|\\n)`, false, true, false, null, true);
 
   if (!firstLineMatch) {
-    return;
+    return [];
   }
 
   const firstLineDecoration: monaco.editor.IModelDeltaDecoration = {
@@ -32,7 +36,7 @@ export default function addMainContractCodeDecoration(model: monaco.editor.IText
       marginClassName: '.main-contract-header',
       glyphMarginClassName: '.main-contract-glyph',
       glyphMarginHoverMessage: [
-        { value: 'Main contract' },
+        { value: t('editorShared.main_contract'), isTrusted: false, supportHtml: false },
       ],
     },
   };
@@ -62,5 +66,5 @@ export default function addMainContractCodeDecoration(model: monaco.editor.IText
   } : undefined;
 
   editor.updateOptions({ glyphMargin: true });
-  model.deltaDecorations([], [ firstLineDecoration, restDecoration ].filter(Boolean));
+  return model.deltaDecorations([], [ firstLineDecoration, restDecoration ].filter(Boolean));
 }

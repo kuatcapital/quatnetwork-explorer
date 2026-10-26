@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { MultichainProvider } from 'lib/contexts/multichain';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -14,6 +16,8 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import Pagination from 'ui/shared/pagination/Pagination';
 
 const MultichainInternalTxs = () => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
 
   const { query, searchTerm, onSearchTermChange } = useInternalTxsQuery({ isMultichain: true });
@@ -24,7 +28,7 @@ const MultichainInternalTxs = () => {
       w={{ base: '100%', lg: '350px' }}
       size="sm"
       onChange={ onSearchTermChange }
-      placeholder="Search by transaction hash"
+      placeholder={ tQuat('transactions.search_hash') }
       initialValue={ searchTerm }
       ml={{ base: 0, lg: 2 }}
     />
@@ -66,7 +70,7 @@ const MultichainInternalTxs = () => {
   return (
     <>
       <PageTitle
-        title="Internal transactions"
+        title={ tQuat('common.internal_transactions') }
         withTextAd
       />
       <DataListDisplay

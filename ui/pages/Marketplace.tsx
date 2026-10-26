@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { createListCollection, Flex } from '@chakra-ui/react';
 import React from 'react';
 import type { MouseEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import { MarketplaceCategory } from 'types/client/marketplace';
@@ -21,7 +23,7 @@ import MarketplaceAppModal from 'ui/marketplace/MarketplaceAppModal';
 import MarketplaceDisclaimerModal from 'ui/marketplace/MarketplaceDisclaimerModal';
 import MarketplaceList from 'ui/marketplace/MarketplaceList';
 import type { SortValue } from 'ui/marketplace/utils';
-import { SORT_OPTIONS } from 'ui/marketplace/utils';
+import { getSortOptions } from 'ui/marketplace/utils';
 import ActionBar from 'ui/shared/ActionBar';
 import IconSvg from 'ui/shared/IconSvg';
 import type { IconName } from 'ui/shared/IconSvg';
@@ -30,22 +32,20 @@ import Sort from 'ui/shared/sort/Sort';
 
 import useMarketplace from '../marketplace/useMarketplace';
 
-const sortCollection = createListCollection({ items: SORT_OPTIONS });
-
 const feature = config.features.marketplace;
 
 const links: Array<{ label: string; href: string; icon: IconName }> = [];
 if (feature.isEnabled) {
   if (feature.submitFormUrl) {
     links.push({
-      label: 'Submit app',
+      label: 'marketplaceUI.submit_app',
       href: feature.submitFormUrl,
       icon: 'plus' as IconName,
     });
   }
   if (feature.suggestIdeasFormUrl) {
     links.push({
-      label: 'Suggest ideas',
+      label: 'marketplaceUI.suggest_ideas',
       href: feature.suggestIdeasFormUrl,
       icon: 'edit' as IconName,
     });
@@ -53,6 +53,9 @@ if (feature.isEnabled) {
 }
 
 const Marketplace = () => {
+  const { t: tEco } = useTranslation();
+  const sortOptions = React.useMemo(() => getSortOptions(tEco), [ tEco ]);
+  const sortCollection = React.useMemo(() => createListCollection({ items: sortOptions }), [ sortOptions ]);
   const {
     isPlaceholderData,
     isError,
@@ -91,7 +94,7 @@ const Marketplace = () => {
 
     tabs.unshift({
       id: MarketplaceCategory.ALL,
-      title: MarketplaceCategory.ALL,
+      title: tEco('common.all'),
       count: appsTotal,
       component: null,
     });
@@ -104,7 +107,7 @@ const Marketplace = () => {
     });
 
     return tabs;
-  }, [ categories, appsTotal, favoriteApps.length ]);
+  }, [ categories, appsTotal, favoriteApps.length, tEco ]);
 
   const selectedTabId = React.useMemo(() => {
     const tab = categoryTabs.find(c => c.id === selectedCategoryId);
@@ -138,7 +141,7 @@ const Marketplace = () => {
     return null;
   }
 
-  const showSort = SORT_OPTIONS.length > 1;
+  const showSort = sortOptions.length > 1;
 
   return (
     <>
@@ -160,7 +163,7 @@ const Marketplace = () => {
                 <MenuItem key={ label } value={ label } asChild>
                   <Link external href={ href } variant="menu" gap={ 0 }>
                     <IconSvg name={ icon } boxSize={ 4 } mr={ 2 }/>
-                    { label }
+                    { tEco(label) }
                   </Link>
                 </MenuItem>
               )) }
@@ -170,7 +173,7 @@ const Marketplace = () => {
           <Flex ml="auto">
             { links.map(({ label, href }) => (
               <Link external key={ label } href={ href } variant="underlaid" textStyle="sm" ml={ 2 }>
-                { label }
+                { tEco(label) }
               </Link>
             )) }
           </Flex>
@@ -189,11 +192,12 @@ const Marketplace = () => {
       { feature.essentialDapps && (
         <>
           <Heading level="2" mb={ 6 } mt={ 8 }>
-            { feature.titles.subtitle_essential_dapps }
+            { feature.titles.subtitle_essential_dapps === 'Essential dapps' ?
+              tEco('marketplaceUI.essential_heading') : feature.titles.subtitle_essential_dapps }
           </Heading>
           <EssentialDappsList/>
           <Heading level="2">
-            { feature.titles.subtitle_list }
+            { feature.titles.subtitle_list === 'Explore dapps' ? tEco('marketplaceUI.explore_heading') : feature.titles.subtitle_list }
           </Heading>
         </>
       ) }
@@ -229,7 +233,7 @@ const Marketplace = () => {
           <FilterInput
             initialValue={ filterQuery }
             onChange={ onSearchInputChange }
-            placeholder="Find app by name or keyword..."
+            placeholder={ tEco('marketplaceUI.find_app') }
             loading={ isPlaceholderData }
             size="sm"
             w={{ base: '100%', lg: '350px' }}

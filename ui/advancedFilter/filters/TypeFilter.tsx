@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { isEqual, without } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterParams, AdvancedFilterType } from 'types/api/advancedFilter';
 
@@ -20,6 +22,8 @@ type Props = {
 };
 
 const TypeFilter = ({ value = [ RESET_VALUE ], handleFilterChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ currentValue, setCurrentValue ] = React.useState<Array<AdvancedFilterType | typeof RESET_VALUE>>([ ...value ]);
 
   const multichainContext = useMultichainContext();
@@ -47,12 +51,12 @@ const TypeFilter = ({ value = [ RESET_VALUE ], handleFilterChange }: Props) => {
   }, [ handleFilterChange, currentValue ]);
 
   const advancedFilterTypes = React.useMemo(() => {
-    return getAdvancedFilterTypes(multichainContext?.chain?.app_config, true);
-  }, [ multichainContext?.chain?.app_config ]);
+    return getAdvancedFilterTypes(multichainContext?.chain?.app_config, true, tQuat);
+  }, [ multichainContext?.chain?.app_config, tQuat ]);
 
   return (
     <TableColumnFilter
-      title="Transaction type"
+      title={ tQuat('advancedFilterUi.transaction_type') }
       isFilled={ !(currentValue.length === 1 && currentValue[0] === RESET_VALUE) }
       isTouched={ !isEqual(currentValue.sort(), value.sort()) }
       onFilter={ onFilter }

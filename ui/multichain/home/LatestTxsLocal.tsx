@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Separator } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { PaginationParams } from 'ui/shared/pagination/types';
 
@@ -26,6 +28,8 @@ const PAGINATION_PARAMS: PaginationParams = {
 };
 
 const LatestTxsLocal = () => {
+  const { t: tQuat } = useTranslation();
+
   const chain = useMultichainContext()?.chain;
 
   const query = useApiQuery('general:homepage_txs', {
@@ -54,9 +58,7 @@ const LatestTxsLocal = () => {
         justifyContent="center"
         textStyle="sm"
         mt={ 3 }
-      >
-        View all transactions
-      </Link>
+      >{ tQuat('home.view_all_transactions') }</Link>
     </SocketProvider>
   );
 };

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ClustersDirectoryObject } from 'types/api/clusters';
 
@@ -16,13 +18,15 @@ interface Props {
 }
 
 const ClustersDirectoryTable = ({ data, isLoading, top, isClusterDetailsLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <AddressHighlightProvider>
       <TableRoot>
         <TableHeaderSticky top={ top }>
           <TableRow>
             <TableColumnHeader width="40%">Cluster name</TableColumnHeader>
-            <TableColumnHeader width="40%">Address</TableColumnHeader>
+            <TableColumnHeader width="40%">{ tQuat('common.address') }</TableColumnHeader>
             <TableColumnHeader width="180px">
               Joined
               <TimeFormatToggle/>

@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZkEvmL2DepositsItem } from 'types/api/zkEvmL2';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import BlockEntityL1 from 'ui/shared/entities/block/BlockEntityL1';
@@ -18,6 +22,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ZkEvmL2DepositsItem; isLoading?: boolean };
 
 const ZkEvmL2DepositsTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation();
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkEvm') {
     return null;
   }
@@ -35,7 +41,7 @@ const ZkEvmL2DepositsTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          <span>{ item.index }</span>
+          <span>{ formatNumber(item.index, locale) }</span>
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle">
@@ -66,8 +72,7 @@ const ZkEvmL2DepositsTableItem = ({ item, isLoading }: Props) => {
           />
         ) : (
           <chakra.span color="text.secondary">
-            Pending Claim
-          </chakra.span>
+            { t('networkTransfers.pending_claim') }</chakra.span>
         ) }
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>

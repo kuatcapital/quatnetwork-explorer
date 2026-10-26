@@ -1,12 +1,15 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { SHIBARIUM_DEPOSIT_ITEM } from 'stubs/shibarium';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { rightLineArrow, nbsp } from 'toolkit/utils/htmlEntities';
 import DepositsListItem from 'ui/deposits/shibarium/DepositsListItem';
 import DepositsTable from 'ui/deposits/shibarium/DepositsTable';
 import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
@@ -16,6 +19,8 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 
 const ShibariumDeposits = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:shibarium_deposits',
     options: {
@@ -65,7 +70,7 @@ const ShibariumDeposits = () => {
         loading={ countersQuery.isPlaceholderData }
         display="inline-block"
       >
-        A total of { countersQuery.data?.toLocaleString() } deposits found
+        { t('networkTransfers.deposits_found', { value: countersQuery.data === undefined ? '' : formatNumber(countersQuery.data, locale) }) }
       </Skeleton>
     );
   })();
@@ -74,11 +79,11 @@ const ShibariumDeposits = () => {
 
   return (
     <>
-      <PageTitle title={ `Deposits (${ layerLabels.parent }${ nbsp }${ rightLineArrow }${ nbsp }${ layerLabels.current })` } withTextAd/>
+      <PageTitle title={ t('networkTransfers.deposits_route', { from: layerLabels.parent, to: layerLabels.current }) } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no deposits."
+        emptyText={ t('networkTransfers.no_deposits') }
         actionBar={ actionBar }
       >
         { content }

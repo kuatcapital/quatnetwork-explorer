@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: runtime chart controls. GPL-3.0.
 import { Grid, Icon, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Resolution, TimeChartData } from './types';
 
@@ -33,6 +35,7 @@ const FullscreenChartModal = ({
   handleZoom,
   handleZoomReset,
 }: Props) => {
+  const { t } = useTranslation();
   return (
     <DialogRoot
       open={ open }
@@ -69,7 +72,7 @@ const FullscreenChartModal = ({
                 onClick={ handleZoomReset }
               >
                 <Icon boxSize={ 4 }><RepeatIcon/></Icon>
-                Reset zoom
+                { t('charts.reset_zoom') }
               </Button>
             ) }
           </Grid>

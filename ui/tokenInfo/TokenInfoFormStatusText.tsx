@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfoApplication } from 'types/api/account';
 
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const TokenInfoFormStatusText = ({ application }: Props) => {
+  const { t: tEco } = useTranslation();
 
   if (!application) {
     return null;
@@ -18,8 +21,8 @@ const TokenInfoFormStatusText = ({ application }: Props) => {
     case 'IN_PROCESS': {
       return (
         <div>
-          <div>Requests are sent to a moderator for review and approval. This process can take several days.</div>
-          <Alert status="warning" mt={ 6 }>Request in progress. Once an admin approves your request you can edit token info.</Alert>
+          <div>{ tEco('tokenInfoUI.moderation') }</div>
+          <Alert status="warning" mt={ 6 }>{ tEco('tokenInfoUI.in_progress') }</Alert>
         </div>
       );
     }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: translated shared interface labels. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { WatchAssetParams } from 'viem';
 
 import type { TokenInfo } from 'types/api/token';
@@ -59,6 +61,7 @@ interface Props {
 }
 
 const AddressAddToWallet = ({ className, token, tokenId, isLoading, variant = 'icon', iconSize = 6, chainConfig }: Props) => {
+  const { t } = useTranslation();
   const { data: { wallet, provider } = {} } = useProvider();
   const switchOrAddChain = useSwitchOrAddChain({ chainConfig });
   const isMobile = useIsMobile();
@@ -75,7 +78,7 @@ const AddressAddToWallet = ({ className, token, tokenId, isLoading, variant = 'i
       const params = getRequestParams(token, tokenId);
 
       if (!params) {
-        throw new Error('Unsupported token type');
+        throw new Error(t('editorShared.unsupported_token'));
       }
 
       // switch to the correct network otherwise the token will be added to the wrong one
@@ -88,8 +91,8 @@ const AddressAddToWallet = ({ className, token, tokenId, isLoading, variant = 'i
 
       if (wasAdded) {
         toaster.success({
-          title: 'Success',
-          description: 'Successfully added token to your wallet',
+          title: t('common.success'),
+          description: t('editorShared.token_added'),
         });
 
         await trackUsage('add_token');
@@ -102,11 +105,11 @@ const AddressAddToWallet = ({ className, token, tokenId, isLoading, variant = 'i
       }
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: (error as Error)?.message || 'Something went wrong',
+        title: t('common.error'),
+        description: (error as Error)?.message || t('editorShared.something_wrong'),
       });
     }
-  }, [ wallet, token, tokenId, switchOrAddChain, provider, trackUsage ]);
+  }, [ wallet, token, tokenId, switchOrAddChain, provider, trackUsage, t ]);
 
   if (!provider || !wallet) {
     return null;
@@ -131,10 +134,10 @@ const AddressAddToWallet = ({ className, token, tokenId, isLoading, variant = 'i
 
   if (variant === 'button') {
     return (
-      <Tooltip content={ `Add token to ${ WALLETS_INFO[wallet].name }` }>
+      <Tooltip content={ t('editorShared.add_token_wallet_named', { wallet: WALLETS_INFO[wallet].name }) }>
         <IconButton
           className={ className }
-          aria-label="Add token to wallet"
+          aria-label={ t('editorShared.add_token_wallet') }
           variant="icon_background"
           size="md"
           onClick={ handleClick }
@@ -146,8 +149,11 @@ const AddressAddToWallet = ({ className, token, tokenId, isLoading, variant = 'i
   }
 
   return (
-    <Tooltip content={ `Add token to ${ WALLETS_INFO[wallet].name }` }>
-      <Box className={ className } display="inline-flex" cursor="pointer" onClick={ handleClick } flexShrink={ 0 } aria-label="Add token to wallet">
+    <Tooltip content={ t('editorShared.add_token_wallet_named', { wallet: WALLETS_INFO[wallet].name }) }>
+      <Box
+        className={ className } display="inline-flex" cursor="pointer" onClick={ handleClick } flexShrink={ 0 }
+        aria-label={ t('editorShared.add_token_wallet') }
+      >
         <IconSvg name={ WALLETS_INFO[wallet].icon } boxSize={ iconSize }/>
       </Box>
     </Tooltip>

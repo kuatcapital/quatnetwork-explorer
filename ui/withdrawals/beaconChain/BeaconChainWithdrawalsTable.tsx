@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressWithdrawalsItem } from 'types/api/address';
 import type { BlockWithdrawalsItem } from 'types/api/block';
@@ -29,6 +31,7 @@ type Props = {
 });
 
 const BeaconChainWithdrawalsTable = ({ items, isLoading, top, view }: Props) => {
+  const { t } = useTranslation();
   const { cutRef, renderedItemsNum } = useLazyRenderedList(items, !isLoading);
 
   if (!feature.isEnabled) {
@@ -40,12 +43,12 @@ const BeaconChainWithdrawalsTable = ({ items, isLoading, top, view }: Props) => 
       <TableRoot style={{ tableLayout: 'auto' }} minW="950px">
         <TableHeaderSticky top={ top }>
           <TableRow>
-            <TableColumnHeader>Index</TableColumnHeader>
-            <TableColumnHeader>Validator index</TableColumnHeader>
-            { view !== 'block' && <TableColumnHeader>Block</TableColumnHeader> }
-            { view !== 'address' && <TableColumnHeader>To</TableColumnHeader> }
-            { view !== 'block' && <TableColumnHeader>Timestamp<TimeFormatToggle/></TableColumnHeader> }
-            <TableColumnHeader>{ `Value ${ feature.currency.symbol }` }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.index') }</TableColumnHeader>
+            <TableColumnHeader>{ t('networkTransfers.validator_index') }</TableColumnHeader>
+            { view !== 'block' && <TableColumnHeader>{ t('networkTransfers.block') }</TableColumnHeader> }
+            { view !== 'address' && <TableColumnHeader>{ t('networkTransfers.to') }</TableColumnHeader> }
+            { view !== 'block' && <TableColumnHeader>{ t('networkTransfers.timestamp') }<TimeFormatToggle/></TableColumnHeader> }
+            <TableColumnHeader>{ t('networkTransfers.value_currency', { symbol: feature.currency.symbol }) }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

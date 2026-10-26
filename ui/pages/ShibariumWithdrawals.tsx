@@ -1,12 +1,15 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { SHIBARIUM_WITHDRAWAL_ITEM } from 'stubs/shibarium';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { rightLineArrow, nbsp } from 'toolkit/utils/htmlEntities';
 import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import PageTitle from 'ui/shared/Page/PageTitle';
@@ -16,6 +19,8 @@ import WithdrawalsListItem from 'ui/withdrawals/shibarium/WithdrawalsListItem';
 import WithdrawalsTable from 'ui/withdrawals/shibarium/WithdrawalsTable';
 
 const ShibariumWithdrawals = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:shibarium_withdrawals',
     options: {
@@ -62,7 +67,7 @@ const ShibariumWithdrawals = () => {
 
     return (
       <Skeleton loading={ countersQuery.isPlaceholderData } display="inline-block">
-        A total of { countersQuery.data?.toLocaleString() } withdrawals found
+        { t('networkTransfers.withdrawals_found', { value: countersQuery.data === undefined ? '' : formatNumber(countersQuery.data, locale) }) }
       </Skeleton>
     );
   })();
@@ -71,11 +76,11 @@ const ShibariumWithdrawals = () => {
 
   return (
     <>
-      <PageTitle title={ `Withdrawals (${ layerLabels.current }${ nbsp }${ rightLineArrow }${ nbsp }${ layerLabels.parent })` } withTextAd/>
+      <PageTitle title={ t('networkTransfers.withdrawals_route', { from: layerLabels.current, to: layerLabels.parent }) } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no withdrawals."
+        emptyText={ t('networkTransfers.no_withdrawals') }
         actionBar={ actionBar }
       >
         { content }

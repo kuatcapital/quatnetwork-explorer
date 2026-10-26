@@ -1,11 +1,15 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, chakra, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 
 import { route } from 'nextjs/routes';
 
 import multichainConfig from 'configs/multichain';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { Link } from 'toolkit/chakra/link';
 import { PopoverBody, PopoverContent, PopoverRoot, PopoverTrigger } from 'toolkit/chakra/popover';
@@ -19,6 +23,8 @@ interface Props {
 }
 
 const ClusterChainsPopover = ({ addressHash, data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   if (!data) {
     return null;
@@ -47,7 +53,10 @@ const ClusterChainsPopover = ({ addressHash, data, isLoading }: Props) => {
             loadingSkeleton={ isLoading }
           >
             <IconSvg name="pie_chart" boxSize={ 5 }/>
-            { activeChains.length } Chain{ activeChains.length > 1 ? 's' : '' }
+            { tQuat('sectionCounts.chains', {
+              count: activeChains.length,
+              value: formatNumber(activeChains.length, locale),
+            }) }
           </Button>
         </PopoverTrigger>
       </Box>

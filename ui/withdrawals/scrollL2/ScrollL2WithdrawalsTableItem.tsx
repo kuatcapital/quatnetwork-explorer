@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ScrollL2MessageItem } from 'types/api/scrollL2';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
@@ -17,6 +21,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ScrollL2MessageItem; isLoading?: boolean };
 
 const ScrollL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation();
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'scroll') {
     return null;
   }
@@ -33,7 +39,7 @@ const ScrollL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          <span>{ item.id }</span>
+          <span>{ formatNumber(item.id, locale) }</span>
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle">
@@ -62,8 +68,7 @@ const ScrollL2WithdrawalsTableItem = ({ item, isLoading }: Props) => {
           />
         ) : (
           <chakra.span color="text.secondary">
-            Pending Claim
-          </chakra.span>
+            { t('networkTransfers.pending_claim') }</chakra.span>
         ) }
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>

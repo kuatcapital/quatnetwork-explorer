@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Spinner, chakra } from '@chakra-ui/react';
 import { isEqual, differenceBy } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterMethodInfo, AdvancedFilterParams } from 'types/api/advancedFilter';
 
@@ -22,6 +24,8 @@ type Props = {
 };
 
 const MethodFilter = ({ value = [], handleFilterChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ currentValue, setCurrentValue ] = React.useState<Array<AdvancedFilterMethodInfo>>([ ...value ]);
   const [ searchTerm, setSearchTerm ] = React.useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -70,7 +74,7 @@ const MethodFilter = ({ value = [], handleFilterChange }: Props) => {
 
   return (
     <TableColumnFilter
-      title="Method"
+      title={ tQuat('common.method') }
       isFilled={ Boolean(currentValue.length) }
       isTouched={ !isEqual(currentValue.map(i => JSON.stringify(i)).sort(), value.map(i => JSON.stringify(i)).sort()) }
       onFilter={ onFilter }
@@ -80,12 +84,12 @@ const MethodFilter = ({ value = [], handleFilterChange }: Props) => {
       <FilterInput
         size="sm"
         onChange={ onSearchChange }
-        placeholder="Find by function name/ method ID"
+        placeholder={ tQuat('advancedFilterUi.method_search') }
         mb={ 3 }
       />
       { methodsQuery.isLoading && <Spinner/> }
-      { methodsQuery.isError && <span>Something went wrong. Please try again.</span> }
-      { Boolean(searchTerm) && methodsQuery.data?.length === 0 && <span>No results found.</span> }
+      { methodsQuery.isError && <span>{ tQuat('advancedFilterUi.retry_error') }</span> }
+      { Boolean(searchTerm) && methodsQuery.data?.length === 0 && <span>{ tQuat('common.no_results') }</span> }
       { methodsQuery.data && (
         // added negative margin because of checkbox focus styles & overflow hidden
         <Flex display="flex" flexDir="column" rowGap={ 3 } maxH="250px" overflowY="scroll">

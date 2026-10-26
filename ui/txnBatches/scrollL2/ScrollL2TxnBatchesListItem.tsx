@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ScrollL2TxnBatch } from 'types/api/scrollL2';
 
@@ -20,6 +22,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ScrollL2TxnBatch; isLoading?: boolean };
 
 const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'scroll') {
     return null;
   }
@@ -41,7 +45,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         <ScrollL2TxnBatchDA container={ item.data_availability.batch_data_container } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.status') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <ScrollL2TxnBatchStatus status={ item.confirmation_transaction.hash ? 'Finalized' : 'Committed' } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
@@ -63,7 +67,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.age') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.commitment_transaction.timestamp }
@@ -80,7 +84,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
             number={ item.confirmation_transaction.block_number }
             isLoading={ isLoading }
           />
-        ) : <Skeleton loading={ isLoading } display="inline-block">Pending</Skeleton> }
+        ) : <Skeleton loading={ isLoading } display="inline-block">{ tQuat('common.pending') }</Skeleton> }
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>Finalized txn hash</ListItemMobileGrid.Label>
@@ -91,7 +95,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
             isLoading={ isLoading }
             noCopy
           />
-        ) : <Skeleton loading={ isLoading } display="inline-block">Pending</Skeleton> }
+        ) : <Skeleton loading={ isLoading } display="inline-block">{ tQuat('common.pending') }</Skeleton> }
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>Blocks count</ListItemMobileGrid.Label>
@@ -108,7 +112,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
 
       { typeof item.transactions_count === 'number' ? (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Txn count</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.transaction_count') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Link
               href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'txs' } }) }

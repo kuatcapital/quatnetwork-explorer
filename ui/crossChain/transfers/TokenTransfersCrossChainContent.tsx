@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InterchainTransfer } from '@blockscout/interchain-indexer-types';
 import type { PaginationParams } from 'ui/shared/pagination/types';
@@ -20,6 +22,7 @@ interface Props extends Omit<DataListDisplayProps, 'children'> {
 }
 
 const TokenTransfersCrossChainContent = ({ items, isLoading, pagination, currentAddress, tableTop, ...rest }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const content = items ? (
     <>
@@ -50,7 +53,7 @@ const TokenTransfersCrossChainContent = ({ items, isLoading, pagination, current
   return (
     <DataListDisplay
       itemsNum={ items?.length }
-      emptyText="There are no cross-chain token transfers."
+      emptyText={ tQuat('transactions.no_cross_chain_transfers') }
       emptyStateProps={{
         term: 'token transfer',
       }}

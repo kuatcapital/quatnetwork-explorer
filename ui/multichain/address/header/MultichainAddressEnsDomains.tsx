@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, chakra, Flex, Grid, Text } from '@chakra-ui/react';
 import { clamp } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { PopoverBody, PopoverContent, PopoverRoot, PopoverTrigger } from 'toolkit/chakra/popover';
 import { Tooltip } from 'toolkit/chakra/tooltip';
@@ -33,6 +37,9 @@ interface Props {
 }
 
 const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const rootRef = React.useRef<HTMLDivElement>(null);
 
   const popover = useDisclosure();
@@ -64,14 +71,17 @@ const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => 
             <Button
               size="sm"
               variant="dropdown"
-              aria-label="Address domains"
+              aria-label={ tQuat('addresses.domains') }
               fontWeight={ 500 }
               flexShrink={ 0 }
               columnGap={ 1 }
               loadingSkeleton={ isLoading }
             >
               <IconSvg name="ENS" boxSize={ 5 }/>
-              <chakra.span hideBelow="xl">{ totalRecords }{ totalRecordsPostfix } Domain{ totalRecords > 1 ? 's' : '' }</chakra.span>
+              <chakra.span hideBelow="xl">{ tQuat('sectionCounts.domains', {
+                count: totalRecords,
+                value: `${ formatNumber(totalRecords, locale) }${ totalRecordsPostfix }`,
+              }) }</chakra.span>
               <chakra.span hideFrom="xl">{ totalRecords }{ totalRecordsPostfix }</chakra.span>
             </Button>
           </PopoverTrigger>
@@ -81,7 +91,7 @@ const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => 
         <PopoverBody textStyle="sm" display="flex" flexDir="column" rowGap={ 5 } alignItems="flex-start">
           { mainDomain && (
             <Box w="100%">
-              <chakra.span color="text.secondary" textStyle="xs">Primary*</chakra.span>
+              <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.primary_domain') }</chakra.span>
               <Flex alignItems="center" textStyle="md" mt={ 2 }>
                 <EnsEntity
                   domain={ mainDomain.name }
@@ -95,7 +105,7 @@ const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => 
           ) }
           { ownedDomains.length > 0 && (
             <div>
-              <chakra.span color="text.secondary" textStyle="xs">Owned by this address</chakra.span>
+              <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.owned_by_address') }</chakra.span>
               <DomainsGrid data={ ownedDomains }/>
             </div>
           ) }
@@ -107,9 +117,7 @@ const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => 
           <Box h="0" w="100px" ref={ cutRef }/>
 
           { mainDomain && (
-            <chakra.span textStyle="xs" mt={ -1 }>
-              *A domain name is not necessarily held by a person popularly associated with the name
-            </chakra.span>
+            <chakra.span textStyle="xs" mt={ -1 }>{ tQuat('addresses.domain_disclaimer') }</chakra.span>
           ) }
         </PopoverBody>
       </PopoverContent>

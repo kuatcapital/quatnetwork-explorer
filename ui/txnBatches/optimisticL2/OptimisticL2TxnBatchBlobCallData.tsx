@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { layerLabels } from 'lib/rollups/utils';
 import DetailedInfoTimestamp from 'ui/shared/DetailedInfo/DetailedInfoTimestamp';
@@ -14,9 +16,11 @@ interface Props {
 }
 
 const OptimisticL2TxnBatchBlobCallData = ({ l1TxHashes, l1Timestamp, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <OptimisticL2TxnBatchBlobWrapper isLoading={ isLoading }>
-      <GridItem fontWeight={ 600 }>Timestamp</GridItem>
+      <GridItem fontWeight={ 600 }>{ tQuat('common.timestamp') }</GridItem>
       <GridItem overflow="hidden">
         <DetailedInfoTimestamp timestamp={ l1Timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }}/>
       </GridItem>

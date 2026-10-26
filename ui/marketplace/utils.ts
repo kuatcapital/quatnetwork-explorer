@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-26: localized sort labels with unchanged sort values. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type { NextRouter } from 'next/router';
 
 import config from 'configs/app';
@@ -9,11 +11,13 @@ const feature = config.features.marketplace;
 
 export type SortValue = 'default' | 'rating_score' | 'rating_count';
 
-export const SORT_OPTIONS: Array<SelectOption<SortValue>> = [
-  { label: 'Default', value: 'default' },
-  (feature.isEnabled && 'api' in feature) && { label: 'Top rated', value: 'rating_score' },
-  (feature.isEnabled && 'api' in feature) && { label: 'Most rated', value: 'rating_count' },
-].filter(Boolean) as Array<SelectOption<SortValue>>;
+export function getSortOptions(t: TFunction): Array<SelectOption<SortValue>> {
+  return [
+    { label: t('marketplaceUI.default_sort'), value: 'default' },
+    (feature.isEnabled && 'api' in feature) && { label: t('marketplaceUI.top_rated'), value: 'rating_score' },
+    (feature.isEnabled && 'api' in feature) && { label: t('marketplaceUI.most_rated'), value: 'rating_count' },
+  ].filter(Boolean) as Array<SelectOption<SortValue>>;
+}
 
 export function getAppUrl(url: string | undefined, router: NextRouter) {
   if (!url) {

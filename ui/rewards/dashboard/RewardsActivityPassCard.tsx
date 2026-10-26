@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { useRewardsContext } from 'lib/contexts/rewards';
@@ -8,6 +10,7 @@ import { Image } from 'toolkit/chakra/image';
 import { Link } from 'toolkit/chakra/link';
 
 export default function RewardsActivityPassCard() {
+  const { t: tEco } = useTranslation();
   const { rewardsConfigQuery } = useRewardsContext();
   const backgroundImage = useColorModeValue('/static/merits/cells.svg', '/static/merits/cells_dark.svg');
 
@@ -27,17 +30,16 @@ export default function RewardsActivityPassCard() {
     >
       <Flex flex={ 1 } flexDirection="column" p={ 3 } gap={ 2 }>
         <Heading level="3">
-          Activity pass
-        </Heading>
+          { tEco('rewardsUI.activity_pass') }</Heading>
         <Text textStyle="sm">
-          Grab your{ ' ' }
-          <Link external href={ activityPassUrl } loading={ rewardsConfigQuery.isLoading }>
-            Activity pass
-          </Link>{ ' ' }
-          then engage with various Blockscout products and features to earn Merits every day!{ ' ' }
-          <Link external href="https://docs.blockscout.com/using-blockscout/merits/activity-pass">
-            Learn more
-          </Link>
+          <Trans
+            t={ tEco }
+            i18nKey="rewardsUI.activity_pass_intro"
+            components={{
+              pass: <Link external href={ activityPassUrl } loading={ rewardsConfigQuery.isLoading }/>,
+              docs: <Link external href="https://docs.blockscout.com/using-blockscout/merits/activity-pass"/>,
+            }}
+          />
         </Text>
       </Flex>
       <Flex
@@ -57,7 +59,7 @@ export default function RewardsActivityPassCard() {
       >
         <Image
           src={ backgroundImage }
-          alt="Background"
+          alt={ tEco('rewardsUI.background') }
           width="268px"
           height="184px"
           position="absolute"
@@ -66,7 +68,7 @@ export default function RewardsActivityPassCard() {
         />
         <Image
           src="/static/merits/activity_pass.svg"
-          alt="Activity pass"
+          alt={ tEco('rewardsUI.activity_pass') }
           width="79px"
           height="86px"
           zIndex={ 1 }
@@ -83,8 +85,7 @@ export default function RewardsActivityPassCard() {
           flexShrink={ 0 }
           zIndex={ 1 }
         >
-          Grab Activity pass
-        </Link>
+          { tEco('rewardsUI.grab_activity_pass') }</Link>
       </Flex>
     </Flex>
   );

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZkSyncBatchesItem } from 'types/api/zkSyncL2';
 
@@ -18,6 +20,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ZkSyncBatchesItem; isLoading?: boolean };
 
 const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkSync') {
     return null;
   }
@@ -64,7 +68,7 @@ const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
             noIcon
             noCopy
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>{ tQuat('common.pending') }</Text> }
       </TableCell>
       <TableCell verticalAlign="middle">
         { item.prove_transaction_hash ? (
@@ -76,7 +80,7 @@ const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
             noIcon
             noCopy
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>{ tQuat('common.pending') }</Text> }
       </TableCell>
     </TableRow>
   );

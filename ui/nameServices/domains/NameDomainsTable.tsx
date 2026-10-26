@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 
@@ -18,13 +20,15 @@ interface Props {
 }
 
 const NameDomainsTable = ({ data, isLoading, sort, onSortToggle }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <AddressHighlightProvider>
       <TableRoot>
         <TableHeaderSticky top={ ACTION_BAR_HEIGHT_DESKTOP }>
           <TableRow>
-            <TableColumnHeader width="25%">Domain</TableColumnHeader>
-            <TableColumnHeader width="25%">Address</TableColumnHeader>
+            <TableColumnHeader width="25%">{ tQuat('addresses.domain_one') }</TableColumnHeader>
+            <TableColumnHeader width="25%">{ tQuat('common.address') }</TableColumnHeader>
             <TableColumnHeaderSortable
               width="25%"
               pl={ 9 }

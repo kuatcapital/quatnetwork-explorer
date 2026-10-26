@@ -1,8 +1,11 @@
+// Modified by Quat Capital, 2026-10-26: explicit locale presentation; API values unchanged. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import type { ValidatorBlackfort } from 'types/api/validators';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
@@ -15,6 +18,7 @@ interface Props {
 }
 
 const ValidatorsTableItem = ({ data, isLoading }: Props) => {
+  const { locale } = useLocale();
   return (
     <TableRow>
       <TableCell verticalAlign="middle">
@@ -31,7 +35,7 @@ const ValidatorsTableItem = ({ data, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
         <Skeleton loading={ isLoading }>
-          { `${ data.commission / 100 }%` }
+          { `${ formatNumber(data.commission / 100, locale) }%` }
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>

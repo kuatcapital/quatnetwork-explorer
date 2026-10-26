@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, GridItem, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2BlobTypeEigenda } from 'types/api/optimisticL2';
 
@@ -17,6 +19,8 @@ interface Props {
 }
 
 const OptimisticL2TxnBatchBlobEigenda = ({ blobs, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <VStack rowGap={ 2 } w="100%">
       { blobs.map((blob) => {
@@ -29,7 +33,7 @@ const OptimisticL2TxnBatchBlobEigenda = ({ blobs, isLoading }: Props) => {
                 <CopyToClipboard text={ blob.cert }/>
               </Flex>
             </GridItem>
-            <GridItem fontWeight={ 600 }>Timestamp</GridItem>
+            <GridItem fontWeight={ 600 }>{ tQuat('common.timestamp') }</GridItem>
             <GridItem overflow="hidden">
               <DetailedInfoTimestamp timestamp={ blob.l1_timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }}/>
             </GridItem>

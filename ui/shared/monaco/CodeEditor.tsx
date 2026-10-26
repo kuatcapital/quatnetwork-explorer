@@ -4,6 +4,7 @@ import type { EditorProps } from '@monaco-editor/react';
 import MonacoEditor from '@monaco-editor/react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { File, Monaco } from './types';
 import type { SmartContractExternalLibrary } from 'types/api/contract';
@@ -49,6 +50,7 @@ interface Props {
 }
 
 const CodeEditor = ({ data, remappings, libraries, language, mainFile, contractName }: Props) => {
+  const { t } = useTranslation();
   const [ instance, setInstance ] = React.useState<Monaco | undefined>();
   const [ editor, setEditor ] = React.useState<monaco.editor.IStandaloneCodeEditor | undefined>();
   const [ index, setIndex ] = React.useState(0);
@@ -109,35 +111,10 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile, contractN
 
     const loadedModels = monaco.editor.getModels();
     const loadedModelsPaths = loadedModels.map((model) => model.uri.path);
-    const newModels = data.slice(1)
+    data.slice(1)
       .filter((file) => !loadedModelsPaths.includes(file.file_path))
       .map((file) => monaco.editor.createModel(file.source_code, editorLanguage, monaco.Uri.parse(file.file_path)));
 
-    if (language === 'solidity') {
-      loadedModels.concat(newModels)
-        .forEach((model) => {
-          contractName && mainFile === model.uri.path && addMainContractCodeDecoration(model, contractName, editor);
-          addFileImportDecorations(model);
-          libraries?.length && addExternalLibraryWarningDecoration(model, libraries);
-        });
-    }
-
-    editor.addAction({
-      id: 'close-tab',
-      label: 'Close current tab',
-      keybindings: [
-        monaco.KeyMod.Alt | monaco.KeyCode.KeyW,
-      ],
-      contextMenuGroupId: 'navigation',
-      contextMenuOrder: 1.7,
-      run: function(editor) {
-        const model = editor.getModel();
-        const path = model?.uri.path;
-        if (path) {
-          handleTabClose(path, true);
-        }
-      },
-    });
   // componentDidMount
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ ]);
@@ -177,6 +154,42 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile, contractN
       return prev;
     });
   }, [ data, index ]);
+
+  React.useEffect(() => {
+    if (!editor || !instance) return;
+    const action = editor.addAction({
+      id: 'close-tab',
+      label: t('editorShared.close_current_tab'),
+      keybindings: [ instance.KeyMod.Alt | instance.KeyCode.KeyW ],
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 1.7,
+      run: (activeEditor) => {
+        const path = activeEditor.getModel()?.uri.path;
+        if (path) handleTabClose(path, true);
+      },
+    });
+    return () => action.dispose();
+  }, [ editor, instance, handleTabClose, t ]);
+
+  React.useEffect(() => {
+    if (!instance || !editor || language !== 'solidity') return;
+    const filePaths = new Set(data.map(file => file.file_path));
+    const decorations = instance.editor.getModels()
+      .filter(model => filePaths.has(model.uri.path))
+      .map(model => ({
+        model,
+        ids: [
+          ...(contractName && mainFile === model.uri.path ? addMainContractCodeDecoration(model, contractName, editor, t) : []),
+          ...addFileImportDecorations(model, t),
+          ...(libraries?.length ? addExternalLibraryWarningDecoration(model, libraries, t) : []),
+        ],
+      }));
+    return () => {
+      decorations.forEach(({ model, ids }) => {
+        if (!model.isDisposed()) model.deltaDecorations(ids, []);
+      });
+    };
+  }, [ instance, editor, language, data, contractName, mainFile, libraries, t ]);
 
   const handleClick = React.useCallback((event: React.MouseEvent) => {
     if (!isMetaPressed && !isMobile) {
@@ -262,8 +275,8 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile, contractN
   }), [ editorWidth, themeColors, borderRadius ]);
 
   const renderErrorScreen = React.useCallback(() => {
-    return <Center bgColor={ themeColors['editor.background'] } w="100%" h="100%" borderRadius="md">Oops! Something went wrong!</Center>;
-  }, [ themeColors ]);
+    return <Center bgColor={ themeColors['editor.background'] } w="100%" h="100%" borderRadius="md">{ t('editorShared.error') }</Center>;
+  }, [ themeColors, t ]);
 
   if (data.length === 1) {
     const css = {
@@ -342,3 +355,4 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile, contractN
 };
 
 export default React.memo(CodeEditor);
+// Modified by Quat Capital, 2026-10-26: reactive editor actions, translated decorations and cleanup. GPL-3.0.

@@ -1,13 +1,19 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useRewardsContext } from 'lib/contexts/rewards';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { SECOND } from 'toolkit/utils/consts';
 import splitSecondsInPeriods from 'ui/blockCountdown/splitSecondsInPeriods';
 
 const DailyRewardClaimButton = () => {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const queryClient = useQueryClient();
   const { balancesQuery, dailyRewardQuery, claim } = useRewardsContext();
   const [ isClaiming, setIsClaiming ] = React.useState(false);
@@ -80,11 +86,11 @@ const DailyRewardClaimButton = () => {
       fontWeight="600"
       cursor="default"
     >
-      Next claim in { timeLeft || 'N/A' }
+      { tEco('rewardsUI.next_claim_time', { time: timeLeft || 'N/A' }) }
     </Flex>
   ) : (
     <Button onClick={ handleClaim } loading={ isLoading }>
-      Claim { dailyRewardValue } Merits
+      { tEco('rewardsUI.claim_merits', { value: formatNumber(dailyRewardValue, locale) }) }
     </Button>
   );
 };

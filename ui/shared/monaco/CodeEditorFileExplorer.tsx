@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: reactive editor and shared translations. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { File } from './types';
 
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const CodeEditorFileExplorer = ({ data, onFileSelect, selectedFile, mainFile, isActive, setActionBarRenderer }: Props) => {
+  const { t } = useTranslation();
   const [ key, setKey ] = React.useState(0);
   const tree = React.useMemo(() => {
     return composeFileTree(data);
@@ -28,9 +31,9 @@ const CodeEditorFileExplorer = ({ data, onFileSelect, selectedFile, mainFile, is
 
   const renderActionBar = React.useCallback(() => {
     return (
-      <CoderEditorCollapseButton onClick={ handleCollapseButtonClick } label="Collapse folders"/>
+      <CoderEditorCollapseButton onClick={ handleCollapseButtonClick } label={ t('editorShared.collapse_folders') }/>
     );
-  }, [ handleCollapseButtonClick ]);
+  }, [ handleCollapseButtonClick, t ]);
 
   const handleFileClick = React.useCallback((event: React.MouseEvent) => {
     const filePath = (event.currentTarget as HTMLDivElement).getAttribute('data-file-path');

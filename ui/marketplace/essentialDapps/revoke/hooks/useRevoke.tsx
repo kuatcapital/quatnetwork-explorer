@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import ERC20Artifact from '@openzeppelin/contracts/build/contracts/ERC20.json';
 import NftArtifact from '@openzeppelin/contracts/build/contracts/ERC721.json';
 import { waitForTransactionReceipt } from '@wagmi/core';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAccount, useWriteContract, useSwitchChain } from 'wagmi';
 
 import type { AllowanceType } from 'types/client/revoke';
@@ -12,6 +14,7 @@ import wagmiConfig from 'lib/web3/wagmiConfig';
 import { toaster } from 'toolkit/chakra/toaster';
 
 export default function useRevoke() {
+  const { t: tEco } = useTranslation();
   const { address: userAddress } = useAccount();
   const { switchChainAsync } = useSwitchChain();
   const { writeContractAsync } = useWriteContract();
@@ -51,20 +54,20 @@ export default function useRevoke() {
       const receipt = await waitForTransactionReceipt(wagmiConfig.config, { hash, chainId });
 
       if (receipt.status === 'reverted') {
-        throw new Error('Failed to revoke approval.');
+        throw new Error(tEco('marketplaceUI.revoke_failed'));
       }
 
       toaster.success({
-        title: 'Success',
-        description: 'Approval revoked successfully.',
+        title: tEco('accountUI.success'),
+        description: tEco('marketplaceUI.revoke_success'),
       });
 
       return true;
 
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: (error as Error)?.message || 'Something went wrong. Try again later.',
+        title: tEco('accountUI.error'),
+        description: (error as Error)?.message || tEco('marketplaceUI.retry_error'),
       });
 
       return false;
@@ -75,5 +78,5 @@ export default function useRevoke() {
     switchChainAsync,
     trackTransaction,
     trackTransactionConfirm,
-  ]);
+    tEco ]);
 }

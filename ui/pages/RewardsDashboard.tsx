@@ -1,15 +1,18 @@
+// Modified by Quat Capital, 2026-10-26: marketplace, rewards or token info localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { useRewardsContext } from 'lib/contexts/rewards';
+import { formatNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import { Alert } from 'toolkit/chakra/alert';
 import { Button } from 'toolkit/chakra/button';
 import { Link } from 'toolkit/chakra/link';
 import RoutedTabs from 'toolkit/components/RoutedTabs/RoutedTabs';
 import { useDisclosure } from 'toolkit/hooks/useDisclosure';
-import { apos } from 'toolkit/utils/htmlEntities';
 import DailyRewardClaimButton from 'ui/rewards/dashboard/DailyRewardClaimButton';
 import RewardsDashboardCard from 'ui/rewards/dashboard/RewardsDashboardCard';
 import RewardsDashboardCardValue from 'ui/rewards/dashboard/RewardsDashboardCardValue';
@@ -23,6 +26,8 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import useRedirectForInvalidAuthToken from 'ui/snippets/auth/useRedirectForInvalidAuthToken';
 
 const RewardsDashboard = () => {
+  const { t: tEco } = useTranslation();
+  const { locale } = useLocale();
   const { balancesQuery, isAuth, referralsQuery, rewardsConfigQuery, dailyRewardQuery, isInitialized } = useRewardsContext();
   const { nextAchievementText, isLoading: isBadgesLoading, badgesQuery } = useStreakBadges();
   const streakModal = useDisclosure();
@@ -50,13 +55,16 @@ const RewardsDashboard = () => {
     <>
       <Flex gap={ 3 } justifyContent="space-between" mb={ 6 }>
         <PageTitle
-          title="Dashboard"
+          title={ tEco('rewardsUI.dashboard') }
           secondRow={ (
             <span>
-              <Link external href={ `https://merits.blockscout.com/?tab=users&utm_source=${ config.chain.id }&utm_medium=text-banner` }>
-                Explore the Merits Hub
-              </Link>{ ' ' }
-              to earn, spend, and learn more about the program.
+              <Trans
+                t={ tEco }
+                i18nKey="rewardsUI.hub_intro"
+                components={{
+                  hub: <Link external href={ `https://merits.blockscout.com/?tab=users&utm_source=${ config.chain.id }&utm_medium=text-banner` }/>,
+                }}
+              />
             </span>
           ) }
           mb={ 0 }
@@ -64,21 +72,20 @@ const RewardsDashboard = () => {
         { !isMobile && <AdBanner format="mobile" w="fit-content" flexShrink={ 0 } borderRadius="md" overflow="hidden"/> }
       </Flex>
       <Flex flexDirection="column" alignItems="flex-start" w="full" gap={ 6 }>
-        { isError && <Alert status="error">Failed to load some data. Please try again later.</Alert> }
+        { isError && <Alert status="error">{ tEco('rewardsUI.load_error') }</Alert> }
         <Flex gap={ 6 } flexDirection={{ base: 'column', md: 'row' }} w="full">
           <RewardsDashboardCard
-            title="All Merits"
-            description="Claim your daily Merits and any Merits received from referrals."
+            title={ tEco('rewardsUI.all_merits') }
+            description={ tEco('rewardsUI.claim_description') }
             contentDirection="column-reverse"
             cardValueStyle={{ minH: { base: '64px', md: '116px' } }}
             contentAfter={ <DailyRewardClaimButton/> }
             hint={ (
-              <>
-                Total number of Merits earned from all activities.{ ' ' }
-                <Link external href="https://docs.blockscout.com/using-blockscout/merits">
-                  More info on Merits
-                </Link>
-              </>
+              <Trans
+                t={ tEco }
+                i18nKey="rewardsUI.total_hint"
+                components={{ docs: <Link external href="https://docs.blockscout.com/using-blockscout/merits"/> }}
+              />
             ) }
           >
             <RewardsDashboardCardValue
@@ -88,42 +95,43 @@ const RewardsDashboard = () => {
             />
           </RewardsDashboardCard>
           <RewardsDashboardCard
-            title="Referrals"
-            description="Total number of users who have joined the program using your code or referral link."
+            title={ tEco('rewardsUI.referrals') }
+            description={ tEco('rewardsUI.referrals_description') }
             contentDirection="column-reverse"
             cardValueStyle={{ minH: { base: '64px', md: '116px' } }}
           >
             <RewardsDashboardCardValue
               value={ referralsQuery.data?.referrals ?
-                `${ referralsQuery.data?.referrals } user${ Number(referralsQuery.data?.referrals) === 1 ? '' : 's' }` :
+                tEco('rewardsUI.users_count', {
+                  count: Number(referralsQuery.data.referrals), value: formatNumber(Number(referralsQuery.data.referrals), locale),
+                }) :
                 'N/A'
               }
               isLoading={ referralsQuery.isPending }
             />
           </RewardsDashboardCard>
           <RewardsDashboardCard
-            title="Streak"
-            description={
-              `Current number of consecutive days you${ apos }ve claimed your daily Merits. The longer your streak, the more daily Merits you can earn.`
-            }
+            title={ tEco('rewardsUI.streak') }
+            description={ tEco('rewardsUI.streak_description') }
             hint={ (
-              <>
-                See the{ ' ' }
-                <Link external href="https://docs.blockscout.com/using-blockscout/merits/streak-rewards">docs</Link>{ ' ' }
-                to learn how your streak number affects daily rewards
-              </>
+              <Trans
+                t={ tEco }
+                i18nKey="rewardsUI.streak_hint"
+                components={{ docs: <Link external href="https://docs.blockscout.com/using-blockscout/merits/streak-rewards"/> }}
+              />
             ) }
             contentDirection="column-reverse"
             cardValueStyle={{ minH: { base: '64px', md: '116px' } }}
             contentAfter={ (
               <Button mt={ 3 } onClick={ streakModal.onOpen } loading={ isBadgesLoading }>
-                Check achievements
-              </Button>
+                { tEco('rewardsUI.check_achievements') }</Button>
             ) }
           >
             <RewardsDashboardCardValue
               value={ dailyRewardQuery.data?.streak ?
-                `${ dailyRewardQuery.data?.streak } day${ Number(dailyRewardQuery.data?.streak) === 1 ? '' : 's' }` :
+                tEco('rewardsUI.days_count', {
+                  count: Number(dailyRewardQuery.data.streak), value: formatNumber(Number(dailyRewardQuery.data.streak), locale),
+                }) :
                 'N/A' }
               isLoading={ dailyRewardQuery.isPending }
               bottomText={ nextAchievementText }
@@ -136,17 +144,17 @@ const RewardsDashboard = () => {
           tabs={ [
             {
               id: 'activity',
-              title: 'Activity',
+              title: tEco('rewardsUI.activity'),
               component: <ActivityTab/>,
             },
             {
               id: 'referrals',
-              title: 'Referrals',
+              title: tEco('rewardsUI.referrals'),
               component: <ReferralsTab/>,
             },
             {
               id: 'resources',
-              title: 'Resources',
+              title: tEco('rewardsUI.resources'),
               component: <ResourcesTab/>,
             },
           ] }

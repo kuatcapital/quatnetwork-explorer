@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type {
   ValidatorStability,
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
+  const { t } = useTranslation();
 
   const onSortToggle = React.useCallback((field: ValidatorsStabilitySortingField) => {
     const value = getNextSortValue<ValidatorsStabilitySortingField, ValidatorsStabilitySortingValue>(VALIDATORS_STABILITY_SORT_SEQUENCE, field)(sort);
@@ -31,15 +34,14 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
     <TableRoot>
       <TableHeaderSticky top={ ACTION_BAR_HEIGHT_DESKTOP }>
         <TableRow>
-          <TableColumnHeader width="50%">Validator’s address</TableColumnHeader>
+          <TableColumnHeader width="50%">{ t('networkTransfers.validator_address') }</TableColumnHeader>
           <TableColumnHeaderSortable
             width="25%"
             sortField="state"
             sortValue={ sort }
             onSortToggle={ onSortToggle }
           >
-            Status
-          </TableColumnHeaderSortable>
+            { t('networkTransfers.status') }</TableColumnHeaderSortable>
           <TableColumnHeaderSortable
             width="25%"
             sortField="blocks_validated"
@@ -47,8 +49,7 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
             onSortToggle={ onSortToggle }
             isNumeric
           >
-            Blocks
-          </TableColumnHeaderSortable>
+            { t('networkTransfers.blocks') }</TableColumnHeaderSortable>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

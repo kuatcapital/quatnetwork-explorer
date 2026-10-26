@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, chakra, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import { layerLabels } from 'lib/rollups/utils';
@@ -15,10 +17,11 @@ import ArbitrumL2TxnWithdrawalsList from 'ui/txnWithdrawals/arbitrumL2/ArbitrumL
 import ArbitrumL2TxnWithdrawalsTable from 'ui/txnWithdrawals/arbitrumL2/ArbitrumL2TxnWithdrawalsTable';
 
 const ArbitrumL2TxnWithdrawals = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const [ searchTerm, setSearchTerm ] = React.useState(getQueryParamString(router.query.q) || undefined);
-  const [ error, setError ] = React.useState<string | null>(null);
+  const [ error, setError ] = React.useState(false);
 
   const { data, isError, isPlaceholderData } = useApiQuery('general:arbitrum_l2_txn_withdrawals', {
     pathParams: {
@@ -33,7 +36,7 @@ const ArbitrumL2TxnWithdrawals = () => {
   });
 
   const handleSearchTermChange = React.useCallback(() => {
-    setError(null);
+    setError(false);
   }, [ ]);
 
   const handleSearchInputFocus = React.useCallback(() => {}, []);
@@ -43,14 +46,14 @@ const ArbitrumL2TxnWithdrawals = () => {
 
     if (!value || TRANSACTION_HASH_REGEXP.test(value)) {
       setSearchTerm(value);
-      setError(null);
+      setError(false);
       router.push(
         { pathname: router.pathname, query: value ? { q: value } : undefined },
         undefined,
         { shallow: true },
       );
     } else {
-      setError('Invalid transaction hash');
+      setError(true);
       setSearchTerm(undefined);
     }
   }, [ router ]);
@@ -75,9 +78,9 @@ const ArbitrumL2TxnWithdrawals = () => {
 
   return (
     <>
-      <PageTitle title="Transaction withdrawals" withTextAd/>
+      <PageTitle title={ t('networkTransfers.txn_withdrawals') } withTextAd/>
       <Text>
-        { layerLabels.current } to { layerLabels.parent } message relayer: search for your { layerLabels.current } transaction to execute a manual withdrawal.
+        { t('networkTransfers.message_relayer', { current: layerLabels.current, parent: layerLabels.parent }) }
       </Text>
       <chakra.form onSubmit={ handleSubmit } noValidate>
         <FilterInput
@@ -85,21 +88,21 @@ const ArbitrumL2TxnWithdrawals = () => {
           w={{ base: '100%', lg: '700px' }}
           mt={ 6 }
           size="sm"
-          placeholder="Search by transaction hash"
+          placeholder={ t('networkTransfers.search_tx') }
           initialValue={ searchTerm }
           onChange={ handleSearchTermChange }
           onFocus={ handleSearchInputFocus }
           onBlur={ handleSearchInputBlur }
         />
       </chakra.form>
-      { error && <FormFieldError message={ error }/> }
+      { error && <FormFieldError message={ t('networkTransfers.invalid_tx_hash') }/> }
       <DataListDisplay
         mt={ 6 }
         isError={ isError }
         itemsNum={ searchTerm ? data?.items.length : undefined }
         hasActiveFilters={ Boolean(searchTerm) }
         emptyStateProps={{
-          term: 'withdrawal',
+          description: t('networkTransfers.no_withdrawals'),
         }}
       >
         { content }

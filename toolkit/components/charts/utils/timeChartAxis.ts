@@ -1,7 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: isolated axis formatters for the selected locale. GPL-3.0.
 import * as d3 from 'd3';
 import { maxBy, uniq } from 'es-toolkit';
 
 import type { AxesConfig, AxisConfig, TimeChartData } from '../types';
+
+import type { Locale } from 'configs/app/i18n';
+import dayjs from 'lib/date/dayjs';
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 
 import { DAY, MONTH, YEAR } from '../../../utils/consts';
 
@@ -16,18 +21,18 @@ export interface LabelFormatParams extends Intl.NumberFormatOptions {
 
 type Data = TimeChartData;
 
-export function getAxesParams(data: Data, axesConfig?: AxesConfig) {
-  const { labelFormatParams: labelFormatParamsY, scale: yScale } = getAxisParamsY(data, axesConfig?.y, axesConfig?.y?.tickFormatter);
+export function getAxesParams(data: Data, axesConfig?: AxesConfig, locale: Locale = 'en') {
+  const { labelFormatParams: labelFormatParamsY, scale: yScale } = getAxisParamsY(data, axesConfig?.y, axesConfig?.y?.tickFormatter, locale);
 
   return {
     x: {
       scale: getAxisParamsX(data).scale,
-      tickFormatter: axesConfig?.x?.tickFormatter ?? tickFormatterX,
+      tickFormatter: axesConfig?.x?.tickFormatter ?? tickFormatterX(locale),
     },
     y: {
       scale: yScale,
       labelFormatParams: labelFormatParamsY,
-      tickFormatter: axesConfig?.y?.tickFormatter ?? getTickFormatterY(labelFormatParamsY),
+      tickFormatter: axesConfig?.y?.tickFormatter ?? getTickFormatterY(labelFormatParamsY, locale),
     },
   };
 }
@@ -40,27 +45,27 @@ function getAxisParamsX(data: Data) {
   return { min, max, scale };
 }
 
-const tickFormatterX = (axis: d3.Axis<d3.NumberValue>) => (d: d3.AxisDomain) => {
-  let format: (date: Date) => string;
+const tickFormatterX = (locale: Locale) => (axis: d3.Axis<d3.NumberValue>) => (d: d3.AxisDomain) => {
+  let format: string;
   const scale = axis.scale();
   const extent = scale.domain();
 
   const span = Number(extent[1]) - Number(extent[0]);
 
   if (span > 2 * YEAR) {
-    format = d3.utcFormat('%Y');
+    format = 'YYYY';
   } else if (span > 4 * MONTH) {
-    format = d3.utcFormat('%b \'%y');
+    format = 'MMM \'YY';
   } else if (span > 2 * DAY) {
-    format = d3.utcFormat('%d %b');
+    format = 'DD MMM';
   } else {
-    format = d3.utcFormat('%H:%M');
+    format = 'HH:mm';
   }
 
-  return format(d as Date);
+  return dayjs(d as Date).utc().locale(locale).format(format);
 };
 
-function getAxisParamsY(data: Data, config?: AxisConfig, tickFormatter?: () => (d: d3.AxisDomain) => string) {
+function getAxisParamsY(data: Data, config?: AxisConfig, tickFormatter?: () => (d: d3.AxisDomain) => string, locale: Locale = 'en') {
   const DEFAULT_TICKS_NUM = 3;
   const min = d3.min(data, ({ items }) => d3.min(items, ({ value }) => value)) ?? 0;
   const max = d3.max(data, ({ items }) => d3.max(items, ({ value }) => value)) ?? 0;
@@ -72,20 +77,21 @@ function getAxisParamsY(data: Data, config?: AxisConfig, tickFormatter?: () => (
       .domain([ config?.scale?.min ?? min, max ]);
 
   const ticks = scale.ticks(config?.ticks ?? DEFAULT_TICKS_NUM);
-  const labelFormatParams = getYLabelFormatParams(ticks, tickFormatter);
+  const labelFormatParams = getYLabelFormatParams(ticks, tickFormatter, DEFAULT_MAXIMUM_SIGNIFICANT_DIGITS, locale);
 
   return { min, max, scale, labelFormatParams };
 }
 
-const getTickFormatterY = (params: Intl.NumberFormatOptions) => () => (d: d3.AxisDomain) => {
+const getTickFormatterY = (params: Intl.NumberFormatOptions, locale: Locale) => () => (d: d3.AxisDomain) => {
   const num = Number(d);
-  return num.toLocaleString(undefined, params);
+  return num.toLocaleString(NUMBER_LOCALES[locale], params);
 };
 
 function getYLabelFormatParams(
   ticks: Array<number>,
   tickFormatter?: () => (d: d3.AxisDomain) => string,
   maximumSignificantDigits = DEFAULT_MAXIMUM_SIGNIFICANT_DIGITS,
+  locale: Locale = 'en',
 ): LabelFormatParams {
   const params = {
     maximumFractionDigits: DEFAULT_MAXIMUM_FRACTION_DIGITS,
@@ -93,12 +99,12 @@ function getYLabelFormatParams(
     notation: 'compact' as const,
   };
 
-  const uniqTicksStr = uniq(ticks.map((tick) => tickFormatter ? tickFormatter()(tick) : tick.toLocaleString(undefined, params)));
+  const uniqTicksStr = uniq(ticks.map((tick) => tickFormatter ? tickFormatter()(tick) : tick.toLocaleString(NUMBER_LOCALES[locale], params)));
   const maxLabelLength = maxBy(uniqTicksStr, (items) => items.length)?.length ?? DEFAULT_LABEL_LENGTH;
 
   if (uniqTicksStr.length === ticks.length || maximumSignificantDigits === MAXIMUM_SIGNIFICANT_DIGITS_LIMIT) {
     return { ...params, maxLabelLength };
   }
 
-  return getYLabelFormatParams(ticks, tickFormatter, maximumSignificantDigits + 1);
+  return getYLabelFormatParams(ticks, tickFormatter, maximumSignificantDigits + 1, locale);
 }

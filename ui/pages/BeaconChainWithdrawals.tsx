@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { currencyUnits } from 'lib/units';
 import { generateListStub } from 'stubs/utils';
 import { WITHDRAWAL } from 'stubs/withdrawals';
@@ -20,6 +24,8 @@ import BeaconChainWithdrawalsTable from 'ui/withdrawals/beaconChain/BeaconChainW
 const feature = config.features.beaconChain;
 
 const BeaconChainWithdrawals = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:withdrawals',
     options: {
@@ -71,8 +77,10 @@ const BeaconChainWithdrawals = () => {
       <Skeleton loading={ countersQuery.isPlaceholderData || isPlaceholderData } display="flex" flexWrap="wrap">
         { countersQuery.data && (
           <Text lineHeight={{ base: '24px', lg: '32px' }}>
-            { BigNumber(countersQuery.data.withdrawals_count).toFormat() } withdrawals processed
-            and { calculateUsdValue({ amount: countersQuery.data.withdrawals_sum }).valueStr } { currencyUnits.ether } withdrawn
+            { t('networkTransfers.withdrawals_processed', {
+              value: formatBigNumber(BigNumber(countersQuery.data.withdrawals_count), locale),
+              amount: calculateUsdValue({ amount: countersQuery.data.withdrawals_sum, locale }).valueStr, symbol: currencyUnits.ether,
+            }) }
           </Text>
         ) }
       </Skeleton>
@@ -84,13 +92,14 @@ const BeaconChainWithdrawals = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } withdrawals` : 'Withdrawals' }
+        title={ config.meta.seo.enhancedDataEnabled ?
+          t('networkTransfers.chain_withdrawals', { chain: config.chain.name }) : t('networkTransfers.withdrawals') }
         withTextAd
       />
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no withdrawals."
+        emptyText={ t('networkTransfers.no_withdrawals') }
         actionBar={ actionBar }
       >
         { content }

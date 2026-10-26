@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-26: reactive advanced-filter page labels and formatted tags. GPL-3.0.
 import {
   Box,
   Text,
@@ -8,6 +9,7 @@ import {
 import { omit } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AdvancedFilterParams } from 'types/api/advancedFilter';
 import { ADVANCED_FILTER_AGES, ADVANCED_FILTER_ADDRESS_RELATION } from 'types/api/advancedFilter';
@@ -19,6 +21,7 @@ import dayjs from 'lib/date/dayjs';
 import getFilterValueFromQuery from 'lib/getFilterValueFromQuery';
 import getFilterValuesFromQuery from 'lib/getFilterValuesFromQuery';
 import getValuesArrayFromQuery from 'lib/getValuesArrayFromQuery';
+import { useLocale } from 'lib/i18n/provider';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { ADVANCED_FILTER_ITEM } from 'stubs/advancedFilter';
 import { generateListStub } from 'stubs/utils';
@@ -27,7 +30,7 @@ import { TableBody, TableCell, TableColumnHeader, TableHeaderSticky, TableRoot, 
 import { Tag } from 'toolkit/chakra/tag';
 import ColumnsButton from 'ui/advancedFilter/ColumnsButton';
 import type { ColumnsIds } from 'ui/advancedFilter/constants';
-import { getAdvancedFilterTypes, TABLE_COLUMNS } from 'ui/advancedFilter/constants';
+import { getAdvancedFilterTypes, getTableColumns, TABLE_COLUMNS } from 'ui/advancedFilter/constants';
 import ExportCSV from 'ui/advancedFilter/ExportCSV';
 import FilterByColumn from 'ui/advancedFilter/FilterByColumn';
 import ItemByColumn from 'ui/advancedFilter/ItemByColumn';
@@ -45,6 +48,8 @@ const COLUMNS_CHECKED = {} as Record<ColumnsIds, boolean>;
 TABLE_COLUMNS.forEach(c => COLUMNS_CHECKED[c.id] = true);
 
 const AdvancedFilter = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const router = useRouter();
   const multichainContext = useMultichainContext();
 
@@ -53,7 +58,7 @@ const AdvancedFilter = () => {
     const addressRelation = getFilterValueFromQuery(ADVANCED_FILTER_ADDRESS_RELATION, router.query.address_relation);
     return {
       transaction_types: getFilterValuesFromQuery(
-        getAdvancedFilterTypes(multichainContext?.chain?.app_config).map(t => t.id),
+        getAdvancedFilterTypes(multichainContext?.chain?.app_config, false, t).map(type => type.id),
         router.query.transaction_types,
       ),
       methods: getValuesArrayFromQuery(router.query.methods),
@@ -136,13 +141,13 @@ const AdvancedFilter = () => {
     onFilterChange({});
   }, [ onFilterChange ]);
 
-  const columnsToShow = TABLE_COLUMNS.filter(c => columns[c.id]);
+  const columnsToShow = getTableColumns(t).filter(c => columns[c.id]);
 
   if (isLoading) {
     return null;
   }
 
-  const filterTags = getFilterTags(filters, multichainContext?.chain?.app_config);
+  const filterTags = getFilterTags(filters, multichainContext?.chain?.app_config, t, locale);
 
   const content = (
     <AddressHighlightProvider>
@@ -163,7 +168,7 @@ const AdvancedFilter = () => {
                   >
                     { Boolean(column.name) && (
                       <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">
-                        { column.id === 'age' ? 'Timestamp' : column.name }
+                        { column.id === 'age' ? t('common.timestamp') : column.name }
                       </chakra.span>
                     ) }
                     <FilterByColumn
@@ -239,21 +244,21 @@ const AdvancedFilter = () => {
   return (
     <>
       <PageTitle
-        title="Advanced filter"
+        title={ t('advancedFilterUi.title') }
         withTextAd
       />
       <Flex mb={ 4 } justifyContent="space-between" alignItems="start">
-        <Text fontSize="lg" mr={ 3 } lineHeight="24px" w="100px">Filtered by:</Text>
+        <Text fontSize="lg" mr={ 3 } lineHeight="24px" w="100px">{ t('advancedFilterUi.filtered_by') }</Text>
         { filterTags.length !== 0 && (
           <Link onClick={ clearAllFilters } display="flex" alignItems="center" justifyContent="end" gap={ 2 } fontSize="sm" w="150px">
             <IconSvg name="repeat" boxSize={ 5 }/>
-            Reset filters
+            { t('advancedFilterUi.reset_filters') }
           </Link>
         ) }
       </Flex>
       <HStack gap={ 2 } flexWrap="wrap" mb={ 6 }>
         { multichainContext?.chain && (
-          <Tag variant="filter" label="Chain">
+          <Tag variant="filter" label={ t('advancedFilterUi.chain') }>
             { multichainContext.chain.app_config.chain.name }
           </Tag>
         ) }
@@ -264,11 +269,11 @@ const AdvancedFilter = () => {
         )) }
         { filterTags.length === 0 && (
           <>
-            <Tag variant="filter" label="Type">
-              All
+            <Tag variant="filter" label={ t('common.type') }>
+              { t('common.all') }
             </Tag>
-            <Tag variant="filter" label="Age">
-              7d
+            <Tag variant="filter" label={ t('common.age') }>
+              { t('advancedFilterUi.age_7d') }
             </Tag>
           </>
         ) }
@@ -276,7 +281,7 @@ const AdvancedFilter = () => {
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no transactions."
+        emptyText={ t('advancedFilterUi.no_transactions') }
         actionBar={ actionBar }
         hasActiveFilters={ Object.values(filters).some(Boolean) }
         emptyStateProps={{

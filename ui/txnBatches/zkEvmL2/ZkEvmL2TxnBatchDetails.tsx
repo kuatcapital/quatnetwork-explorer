@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ZKEVM_L2_TX_BATCH_STATUSES } from 'types/api/zkEvmL2';
 import type { ZkEvmL2TxnBatch } from 'types/api/zkEvmL2';
@@ -10,6 +12,8 @@ import { route } from 'nextjs-routes';
 
 import type { ResourceError } from 'lib/api/resources';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { formatZkEvmL2TxnBatchStatus } from 'lib/rollups/utils';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -30,6 +34,9 @@ interface Props {
 }
 
 const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const router = useRouter();
 
   const { data, isPlaceholderData, isError, error } = query;
@@ -82,9 +89,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Status
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <VerificationSteps
           steps={ verificationSteps }
@@ -95,18 +100,14 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Timestamp
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.timestamp ? <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/> : 'Undefined' }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Verify tx hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('transactions.verify_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.verify_transaction_hash ? (
           <TxEntityL1
@@ -115,18 +116,19 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
             maxW="100%"
             noCopy
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>{ tQuat('common.pending') }</Text> }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Transactions
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
-            { data.transactions.length } transaction{ data.transactions.length === 1 ? '' : 's' }
+            { tQuat('sectionCounts.transactions', {
+              count: data.transactions.length,
+              value: formatNumber(data.transactions.length, locale),
+            }) }
           </Link>
         </Skeleton>
       </DetailedInfo.ItemValue>
@@ -163,9 +165,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Sequence tx hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('transactions.sequence_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.sequence_transaction_hash ? (
           <TxEntityL1
@@ -174,7 +174,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
             maxW="100%"
             noCopy
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>{ tQuat('common.pending') }</Text> }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel

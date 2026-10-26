@@ -1,7 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CeloEpochDetails, CeloEpochElectionReward } from 'types/api/epochs';
 
+import { useLocale } from 'lib/i18n/provider';
 import { IconButton } from 'toolkit/chakra/icon-button';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
@@ -20,6 +23,8 @@ interface Props {
 }
 
 const EpochElectionRewardsTableItem = ({ isLoading, data, type }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const section = useDisclosure();
 
   const mainRowBorderColor = section.open ? 'transparent' : 'border.divider';
@@ -34,7 +39,7 @@ const EpochElectionRewardsTableItem = ({ isLoading, data, type }: Props) => {
           { Boolean(data.count) && (
             <Skeleton loading={ isLoading } display="flex" borderRadius="sm">
               <IconButton
-                aria-label={ section.open ? 'Collapse section' : 'Expand section' }
+                aria-label={ section.open ? t('networkTransfers.collapse') : t('networkTransfers.expand') }
                 variant="link"
               >
                 <IconSvg
@@ -52,7 +57,7 @@ const EpochElectionRewardsTableItem = ({ isLoading, data, type }: Props) => {
         </TableCell>
         <TableCell borderColor={ mainRowBorderColor }>
           <Skeleton loading={ isLoading } fontWeight={ 400 } my={ 1 }>
-            { getRewardNumText(type, data.count) }
+            { getRewardNumText(type, data.count, t, locale) }
           </Skeleton>
         </TableCell>
         <TableCell borderColor={ mainRowBorderColor } textAlign="right">

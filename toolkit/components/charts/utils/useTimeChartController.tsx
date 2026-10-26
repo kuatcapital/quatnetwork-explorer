@@ -1,6 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: refresh axes when the UI language changes. GPL-3.0.
 import React from 'react';
 
 import type { AxesConfig, ChartMargin, TimeChartData } from '../types';
+
+import { useLocale } from 'lib/i18n/provider';
 
 import { useClientRect } from '../../../hooks/useClientRect';
 import { calculateInnerSize } from './calculateInnerSize';
@@ -13,12 +16,13 @@ interface Props {
 }
 
 export function useTimeChartController({ data, margin, axesConfig }: Props) {
+  const { locale } = useLocale();
 
   const [ rect, ref ] = useClientRect<SVGSVGElement>();
 
   // we need to recalculate the axis scale whenever the rect width changes
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const axesParams = React.useMemo(() => getAxesParams(data, axesConfig), [ data, axesConfig, rect?.width ]);
+  const axesParams = React.useMemo(() => getAxesParams(data, axesConfig, locale), [ data, axesConfig, rect?.width, locale ]);
 
   const chartMargin = React.useMemo(() => {
     const PIXELS_PER_DIGIT = 8;

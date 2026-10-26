@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: localize validators, epochs and transfers. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import type { Abi } from 'viem';
 import { useSwitchChain, useWaitForTransactionReceipt, useWalletClient } from 'wagmi';
 
@@ -56,6 +58,7 @@ interface Props {
 }
 
 const OptimisticL2ClaimModal = ({ data, onOpenChange, proofSubmitterAddress, onSuccess }: Props) => {
+  const { t } = useTranslation();
 
   const [ txHash, setTxHash ] = React.useState<`0x${ string }` | undefined>(undefined);
 
@@ -78,23 +81,24 @@ const OptimisticL2ClaimModal = ({ data, onOpenChange, proofSubmitterAddress, onS
 
   const showErrorToast = React.useCallback((error: unknown) => {
     const apiError = getErrorObjPayload<{ message: string }>(error);
-    const message = capitalizeFirstLetter(apiError?.message || getErrorProp(error, 'shortMessage') || getErrorMessage(error) || 'Something went wrong');
+    const errorMessage = apiError?.message || getErrorProp(error, 'shortMessage') || getErrorMessage(error) || t('networkTransfers.unexpected_error');
+    const message = capitalizeFirstLetter(errorMessage);
     toaster.error({
-      title: 'Error',
+      title: t('networkTransfers.error'),
       description: message,
     });
-  }, []);
+  }, [ t ]);
 
   const onFormSubmit: SubmitHandler<FormFields> = React.useCallback(async(formData) => {
     try {
       if (!rollupFeature.isEnabled || !parentChain) {
-        throw new Error('Feature is not enabled');
+        throw new Error(t('networkTransfers.feature_disabled'));
       }
 
       await switchChainAsync({ chainId: Number(parentChain.id) });
 
       if (!walletClient) {
-        throw new Error('Wallet Client is not defined');
+        throw new Error(t('networkTransfers.wallet_undefined'));
       }
 
       if (
@@ -106,7 +110,7 @@ const OptimisticL2ClaimModal = ({ data, onOpenChange, proofSubmitterAddress, onS
         data.msg_nonce_raw === null ||
         data.msg_value === null
       ) {
-        throw new Error('Data is not valid');
+        throw new Error(t('networkTransfers.invalid_data'));
       }
 
       const args = [
@@ -133,7 +137,7 @@ const OptimisticL2ClaimModal = ({ data, onOpenChange, proofSubmitterAddress, onS
     } catch (error) {
       showErrorToast(error);
     }
-  }, [ walletClient, switchChainAsync, data, showErrorToast ]);
+  }, [ walletClient, switchChainAsync, data, showErrorToast, t ]);
 
   React.useEffect(() => {
     if (!txHash) {
@@ -165,19 +169,18 @@ const OptimisticL2ClaimModal = ({ data, onOpenChange, proofSubmitterAddress, onS
     >
       <DialogContent>
         <DialogHeader>
-          Claim your withdrawal
-        </DialogHeader>
+          { t('networkTransfers.claim_title') }</DialogHeader>
         <DialogBody>
           <FormProvider { ...formApi }>
             <chakra.form
               noValidate
               onSubmit={ formApi.handleSubmit(onFormSubmit) }
             >
-              <p>Confirm the proof submitter address is correct to claim</p>
+              <p>{ t('networkTransfers.claim_address_hint') }</p>
               <FormFieldAddress<FormFields>
                 name="address"
                 required
-                placeholder="Address (0x...)"
+                placeholder={ t('networkTransfers.address_placeholder') }
                 bgColor="dialog.bg"
                 mt={ 6 }
               />
@@ -187,20 +190,18 @@ const OptimisticL2ClaimModal = ({ data, onOpenChange, proofSubmitterAddress, onS
                   type="submit"
                   disabled={ formApi.formState.isSubmitting || isTxPending }
                   loading={ formApi.formState.isSubmitting || isTxPending }
-                  loadingText="Claim"
+                  loadingText={ t('networkTransfers.claim') }
                 >
-                  Claim
-                </Button>
+                  { t('networkTransfers.claim') }</Button>
               ) : (
                 <Button
                   mt={ 6 }
                   onClick={ connectWeb3Wallet }
                   disabled={ isWeb3WalletOpen }
                   loading={ isWeb3WalletOpen }
-                  loadingText="Connect wallet"
+                  loadingText={ t('networkTransfers.connect_wallet') }
                 >
-                  Connect wallet
-                </Button>
+                  { t('networkTransfers.connect_wallet') }</Button>
               ) }
             </chakra.form>
           </FormProvider>

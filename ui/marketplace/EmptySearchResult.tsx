@@ -1,11 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: complete empty-result translations with icon/link structure. GPL-3.0.
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { MarketplaceCategory } from 'types/client/marketplace';
 
 import config from 'configs/app';
 import { EmptyState } from 'toolkit/chakra/empty-state';
 import { Link } from 'toolkit/chakra/link';
-import { apos, space } from 'toolkit/utils/htmlEntities';
 import IconSvg from 'ui/shared/IconSvg';
 
 const feature = config.features.marketplace;
@@ -15,28 +16,35 @@ type Props = {
   selectedCategoryId?: string;
 };
 
-const EmptySearchResult = ({ favoriteApps, selectedCategoryId }: Props) => (
-  <EmptyState
-    description={
-      (selectedCategoryId === MarketplaceCategory.FAVORITES && !favoriteApps.length) ? (
-        <>
-          You don{ apos }t have any favorite apps.<br/>
-          Click on the <IconSvg name="heart_outline" boxSize={ 5 } verticalAlign="text-bottom" color="icon.secondary"/>{ space }
-          icon on the app{ apos }s card to add it to Favorites.
-        </>
-      ) : (
-        <>
-          No matching apps found.
-          { 'suggestIdeasFormUrl' in feature && (
-            <>
-              { ' ' }Have a groundbreaking idea or app suggestion?<br/>
-              <Link external href={ feature.suggestIdeasFormUrl }>Share it with us</Link>
-            </>
-          ) }
-        </>
-      )
-    }
-  />
-);
+const EmptySearchResult = ({ favoriteApps, selectedCategoryId }: Props) => {
+  const { t: tEco } = useTranslation();
+  return (
+    <EmptyState
+      description={
+        (selectedCategoryId === MarketplaceCategory.FAVORITES && !favoriteApps.length) ? (
+          <Trans
+            t={ tEco }
+            i18nKey="marketplaceUI.empty_favorites"
+            components={{ heart: <IconSvg name="heart_outline" boxSize={ 5 } verticalAlign="text-bottom" color="icon.secondary"/>, br: <br/> }}
+          />
+        ) : (
+          <>
+            { tEco('marketplaceUI.no_matching_apps') }
+            { 'suggestIdeasFormUrl' in feature && (
+              <>
+                { ' ' }
+                <Trans
+                  t={ tEco }
+                  i18nKey="marketplaceUI.suggestion"
+                  components={{ share: <Link external href={ feature.suggestIdeasFormUrl }/>, br: <br/> }}
+                />
+              </>
+            ) }
+          </>
+        )
+      }
+    />
+  );
+};
 
 export default React.memo(EmptySearchResult);

@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenType } from 'types/api/token';
 
@@ -26,6 +28,8 @@ const getChainIdFilterValue = (chainIds: Array<string>) => {
 };
 
 const MultichainTokens = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMobile = useIsMobile();
 
@@ -106,7 +110,7 @@ const MultichainTokens = () => {
       minW={{ base: 'auto', lg: '250px' }}
       size="sm"
       onChange={ handleSearchTermChange }
-      placeholder="Token name or symbol"
+      placeholder={ tQuat('tokenUi.search_placeholder') }
       initialValue={ searchTerm }
     />
   );
@@ -148,7 +152,7 @@ const MultichainTokens = () => {
 
   return (
     <>
-      <PageTitle title="Tokens" withTextAd/>
+      <PageTitle title={ tQuat('common.tokens') } withTextAd/>
       <Tokens
         query={ tokensQuery }
         actionBar={ actionBar }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -25,6 +27,8 @@ interface Props {
 }
 
 const ChainWidget = ({ data, isLoading, metrics }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const { data: { wallet } = {} } = useProvider();
   const walletIcon = wallet ? WALLETS_INFO[wallet].icon : undefined;
@@ -42,7 +46,7 @@ const ChainWidget = ({ data, isLoading, metrics }: Props) => {
       { metrics?.active_accounts?.current_full_week && (
         <HStack gap={ 2 }>
           <Skeleton loading={ isLoading } color="text.secondary">
-            <span>Active accounts</span>
+            <span>{ tQuat('statsMetadata.metrics.activeAccounts.title') }</span>
           </Skeleton>
           <Skeleton loading={ isLoading }>{ Number(metrics.active_accounts.current_full_week).toLocaleString() }</Skeleton>
         </HStack>
