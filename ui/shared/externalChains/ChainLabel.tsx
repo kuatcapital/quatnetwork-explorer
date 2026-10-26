@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import type { StackProps } from '@chakra-ui/react';
 import { Box, Flex, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ExternalChain } from 'types/externalChains';
 
@@ -17,6 +19,7 @@ interface Props extends StackProps {
 }
 
 const ChainLabel = ({ data, isLoading, fallback, ...rest }: Props) => {
+  const { t } = useTranslation();
   if (!data) {
     return fallback || null;
   }
@@ -25,7 +28,7 @@ const ChainLabel = ({ data, isLoading, fallback, ...rest }: Props) => {
     <>
       <Box fontWeight={ 600 }>{ data.name }</Box>
       <Flex alignItems="center" justifyContent="center">
-        ChainID: { data.id }
+        { t('sharedUi.chain_id', { id: data.id }) }
         <CopyToClipboard text={ data.id } noTooltip/>
       </Flex>
     </>

@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfoApplication, VerifiedAddress } from 'types/api/account';
 
-import dayjs from 'lib/date/dayjs';
 import { IconButton } from 'toolkit/chakra/icon-button';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -11,6 +12,7 @@ import { Tooltip } from 'toolkit/chakra/tooltip';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import IconSvg from 'ui/shared/IconSvg';
+import Time from 'ui/shared/time/Time';
 
 import VerifiedAddressesStatus from './VerifiedAddressesStatus';
 
@@ -23,6 +25,7 @@ interface Props {
 }
 
 const VerifiedAddressesTableItem = ({ item, application, onAdd, onEdit, isLoading }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   const handleAddClick = React.useCallback(() => {
     if (isLoading) {
@@ -44,11 +47,11 @@ const VerifiedAddressesTableItem = ({ item, application, onAdd, onEdit, isLoadin
     }
 
     if (!item.metadata.tokenName) {
-      return <span>Not a token</span>;
+      return <span>{ tAcct('accountUI.not_a_token') }</span>;
     }
 
     if (!application) {
-      return <Link onClick={ handleAddClick }>Add details</Link>;
+      return <Link onClick={ handleAddClick }>{ tAcct('accountUI.add_details') }</Link>;
     }
 
     const token = {
@@ -84,9 +87,9 @@ const VerifiedAddressesTableItem = ({ item, application, onAdd, onEdit, isLoadin
       </TableCell>
       <TableCell pl="0">
         { item.metadata.tokenName && application && !isLoading ? (
-          <Tooltip content="Edit" disabled={ isLoading } disableOnMobile>
+          <Tooltip content={ tAcct('accountUI.edit') } disabled={ isLoading } disableOnMobile>
             <IconButton
-              aria-label="edit"
+              aria-label={ tAcct('accountUI.edit') }
               variant="link"
               size="2xs"
               borderRadius="none"
@@ -104,7 +107,7 @@ const VerifiedAddressesTableItem = ({ item, application, onAdd, onEdit, isLoadin
       </TableCell>
       <TableCell fontSize="sm" color="text.secondary">
         <Skeleton loading={ isLoading } display="inline-block">
-          { item.metadata.tokenName && application ? dayjs(application.updatedAt).format('MMM DD, YYYY') : null }
+          { item.metadata.tokenName && application ? <Time timestamp={ application.updatedAt } format="ll"/> : null }
         </Skeleton>
       </TableCell>
     </TableRow>

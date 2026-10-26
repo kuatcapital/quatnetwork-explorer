@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { WatchlistAddress } from 'types/api/account';
 
@@ -16,13 +18,14 @@ interface Props {
 }
 
 const WatchlistTable = ({ data, isLoading, onDeleteClick, onEditClick, top, hasEmail }: Props) => {
+  const { t: tAcct } = useTranslation();
   return (
     <TableRoot minWidth="600px">
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader width="70%">Address</TableColumnHeader>
-          <TableColumnHeader width="30%">Private tag</TableColumnHeader>
-          <TableColumnHeader width="160px">Email notification</TableColumnHeader>
+          <TableColumnHeader width="70%">{ tAcct('accountUI.address') }</TableColumnHeader>
+          <TableColumnHeader width="30%">{ tAcct('accountUI.private_tag') }</TableColumnHeader>
+          <TableColumnHeader width="160px">{ tAcct('accountUI.email_notification') }</TableColumnHeader>
           <TableColumnHeader width="108px"></TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

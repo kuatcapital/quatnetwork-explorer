@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import { route } from 'nextjs/routes';
 
 import config from 'configs/app';
@@ -7,18 +10,19 @@ import dayjs from 'lib/date/dayjs';
 interface Params {
   timeFromNow: number;
   blockHeight: string;
+  t: TFunction;
   multichainContext?: TMultichainContext | null;
 }
 
 const DATE_FORMAT = 'YYYYMMDDTHHmm';
 
-export default function createGoogleCalendarLink({ timeFromNow, blockHeight, multichainContext }: Params): string {
+export default function createGoogleCalendarLink({ timeFromNow, blockHeight, multichainContext, t }: Params): string {
 
   const chainConfig = multichainContext?.chain.app_config || config;
 
   const date = dayjs().add(timeFromNow, 's');
-  const name = `Block #${ blockHeight } reminder | ${ chainConfig.chain.name }`;
-  const description = `#${ blockHeight } block creation time on ${ chainConfig.chain.name } blockchain.`;
+  const name = t('blockCountdown.reminder', { height: blockHeight, chain: chainConfig.chain.name });
+  const description = t('blockCountdown.calendar_description', { height: blockHeight, chain: chainConfig.chain.name });
   const startTime = date.format(DATE_FORMAT);
   const endTime = date.add(15, 'minutes').format(DATE_FORMAT);
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

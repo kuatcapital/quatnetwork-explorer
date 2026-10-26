@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ApiKey } from 'types/api/account';
 
@@ -13,8 +15,9 @@ type Props = {
 };
 
 const ApiKeyModal: React.FC<Props> = ({ open, onOpenChange, data }) => {
-  const title = data ? 'Edit API key' : 'New API key';
-  const text = !data ? 'Add an application name to identify your API key. Click the button below to auto-generate the associated key.' : '';
+  const { t: tAcct } = useTranslation();
+  const title = data ? tAcct('accountUI.edit_api_key') : tAcct('accountUI.new_api_key');
+  const text = !data ? tAcct('accountUI.api_key_help') : '';
 
   const [ isAlertVisible, setAlertVisible ] = useState(false);
 

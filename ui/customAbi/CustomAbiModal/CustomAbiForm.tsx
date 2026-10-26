@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { CustomAbi, CustomAbis, CustomAbiErrors } from 'types/api/account';
 
@@ -35,6 +37,7 @@ type Inputs = {
 const NAME_MAX_LENGTH = 255;
 
 const CustomAbiForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAlertVisible }) => {
+  const { t: tAcct } = useTranslation();
   const formApi = useForm<Inputs>({
     defaultValues: {
       contract_address_hash: data?.contract_address_hash || '',
@@ -107,7 +110,7 @@ const CustomAbiForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAler
       <form noValidate onSubmit={ formApi.handleSubmit(onSubmit) }>
         <FormFieldAddress<Inputs>
           name="contract_address_hash"
-          placeholder="Smart contract address (0x...)"
+          placeholder={ tAcct('accountUI.contract_address') }
           required
           bgColor="dialog.bg"
           readOnly={ Boolean(data && 'contract_address_hash' in data) }
@@ -115,7 +118,7 @@ const CustomAbiForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAler
         />
         <FormFieldText<Inputs>
           name="name"
-          placeholder="Project name"
+          placeholder={ tAcct('accountUI.project_name') }
           required
           rules={{
             maxLength: NAME_MAX_LENGTH,
@@ -125,7 +128,7 @@ const CustomAbiForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAler
         />
         <FormFieldText<Inputs>
           name="abi"
-          placeholder="Custom ABI [{...}] (JSON format)"
+          placeholder={ tAcct('accountUI.abi_json') }
           required
           asComponent="Textarea"
           bgColor="dialog.bg"
@@ -139,7 +142,7 @@ const CustomAbiForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAler
             disabled={ !formApi.formState.isDirty }
             loading={ isPending }
           >
-            { data && 'id' in data ? 'Save' : 'Create custom ABI' }
+            { data && 'id' in data ? tAcct('accountUI.save') : tAcct('accountUI.create_custom_abi') }
           </Button>
         </Box>
       </form>

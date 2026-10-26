@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import InternalTxsList from 'ui/internalTxs/InternalTxsList';
 import InternalTxsTable from 'ui/internalTxs/InternalTxsTable';
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const BlockInternalTxs = ({ query, top }: Props) => {
+  const { t } = useTranslation();
   const { data, isPlaceholderData, isError } = query;
 
   const content = data?.items ? (
@@ -29,7 +32,7 @@ const BlockInternalTxs = ({ query, top }: Props) => {
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items.length }
-      emptyText="There are no internal transactions."
+      emptyText={ t('blockDetails.internal_empty') }
     >
       { content }
     </DataListDisplay>

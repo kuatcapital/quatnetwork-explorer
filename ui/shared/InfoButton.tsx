@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { Button } from 'toolkit/chakra/button';
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const InfoButton = ({ children, isLoading }: Props) => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const triggerButton = (
@@ -19,14 +22,14 @@ const InfoButton = ({ children, isLoading }: Props) => {
       size="sm"
       variant="dropdown"
       gap={ 0 }
-      aria-label="Show info"
+      aria-label={ t('sharedUi.show_info') }
       fontWeight={ 500 }
       pl={ 1 }
       pr={ isMobile ? 1 : 2 }
       loadingSkeleton={ isLoading }
     >
       <IconSvg name="info" boxSize={ 6 } mr={ isMobile ? 0 : 1 }/>
-      { !isMobile && <span>Info</span> }
+      { !isMobile && <span>{ t('common.info') }</span> }
     </Button>
   );
 

@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-26: selected-locale toolkit defaults. GPL-3.0.
 import { Box, Flex, Icon, Text, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import JsonFileIcon from 'icons/files/json.svg';
 import PlaceholderFileIcon from 'icons/files/placeholder.svg';
 import SolFileIcon from 'icons/files/sol.svg';
 import YulFileIcon from 'icons/files/yul.svg';
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 
 import { CloseButton } from '../../../../chakra/close-button';
 import { Hint } from '../../../../components/Hint/Hint';
@@ -34,6 +38,8 @@ interface Props {
 }
 
 export const FileSnippet = chakra(({ file, className, index, onRemove, isDisabled, error }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const handleRemove = React.useCallback((event: React.MouseEvent) => {
     event.stopPropagation();
     onRemove?.(index);
@@ -67,14 +73,16 @@ export const FileSnippet = chakra(({ file, className, index, onRemove, isDisable
           </Text>
           { Boolean(error) && <Hint label={ error } ml={ 1 } color="text.error"/> }
           <CloseButton
-            aria-label="Remove"
+            aria-label={ t('toolkit.remove') }
             ml={ 2 }
             onClick={ handleRemove }
             disabled={ isDisabled }
           />
         </Flex>
         <Text color="text.secondary" textStyle="sm" mt={ 1 }>
-          { file.size.toLocaleString(undefined, { notation: 'compact', maximumFractionDigits: 2, unit: 'byte', unitDisplay: 'narrow', style: 'unit' }) }
+          { file.size.toLocaleString(NUMBER_LOCALES[locale], {
+            notation: 'compact', maximumFractionDigits: 2, unit: 'byte', unitDisplay: 'narrow', style: 'unit',
+          }) }
         </Text>
       </Box>
     </Flex>

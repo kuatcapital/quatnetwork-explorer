@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { AddressTag, TransactionTag, AddressTagsResponse, TransactionTagsResponse } from 'types/api/account';
 
@@ -16,6 +18,7 @@ type Props = {
 };
 
 const DeletePrivateTagModal: React.FC<Props> = ({ open, onOpenChange, data, type }) => {
+  const { t: tAcct } = useTranslation();
   const tag = data.name;
   const id = data.id;
 
@@ -47,15 +50,21 @@ const DeletePrivateTagModal: React.FC<Props> = ({ open, onOpenChange, data, type
 
   const renderText = useCallback(() => {
     return (
-      <Text>Tag<Text fontWeight="700" as="span">{ ` "${ tag || 'tag' }" ` }</Text>will be deleted</Text>
+      <Text>
+        <Trans
+          i18nKey="accountUI.tag_delete_confirmation"
+          values={{ tag: tag || tAcct('accountUI.private_tag') }}
+          components={{ strong: <Text fontWeight="700" as="span"/> }}
+        />
+      </Text>
     );
-  }, [ tag ]);
+  }, [ tag, tAcct ]);
 
   return (
     <DeleteModal
       open={ open }
       onOpenChange={ onOpenChange }
-      title="Removal of private tag"
+      title={ tAcct('accountUI.remove_private_tag') }
       renderContent={ renderText }
       mutationFn={ mutationFn }
       onSuccess={ onSuccess }

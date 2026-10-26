@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import * as EntityBase from 'ui/shared/entities/base/components';
@@ -8,6 +10,7 @@ import type { ContentProps } from './AddressEntity';
 import AddressEntity from './AddressEntity';
 
 const AddressEntityContentProxy = (props: ContentProps) => {
+  const { t } = useTranslation();
   const implementations = props.address.implementations;
 
   if (!implementations || implementations.length === 0) {
@@ -22,7 +25,7 @@ const AddressEntityContentProxy = (props: ContentProps) => {
   const content = (
     <>
       <Box fontWeight={ 600 }>
-        Proxy contract
+        { t('sharedEntities.proxy_contract') }
         { props.address.name ? ` (${ props.address.name })` : '' }
       </Box>
       <AddressEntity
@@ -35,7 +38,7 @@ const AddressEntityContentProxy = (props: ContentProps) => {
         w="100%"
       />
       <Box fontWeight={ 600 } mt={ 2 }>
-        Implementation{ implementations.length > 1 ? 's' : '' }
+        { t('sharedEntities.implementations', { count: implementations.length }) }
         { implementationName ? ` (${ implementationName })` : '' }
       </Box>
       <Flex flexWrap="wrap" columnGap={ 3 }>

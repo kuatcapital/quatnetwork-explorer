@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import IconSvg from 'ui/shared/IconSvg';
@@ -9,8 +11,9 @@ interface Props extends Omit<IconSvgProps, 'name'> {
 }
 
 const FallbackRpcIcon = (props: Props) => {
+  const { t } = useTranslation();
   return (
-    <Tooltip content="Our indexer is experiencing problems, you see the data directly from RPC">
+    <Tooltip content={ t('sharedUi.rpc_fallback') }>
       <IconSvg name="RPC" color="orange.400" boxSize={ 5 } { ...props }/>
     </Tooltip>
   );

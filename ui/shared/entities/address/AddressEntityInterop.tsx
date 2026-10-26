@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { Box, chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ChainInfo } from 'types/api/interop';
 
@@ -42,6 +44,7 @@ const IconStub = () => {
 };
 
 const AddressEntityInterop = ({ chain, ...props }: Props) => {
+  const { t } = useTranslation();
   const partsProps = distributeEntityProps(props);
 
   const href = chain?.instance_url ? chain.instance_url.replace(/\/$/, '') + route({
@@ -62,7 +65,7 @@ const AddressEntityInterop = ({ chain, ...props }: Props) => {
             bottom="-3px"
             right="4px"
             src={ chain.chain_logo }
-            alt={ chain.chain_name || 'external chain logo' }
+            alt={ chain.chain_name || t('sharedEntities.external_chain_logo') }
             fallback={ <IconStub/> }
             width="14px"
             height="14px"
@@ -78,7 +81,9 @@ const AddressEntityInterop = ({ chain, ...props }: Props) => {
   return (
     <AddressEntity.Container className={ props.className }>
       { chain && (
-        <Tooltip content={ `Address on ${ chain.chain_name ? chain.chain_name : 'external chain' } (chain id ${ chain.chain_id })` }>
+        <Tooltip content={ t('sharedEntities.address_on_interop_chain', {
+          chain: chain.chain_name || t('sharedEntities.external_chain_lower'), chainId: chain.chain_id,
+        }) }>
           { addressIcon }
         </Tooltip>
       ) }

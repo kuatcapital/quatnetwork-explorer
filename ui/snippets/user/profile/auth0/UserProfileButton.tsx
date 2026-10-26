@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import type { ButtonProps } from '@chakra-ui/react';
 import { Box, HStack } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserInfo } from 'types/api/account';
 
@@ -25,6 +27,7 @@ interface Props {
 }
 
 const UserProfileButton = ({ profileQuery, size, variant, onClick, isPending, ...rest }: Props, ref: React.ForwardedRef<HTMLButtonElement>) => {
+  const { t: tAcct } = useTranslation();
   const [ isFetched, setIsFetched ] = useState(false);
   const isMobile = useIsMobile();
 
@@ -58,20 +61,20 @@ const UserProfileButton = ({ profileQuery, size, variant, onClick, isPending, ..
     }
 
     if (!data || isButtonLoading) {
-      return 'Log in';
+      return tAcct('accountUI.log_in');
     }
 
     return (
       <HStack gap={ 2 }>
         <IconSvg name="profile" boxSize={ 5 }/>
-        <Box display={{ base: 'none', md: 'block' }}>{ data.email ? getUserHandle(data.email) : 'My profile' }</Box>
+        <Box display={{ base: 'none', md: 'block' }}>{ data.email ? getUserHandle(data.email) : tAcct('accountUI.my_profile') }</Box>
       </HStack>
     );
   })();
 
   return (
     <Tooltip
-      content={ <span>Sign in to My Account to add tags,<br/>create watchlists, access API keys and more</span> }
+      content={ tAcct('accountUI.profile_login_hint') }
       disabled={ isMobile || isLoading || Boolean(data) }
       openDelay={ 500 }
       disableOnMobile

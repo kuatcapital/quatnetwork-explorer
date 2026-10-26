@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormSubmitResultGrouped } from '../types';
 
@@ -11,10 +13,11 @@ interface Props {
 }
 
 const PublicTagsSubmitResultSuccess = ({ data }: Props) => {
+  const { t: tAcct } = useTranslation();
   return (
     <Grid gridTemplateColumns={{ base: '1fr', lg: '1fr 1fr' }} rowGap={ 3 } columnGap={ 3 }>
       <GridItem overflow="hidden">
-        <Box fontSize="sm" color="text.secondary" fontWeight={ 500 }>Smart contract / Address (0x...)</Box>
+        <Box fontSize="sm" color="text.secondary" fontWeight={ 500 }>{ tAcct('accountUI.contract_or_address') }</Box>
         <Flex flexDir="column" rowGap={ 2 } mt={ 2 }>
           { data.items
             .map(({ addresses }) => addresses)
@@ -29,7 +32,7 @@ const PublicTagsSubmitResultSuccess = ({ data }: Props) => {
         </Flex>
       </GridItem>
       <GridItem>
-        <Box fontSize="sm" color="text.secondary" fontWeight={ 500 }>Tag</Box>
+        <Box fontSize="sm" color="text.secondary" fontWeight={ 500 }>{ tAcct('accountUI.tag') }</Box>
         <Flex rowGap={ 2 } columnGap={ 2 } mt={ 2 } justifyContent="flex-start" flexWrap="wrap">
           { data.items
             .map(({ tags }) => tags)

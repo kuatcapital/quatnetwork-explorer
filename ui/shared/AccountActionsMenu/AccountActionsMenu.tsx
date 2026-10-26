@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemProps } from './types';
 
@@ -24,6 +26,7 @@ interface Props {
 }
 
 const AccountActionsMenu = ({ isLoading, className, showUpdateMetadataItem }: Props) => {
+  const { t: tAcct } = useTranslation();
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -73,7 +76,13 @@ const AccountActionsMenu = ({ isLoading, className, showUpdateMetadataItem }: Pr
   return (
     <MenuRoot unmountOnExit={ false }>
       <MenuTrigger asChild>
-        <IconButton variant="icon_background" size="md" className={ className } onClick={ handleButtonClick } aria-label="Show address menu">
+        <IconButton
+          variant="icon_background"
+          size="md"
+          className={ className }
+          onClick={ handleButtonClick }
+          aria-label={ tAcct('accountUI.show_address_menu') }
+        >
           <IconSvg name="dots"/>
         </IconButton>
       </MenuTrigger>

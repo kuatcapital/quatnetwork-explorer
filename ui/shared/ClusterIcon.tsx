@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Image } from 'toolkit/chakra/image';
@@ -20,6 +22,7 @@ const ClusterIcon = ({
   flexShrink = 0,
   ...imageProps
 }: ClusterIconProps) => {
+  const { t } = useTranslation();
   const clustersFeature = nameServicesFeature.isEnabled && nameServicesFeature.clusters.isEnabled ? nameServicesFeature.clusters : undefined;
 
   const fallbackElement = (
@@ -53,7 +56,7 @@ const ClusterIcon = ({
       flexShrink={ flexShrink }
 
       src={ `${ clustersFeature.cdnUrl }/profile-image/${ clusterName }` }
-      alt={ `${ clusterName } profile` }
+      alt={ t('sharedEntities.profile', { name: clusterName }) }
       fallback={ fallbackElement }
       { ...imageProps }
     />

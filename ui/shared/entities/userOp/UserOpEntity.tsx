@@ -1,11 +1,12 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs/routes';
 
 import { useMultichainContext } from 'lib/contexts/multichain';
 import * as EntityBase from 'ui/shared/entities/base/components';
-import getChainTooltipText from 'ui/shared/externalChains/getChainTooltipText';
 
 import { distributeEntityProps } from '../base/utils';
 
@@ -28,12 +29,15 @@ const Link = chakra((props: LinkProps) => {
 });
 
 const Icon = (props: EntityBase.IconBaseProps) => {
+  const { t } = useTranslation();
   return (
     <EntityBase.Icon
       { ...props }
       name={ 'name' in props ? props.name : 'user_op' }
       shield={ props.shield ?? (props.chain ? { src: props.chain.logo } : undefined) }
-      hint={ props.chain && props.shield !== false ? getChainTooltipText(props.chain, 'User operation on ') : undefined }
+      hint={ props.chain && props.shield !== false ? t('sharedEntities.user_operation_on_chain', {
+        chain: props.chain.name, chainId: props.chain.id,
+      }) : undefined }
     />
   );
 };

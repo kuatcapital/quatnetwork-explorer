@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Route } from 'nextjs-routes';
 
@@ -23,6 +25,7 @@ const PROTECTED_ROUTES: Array<Route['pathname']> = [
 ];
 
 export default function useLogout() {
+  const { t: tAcct } = useTranslation();
   const router = useRouter();
   const queryClient = useQueryClient();
   const apiFetch = useApiFetch();
@@ -57,9 +60,9 @@ export default function useLogout() {
       });
     } catch (error) {
       toaster.error({
-        title: 'Logout failed',
-        description: 'Please try again later',
+        title: tAcct('accountUI.logout_failed'),
+        description: tAcct('accountUI.try_again_later'),
       });
     }
-  }, [ apiFetch, rewardsLogout, queryClient, router ]);
+  }, [ apiFetch, rewardsLogout, queryClient, router, tAcct ]);
 }

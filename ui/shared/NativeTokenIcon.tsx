@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
@@ -16,6 +18,7 @@ type Props = {
 };
 
 const NativeTokenIcon = ({ isLoading, className, type }: Props) => {
+  const { t } = useTranslation();
   const statsQueryResult = useApiQuery('general:stats', {
     queryOptions: {
       refetchOnMount: false,
@@ -34,7 +37,7 @@ const NativeTokenIcon = ({ isLoading, className, type }: Props) => {
       className={ className }
       borderRadius="base"
       src={ src || undefined }
-      alt={ `${ config.chain.currency.symbol } logo` }
+      alt={ t('sharedEntities.token_logo', { name: config.chain.currency.symbol }) }
       fallback={ <TokenLogoPlaceholder/> }
     />
   );

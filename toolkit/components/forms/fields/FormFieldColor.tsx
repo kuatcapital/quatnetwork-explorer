@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: runtime client validation messages. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { Circle } from '@chakra-ui/react';
 import React from 'react';
 import type { FieldValues, Path } from 'react-hook-form';
 import { useController, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFieldPropsBase } from './types';
 
@@ -36,6 +38,7 @@ const FormFieldColorContent = <
   controllerProps,
   ...restProps
 }: FormFieldColorProps<FormFields, Name>) => {
+  const { t } = useTranslation();
   const { control } = useFormContext<FormFields>();
   const { field, fieldState, formState } = useController<FormFields, typeof name>({
     control,
@@ -83,7 +86,7 @@ const FormFieldColorContent = <
   return (
     <Field
       label={ placeholder }
-      errorText={ getFormFieldErrorText(fieldState.error) }
+      errorText={ getFormFieldErrorText(fieldState.error, t) }
       invalid={ Boolean(fieldState.error) }
       disabled={ formState.isSubmitting || disabled }
       size={ size }

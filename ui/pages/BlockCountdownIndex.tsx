@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import { chakra, Box, Center } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { routeParams } from 'nextjs/routes';
 
@@ -11,6 +13,7 @@ import ChainIcon from 'ui/shared/externalChains/ChainIcon';
 import IconSvg from 'ui/shared/IconSvg';
 
 const BlockCountdownIndex = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const multichainContext = useMultichainContext();
 
@@ -50,11 +53,9 @@ const BlockCountdownIndex = () => {
         level="1"
         mt={{ base: 3, lg: 6 }}
       >
-        Block countdown
-      </Heading>
+        { t('blockCountdown.title') } </Heading>
       <Box mt={ 2 }>
-        The estimated time for a block to be created and added to the blockchain.
-      </Box>
+        { t('blockCountdown.description') } </Box>
       <chakra.form
         noValidate
         onSubmit={ handleFormSubmit }
@@ -62,7 +63,7 @@ const BlockCountdownIndex = () => {
         mt={{ base: 3, lg: 6 }}
       >
         <FilterInput
-          placeholder="Search by block number"
+          placeholder={ t('blockCountdown.search') }
           size="sm"
           type="number"
           name="search_term"

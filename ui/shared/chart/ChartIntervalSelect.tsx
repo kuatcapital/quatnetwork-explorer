@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: runtime translation and locale formatting. GPL-3.0.
 import { createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { StatsInterval, StatsIntervalIds } from 'types/client/stats';
 
@@ -7,19 +9,7 @@ import { Select } from 'toolkit/chakra/select';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import type { TagProps } from 'toolkit/chakra/tag';
 import TagGroupSelect from 'ui/shared/tagGroupSelect/TagGroupSelect';
-import { STATS_INTERVALS } from 'ui/stats/constants';
-
-const intervalCollection = createListCollection({
-  items: Object.keys(STATS_INTERVALS).map((id: string) => ({
-    value: id,
-    label: STATS_INTERVALS[id as StatsIntervalIds].title,
-  })),
-});
-
-const intervalListShort = Object.keys(STATS_INTERVALS).map((id: string) => ({
-  id: id,
-  title: STATS_INTERVALS[id as StatsIntervalIds].shortTitle,
-})) as Array<StatsInterval>;
+import { getStatsIntervals } from 'ui/stats/constants';
 
 type Props = {
   interval: StatsIntervalIds;
@@ -29,6 +19,14 @@ type Props = {
 };
 
 const ChartIntervalSelect = ({ interval, onIntervalChange, isLoading, selectTagSize }: Props) => {
+  const { t } = useTranslation();
+  const intervals = React.useMemo(() => getStatsIntervals(t), [ t ]);
+  const intervalCollection = React.useMemo(() => createListCollection({
+    items: Object.entries(intervals).map(([ id, item ]) => ({ value: id, label: item.title })),
+  }), [ intervals ]);
+  const intervalListShort: Array<StatsInterval> = React.useMemo(() => Object.entries(intervals).map(([ id, item ]) => ({
+    id: id as StatsIntervalIds, title: item.shortTitle,
+  })), [ intervals ]);
 
   const handleItemSelect = React.useCallback(({ value }: { value: Array<string> }) => {
     onIntervalChange(value[0] as StatsIntervalIds);
@@ -41,8 +39,8 @@ const ChartIntervalSelect = ({ interval, onIntervalChange, isLoading, selectTagS
       </Skeleton>
       <Select
         collection={ intervalCollection }
-        placeholder="Select interval"
-        defaultValue={ [ interval ] }
+        placeholder={ t('statistics.select_interval') }
+        value={ [ interval ] }
         onValueChange={ handleItemSelect }
         hideFrom="lg"
         w="100%"

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZkEvmL2TxnBatchesItem } from 'types/api/zkEvmL2';
 
@@ -13,23 +15,24 @@ export interface Props {
 }
 
 const ZkEvmL2TxnBatchStatus = ({ status, isLoading }: Props) => {
+  const { t } = useTranslation();
   let type: StatusTagType;
   let text: string;
 
   switch (status) {
     case 'L1 Sequence Confirmed': {
       type = 'ok';
-      text = `${ layerLabels.parent } sequence confirmed`;
+      text = t('sharedStatus.sequence_confirmed', { layer: layerLabels.parent });
       break;
     }
     case 'Finalized': {
       type = 'ok';
-      text = status;
+      text = t('sharedStatus.finalized');
       break;
     }
     default: {
       type = 'pending';
-      text = status;
+      text = status === 'Unfinalized' ? t('sharedStatus.unfinalized') : status;
     }
   }
 

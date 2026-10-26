@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { ApiKey, ApiKeys } from 'types/api/account';
 
@@ -15,6 +17,7 @@ type Props = {
 };
 
 const DeleteApiKeyModal: React.FC<Props> = ({ open, onOpenChange, data }) => {
+  const { t: tAcct } = useTranslation();
   const queryClient = useQueryClient();
   const apiFetch = useApiFetch();
 
@@ -33,15 +36,21 @@ const DeleteApiKeyModal: React.FC<Props> = ({ open, onOpenChange, data }) => {
 
   const renderText = useCallback(() => {
     return (
-      <Text> API key for <Text fontWeight="700" as="span">{ ` "${ data.name || 'name' }" ` }</Text> will be deleted </Text>
+      <Text>
+        <Trans
+          i18nKey="accountUI.api_key_delete_confirmation"
+          values={{ name: data.name || tAcct('accountUI.name') }}
+          components={{ strong: <Text fontWeight="700" as="span"/> }}
+        />
+      </Text>
     );
-  }, [ data.name ]);
+  }, [ data.name, tAcct ]);
 
   return (
     <DeleteModal
       open={ open }
       onOpenChange={ onOpenChange }
-      title="Remove API key"
+      title={ tAcct('accountUI.remove_api_key') }
       renderContent={ renderText }
       mutationFn={ mutationFn }
       onSuccess={ onSuccess }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: runtime toolkit labels for RU/KK/EN. GPL-3.0.
 import { Icon } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItem } from './types';
 
@@ -18,6 +20,7 @@ interface Props extends IconButtonProps {
 }
 
 const AdaptiveTabsMenu = ({ tabs, tabsCut, isActive, ...props }: Props, ref: React.Ref<HTMLButtonElement>) => {
+  const { t } = useTranslation();
 
   return (
     <PopoverRoot positioning={{ placement: 'bottom-end' }}>
@@ -37,7 +40,7 @@ const AdaptiveTabsMenu = ({ tabs, tabsCut, isActive, ...props }: Props, ref: Rea
           ref={ ref }
           expanded={ isActive }
           px="18px"
-          aria-label="Open tabs menu"
+          aria-label={ t('toolkit.open_tabs') }
           { ...props }
         >
           <Icon boxSize={ 5 }><DotsIcon/></Icon>

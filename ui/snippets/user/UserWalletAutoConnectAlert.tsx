@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Text, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import IconSvg from 'ui/shared/IconSvg';
 
 const UserWalletAutoConnectAlert = () => {
+  const { t: tAcct } = useTranslation();
   return (
     <Flex
       borderRadius="base"
@@ -20,8 +23,7 @@ const UserWalletAutoConnectAlert = () => {
         mr={ 2 }
       />
       <Text fontSize="xs" lineHeight="16px">
-        Connect your wallet in the app below
-      </Text>
+        { tAcct('accountUI.connect_app_wallet') }</Text>
     </Flex>
   );
 };

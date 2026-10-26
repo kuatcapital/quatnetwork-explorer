@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfoApplication, VerifiedAddress } from 'types/api/account';
 
@@ -15,15 +17,16 @@ interface Props {
 }
 
 const VerifiedAddressesTable = ({ data, applications, onItemEdit, onItemAdd, isLoading }: Props) => {
+  const { t: tAcct } = useTranslation();
   return (
     <TableRoot>
       <TableHeader>
         <TableRow>
-          <TableColumnHeader>Address</TableColumnHeader>
-          <TableColumnHeader w="168px" pr={ 1 }>Token info</TableColumnHeader>
+          <TableColumnHeader>{ tAcct('accountUI.address') }</TableColumnHeader>
+          <TableColumnHeader w="168px" pr={ 1 }>{ tAcct('accountUI.token_info') }</TableColumnHeader>
           <TableColumnHeader w="36px" pl="0"></TableColumnHeader>
-          <TableColumnHeader w="160px">Request status</TableColumnHeader>
-          <TableColumnHeader w="150px">Date</TableColumnHeader>
+          <TableColumnHeader w="160px">{ tAcct('accountUI.request_status') }</TableColumnHeader>
+          <TableColumnHeader w="150px">{ tAcct('accountUI.date') }</TableColumnHeader>
         </TableRow>
       </TableHeader>
       <TableBody>

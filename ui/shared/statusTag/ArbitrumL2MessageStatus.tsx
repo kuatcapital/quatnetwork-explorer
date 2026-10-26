@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2MessagesItem } from 'types/api/arbitrumL2';
 
@@ -11,28 +13,29 @@ export interface Props {
 }
 
 const ArbitrumL2MessageStatus = ({ status, isLoading }: Props) => {
+  const { t } = useTranslation();
   let type: StatusTagType;
   let text: string;
 
   switch (status) {
     case 'relayed': {
       type = 'ok';
-      text = 'Relayed';
+      text = t('sharedStatus.relayed');
       break;
     }
     case 'confirmed': {
       type = 'pending';
-      text = 'Ready for relay';
+      text = t('sharedStatus.ready_for_relay');
       break;
     }
     case 'sent': {
       type = 'pending';
-      text = 'Waiting';
+      text = t('sharedStatus.waiting');
       break;
     }
     case 'initiated': {
       type = 'pending';
-      text = 'Pending';
+      text = t('common.pending');
       break;
     }
     default:

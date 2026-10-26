@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { chakra, Box, Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import delay from 'lib/delay';
 import useWeb3AccountWithDomain from 'lib/web3/useAccountWithDomain';
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const UserProfileContentWallet = ({ onClose, className }: Props) => {
+  const { t: tAcct } = useTranslation();
   const web3Wallet = useWeb3Wallet({ source: 'Profile dropdown' });
 
   const web3AccountWithDomain = useWeb3AccountWithDomain(true);
@@ -59,7 +62,7 @@ const UserProfileContentWallet = ({ onClose, className }: Props) => {
           />
           { web3Wallet.isReconnecting ? <Spinner size="sm" m="2px" flexShrink={ 0 }/> : (
             <IconButton
-              aria-label="Open wallet"
+              aria-label={ tAcct('accountUI.open_wallet') }
               variant="icon_secondary"
               size="2xs"
               onClick={ handleOpenWalletClick }
@@ -77,23 +80,22 @@ const UserProfileContentWallet = ({ onClose, className }: Props) => {
         size="sm"
         onClick={ handleConnectWalletClick }
         loading={ web3Wallet.isOpen }
-        loadingText="Connect Wallet"
+        loadingText={ tAcct('accountUI.connect_wallet_title') }
         w="100%"
       >
-        Connect
-      </Button>
+        { tAcct('accountUI.connect') }</Button>
     );
   })();
 
   return (
     <Box className={ className }>
       <Flex px={ 1 } mb="1" textStyle="xs" alignItems="center" fontWeight="500">
-        <span>Connected wallet</span>
+        <span>{ tAcct('accountUI.connected_wallet') }</span>
         <Hint
           label={
             web3Wallet.isConnected ?
-              'This wallet is currently connected to Blockscout and used for interacting with apps and smart contracts' :
-              'This wallet is used for interacting with apps and smart contracts'
+              tAcct('accountUI.connected_wallet_description') :
+              tAcct('accountUI.wallet_description')
           }
           boxSize={ 4 }
           ml={ 1 }

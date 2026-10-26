@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import type { Path } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { FormFieldCheckbox } from 'toolkit/components/forms/fields/FormFieldCheckbox';
@@ -25,6 +27,7 @@ export const NOTIFICATION_OPTIONS: ReadonlyArray<NotificationOption> = [
 export const NOTIFICATIONS = NOTIFICATION_OPTIONS.map(({ id }) => id);
 
 export default function AddressFormNotifications() {
+  const { t: tAcct } = useTranslation();
   return (
     <Grid templateColumns={{ base: 'repeat(2, max-content)', lg: 'repeat(3, max-content)' }} gap={{ base: '10px 24px', lg: '20px 24px' }}>
       { NOTIFICATION_OPTIONS.map((notification) => {
@@ -44,13 +47,13 @@ export default function AddressFormNotifications() {
             <GridItem>
               <FormFieldCheckbox<FormFields, typeof incomingFieldName>
                 name={ incomingFieldName }
-                label="Incoming"
+                label={ tAcct('accountUI.incoming') }
               />
             </GridItem>
             <GridItem>
               <FormFieldCheckbox<FormFields, typeof outgoingFieldName>
                 name={ outgoingFieldName }
-                label="Outgoing"
+                label={ tAcct('accountUI.outgoing') }
               />
             </GridItem>
           </React.Fragment>

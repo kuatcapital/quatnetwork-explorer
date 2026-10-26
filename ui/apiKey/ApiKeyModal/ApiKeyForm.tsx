@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { ApiKey, ApiKeys, ApiKeyErrors } from 'types/api/account';
 
@@ -27,6 +29,7 @@ type Inputs = {
 const NAME_MAX_LENGTH = 255;
 
 const ApiKeyForm: React.FC<Props> = ({ data, onOpenChange, setAlertVisible }) => {
+  const { t: tAcct } = useTranslation();
   const formApi = useForm<Inputs>({
     mode: 'onTouched',
     defaultValues: {
@@ -96,14 +99,14 @@ const ApiKeyForm: React.FC<Props> = ({ data, onOpenChange, setAlertVisible }) =>
         { data && (
           <FormFieldText<Inputs>
             name="token"
-            placeholder="Auto-generated API key token"
+            placeholder={ tAcct('accountUI.generated_api_key') }
             readOnly
             mb={ 5 }
           />
         ) }
         <FormFieldText<Inputs>
           name="name"
-          placeholder="Application name for API key (e.g Web3 project)"
+          placeholder={ tAcct('accountUI.application_name') }
           required
           rules={{
             maxLength: NAME_MAX_LENGTH,
@@ -117,7 +120,7 @@ const ApiKeyForm: React.FC<Props> = ({ data, onOpenChange, setAlertVisible }) =>
             disabled={ !formApi.formState.isDirty }
             loading={ isPending }
           >
-            { data ? 'Save' : 'Generate API key' }
+            { data ? tAcct('accountUI.save') : tAcct('accountUI.generate_api_key') }
           </Button>
         </Box>
       </form>

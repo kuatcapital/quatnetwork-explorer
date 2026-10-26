@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Alert } from 'toolkit/chakra/alert';
@@ -10,6 +12,7 @@ import useLinkEmail from 'ui/snippets/auth/linkEmail/useLinkEmail';
 const feature = config.features.account;
 
 const WatchlistEmailAlert = () => {
+  const { t: tAcct } = useTranslation();
   const authModal = useDisclosure();
   const linkEmail = useLinkEmail();
 
@@ -29,8 +32,8 @@ const WatchlistEmailAlert = () => {
         w="fit-content"
         mb={ 6 }
       >
-        To receive notifications you need to add an email to your profile.
-        <Button variant="outline" size="sm" onClick={ handleButtonClick }>Add email</Button>
+        { tAcct('accountUI.notifications_email_required') }
+        <Button variant="outline" size="sm" onClick={ handleButtonClick }>{ tAcct('accountUI.add_email') }</Button>
       </Alert>
       { authModal.open && <AuthModal initialScreen={{ type: 'email', isAuth: true }} onClose={ authModal.onClose }/> }
     </>

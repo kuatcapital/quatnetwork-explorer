@@ -31,8 +31,9 @@ import * as UserOpEntity from 'ui/shared/entities/userOp/UserOpEntity';
 import HashStringShortenDynamic from 'ui/shared/HashStringShortenDynamic';
 import IconSvg from 'ui/shared/IconSvg';
 import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
+import { useLocalizedSearchItemTitles } from 'ui/shared/search/useLocalizedSearchItemTitles';
 import type { SearchResultAppItem } from 'ui/shared/search/utils';
-import { getItemCategory, searchItemTitles } from 'ui/shared/search/utils';
+import { getItemCategory } from 'ui/shared/search/utils';
 import TacOperationStatus from 'ui/shared/statusTag/TacOperationStatus';
 import Time from 'ui/shared/time/Time';
 
@@ -46,7 +47,7 @@ interface Props {
 }
 
 const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Props) => {
-
+  const searchItemTitles = useLocalizedSearchItemTitles();
   const handleLinkClick = React.useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     saveToRecentKeywords(searchTerm);
     mixpanel.logEvent(mixpanel.EventTypes.SEARCH_QUERY, {
@@ -489,3 +490,4 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
 };
 
 export default SearchResultListItem;
+// Modified by Quat Capital, 2026-10-26: reactive search category labels. GPL-3.0.

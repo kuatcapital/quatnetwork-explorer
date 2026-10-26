@@ -1,9 +1,11 @@
 import type { StackProps } from '@chakra-ui/react';
 import { createListCollection, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useSettingsContext } from 'lib/contexts/settings';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { IconButton } from 'toolkit/chakra/icon-button';
 import type { SelectOption } from 'toolkit/chakra/select';
 import { SelectContent, SelectItem, SelectRoot, SelectControl } from 'toolkit/chakra/select';
@@ -12,17 +14,7 @@ import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
 import IconSvg from 'ui/shared/IconSvg';
 import TextSeparator from 'ui/shared/TextSeparator';
 
-const FORMAT_OPTIONS = [
-  { label: 'Local', value: 'local' as const },
-  { label: 'UTC', value: 'utc' as const },
-  { label: 'Unix', value: 'unix' as const },
-];
-
-const collection = createListCollection<SelectOption>({
-  items: FORMAT_OPTIONS,
-});
-
-type Format = (typeof FORMAT_OPTIONS)[number]['value'];
+type Format = 'local' | 'utc' | 'unix';
 
 interface Props extends StackProps {
   timestamp: string | number;
@@ -31,7 +23,15 @@ interface Props extends StackProps {
 };
 
 const DetailedInfoTimestamp = ({ timestamp, isLoading, noRelativeTime, ...rest }: Props) => {
-
+  const { t } = useTranslation();
+  const { locale } = useLocale();
+  const collection = React.useMemo(() => createListCollection<SelectOption>({
+    items: [
+      { label: t('common.local'), value: 'local' },
+      { label: 'UTC', value: 'utc' },
+      { label: t('sharedUi.unix'), value: 'unix' },
+    ],
+  }), [ t ]);
   const settings = useSettingsContext();
 
   const [ format, setFormat ] = React.useState<Array<Format>>(settings?.isLocalTime === false ? [ 'utc' ] : [ 'local' ]);
@@ -42,11 +42,11 @@ const DetailedInfoTimestamp = ({ timestamp, isLoading, noRelativeTime, ...rest }
 
   const timeText = (() => {
     if (format.includes('local')) {
-      return dayjs(timestamp).format('llll');
+      return dayjs(timestamp).locale(locale).format('llll');
     }
 
     if (format.includes('utc')) {
-      return dayjs(timestamp).utc().format('MMM DD YYYY HH:mm:ss');
+      return dayjs(timestamp).utc().locale(locale).format('LL LTS');
     }
 
     return dayjs(timestamp).unix().toString();
@@ -57,7 +57,7 @@ const DetailedInfoTimestamp = ({ timestamp, isLoading, noRelativeTime, ...rest }
       { !noRelativeTime && (
         <>
           <Skeleton loading={ isLoading } flexShrink={ 0 }>
-            { dayjs(timestamp).fromNow() }
+            { dayjs(timestamp).locale(locale).fromNow() }
           </Skeleton>
           <TextSeparator mx={ 0 }/>
         </>
@@ -66,7 +66,7 @@ const DetailedInfoTimestamp = ({ timestamp, isLoading, noRelativeTime, ...rest }
         <SelectRoot
           name="time_format"
           collection={ collection }
-          defaultValue={ format }
+          value={ format }
           onValueChange={ handleFormatChange }
           variant="plain"
           w="fit-content"
@@ -77,7 +77,7 @@ const DetailedInfoTimestamp = ({ timestamp, isLoading, noRelativeTime, ...rest }
             defaultValue={ format }
           >
             <IconButton
-              aria-label="Toggle time format"
+              aria-label={ t('common.toggle_time_format') }
               variant="icon_secondary"
               boxSize={ 5 }
               borderRadius="sm"
@@ -106,3 +106,4 @@ const DetailedInfoTimestamp = ({ timestamp, isLoading, noRelativeTime, ...rest }
 };
 
 export default DetailedInfoTimestamp;
+// Modified by Quat Capital, 2026-10-26: localized timestamps and controls without global Day.js locale. GPL-3.0.

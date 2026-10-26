@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Block } from 'types/api/block';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { currencyUnits } from 'lib/units';
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import { ZERO } from 'toolkit/utils/consts';
@@ -18,6 +22,8 @@ interface Props {
 }
 
 const BlockDetailsBlobInfo = ({ data }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   if (
     !data.blob_gas_price ||
     !data.blob_gas_used ||
@@ -36,11 +42,10 @@ const BlockDetailsBlobInfo = ({ data }: Props) => {
       { data.blob_gas_price && (
         <>
           <DetailedInfo.ItemLabel
-            // eslint-disable-next-line max-len
-            hint="Price per unit of gas used for for blob deployment. Blob gas is independent of normal gas. Both gas prices can affect the priority of transaction execution."
+
+            hint={ t('blockDetails.blob_price_hint') }
           >
-            Blob gas price
-          </DetailedInfo.ItemLabel>
+            { t('blockDetails.blob_price') } </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue multiRow>
             <GasPriceValue amount={ data.blob_gas_price }/>
           </DetailedInfo.ItemValue>
@@ -49,22 +54,20 @@ const BlockDetailsBlobInfo = ({ data }: Props) => {
       { data.blob_gas_used && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Actual amount of gas used by the blobs in this block"
+            hint={ t('blockDetails.blob_used_hint') }
           >
-            Blob gas used
-          </DetailedInfo.ItemLabel>
+            { t('blockDetails.blob_used') } </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
-            <Text>{ BigNumber(data.blob_gas_used).toFormat() }</Text>
+            <Text>{ formatBigNumber(BigNumber(data.blob_gas_used), locale) }</Text>
           </DetailedInfo.ItemValue>
         </>
       ) }
       { !burntBlobFees.isEqualTo(ZERO) && (
         <>
           <DetailedInfo.ItemLabel
-            hint={ `Amount of ${ currencyUnits.ether } used for blobs in this block` }
+            hint={ t('blockDetails.blob_burnt_hint', { currency: currencyUnits.ether }) }
           >
-            Blob burnt fees
-          </DetailedInfo.ItemLabel>
+            { t('blockDetails.blob_burnt') } </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue multiRow>
             <NativeCoinValue
               amount={ burntBlobFees.toString() }
@@ -73,7 +76,7 @@ const BlockDetailsBlobInfo = ({ data }: Props) => {
               mr={ 4 }
             />
             { !blobFees.isEqualTo(ZERO) && (
-              <Tooltip content="Blob burnt fees / Txn fees * 100%">
+              <Tooltip content={ t('blockDetails.blob_burnt_ratio') }>
                 <Utilization value={ burntBlobFees.dividedBy(blobFees).toNumber() }/>
               </Tooltip>
             ) }
@@ -83,10 +86,9 @@ const BlockDetailsBlobInfo = ({ data }: Props) => {
       { data.excess_blob_gas && (
         <>
           <DetailedInfo.ItemLabel
-            hint="A running total of blob gas consumed in excess of the target, prior to the block."
+            hint={ t('blockDetails.blob_excess_hint') }
           >
-            Excess blob gas
-          </DetailedInfo.ItemLabel>
+            { t('blockDetails.blob_excess') } </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <GasPriceValue amount={ data.excess_blob_gas }/>
           </DetailedInfo.ItemValue>

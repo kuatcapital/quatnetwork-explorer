@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as tac from '@blockscout/tac-operation-lifecycle-types';
 
@@ -16,6 +18,7 @@ interface Props extends AddressEntity.EntityProps {
 }
 
 const AddressEntityTacTon = (props: Props) => {
+  const { t } = useTranslation();
   if (!tacFeature.isEnabled) {
     return null;
   }
@@ -54,8 +57,8 @@ const AddressEntityTacTon = (props: Props) => {
       link={{ external: props.chainType === tac.BlockchainType.TON }}
       icon={ props.chainType === tac.BlockchainType.TON ? {
         shield: { name: 'brands/ton' },
-        hint: 'Address on TON',
-        hintPostfix: ' on TON',
+        hint: t('sharedEntities.address_ton'),
+        hintPostfix: t('sharedEntities.on_ton'),
       } : undefined }
     />
   );

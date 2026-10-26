@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSignMessage, useAccount, useSwitchChain } from 'wagmi';
 
 import type {
@@ -37,6 +39,7 @@ interface Props extends AddressVerificationFormFirstStepFields, AddressCheckStat
 }
 
 const AddressVerificationStepSignature = ({ address, signingMessage, contractCreator, contractOwner, onContinue, noWeb3Provider }: Props) => {
+  const { t: tAcct } = useTranslation();
   const [ signMethod, setSignMethod ] = React.useState<SignMethod>(noWeb3Provider ? 'manual' : 'wallet');
 
   const { isConnected } = useAccount();
@@ -107,7 +110,7 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
     clearErrors('root');
 
     if (!isConnected) {
-      return setError('root', { type: 'manual', message: 'Please connect to your Web3 wallet first' });
+      return setError('root', { type: 'manual', message: tAcct('accountUI.connect_web3_first') });
     }
 
     await switchChainAsync({ chainId: Number(config.chain.id) });
@@ -118,10 +121,10 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
         onSubmit();
       },
       onError: (error) => {
-        return setError('root', { type: 'SIGNING_FAIL', message: (error as Error)?.message || 'Oops! Something went wrong' });
+        return setError('root', { type: 'SIGNING_FAIL', message: (error as Error)?.message || tAcct('accountUI.oops_error') });
       },
     });
-  }, [ clearErrors, isConnected, getValues, signMessage, setError, setValue, onSubmit, switchChainAsync ]);
+  }, [ clearErrors, isConnected, getValues, signMessage, setError, setValue, onSubmit, switchChainAsync, tAcct ]);
 
   const handleManualSignClick = React.useCallback(() => {
     clearErrors('root');
@@ -134,10 +137,9 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
         <Button
           onClick={ handleManualSignClick }
           loading={ formState.isSubmitting }
-          loadingText="Verifying"
+          loadingText={ tAcct('accountUI.verifying') }
         >
-          Verify
-        </Button>
+          { tAcct('accountUI.verify') }</Button>
       );
     }
 
@@ -145,22 +147,22 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
       <Button
         onClick={ isConnected ? handleWeb3SignClick : handleOpenWeb3Modal }
         loading={ formState.isSubmitting || isSigning }
-        loadingText={ isSigning ? 'Signing' : 'Verifying' }
+        loadingText={ isSigning ? tAcct('accountUI.signing') : tAcct('accountUI.verifying') }
       >
-        { isConnected ? 'Sign and verify' : 'Connect wallet' }
+        { isConnected ? tAcct('accountUI.sign_verify') : tAcct('accountUI.connect_wallet') }
       </Button>
     );
   })();
 
-  const contactUsLink = <span>contact us <Link href="mailto:help@blockscout.com" rel="noopener noreferrer">help@blockscout.com</Link></span>;
+  const contactUsLink = <Link href="mailto:help@blockscout.com" rel="noopener noreferrer"/>;
 
   const rootError = (() => {
     switch (formState.errors.root?.type) {
       case 'INVALID_SIGNATURE_ERROR': {
-        return <span>The signature could not be processed.</span>;
+        return <span>{ tAcct('accountUI.signature_unprocessed') }</span>;
       }
       case 'VALIDITY_EXPIRED_ERROR': {
-        return <span>This verification message has expired. Add the contract address to restart the process.</span>;
+        return <span>{ tAcct('accountUI.verification_expired') }</span>;
       }
       case 'SIGNING_FAIL': {
         return <span>{ formState.errors.root.message }</span>;
@@ -170,20 +172,17 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
         const expectedSigners = [ contractCreator, contractOwner ].filter(Boolean).map(s => shortenString(s)).join(', ');
         return (
           <Box>
-            <span>This address </span>
-            <span>{ signer }</span>
-            <span> is not a creator/owner of the requested contract and cannot claim ownership. Only </span>
-            <span>{ expectedSigners }</span>
-            <span> can verify ownership of this contract.</span>
+            <Trans
+              i18nKey="accountUI.ownership_wrong_signer"
+              components={{ address: <span>{ signer }</span>, creator: <span>{ expectedSigners }</span> }}
+            />
           </Box>
         );
       }
       case 'UNKNOWN_STATUS': {
         return (
           <Box>
-            <span>We are not able to process the verify account ownership for this contract address. Kindly </span>
-            { contactUsLink }
-            <span> for further assistance.</span>
+            <Trans i18nKey="accountUI.ownership_support" components={{ contact: contactUsLink }}/>
           </Box>
         );
       }
@@ -198,25 +197,27 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
       <form noValidate onSubmit={ onSubmit }>
         { rootError && <Alert status="warning" mb={ 6 }>{ rootError }</Alert> }
         <Box mb={ 8 }>
-          <span>Please select the address to sign and copy the message and sign it using the Blockscout message provider of your choice. </span>
-          <Link href="https://docs.blockscout.com/using-blockscout/my-account/verified-addresses/copy-and-sign-message" external noIcon>
-            Additional instructions
-          </Link>
-          <span>. If you do not see your address here but are sure that you are the owner of the contract, kindly </span>
-          { contactUsLink }
-          <span> for further assistance.</span>
+          <Trans
+            i18nKey="accountUI.ownership_signature_instructions"
+            components={{
+              instructions: (
+                <Link href="https://docs.blockscout.com/using-blockscout/my-account/verified-addresses/copy-and-sign-message" external noIcon/>
+              ),
+              contact: contactUsLink,
+            }}
+          />
         </Box>
         { (contractOwner || contractCreator) && (
           <Flex flexDir="column" rowGap={ 4 } mb={ 4 }>
             { contractCreator && (
               <Box>
-                <chakra.span fontWeight={ 600 }>Contract creator: </chakra.span>
+                <chakra.span fontWeight={ 600 }>{ tAcct('accountUI.contract_creator') }</chakra.span>
                 <chakra.span>{ contractCreator }</chakra.span>
               </Box>
             ) }
             { contractOwner && (
               <Box>
-                <chakra.span fontWeight={ 600 }>Contract owner: </chakra.span>
+                <chakra.span fontWeight={ 600 }>{ tAcct('accountUI.contract_owner') }</chakra.span>
                 <chakra.span>{ contractOwner }</chakra.span>
               </Box>
             ) }
@@ -227,7 +228,7 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
             <CopyToClipboard text={ signingMessage } ml="auto"/>
             <FormFieldText<Fields>
               name="message"
-              placeholder="Message to sign"
+              placeholder={ tAcct('accountUI.message_to_sign') }
               required
               asComponent="Textarea"
               readOnly
@@ -245,14 +246,14 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
               flexDir="column"
               rowGap={ 4 }
             >
-              <Radio value="wallet">Sign via Web3 wallet</Radio>
-              <Radio value="manual">Sign manually</Radio>
+              <Radio value="wallet">{ tAcct('accountUI.sign_via_web3') }</Radio>
+              <Radio value="manual">{ tAcct('accountUI.sign_manually') }</Radio>
             </RadioGroup>
           ) }
           { signMethod === 'manual' && (
             <FormFieldText<Fields>
               name="signature"
-              placeholder="Signature hash"
+              placeholder={ tAcct('accountUI.signature_hash') }
               required
               rules={{ pattern: SIGNATURE_REGEXP }}
               bgColor="dialog.bg"

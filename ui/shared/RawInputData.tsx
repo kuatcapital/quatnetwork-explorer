@@ -1,21 +1,13 @@
 import { createListCollection } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import hexToUtf8 from 'lib/hexToUtf8';
 import type { SelectOption } from 'toolkit/chakra/select';
 import { Select } from 'toolkit/chakra/select';
 import RawDataSnippet from 'ui/shared/RawDataSnippet';
 
-const OPTIONS = [
-  { label: 'Hex', value: 'Hex' as const },
-  { label: 'UTF-8', value: 'UTF-8' as const },
-];
-
-const collection = createListCollection<SelectOption>({
-  items: OPTIONS,
-});
-
-export type DataType = (typeof OPTIONS)[number]['value'];
+export type DataType = 'Hex' | 'UTF-8';
 
 interface Props {
   hex: string;
@@ -26,6 +18,13 @@ interface Props {
 }
 
 const RawInputData = ({ hex, rightSlot: rightSlotProp, defaultDataType = 'Hex', isLoading, minHeight }: Props) => {
+  const { t } = useTranslation();
+  const collection = React.useMemo(() => createListCollection<SelectOption>({
+    items: [
+      { label: t('sharedUi.hex'), value: 'Hex' },
+      { label: 'UTF-8', value: 'UTF-8' },
+    ],
+  }), [ t ]);
   const [ selectedDataType, setSelectedDataType ] = React.useState<DataType>(defaultDataType);
 
   const handleValueChange = React.useCallback(({ value }: { value: Array<string> }) => {
@@ -36,10 +35,10 @@ const RawInputData = ({ hex, rightSlot: rightSlotProp, defaultDataType = 'Hex', 
     <>
       <Select
         collection={ collection }
-        placeholder="Select type"
-        defaultValue={ [ defaultDataType ] }
+        placeholder={ t('sharedUi.select_type') }
+        value={ [ selectedDataType ] }
         onValueChange={ handleValueChange }
-        w="100px"
+        w="fit-content"
         mr="auto"
         loading={ isLoading }
       />
@@ -60,3 +59,4 @@ const RawInputData = ({ hex, rightSlot: rightSlotProp, defaultDataType = 'Hex', 
 };
 
 export default React.memo(RawInputData);
+// Modified by Quat Capital, 2026-10-26: translated type labels with stable data encoding. GPL-3.0.

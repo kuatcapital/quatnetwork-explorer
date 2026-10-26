@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import { Box, Center, Flex, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs/routes';
 
@@ -8,6 +10,8 @@ import useApiQuery from 'lib/api/useApiQuery';
 import { useMultichainContext } from 'lib/contexts/multichain';
 import dayjs from 'lib/date/dayjs';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { Button } from 'toolkit/chakra/button';
 import { Heading } from 'toolkit/chakra/heading';
@@ -31,6 +35,8 @@ type Props = {
 };
 
 const BlockCountdown = ({ hideCapybaraRunner }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const multichainContext = useMultichainContext();
   const router = useRouter();
   const height = getQueryParamString(router.query.height);
@@ -47,9 +53,9 @@ const BlockCountdown = ({ hideCapybaraRunner }: Props) => {
     if (!data?.result?.EstimateTimeInSec) {
       return;
     }
-    const fileBlob = createIcsFileBlob({ blockHeight: height, date: dayjs().add(Number(data.result.EstimateTimeInSec), 's'), multichainContext });
-    downloadBlob(fileBlob, `Block #${ height } creation event.ics`);
-  }, [ data?.result?.EstimateTimeInSec, height, multichainContext ]);
+    const fileBlob = createIcsFileBlob({ blockHeight: height, date: dayjs().add(Number(data.result.EstimateTimeInSec), 's'), multichainContext, t });
+    downloadBlob(fileBlob, t('blockCountdown.filename', { height }));
+  }, [ data?.result?.EstimateTimeInSec, height, multichainContext, t ]);
 
   const handleTimerFinish = React.useCallback(() => {
     window.location.assign(route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: height } }, multichainContext));
@@ -77,10 +83,10 @@ const BlockCountdown = ({ hideCapybaraRunner }: Props) => {
             <Heading
               level="1"
             >
-              <TruncatedText text={ `Block #${ height }` } w="100%"/>
+              <TruncatedText text={ t('blockDetails.block_title', { number: formatNumber(Number(height), locale) }) } w="100%"/>
             </Heading>
             <Box mt={ 2 } color="text.secondary">
-              <Box fontWeight={ 600 }>Estimated target date</Box>
+              <Box fontWeight={ 600 }>{ t('blockCountdown.target') }</Box>
               <Time timestamp={ dayjs().add(Number(data.result.EstimateTimeInSec), 's').valueOf() }/>
             </Box>
             <Flex columnGap={ 2 } mt={ 3 }>
@@ -90,9 +96,9 @@ const BlockCountdown = ({ hideCapybaraRunner }: Props) => {
                 textStyle="sm"
                 px={ 2 }
                 display="inline-flex"
-                href={ createGoogleCalendarLink({ blockHeight: height, timeFromNow: Number(data.result.EstimateTimeInSec), multichainContext }) }
+                href={ createGoogleCalendarLink({ blockHeight: height, timeFromNow: Number(data.result.EstimateTimeInSec), multichainContext, t }) }
               >
-                <Image src="/static/google_calendar.svg" alt="Google calendar logo" boxSize={ 5 } mr={ 2 }/>
+                <Image src="/static/google_calendar.svg" alt={ t('blockCountdown.google_logo') } boxSize={ 5 } mr={ 2 }/>
                 <span>Google</span>
               </Link>
               <Button
@@ -106,7 +112,7 @@ const BlockCountdown = ({ hideCapybaraRunner }: Props) => {
                 display="inline-flex"
                 onClick={ handleAddToAppleCalClick }
               >
-                <Image src="/static/apple_calendar.svg" alt="Apple calendar logo" boxSize={ 5 }/>
+                <Image src="/static/apple_calendar.svg" alt={ t('blockCountdown.apple_logo') } boxSize={ 5 }/>
                 <span>Apple</span>
               </Button>
             </Flex>
@@ -139,8 +145,8 @@ const BlockCountdown = ({ hideCapybaraRunner }: Props) => {
           />
         ) }
         <Grid gridTemplateColumns="repeat(2, calc(50% - 4px))" columnGap={ 2 } mt={ 2 }>
-          <StatsWidget label="Remaining blocks" value={ data.result.RemainingBlock } icon="apps"/>
-          <StatsWidget label="Current block" value={ data.result.CurrentBlock } icon="block"/>
+          <StatsWidget label={ t('blockCountdown.remaining') } value={ formatNumber(Number(data.result.RemainingBlock), locale) } icon="apps"/>
+          <StatsWidget label={ t('blockCountdown.current') } value={ formatNumber(Number(data.result.CurrentBlock), locale) } icon="block"/>
         </Grid>
         { !hideCapybaraRunner && <CapybaraRunner/> }
       </Flex>

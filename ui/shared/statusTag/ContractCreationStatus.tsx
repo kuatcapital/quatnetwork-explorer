@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractCreationStatus } from 'types/api/contract';
 
@@ -13,23 +15,24 @@ interface Props extends BadgeProps {
 }
 
 const ContractCreationStatus = ({ status, ...rest }: Props) => {
+  const { t } = useTranslation();
   switch (status) {
     case 'success':
       return (
-        <Tooltip content="The contract was successfully created">
-          <StatusTag type="ok" text="Success" { ...rest }/>
+        <Tooltip content={ t('sharedStatus.contract_created') }>
+          <StatusTag type="ok" text={ t('common.success') } { ...rest }/>
         </Tooltip>
       );
     case 'failed':
       return (
-        <Tooltip content="The creation transaction failed">
-          <StatusTag type="error" text="Failed" { ...rest }/>
+        <Tooltip content={ t('sharedStatus.creation_failed') }>
+          <StatusTag type="error" text={ t('common.failed') } { ...rest }/>
         </Tooltip>
       );
     case 'selfdestructed':
       return (
-        <Tooltip content="The contract was created at some point but has since self-destructed">
-          <Badge colorPalette="gray" { ...rest }>Self-destructed</Badge>
+        <Tooltip content={ t('sharedStatus.contract_destroyed_hint') }>
+          <Badge colorPalette="gray" { ...rest }>{ t('sharedStatus.self_destructed') }</Badge>
         </Tooltip>
       );
     default:

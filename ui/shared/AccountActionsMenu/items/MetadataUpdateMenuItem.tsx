@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemProps } from '../types';
 
@@ -9,6 +11,7 @@ import { useMetadataUpdateContext } from 'ui/tokenInstance/contexts/metadataUpda
 import ButtonItem from '../parts/ButtonItem';
 
 const MetadataUpdateMenuItem = ({ type }: ItemProps) => {
+  const { t: tAcct } = useTranslation();
 
   const { status, setStatus } = useMetadataUpdateContext() || {};
 
@@ -21,7 +24,7 @@ const MetadataUpdateMenuItem = ({ type }: ItemProps) => {
       case 'button': {
         return (
           <ButtonItem
-            label="Refresh metadata"
+            label={ tAcct('accountUI.refresh_metadata') }
             icon="refresh"
             onClick={ handleClick }
             isDisabled={ status === 'WAITING_FOR_RESPONSE' }
@@ -32,7 +35,7 @@ const MetadataUpdateMenuItem = ({ type }: ItemProps) => {
         return (
           <MenuItem onClick={ handleClick } disabled={ status === 'WAITING_FOR_RESPONSE' } value="refresh-metadata">
             <IconSvg name="refresh" boxSize={ 5 }/>
-            <span>Refresh metadata</span>
+            <span>{ tAcct('accountUI.refresh_metadata') }</span>
           </MenuItem>
         );
       }

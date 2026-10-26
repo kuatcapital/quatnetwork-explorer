@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: runtime toolkit labels for RU/KK/EN. GPL-3.0.
 import { Icon } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import InfoIcon from 'icons/info.svg';
 
@@ -16,6 +18,7 @@ export interface HintProps extends IconButtonProps {
 }
 
 export const Hint = React.memo(({ label, tooltipProps, isLoading, boxSize = 5, ...rest }: HintProps) => {
+  const { t } = useTranslation();
   return (
     <Tooltip
       content={ label }
@@ -23,7 +26,7 @@ export const Hint = React.memo(({ label, tooltipProps, isLoading, boxSize = 5, .
       { ...tooltipProps }
     >
       <IconButton
-        aria-label="hint"
+        aria-label={ t('toolkit.hint') }
         boxSize={ boxSize }
         loadingSkeleton={ isLoading }
         borderRadius="sm"

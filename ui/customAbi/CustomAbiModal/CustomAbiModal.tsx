@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CustomAbi } from 'types/api/account';
 
@@ -14,8 +16,9 @@ type Props = {
 };
 
 const CustomAbiModal: React.FC<Props> = ({ open, onOpenChange, data, onSuccess }) => {
-  const title = data && 'id' in data ? 'Edit custom ABI' : 'New custom ABI';
-  const text = !(data && 'id' in data) ? 'Double check the ABI matches the contract to prevent errors or incorrect results.' : '';
+  const { t: tAcct } = useTranslation();
+  const title = data && 'id' in data ? tAcct('accountUI.edit_custom_abi') : tAcct('accountUI.new_custom_abi');
+  const text = !(data && 'id' in data) ? tAcct('accountUI.custom_abi_help') : '';
 
   const [ isAlertVisible, setAlertVisible ] = useState(false);
 

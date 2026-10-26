@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTag, AddressTagErrors } from 'types/api/account';
 
@@ -27,6 +29,7 @@ type Inputs = {
 };
 
 const AddressForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAlertVisible }) => {
+  const { t: tAcct } = useTranslation();
   const apiFetch = useApiFetch();
   const [ pending, setPending ] = useState(false);
   const formApi = useForm<Inputs>({
@@ -90,7 +93,7 @@ const AddressForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAlertV
         />
         <FormFieldText<Inputs>
           name="tag"
-          placeholder="Private tag (max 35 characters)"
+          placeholder={ tAcct('accountUI.private_tag_placeholder') }
           required
           rules={{
             maxLength: TAG_MAX_LENGTH,
@@ -103,7 +106,7 @@ const AddressForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAlertV
           disabled={ !formApi.formState.isDirty }
           loading={ pending }
         >
-          { data ? 'Save changes' : 'Add tag' }
+          { data ? tAcct('accountUI.save_changes') : tAcct('accountUI.add_tag') }
         </Button>
       </form>
     </FormProvider>

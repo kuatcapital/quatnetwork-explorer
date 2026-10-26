@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { RouteParams } from 'nextjs/routes';
 import { route } from 'nextjs/routes';
@@ -15,6 +17,7 @@ interface Props extends LinkProps {
 }
 
 const AdvancedFilterLink = ({ query, routeParams, adaptive = true, ...rest }: Props) => {
+  const { t } = useTranslation();
   return (
     <Link
       href={ route({ pathname: '/advanced-filter', query }, routeParams) }
@@ -25,7 +28,7 @@ const AdvancedFilterLink = ({ query, routeParams, adaptive = true, ...rest }: Pr
       { ...rest }
     >
       <IconSvg name="advanced-filter" boxSize={ 5 }/>
-      <chakra.span hideBelow={ adaptive ? 'lg' : undefined }>Advanced</chakra.span>
+      <chakra.span hideBelow={ adaptive ? 'lg' : undefined }>{ t('common.advanced') }</chakra.span>
     </Link>
   );
 };

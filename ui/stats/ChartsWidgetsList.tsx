@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize statistics empty-state subject. GPL-3.0.
 import { Box, Grid } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as stats from '@blockscout/stats-types';
 import type { StatsIntervalIds } from 'types/client/stats';
@@ -27,6 +29,7 @@ type Props = {
 };
 
 const ChartsWidgetsList = ({ isError, isPlaceholderData, charts, interval, initialFilterQuery, sections, selectedSectionId }: Props) => {
+  const { t } = useTranslation();
   const [ isSomeChartLoadingError, setIsSomeChartLoadingError ] = useState(false);
   const hasCharts = sections?.some((section) => section.charts.length > 0);
   const hasDisplayedCharts = charts?.some((section) => section.charts.length > 0);
@@ -63,7 +66,7 @@ const ChartsWidgetsList = ({ isError, isPlaceholderData, charts, interval, initi
     return (
       <EmptyState
         type={ hasCharts ? 'query' : 'stats' }
-        term={ hasCharts ? 'chart' : selectedSection?.title }
+        term={ hasCharts ? t('statistics.chart') : selectedSection?.title }
       />
     );
   }

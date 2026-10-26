@@ -1,5 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, Separator, Flex, VStack } from '@chakra-ui/react';
+import type { TFunction } from 'i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NavLink } from './types';
 import type { UserInfo } from 'types/api/account';
@@ -19,34 +22,34 @@ import UserWalletAutoConnectAlert from '../../UserWalletAutoConnectAlert';
 import UserProfileContentWallet from '../common/UserProfileContentWallet';
 import UserProfileContentNavLink from './UserProfileContentNavLink';
 
-const navLinks: Array<NavLink> = [
+const getNavLinks = (tAcct: TFunction): Array<NavLink> => [
   {
-    text: 'My profile',
+    text: tAcct('accountUI.my_profile'),
     href: route({ pathname: '/auth/profile' }),
     icon: 'profile' as const,
   },
   {
-    text: 'Watch list',
+    text: tAcct('accountUI.watchlist'),
     href: route({ pathname: '/account/watchlist' }),
     icon: 'star_outline' as const,
   },
   {
-    text: 'Private tags',
+    text: tAcct('accountUI.private_tags'),
     href: route({ pathname: '/account/tag-address' }),
     icon: 'private_tags' as const,
   },
   {
-    text: 'API keys',
+    text: tAcct('accountUI.api_keys'),
     href: route({ pathname: '/account/api-key' }),
     icon: 'API' as const,
   },
   {
-    text: 'Custom ABI',
+    text: tAcct('accountUI.custom_abi'),
     href: route({ pathname: '/account/custom-abi' }),
     icon: 'ABI' as const,
   },
   config.features.addressVerification.isEnabled && {
-    text: 'Verified addrs',
+    text: tAcct('accountUI.verified_addresses_short'),
     href: route({ pathname: '/account/verified-addresses' }),
     icon: 'verified' as const,
   },
@@ -61,6 +64,8 @@ interface Props {
 }
 
 const UserProfileContent = ({ data, onClose, onLogin, onAddEmail, onAddAddress }: Props) => {
+  const { t: tAcct } = useTranslation();
+  const navLinks = React.useMemo(() => getNavLinks(tAcct), [ tAcct ]);
   const { isAutoConnectDisabled } = useMarketplaceContext();
   const logout = useLogout();
 
@@ -74,7 +79,7 @@ const UserProfileContent = ({ data, onClose, onLogin, onAddEmail, onAddAddress }
       <Box>
         { isAutoConnectDisabled && <UserWalletAutoConnectAlert/> }
         { config.features.blockchainInteraction.isEnabled && <UserProfileContentWallet onClose={ onClose }/> }
-        <Button mt={ 3 } onClick={ onLogin } size="sm" w="100%">Log in</Button>
+        <Button mt={ 3 } onClick={ onLogin } size="sm" w="100%">{ tAcct('accountUI.log_in') }</Button>
       </Box>
     );
   }
@@ -83,7 +88,7 @@ const UserProfileContent = ({ data, onClose, onLogin, onAddEmail, onAddAddress }
     <Box>
       { isAutoConnectDisabled && <UserWalletAutoConnectAlert/> }
 
-      <Box textStyle="xs" fontWeight="500" px={ 1 } mb="1">Account</Box>
+      <Box textStyle="xs" fontWeight="500" px={ 1 } mb="1">{ tAcct('accountUI.account') }</Box>
       <Box
         textStyle="xs"
         fontWeight="500"
@@ -94,20 +99,20 @@ const UserProfileContent = ({ data, onClose, onLogin, onAddEmail, onAddAddress }
       >
         { config.features.blockchainInteraction.isEnabled && (
           <Flex p={ 2 } borderColor="border.divider" borderBottomWidth="1px">
-            <Box>Address</Box>
+            <Box>{ tAcct('accountUI.address') }</Box>
             <Hint
-              label={ `This wallet address is linked to your Blockscout account. It can be used to login ${ config.features.rewards.isEnabled ? 'and is used for Merits Program participation' : '' }` } // eslint-disable-line max-len
+              label={ tAcct(config.features.rewards.isEnabled ? 'accountUI.linked_wallet_rewards_hint' : 'accountUI.linked_wallet_hint') }
               boxSize={ 4 }
               ml={ 1 }
             />
             { data?.address_hash ?
-              <Box ml="auto">{ shortenString(data?.address_hash) }</Box> : <Link ml="auto" onClick={ onAddAddress }>Add address</Link> }
+              <Box ml="auto">{ shortenString(data?.address_hash) }</Box> : <Link ml="auto" onClick={ onAddAddress }>{ tAcct('accountUI.add_address') }</Link> }
           </Flex>
         ) }
         <Flex p={ 2 } columnGap={ 4 }>
-          <Box mr="auto">Email</Box>
+          <Box mr="auto">{ tAcct('accountUI.email') }</Box>
           { data?.email ?
-            <TruncatedText text={ data.email }/> : <Link onClick={ onAddEmail }>Add email</Link> }
+            <TruncatedText text={ data.email }/> : <Link onClick={ onAddEmail }>{ tAcct('accountUI.add_email') }</Link> }
         </Flex>
       </Box>
 
@@ -116,7 +121,7 @@ const UserProfileContent = ({ data, onClose, onLogin, onAddEmail, onAddAddress }
       <VStack as="ul" gap="0" alignItems="flex-start" overflow="hidden" mt={ 4 }>
         { navLinks.map((item) => (
           <UserProfileContentNavLink
-            key={ item.text }
+            key={ item.href }
             { ...item }
             onClick={ onClose }
           />
@@ -126,7 +131,7 @@ const UserProfileContent = ({ data, onClose, onLogin, onAddEmail, onAddAddress }
       <Separator my={ 1 }/>
 
       <UserProfileContentNavLink
-        text="Sign out"
+        text={ tAcct('accountUI.sign_out') }
         icon="sign_out"
         onClick={ handleLogoutClick }
       />

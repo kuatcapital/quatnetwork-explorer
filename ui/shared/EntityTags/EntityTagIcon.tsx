@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EntityTag } from './types';
 
@@ -12,11 +14,12 @@ interface Props {
 }
 
 const EntityTagIcon = ({ data, noColors }: Props) => {
+  const { t } = useTranslation();
 
   const iconColor = (!noColors && data.meta?.textColor) || 'icon.secondary';
 
   if (data.meta?.tagIcon && !noColors) {
-    return <Image boxSize={ 3 } src={ data.meta.tagIcon } alt={ `${ data.name } icon` }/>;
+    return <Image boxSize={ 3 } src={ data.meta.tagIcon } alt={ t('common.icon', { name: data.name }) }/>;
   }
 
   if (data.tagType === 'name') {

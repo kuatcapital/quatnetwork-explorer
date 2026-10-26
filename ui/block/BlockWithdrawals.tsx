@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
@@ -12,6 +14,7 @@ type Props = {
 const TABS_HEIGHT = 88;
 
 const BlockWithdrawals = ({ blockWithdrawalsQuery }: Props) => {
+  const { t } = useTranslation();
   const content = blockWithdrawalsQuery.data?.items ? (
     <>
       <Box hideFrom="lg">
@@ -36,7 +39,7 @@ const BlockWithdrawals = ({ blockWithdrawalsQuery }: Props) => {
     <DataListDisplay
       isError={ blockWithdrawalsQuery.isError }
       itemsNum={ blockWithdrawalsQuery.data?.items?.length }
-      emptyText="There are no withdrawals for this block."
+      emptyText={ t('blockDetails.withdrawals_empty') }
     >
       { content }
     </DataListDisplay>

@@ -1,8 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { GasPriceInfo, GasPrices } from 'types/api/stats';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { SECOND } from 'toolkit/utils/consts';
 import { asymp } from 'toolkit/utils/htmlEntities';
@@ -16,11 +20,6 @@ interface Props {
   isLoading: boolean;
 }
 
-const TITLES: Record<keyof GasPrices, string> = {
-  fast: 'Fast',
-  average: 'Normal',
-  slow: 'Slow',
-};
 const ICONS: Record<keyof GasPrices, IconName> = {
   fast: 'rocket_xl',
   average: 'gas_xl',
@@ -28,6 +27,9 @@ const ICONS: Record<keyof GasPrices, IconName> = {
 };
 
 const GasTrackerPriceSnippet = ({ data, type, isLoading }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
+  const titles = { fast: t('gasTracker.fast'), average: t('gasTracker.normal'), slow: t('gasTracker.slow') };
   const bgColors = {
     fast: 'transparent',
     average: { _light: 'gray.50', _dark: 'whiteAlpha.200' },
@@ -49,7 +51,7 @@ const GasTrackerPriceSnippet = ({ data, type, isLoading }: Props) => {
         borderBottomWidth: { base: '2px', lg: '0' },
       }}
     >
-      <Skeleton loading={ isLoading } textStyle="heading.lg" w="fit-content">{ TITLES[type] }</Skeleton>
+      <Skeleton loading={ isLoading } textStyle="heading.lg" w="fit-content">{ titles[type] }</Skeleton>
       <Flex columnGap={ 3 } alignItems="center" mt={ 3 }>
         <IconSvg name={ ICONS[type] } boxSize={{ base: '30px', xl: 10 }} isLoading={ isLoading } flexShrink={ 0 }/>
         <Skeleton loading={ isLoading }>
@@ -58,13 +60,19 @@ const GasTrackerPriceSnippet = ({ data, type, isLoading }: Props) => {
       </Flex>
       <Skeleton loading={ isLoading } fontSize="sm" color="text.secondary" mt={ 3 } w="fit-content">
         { data.price !== null && data.fiat_price !== null && <GasPrice data={ data } prefix={ `${ asymp } ` } unitMode="secondary"/> }
-        <span> per transaction</span>
-        { typeof data.time === 'number' && data.time > 0 && <span> / { (data.time / SECOND).toLocaleString(undefined, { maximumFractionDigits: 1 }) }s</span> }
+        <span> { t('gasTracker.per_transaction') }</span>
+        { typeof data.time === 'number' && data.time > 0 && (
+          <span> / { t('gasTracker.seconds', { value: formatNumber(data.time / SECOND, locale, { maximumFractionDigits: 1 }) }) }</span>
+        ) }
       </Skeleton>
       <Skeleton loading={ isLoading } fontSize="sm" color="text.secondary" mt={ 2 } w="fit-content" whiteSpace="pre">
-        { typeof data.base_fee === 'number' && <span>Base { data.base_fee.toLocaleString(undefined, { maximumFractionDigits: 0 }) }</span> }
+        { typeof data.base_fee === 'number' && (
+          <span>{ t('gasTracker.base', { value: formatNumber(data.base_fee, locale, { maximumFractionDigits: 0 }) }) }</span>
+        ) }
         { typeof data.base_fee === 'number' && typeof data.priority_fee === 'number' && <span> / </span> }
-        { typeof data.priority_fee === 'number' && <span>Priority { data.priority_fee.toLocaleString(undefined, { maximumFractionDigits: 0 }) }</span> }
+        { typeof data.priority_fee === 'number' && (
+          <span>{ t('gasTracker.priority', { value: formatNumber(data.priority_fee, locale, { maximumFractionDigits: 0 }) }) }</span>
+        ) }
       </Skeleton>
     </Box>
   );

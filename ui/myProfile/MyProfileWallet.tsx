@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserInfo } from 'types/api/account';
 
@@ -16,19 +18,16 @@ interface Props {
 }
 
 const MyProfileWallet = ({ profileQuery, onAddWallet }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   return (
     <section>
-      <Heading level="2" mb={ 3 }>My linked wallet</Heading>
+      <Heading level="2" mb={ 3 }>{ tAcct('accountUI.linked_wallet') }</Heading>
       <Text mb={ 3 } >
-        This wallet address is used for login{ ' ' }
+        { tAcct(config.features.rewards.isEnabled ? 'accountUI.wallet_login_rewards' : 'accountUI.wallet_login') }{ ' ' }
         { config.features.rewards.isEnabled && (
-          <>
-            and participation in the Merits Program.
-            <Link external href="https://docs.blockscout.com/using-blockscout/merits" ml={ 1 }>
-              Learn more
-            </Link>
-          </>
+          <Link external href="https://docs.blockscout.com/using-blockscout/merits" ml={ 1 }>
+            { tAcct('accountUI.learn_more') }</Link>
         ) }
       </Text>
       { profileQuery.data?.address_hash ? (
@@ -39,7 +38,7 @@ const MyProfileWallet = ({ profileQuery, onAddWallet }: Props) => {
             noAltHash
           />
         </Box>
-      ) : <Button size="sm" onClick={ onAddWallet }>Link wallet</Button> }
+      ) : <Button size="sm" onClick={ onAddWallet }>{ tAcct('accountUI.link_wallet') }</Button> }
     </section>
   );
 };

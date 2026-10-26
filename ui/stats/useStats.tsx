@@ -1,12 +1,16 @@
+// Modified by Quat Capital, 2026-10-26: runtime stats metadata localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as stats from '@blockscout/stats-types';
 import type { StatsIntervalIds } from 'types/client/stats';
 import type { ExternalChainExtended } from 'types/externalChains';
 
+import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import getQueryParamString from 'lib/router/getQueryParamString';
+import { localizeStatsMetadata, localizeStatsSection } from 'lib/stats/localizeStatsMetadata';
 import { STATS_CHARTS } from 'stubs/stats';
 
 function isSectionMatches(section: stats.LineChartSection, currentSection: string): boolean {
@@ -22,6 +26,7 @@ interface Props {
 }
 
 export default function useStats({ chain }: Props = {}) {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const { data, isPlaceholderData, isError } = useApiQuery('stats:lines', {
@@ -31,28 +36,39 @@ export default function useStats({ chain }: Props = {}) {
     chain,
   });
 
+  const nativeSymbol = chain?.app_config?.chain.currency.symbol || config.chain.currency.symbol;
+  const localizedSections = useMemo(() => data?.sections?.map(section => ({
+    ...localizeStatsSection(section, t),
+    charts: section.charts.map(chart => localizeStatsMetadata(chart, t, nativeSymbol)),
+  })), [ data?.sections, t, nativeSymbol ]);
+  const autoFilterRef = React.useRef<{ id: string; title: string } | undefined>(undefined);
+
   const [ currentSection, setCurrentSection ] = useState('all');
   const [ filterQuery, setFilterQuery ] = useState('');
   const [ initialFilterQuery, setInitialFilterQuery ] = React.useState('');
   const [ interval, setInterval ] = useState<StatsIntervalIds>('oneMonth');
-  const sectionIds = useMemo(() => data?.sections?.map(({ id }) => id), [ data ]);
+  const sectionIds = useMemo(() => localizedSections?.map(({ id }) => id), [ localizedSections ]);
 
   React.useEffect(() => {
-    if (!isPlaceholderData && !isError) {
-      const chartId = getQueryParamString(router.query.chartId);
-      const chartName = data?.sections.map((section) => section.charts.find((chart) => chart.id === chartId)).filter(Boolean)[0]?.title;
-      if (chartName) {
-        setInitialFilterQuery(chartName);
-        setFilterQuery(chartName);
-        router.replace({ pathname: '/stats' }, undefined, { scroll: false });
-      }
+    if (isPlaceholderData || isError) {
+      return;
     }
-  // run only when data is loaded
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ isPlaceholderData ]);
+    const requestedChartId = getQueryParamString(router.query.chartId);
+    const chartId = requestedChartId || autoFilterRef.current?.id;
+    const chart = localizedSections?.flatMap(section => section.charts).find(chart => chart.id === chartId);
+    if (!chart) {
+      return;
+    }
+    autoFilterRef.current = { id: chart.id, title: chart.title };
+    setInitialFilterQuery(chart.title);
+    setFilterQuery(chart.title);
+    if (requestedChartId) {
+      router.replace({ pathname: '/stats' }, undefined, { scroll: false });
+    }
+  }, [ isPlaceholderData, isError, localizedSections, router ]);
 
   const displayedCharts = React.useMemo(() => {
-    return data?.sections
+    return localizedSections
       ?.map((section) => {
         const charts = section.charts.filter((chart) => isSectionMatches(section, currentSection) && isChartNameMatches(filterQuery, chart));
 
@@ -61,7 +77,7 @@ export default function useStats({ chain }: Props = {}) {
           charts,
         };
       }).filter((section) => section.charts.length > 0);
-  }, [ currentSection, data?.sections, filterQuery ]);
+  }, [ currentSection, localizedSections, filterQuery ]);
 
   const handleSectionChange = useCallback((newSection: string) => {
     setCurrentSection(newSection);
@@ -72,11 +88,14 @@ export default function useStats({ chain }: Props = {}) {
   }, []);
 
   const handleFilterChange = useCallback((q: string) => {
+    if (q !== autoFilterRef.current?.title) {
+      autoFilterRef.current = undefined;
+    }
     setFilterQuery(q);
   }, []);
 
   return React.useMemo(() => ({
-    sections: data?.sections,
+    sections: localizedSections,
     sectionIds,
     isPlaceholderData,
     isError,
@@ -89,7 +108,7 @@ export default function useStats({ chain }: Props = {}) {
     handleFilterChange,
     displayedCharts,
   }), [
-    data,
+    localizedSections,
     sectionIds,
     isPlaceholderData,
     isError,

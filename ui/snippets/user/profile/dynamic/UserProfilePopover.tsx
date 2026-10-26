@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { DynamicConnectButton, useAuthenticateConnectedUser } from '@dynamic-labs/sdk-react-core';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from 'toolkit/chakra/button';
 import { PopoverBody, PopoverContent, PopoverRoot, PopoverTrigger } from 'toolkit/chakra/popover';
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const UserProfilePopover = ({ children, isAutoConnectDisabled }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   const { authenticateUser } = useAuthenticateConnectedUser();
 
@@ -32,7 +35,7 @@ const UserProfilePopover = ({ children, isAutoConnectDisabled }: Props) => {
           { isAutoConnectDisabled && <UserWalletAutoConnectAlert/> }
           <UserProfileContentWallet/>
           <DynamicConnectButton buttonClassName="dynamic-login-button">
-            <Button as="div" mt={ 3 } onClick={ authenticateUser } size="sm" w="100%" >Log in</Button>
+            <Button as="div" mt={ 3 } onClick={ authenticateUser } size="sm" w="100%" >{ tAcct('accountUI.log_in') }</Button>
           </DynamicConnectButton>
         </PopoverBody>
       </PopoverContent>

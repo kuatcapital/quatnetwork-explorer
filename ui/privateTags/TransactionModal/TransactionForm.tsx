@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { TransactionTag, TransactionTagErrors } from 'types/api/account';
 
@@ -29,6 +31,7 @@ type Inputs = {
 };
 
 const TransactionForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAlertVisible }) => {
+  const { t: tAcct } = useTranslation();
   const [ pending, setPending ] = useState(false);
 
   const formApi = useForm<Inputs>({
@@ -89,7 +92,7 @@ const TransactionForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAl
       <form noValidate onSubmit={ formApi.handleSubmit(onSubmit) }>
         <FormFieldText<Inputs>
           name="transaction"
-          placeholder="Transaction hash (0x...)"
+          placeholder={ tAcct('accountUI.transaction_hash') }
           required
           rules={{
             maxLength: TRANSACTION_HASH_LENGTH,
@@ -100,7 +103,7 @@ const TransactionForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAl
         />
         <FormFieldText<Inputs>
           name="tag"
-          placeholder="Private tag (max 35 characters)"
+          placeholder={ tAcct('accountUI.private_tag_placeholder') }
           required
           rules={{
             maxLength: TAG_MAX_LENGTH,
@@ -114,7 +117,7 @@ const TransactionForm: React.FC<Props> = ({ data, onOpenChange, onSuccess, setAl
             disabled={ !formApi.formState.isDirty }
             loading={ pending }
           >
-            { data ? 'Save changes' : 'Add tag' }
+            { data ? tAcct('accountUI.save_changes') : tAcct('accountUI.add_tag') }
           </Button>
         </Box>
       </form>

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormSubmitResult } from 'ui/publicTags/submit/types';
 
@@ -13,6 +15,7 @@ import useProfileQuery from 'ui/snippets/auth/useProfileQuery';
 type Screen = 'form' | 'result' | 'initializing' | 'error';
 
 const PublicTagsSubmit = () => {
+  const { t: tAcct } = useTranslation();
 
   const [ screen, setScreen ] = React.useState<Screen>('initializing');
   const [ submitResult, setSubmitResult ] = React.useState<FormSubmitResult>();
@@ -48,7 +51,7 @@ const PublicTagsSubmit = () => {
 
   return (
     <>
-      <PageTitle title="Request a public tag/label"/>
+      <PageTitle title={ tAcct('accountUI.request_public_tag') }/>
       { content }
     </>
   );

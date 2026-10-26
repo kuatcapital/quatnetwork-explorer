@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as tac from '@blockscout/tac-operation-lifecycle-types';
 
@@ -14,7 +16,16 @@ interface Props {
 }
 
 const TacOperationStatus = ({ status, isLoading, noTooltip }: Props) => {
-  const text = getTacOperationStatus(status);
+  const { t } = useTranslation();
+  const text = (() => {
+    switch (status) {
+      case tac.OperationType.ERROR: return t('common.error');
+      case tac.OperationType.ROLLBACK: return t('sharedStatus.rollback');
+      case tac.OperationType.INSUFFICIENT_FEE: return t('sharedStatus.insufficient_fee');
+      case tac.OperationType.PENDING: return t('common.pending');
+      default: return getTacOperationStatus(status);
+    }
+  })();
 
   if (!text) {
     return null;
@@ -27,8 +38,7 @@ const TacOperationStatus = ({ status, isLoading, noTooltip }: Props) => {
     case tac.OperationType.ROLLBACK:
       return (
         <Tooltip
-          // eslint-disable-next-line max-len
-          content="The cross‑chain operation was reverted and the original assets and state were returned to the sender after a failure on the destination chain"
+          content={ t('sharedStatus.rollback_hint') }
           disabled={ noTooltip }
         >
           <StatusTag type="error" text={ text } loading={ isLoading }/>

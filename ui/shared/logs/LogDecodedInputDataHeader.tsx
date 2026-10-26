@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import type { FlexProps } from '@chakra-ui/react';
 import { Separator, Flex, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Badge } from 'toolkit/chakra/badge';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -38,6 +40,7 @@ const Item = ({ label, children, isLoading, ...rest }: ItemProps) => {
 };
 
 const LogDecodedInputDataHeader = ({ methodId, methodCall, isLoading, rightSlot }: Props) => {
+  const { t } = useTranslation();
   return (
     <VStack
       align="flex-start"
@@ -48,12 +51,12 @@ const LogDecodedInputDataHeader = ({ methodId, methodCall, isLoading, rightSlot 
       w="100%"
     >
       <Flex columnGap={ 2 } w="100%">
-        <Item label="Method id" isLoading={ isLoading } flexDir="row" alignItems="center">
+        <Item label={ t('sharedLogs.method_id') } isLoading={ isLoading } flexDir="row" alignItems="center">
           <Badge loading={ isLoading }>{ methodId }</Badge>
         </Item>
         { rightSlot }
       </Flex>
-      <Item label="Call" isLoading={ isLoading }>
+      <Item label={ t('sharedLogs.call') } isLoading={ isLoading }>
         <Skeleton loading={ isLoading } whiteSpace="pre-wrap" wordBreak="break-all" flexGrow={ 1 }>{ methodCall }</Skeleton>
       </Item>
     </VStack>

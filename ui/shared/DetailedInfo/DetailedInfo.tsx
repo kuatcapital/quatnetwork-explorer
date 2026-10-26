@@ -1,6 +1,7 @@
 import type { GridItemProps, GridProps } from '@chakra-ui/react';
 import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Hint } from 'toolkit/components/Hint/Hint';
@@ -28,11 +29,14 @@ interface ItemLabelProps extends GridItemProps {
   hasScroll?: boolean;
 }
 
-const ItemLabelScrollText = () => (
-  <Text fontWeight={ 500 } color="text.secondary" textStyle="xs" className="note" textAlign="right">
-    Scroll to see more
-  </Text>
-);
+const ItemLabelScrollText = () => {
+  const { t } = useTranslation();
+  return (
+    <Text fontWeight={ 500 } color="text.secondary" textStyle="xs" className="note" textAlign="right">
+      { t('sharedUi.scroll_more') }
+    </Text>
+  );
+};
 
 export const ItemLabel = ({ hint, children, isLoading, id, hasScroll, ...rest }: ItemLabelProps) => {
   return (
@@ -104,3 +108,4 @@ export const ItemDivider = (props: GridItemProps) => {
     />
   );
 };
+// Modified by Quat Capital, 2026-10-26: translate the shared scroll hint. GPL-3.0.

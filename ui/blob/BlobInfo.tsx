@@ -1,8 +1,12 @@
+// Modified by Quat Capital, 2026-10-26: localize blob and statistics metadata. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Blob } from 'types/api/blobs';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Alert } from 'toolkit/chakra/alert';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
@@ -18,6 +22,8 @@ interface Props {
 }
 
 const BlobInfo = ({ data, isLoading }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   return (
     <DetailedInfo.Container
       templateColumns={{ base: 'minmax(0, 1fr)', lg: '216px minmax(728px, auto)' }}
@@ -25,7 +31,7 @@ const BlobInfo = ({ data, isLoading }: Props) => {
       { !data.blob_data && (
         <GridItem colSpan={{ base: undefined, lg: 2 }} mb={ 3 }>
           <Skeleton loading={ isLoading }>
-            <Alert status="warning">This blob is not yet indexed</Alert>
+            <Alert status="warning">{ t('blobUI.not_indexed') }</Alert>
           </Skeleton>
         </GridItem>
       ) }
@@ -33,10 +39,10 @@ const BlobInfo = ({ data, isLoading }: Props) => {
       { data.kzg_proof && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Zero knowledge proof. Allows for quick verification of commitment"
+            hint={ t('blobUI.proof_hint') }
             isLoading={ isLoading }
           >
-            Proof
+            { t('blobUI.proof') }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="pre-wrap" wordBreak="break-all">
@@ -50,10 +56,10 @@ const BlobInfo = ({ data, isLoading }: Props) => {
       { data.kzg_commitment && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Commitment to the data in the blob"
+            hint={ t('blobUI.commitment_hint') }
             isLoading={ isLoading }
           >
-            Commitment
+            { t('blobUI.commitment') }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="pre-wrap" wordBreak="break-all">
@@ -67,14 +73,14 @@ const BlobInfo = ({ data, isLoading }: Props) => {
       { data.blob_data && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Blob size in bytes"
+            hint={ t('blobUI.size_hint') }
             isLoading={ isLoading }
           >
-            Size, bytes
+            { t('blobUI.size') }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="pre-wrap" wordBreak="break-all">
-              { (data.blob_data.replace('0x', '').length / 2).toLocaleString() }
+              { formatNumber(data.blob_data.replace('0x', '').length / 2, locale) }
             </Skeleton>
           </DetailedInfo.ItemValue>
         </>
@@ -83,10 +89,10 @@ const BlobInfo = ({ data, isLoading }: Props) => {
       { data.transaction_hashes[0] && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Hash of the transaction with this blob"
+            hint={ t('blobUI.tx_hash_hint') }
             isLoading={ isLoading }
           >
-            Transaction hash
+            { t('blobUI.tx_hash') }
           </DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <TxEntity hash={ data.transaction_hashes[0].transaction_hash } isLoading={ isLoading } noIcon/>

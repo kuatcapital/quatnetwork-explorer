@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Tooltip } from 'toolkit/chakra/tooltip';
@@ -10,13 +12,14 @@ interface Props extends BoxProps {
 }
 
 const BlockPendingUpdateHint = ({ view = 'block', ...props }: Props) => {
+  const { t } = useTranslation();
   if (!config.UI.views.block.pendingUpdateAlertEnabled) {
     return null;
   }
 
   const tooltipContent = view === 'block' ?
-    'Block is being re-synced. Details may be incomplete until the update is finished.' :
-    'This transaction is part of a block that is being re-synced. Details may be incomplete until the update is finished.';
+    t('sharedEntities.block_resync') :
+    t('sharedEntities.transaction_resync');
 
   return (
     <Tooltip content={ tooltipContent }>

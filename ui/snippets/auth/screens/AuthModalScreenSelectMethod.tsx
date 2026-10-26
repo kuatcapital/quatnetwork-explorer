@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Screen } from '../types';
 
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const AuthModalScreenSelectMethod = ({ onSelectMethod }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   const handleEmailClick = React.useCallback(() => {
     mixpanel.logEvent(mixpanel.EventTypes.LOGIN, {
@@ -30,8 +33,8 @@ const AuthModalScreenSelectMethod = ({ onSelectMethod }: Props) => {
 
   return (
     <VStack gap={ 3 } mt={ 4 } align="stretch">
-      <Button variant="outline" onClick={ handleConnectWalletClick }>Continue with Web3 wallet</Button>
-      <Button variant="outline" onClick={ handleEmailClick }>Continue with email</Button>
+      <Button variant="outline" onClick={ handleConnectWalletClick }>{ tAcct('accountUI.continue_web3') }</Button>
+      <Button variant="outline" onClick={ handleEmailClick }>{ tAcct('accountUI.continue_email') }</Button>
     </VStack>
   );
 };

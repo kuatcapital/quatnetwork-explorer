@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Flex, HStack, Text } from '@chakra-ui/react';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTag } from 'types/api/account';
 
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const AddressTagListItem = ({ item, onEditClick, onDeleteClick, isLoading }: Props) => {
+  const { t: tAcct } = useTranslation();
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
   }, [ item, onEditClick ]);
@@ -35,7 +38,7 @@ const AddressTagListItem = ({ item, onEditClick, onDeleteClick, isLoading }: Pro
           w="100%"
         />
         <HStack gap={ 3 } mt={ 4 }>
-          <Text textStyle="sm" fontWeight="medium">Private tag</Text>
+          <Text textStyle="sm" fontWeight="medium">{ tAcct('accountUI.private_tag') }</Text>
           <Skeleton loading={ isLoading } display="inline-block" borderRadius="sm">
             <Tag>
               { item.name }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Flex, Icon } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 // eslint-disable-next-line no-restricted-imports
@@ -33,6 +35,7 @@ function getCeleniumUrl(props: Props) {
 }
 
 const CeleniumLink = (props: Props) => {
+  const { t } = useTranslation();
   const url = getCeleniumUrl(props);
 
   if (!url) {
@@ -42,7 +45,7 @@ const CeleniumLink = (props: Props) => {
   return (
     <Flex alignItems="center" columnGap={ 2 }>
       <Icon as={ celeniumIcon } boxSize={ 5 }/>
-      <Link external href={ getCeleniumUrl(props) }>Blob page</Link>
+      <Link external href={ getCeleniumUrl(props) }>{ t('sharedUi.blob_page') }</Link>
     </Flex>
   );
 };

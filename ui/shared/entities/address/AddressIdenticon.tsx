@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import * as cookies from 'lib/cookies';
@@ -10,6 +12,7 @@ import IdenticonGithub from 'ui/shared/IdenticonGithub';
 interface IconProps {
   hash: string;
   size: number;
+  alt?: string;
 }
 
 const Icon = dynamic(
@@ -29,7 +32,7 @@ const Icon = dynamic(
           return (
             <Image
               src={ data }
-              alt={ `Identicon for ${ props.hash }}` }
+              alt={ props.alt }
             />
           );
         };
@@ -76,9 +79,10 @@ const Icon = dynamic(
 type Props = IconProps;
 
 const AddressIdenticon = ({ size, hash }: Props) => {
+  const { t } = useTranslation();
   return (
     <Box boxSize={ `${ size }px` } borderRadius="full" overflow="hidden">
-      <Icon size={ size } hash={ hash }/>
+      <Icon size={ size } hash={ hash } alt={ t('sharedEntities.identicon', { hash }) }/>
     </Box>
   );
 };

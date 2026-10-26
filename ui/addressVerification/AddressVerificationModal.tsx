@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import dynamic from 'next/dynamic';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressVerificationFormFirstStepFields, AddressCheckStatusSuccess } from './types';
 import type { VerifiedAddress } from 'types/api/account';
@@ -32,6 +34,7 @@ interface Props {
 }
 
 const AddressVerificationModal = ({ defaultAddress, open, onOpenChange, onSubmit, onAddTokenInfoClick, onShowListClick, pageType }: Props) => {
+  const { t: tAcct } = useTranslation();
   const [ stepIndex, setStepIndex ] = React.useState(0);
   const [ data, setData ] = React.useState<StateData>({ address: '', signingMessage: '' });
 
@@ -80,11 +83,11 @@ const AddressVerificationModal = ({ defaultAddress, open, onOpenChange, onSubmit
 
   const steps = [
     {
-      title: 'Verify new address ownership',
+      title: tAcct('accountUI.verify_address_ownership'),
       content: <AddressVerificationStepAddress onContinue={ handleGoToSecondStep } defaultAddress={ defaultAddress }/>,
     },
     {
-      title: 'Copy and sign message',
+      title: tAcct('accountUI.copy_sign_message'),
       content: (
         <AddressVerificationStepSignature
           { ...data }
@@ -94,7 +97,7 @@ const AddressVerificationModal = ({ defaultAddress, open, onOpenChange, onSubmit
       ),
     },
     {
-      title: 'Congrats! Address is verified.',
+      title: tAcct('accountUI.address_verified'),
       content: (
         <AddressVerificationStepSuccess
           onShowListClick={ onShowListClick }

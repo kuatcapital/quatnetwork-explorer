@@ -1,0 +1,429 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedOn": "2026-10-26",
+    "license": "GPL-3.0",
+    "purpose": "T18 known stats metadata keyed by stable API id and blob controls",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "statsMetadata": {
+      "metrics": {
+        "accountsGrowth": {
+          "title": "Accounts growth",
+          "description": "Cumulative accounts number per period"
+        },
+        "activeAccounts": {
+          "title": "Active accounts",
+          "description": "Active accounts number per period"
+        },
+        "newAccounts": {
+          "title": "New accounts",
+          "description": "New accounts number per day"
+        },
+        "averageTxnFee": {
+          "title": "Average transaction fee",
+          "description": "The average amount in {{unit}} spent per transaction"
+        },
+        "newTxns": {
+          "title": "New transactions",
+          "description": "New transactions number"
+        },
+        "txnsFee": {
+          "title": "Transactions fees",
+          "description": "Amount of tokens paid as fees"
+        },
+        "txnsGrowth": {
+          "title": "Transactions growth",
+          "description": "Cumulative transactions number"
+        },
+        "txnsSuccessRate": {
+          "title": "Transactions success rate",
+          "description": "Successful transactions rate per day"
+        },
+        "averageBlockRewards": {
+          "title": "Average block rewards",
+          "description": "Average amount of distributed reward in tokens per day"
+        },
+        "averageBlockSize": {
+          "title": "Average block size",
+          "description": "Average size of blocks in bytes"
+        },
+        "newBlocks": {
+          "title": "New blocks",
+          "description": "New blocks number"
+        },
+        "newNativeCoinTransfers": {
+          "title": "New {{unit}} transfers",
+          "description": "New token transfers number for the period"
+        },
+        "averageGasLimit": {
+          "title": "Average gas limit",
+          "description": "Average gas limit per block for the period"
+        },
+        "averageGasPrice": {
+          "title": "Average gas price",
+          "description": "Average gas price for the period ({{unit}})"
+        },
+        "gasUsedGrowth": {
+          "title": "Gas used growth",
+          "description": "Cumulative gas used for the period"
+        },
+        "newVerifiedContracts": {
+          "title": "New verified contracts",
+          "description": "New verified contracts number for the period"
+        },
+        "verifiedContractsGrowth": {
+          "title": "Verified contracts growth",
+          "description": "Cumulative number verified contracts for the period"
+        },
+        "newTxnsWindow": {
+          "title": "Daily transactions",
+          "description": "The chart displays daily transactions for the past 30 days"
+        },
+        "newOperationalTxnsWindow": {
+          "title": "Daily operational transactions",
+          "description": "The chart displays daily transactions for the past 30 days (without block creation transactions)"
+        },
+        "averageBlockTime": {
+          "title": "Average block time",
+          "description": "Average time taken in seconds for a block to be included in the blockchain"
+        },
+        "totalAddresses": {
+          "title": "Total addresses",
+          "description": "Number of addresses that participated in the blockchain"
+        },
+        "totalBlocks": {
+          "title": "Total blocks",
+          "description": "Number of blocks over all time"
+        },
+        "totalTxns": {
+          "title": "Total txns",
+          "description": "All transactions including pending, dropped, replaced, failed transactions"
+        },
+        "yesterdayTxns": {
+          "title": "Yesterday txns",
+          "description": "Number of transactions yesterday (0:00 - 23:59 UTC)"
+        },
+        "totalOperationalTxns": {
+          "title": "Total operational txns",
+          "description": "'Total txns' without block creation transactions"
+        },
+        "yesterdayOperationalTxns": {
+          "title": "Yesterday operational txns",
+          "description": "Number of transactions yesterday (0:00 - 23:59 UTC) without block creation transactions"
+        }
+      },
+      "sections": {
+        "accounts": "Accounts",
+        "transactions": "Transactions",
+        "blocks": "Blocks",
+        "tokens": "Tokens",
+        "gas": "Gas",
+        "contracts": "Contracts"
+      },
+      "units": {
+        "bytes": "Bytes",
+        "seconds": "s"
+      }
+    },
+    "blobUI": {
+      "not_indexed": "This blob is not yet indexed",
+      "proof_hint": "Zero knowledge proof. Allows for quick verification of commitment",
+      "proof": "Proof",
+      "commitment_hint": "Commitment to the data in the blob",
+      "commitment": "Commitment",
+      "size_hint": "Blob size in bytes",
+      "size": "Size, bytes",
+      "tx_hash_hint": "Hash of the transaction with this blob",
+      "tx_hash": "Transaction hash",
+      "image": "Image",
+      "raw": "Raw",
+      "not_image": "Not an image",
+      "data": "Blob data",
+      "type": "Select type",
+      "download": "Download",
+      "image_alt": "Blob image representation"
+    }
+  },
+  "ru": {
+    "statsMetadata": {
+      "metrics": {
+        "accountsGrowth": {
+          "title": "Рост числа аккаунтов",
+          "description": "Накопленное число аккаунтов за период"
+        },
+        "activeAccounts": {
+          "title": "Активные аккаунты",
+          "description": "Число активных аккаунтов за период"
+        },
+        "newAccounts": {
+          "title": "Новые аккаунты",
+          "description": "Число новых аккаунтов за день"
+        },
+        "averageTxnFee": {
+          "title": "Средняя комиссия за транзакцию",
+          "description": "Средняя сумма в {{unit}}, потраченная на транзакцию"
+        },
+        "newTxns": {
+          "title": "Новые транзакции",
+          "description": "Число новых транзакций"
+        },
+        "txnsFee": {
+          "title": "Комиссии транзакций",
+          "description": "Количество токенов, уплаченных в качестве комиссий"
+        },
+        "txnsGrowth": {
+          "title": "Рост числа транзакций",
+          "description": "Накопленное число транзакций"
+        },
+        "txnsSuccessRate": {
+          "title": "Доля успешных транзакций",
+          "description": "Доля успешных транзакций за день"
+        },
+        "averageBlockRewards": {
+          "title": "Средняя награда за блок",
+          "description": "Средняя распределённая награда в токенах за день"
+        },
+        "averageBlockSize": {
+          "title": "Средний размер блока",
+          "description": "Средний размер блоков в байтах"
+        },
+        "newBlocks": {
+          "title": "Новые блоки",
+          "description": "Число новых блоков"
+        },
+        "newNativeCoinTransfers": {
+          "title": "Новые переводы {{unit}}",
+          "description": "Число новых переводов токена за период"
+        },
+        "averageGasLimit": {
+          "title": "Средний лимит газа",
+          "description": "Средний лимит газа на блок за период"
+        },
+        "averageGasPrice": {
+          "title": "Средняя цена газа",
+          "description": "Средняя цена газа за период ({{unit}})"
+        },
+        "gasUsedGrowth": {
+          "title": "Рост расхода газа",
+          "description": "Накопленный расход газа за период"
+        },
+        "newVerifiedContracts": {
+          "title": "Новые контракты с проверенным кодом",
+          "description": "Число новых контрактов с проверенным кодом за период"
+        },
+        "verifiedContractsGrowth": {
+          "title": "Рост числа контрактов с проверенным кодом",
+          "description": "Накопленное число контрактов с проверенным кодом за период"
+        },
+        "newTxnsWindow": {
+          "title": "Транзакции за день",
+          "description": "График ежедневных транзакций за последние 30 дней"
+        },
+        "newOperationalTxnsWindow": {
+          "title": "Операционные транзакции за день",
+          "description": "График ежедневных транзакций за последние 30 дней (без транзакций создания блоков)"
+        },
+        "averageBlockTime": {
+          "title": "Среднее время блока",
+          "description": "Среднее время включения блока в блокчейн, в секундах"
+        },
+        "totalAddresses": {
+          "title": "Всего адресов",
+          "description": "Число адресов, участвовавших в блокчейне"
+        },
+        "totalBlocks": {
+          "title": "Всего блоков",
+          "description": "Число блоков за всё время"
+        },
+        "totalTxns": {
+          "title": "Всего транзакций",
+          "description": "Все транзакции, включая ожидающие, отброшенные, заменённые и завершившиеся с ошибкой"
+        },
+        "yesterdayTxns": {
+          "title": "Транзакции за вчера",
+          "description": "Число транзакций за вчера (0:00–23:59 UTC)"
+        },
+        "totalOperationalTxns": {
+          "title": "Всего операционных транзакций",
+          "description": "Все транзакции, кроме транзакций создания блоков"
+        },
+        "yesterdayOperationalTxns": {
+          "title": "Операционные транзакции за вчера",
+          "description": "Число транзакций за вчера (0:00–23:59 UTC), без транзакций создания блоков"
+        }
+      },
+      "sections": {
+        "accounts": "Аккаунты",
+        "transactions": "Транзакции",
+        "blocks": "Блоки",
+        "tokens": "Токены",
+        "gas": "Газ",
+        "contracts": "Контракты"
+      },
+      "units": {
+        "bytes": "Байт",
+        "seconds": "с"
+      }
+    },
+    "blobUI": {
+      "not_indexed": "Этот блоб ещё не проиндексирован",
+      "proof_hint": "Доказательство с нулевым разглашением для быстрой проверки фиксации данных",
+      "proof": "Доказательство",
+      "commitment_hint": "Криптографическая фиксация данных блоба",
+      "commitment": "Фиксация данных",
+      "size_hint": "Размер блоба в байтах",
+      "size": "Размер, байт",
+      "tx_hash_hint": "Хеш транзакции с этим блобом",
+      "tx_hash": "Хеш транзакции",
+      "image": "Изображение",
+      "raw": "Исходные данные",
+      "not_image": "Данные не являются изображением",
+      "data": "Данные блоба",
+      "type": "Выберите тип",
+      "download": "Скачать",
+      "image_alt": "Изображение данных блоба"
+    }
+  },
+  "kk": {
+    "statsMetadata": {
+      "metrics": {
+        "accountsGrowth": {
+          "title": "Аккаунттар санының өсуі",
+          "description": "Кезеңдегі аккаунттардың жинақталған саны"
+        },
+        "activeAccounts": {
+          "title": "Белсенді аккаунттар",
+          "description": "Кезеңдегі белсенді аккаунттар саны"
+        },
+        "newAccounts": {
+          "title": "Жаңа аккаунттар",
+          "description": "Күн ішіндегі жаңа аккаунттар саны"
+        },
+        "averageTxnFee": {
+          "title": "Орташа транзакция комиссиясы",
+          "description": "Әр транзакцияға жұмсалған {{unit}} түріндегі орташа сома"
+        },
+        "newTxns": {
+          "title": "Жаңа транзакциялар",
+          "description": "Жаңа транзакциялар саны"
+        },
+        "txnsFee": {
+          "title": "Транзакция комиссиялары",
+          "description": "Комиссия ретінде төленген токендер мөлшері"
+        },
+        "txnsGrowth": {
+          "title": "Транзакциялар санының өсуі",
+          "description": "Транзакциялардың жинақталған саны"
+        },
+        "txnsSuccessRate": {
+          "title": "Сәтті транзакциялар үлесі",
+          "description": "Күн ішіндегі сәтті транзакциялар үлесі"
+        },
+        "averageBlockRewards": {
+          "title": "Блоктың орташа сыйақысы",
+          "description": "Күн ішінде токендермен бөлінген орташа сыйақы"
+        },
+        "averageBlockSize": {
+          "title": "Блоктың орташа өлшемі",
+          "description": "Блоктардың байтпен берілген орташа өлшемі"
+        },
+        "newBlocks": {
+          "title": "Жаңа блоктар",
+          "description": "Жаңа блоктар саны"
+        },
+        "newNativeCoinTransfers": {
+          "title": "Жаңа {{unit}} аударымдары",
+          "description": "Кезеңдегі жаңа токен аударымдары саны"
+        },
+        "averageGasLimit": {
+          "title": "Орташа газ лимиті",
+          "description": "Кезеңдегі әр блоктың орташа газ лимиті"
+        },
+        "averageGasPrice": {
+          "title": "Газдың орташа бағасы",
+          "description": "Кезеңдегі орташа газ бағасы ({{unit}})"
+        },
+        "gasUsedGrowth": {
+          "title": "Жұмсалған газ көлемінің өсуі",
+          "description": "Кезеңдегі жұмсалған газдың жинақталған көлемі"
+        },
+        "newVerifiedContracts": {
+          "title": "Бастапқы коды тексерілген жаңа келісімшарттар",
+          "description": "Кезеңдегі бастапқы коды тексерілген жаңа келісімшарттар саны"
+        },
+        "verifiedContractsGrowth": {
+          "title": "Бастапқы коды тексерілген келісімшарттар санының өсуі",
+          "description": "Кезеңдегі бастапқы коды тексерілген келісімшарттардың жинақталған саны"
+        },
+        "newTxnsWindow": {
+          "title": "Күндік транзакциялар",
+          "description": "Соңғы 30 күндегі күндік транзакциялар графигі"
+        },
+        "newOperationalTxnsWindow": {
+          "title": "Күндік операциялық транзакциялар",
+          "description": "Соңғы 30 күндегі күндік транзакциялар графигі (блок жасау транзакцияларынсыз)"
+        },
+        "averageBlockTime": {
+          "title": "Блоктың орташа уақыты",
+          "description": "Блоктың блокчейнге қосылуының секундпен берілген орташа уақыты"
+        },
+        "totalAddresses": {
+          "title": "Барлық мекенжайлар",
+          "description": "Блокчейнге қатысқан мекенжайлар саны"
+        },
+        "totalBlocks": {
+          "title": "Барлық блоктар",
+          "description": "Барлық уақыттағы блоктар саны"
+        },
+        "totalTxns": {
+          "title": "Барлық транзакциялар",
+          "description": "Күтудегі, тасталған, ауыстырылған және сәтсіз транзакцияларды қоса алғанда, барлық транзакциялар"
+        },
+        "yesterdayTxns": {
+          "title": "Кешегі транзакциялар",
+          "description": "Кешегі транзакциялар саны (0:00–23:59 UTC)"
+        },
+        "totalOperationalTxns": {
+          "title": "Барлық операциялық транзакциялар",
+          "description": "Блок жасау транзакцияларынан басқа барлық транзакциялар"
+        },
+        "yesterdayOperationalTxns": {
+          "title": "Кешегі операциялық транзакциялар",
+          "description": "Блок жасау транзакцияларынсыз кешегі транзакциялар саны (0:00–23:59 UTC)"
+        }
+      },
+      "sections": {
+        "accounts": "Аккаунттар",
+        "transactions": "Транзакциялар",
+        "blocks": "Блоктар",
+        "tokens": "Токендер",
+        "gas": "Газ",
+        "contracts": "Келісімшарттар"
+      },
+      "units": {
+        "bytes": "Байт",
+        "seconds": "с"
+      }
+    },
+    "blobUI": {
+      "not_indexed": "Бұл блоб әлі индекстелмеген",
+      "proof_hint": "Деректер бекітілуін жылдам тексеруге арналған нөлдік білім дәлелі",
+      "proof": "Дәлел",
+      "commitment_hint": "Блоб деректерінің криптографиялық бекітілуі",
+      "commitment": "Деректерді бекіту",
+      "size_hint": "Блоб өлшемі, байтпен",
+      "size": "Өлшем, байт",
+      "tx_hash_hint": "Осы блобы бар транзакция хэші",
+      "tx_hash": "Транзакция хэші",
+      "image": "Кескін",
+      "raw": "Бастапқы деректер",
+      "not_image": "Деректер кескін емес",
+      "data": "Блоб деректері",
+      "type": "Түрін таңдаңыз",
+      "download": "Жүктеп алу",
+      "image_alt": "Блоб деректерінің кескіні"
+    }
+  }
+}

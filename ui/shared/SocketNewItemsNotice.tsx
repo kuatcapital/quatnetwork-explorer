@@ -1,7 +1,11 @@
-import { Text, chakra } from '@chakra-ui/react';
+// Modified by Quat Capital, 2026-10-26: complete localized socket messages and quantity forms. GPL-3.0.
+import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Alert } from 'toolkit/chakra/alert';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -24,57 +28,48 @@ interface Props {
   onLinkClick?: () => void;
 }
 
+const MESSAGE_KEYS = {
+  transaction: { scan: 'sharedUi.scan_transactions', arrived: 'sharedUi.arrived_transactions' },
+  token_transfer: { scan: 'sharedUi.scan_transfers', arrived: 'sharedUi.arrived_transfers' },
+  deposit: { scan: 'sharedUi.scan_deposits', arrived: 'sharedUi.arrived_deposits' },
+  block: { scan: 'sharedUi.scan_blocks', arrived: 'sharedUi.arrived_blocks' },
+  flashblock: { scan: 'sharedUi.scan_flashblocks', arrived: 'sharedUi.arrived_flashblocks' },
+  cross_chain_transaction: { scan: 'sharedUi.scan_cross_transactions', arrived: 'sharedUi.arrived_cross_transactions' },
+} as const;
+
 const SocketNewItemsNotice = chakra(({ children, className, url, num, showErrorAlert, type = 'transaction', isLoading, onLinkClick }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const handleLinkClick = React.useCallback(() => {
     onLinkClick ? onLinkClick() : window.location.reload();
   }, [ onLinkClick ]);
 
   const alertContent = (() => {
     if (showErrorAlert) {
-      return 'Live updates temporarily delayed';
+      return t('sharedUi.updates_delayed');
     }
 
-    let name;
-
-    switch (type) {
-      case 'token_transfer':
-        name = 'token transfer';
-        break;
-      case 'deposit':
-        name = 'deposit';
-        break;
-      case 'block':
-        name = 'block';
-        break;
-      case 'flashblock': {
-        if (flashblocksFeature.isEnabled) {
-          name = flashblocksFeature.name;
-        }
-        break;
-      }
-      case 'cross_chain_transaction':
-        name = 'cross chain transaction';
-        break;
-      default:
-        name = 'transaction';
-        break;
-    }
+    const keys = MESSAGE_KEYS[type];
+    const name = flashblocksFeature.isEnabled ? flashblocksFeature.name : t('sharedUi.flashblock');
 
     if (!num) {
-      return `scanning new ${ name }s...`;
+      return t(keys.scan, { name });
     }
 
     if (type === 'cross_chain_transaction') {
       return (
-        <Link href={ url } onClick={ !url ? handleLinkClick : undefined }>More { name }s available</Link>
+        <Link href={ url } onClick={ !url ? handleLinkClick : undefined }>{ t('sharedUi.more_cross_transactions') }</Link>
       );
     }
 
     return (
-      <>
-        <Link href={ url } onClick={ !url ? handleLinkClick : undefined }>{ num.toLocaleString() } more { name }{ num > 1 ? 's' : '' }</Link>
-        <Text whiteSpace="pre"> ha{ num > 1 ? 've' : 's' } come in</Text>
-      </>
+      <Trans
+        t={ t }
+        i18nKey={ keys.arrived }
+        count={ num }
+        values={{ value: formatNumber(num, locale), name }}
+        components={{ records: <Link href={ url } onClick={ !url ? handleLinkClick : undefined }/> }}
+      />
     );
   })();
 

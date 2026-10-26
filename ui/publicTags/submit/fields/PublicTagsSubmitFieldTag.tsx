@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { chakra, Flex, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import { type FieldError, type FieldErrorsImpl, type Merge } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields, FormFieldTag } from '../types';
 import type { PublicTagType } from 'types/api/addressMetadata';
@@ -33,6 +35,7 @@ interface Props {
 }
 
 const PublicTagsSubmitFieldTag = ({ index, isDisabled, errors, onAddClick, onRemoveClick, tagTypes, field }: Props) => {
+  const { t: tAcct } = useTranslation();
   const isMobile = useIsMobile();
   const bgColorDefault = { _light: 'blackAlpha.50', _dark: 'whiteAlpha.100' };
   const bgColorError = { _light: 'red.50', _dark: 'red.900' };
@@ -56,7 +59,7 @@ const PublicTagsSubmitFieldTag = ({ index, isDisabled, errors, onAddClick, onRem
           <GridItem colSpan={{ base: 1, lg: 2 }}>
             <FormFieldText<FormFields>
               name={ `tags.${ index }.name` }
-              placeholder="Tag (max 35 characters)"
+              placeholder={ tAcct('accountUI.tag_placeholder') }
               required
               rules={{ maxLength: 35 }}
             />
@@ -67,17 +70,17 @@ const PublicTagsSubmitFieldTag = ({ index, isDisabled, errors, onAddClick, onRem
           <GridItem colSpan={{ base: 1, lg: 2 }}>
             <FormFieldUrl<FormFields>
               name={ `tags.${ index }.url` }
-              placeholder="Label URL"
+              placeholder={ tAcct('accountUI.label_url') }
             />
           </GridItem>
           <FormFieldColor<FormFields>
             name={ `tags.${ index }.bgColor` }
-            placeholder="Background (Hex)"
+            placeholder={ tAcct('accountUI.background_hex') }
             sampleDefaultBgColor={ CIRCLE_BG_COLOR_DEFAULT.bgColor }
           />
           <FormFieldColor<FormFields>
             name={ `tags.${ index }.textColor` }
-            placeholder="Text (Hex)"
+            placeholder={ tAcct('accountUI.text_hex') }
             sampleDefaultBgColor={ CIRCLE_BG_COLOR_DEFAULT.textColor }
           />
           <GridItem colSpan={{ base: 1, lg: 4 }}>
@@ -86,7 +89,7 @@ const PublicTagsSubmitFieldTag = ({ index, isDisabled, errors, onAddClick, onRem
           <GridItem colSpan={{ base: 1, lg: 4 }}>
             <FormFieldText<FormFields>
               name={ `tags.${ index }.tooltipDescription` }
-              placeholder="Label description (max 80 characters)"
+              placeholder={ tAcct('accountUI.label_description') }
               maxH="160px"
               rules={{ maxLength: 80 }}
               asComponent="Textarea"

@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { WatchlistAddress, WatchlistErrors } from 'types/api/account';
 
@@ -41,6 +43,7 @@ export type Inputs = {
 };
 
 const AddressForm: React.FC<Props> = ({ data, onSuccess, setAlertVisible, isAdd, hasEmail, showEmailAlert }) => {
+  const { t: tAcct } = useTranslation();
   const [ pending, setPending ] = useState(false);
 
   let notificationsDefault = {} as Inputs['notification_settings'];
@@ -123,7 +126,7 @@ const AddressForm: React.FC<Props> = ({ data, onSuccess, setAlertVisible, isAdd,
         />
         <FormFieldText<Inputs>
           name="tag"
-          placeholder="Private tag (max 35 characters)"
+          placeholder={ tAcct('accountUI.private_tag_placeholder') }
           required
           rules={{
             maxLength: TAG_MAX_LENGTH,
@@ -134,15 +137,14 @@ const AddressForm: React.FC<Props> = ({ data, onSuccess, setAlertVisible, isAdd,
         { hasEmail ? (
           <>
             <Text color="text.secondary" fontSize="sm" marginBottom={ 5 }>
-              Please select what types of notifications you will receive
-            </Text>
+              { tAcct('accountUI.select_notifications') }</Text>
             <Box marginBottom={ 8 }>
               <AddressFormNotifications/>
             </Box>
-            <Text color="text.secondary" fontSize="sm" marginBottom={{ base: '10px', lg: 5 }}>Notification methods</Text>
+            <Text color="text.secondary" fontSize="sm" marginBottom={{ base: '10px', lg: 5 }}>{ tAcct('accountUI.notification_methods') }</Text>
             <FormFieldCheckbox<Inputs, 'notification'>
               name="notification"
-              label="Email notifications"
+              label={ tAcct('accountUI.email_notifications') }
             />
           </>
         ) : null }
@@ -153,8 +155,7 @@ const AddressForm: React.FC<Props> = ({ data, onSuccess, setAlertVisible, isAdd,
             w="fit-content"
             mb={ 6 }
           >
-            To receive notifications you need to add an email to your profile.
-          </Alert>
+            { tAcct('accountUI.notifications_email_required') }</Alert>
         ) : null }
         <Button
           type="submit"
@@ -162,7 +163,7 @@ const AddressForm: React.FC<Props> = ({ data, onSuccess, setAlertVisible, isAdd,
           disabled={ !formApi.formState.isDirty }
           mt={ 8 }
         >
-          { !isAdd ? 'Save changes' : 'Add address' }
+          { !isAdd ? tAcct('accountUI.save_changes') : tAcct('accountUI.add_address') }
         </Button>
       </form>
     </FormProvider>

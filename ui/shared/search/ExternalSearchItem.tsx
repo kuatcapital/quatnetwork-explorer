@@ -1,7 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
+import { useLocale } from 'lib/i18n/provider';
 import type { ExternalSearchItem as ExternalSearchItemType } from 'lib/search/externalSearch';
 import { Link } from 'toolkit/chakra/link';
 
@@ -19,6 +22,8 @@ interface Props {
 }
 
 const ExternalSearchItem = ({ item }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   if (!zetaChainFeature.isEnabled || !item) {
     return null;
   }
@@ -28,10 +33,10 @@ const ExternalSearchItem = ({ item }: Props) => {
   return (
     <>
       <Text color="text.secondary">
-        It looks like you are searching for { getIndefiniteArticle(item.name) } { item.name }. This information is best served by the external explorer.
+        { t('sharedUi.external_search', { name: locale === 'en' ? `${ getIndefiniteArticle(item.name) } ${ item.name }` : item.name }) }
       </Text>
       <Link href={ url } external mt={ 4 }>
-        Click here to be redirected
+        { t('sharedUi.external_search_redirect') }
       </Link>
     </>
   );

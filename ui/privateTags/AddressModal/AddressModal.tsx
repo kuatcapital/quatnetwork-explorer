@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTag } from 'types/api/account';
 
@@ -16,8 +18,9 @@ type Props = {
 };
 
 const AddressModal: React.FC<Props> = ({ open, onOpenChange, onSuccess, data, pageType }) => {
-  const title = data?.id ? 'Edit address tag' : 'New address tag';
-  const text = !data?.id ? 'Label any address with a private address tag (up to 35 chars) to customize your explorer experience.' : '';
+  const { t: tAcct } = useTranslation();
+  const title = data?.id ? tAcct('accountUI.edit_address_tag') : tAcct('accountUI.new_address_tag');
+  const text = !data?.id ? tAcct('accountUI.address_tag_help') : '';
 
   const [ isAlertVisible, setAlertVisible ] = useState(false);
 

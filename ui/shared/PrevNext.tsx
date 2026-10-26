@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Box, chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { IconButton } from 'toolkit/chakra/icon-button';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const PrevNext = ({ className, onClick, prevLabel, nextLabel, isPrevDisabled, isNextDisabled, isLoading }: Props) => {
+  const { t } = useTranslation();
   const handelPrevClick = React.useCallback(() => {
     onClick('prev');
   }, [ onClick ]);
@@ -38,7 +41,7 @@ const PrevNext = ({ className, onClick, prevLabel, nextLabel, isPrevDisabled, is
     <Box className={ className } display="flex">
       <Tooltip content={ prevLabel }>
         <IconButton
-          aria-label="prev"
+          aria-label={ prevLabel || t('common.previous') }
           borderRadius="sm"
           variant="icon_background"
           boxSize={ 6 }
@@ -50,7 +53,7 @@ const PrevNext = ({ className, onClick, prevLabel, nextLabel, isPrevDisabled, is
       </Tooltip>
       <Tooltip content={ nextLabel }>
         <IconButton
-          aria-label="next"
+          aria-label={ nextLabel || t('common.next') }
           borderRadius="sm"
           variant="icon_background"
           boxSize={ 6 }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -40,6 +42,7 @@ const TokenTransferListItem = ({
   isLoading,
   chainData,
 }: Props) => {
+  const { t } = useTranslation();
   return (
     <ListItemMobile rowGap={ 3 }>
       <Flex w="100%" justifyContent="space-between">
@@ -56,7 +59,7 @@ const TokenTransferListItem = ({
               <Badge flexShrink={ 0 } loading={ isLoading }>{ getTokenTypeName(token.type, chainData?.app_config) }</Badge>
             </>
           ) }
-          <Badge colorPalette="orange" loading={ isLoading }>{ getTokenTransferTypeText(type) }</Badge>
+          <Badge colorPalette="orange" loading={ isLoading }>{ getTokenTransferTypeText(type, t) }</Badge>
         </Flex>
         { showTxInfo && txHash && (
           <TxAdditionalInfo hash={ txHash } isMobile isLoading={ isLoading }/>
@@ -95,7 +98,7 @@ const TokenTransferListItem = ({
       />
       { total && 'value' in total && total.value !== null && (
         <Flex columnGap={ 2 } w="100%">
-          <Skeleton loading={ isLoading } fontWeight={ 500 } flexShrink={ 0 }>Value</Skeleton>
+          <Skeleton loading={ isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ t('transactions.value_amount') }</Skeleton>
           <AssetValue
             amount={ total && 'value' in total && total.value !== null ? total.value : null }
             decimals={ total && 'decimals' in total ? total.decimals || '0' : '0' }
@@ -108,7 +111,7 @@ const TokenTransferListItem = ({
 
       { token && isConfidentialTokenType(token.type) && (!total || !('value' in total) || total.value === null) && (
         <Flex columnGap={ 2 } w="100%">
-          <Skeleton loading={ isLoading } fontWeight={ 500 } flexShrink={ 0 }>Value</Skeleton>
+          <Skeleton loading={ isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ t('transactions.value_amount') }</Skeleton>
           <ConfidentialValue loading={ isLoading } color="text.secondary"/>
         </Flex>
       ) }

@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { List, chakra, Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { VerifiedAddress, TokenInfoApplication, TokenInfoApplications, VerifiedAddressResponse } from 'types/api/account';
 
@@ -27,6 +29,7 @@ import VerifiedAddressesListItem from 'ui/verifiedAddresses/VerifiedAddressesLis
 import VerifiedAddressesTable from 'ui/verifiedAddresses/VerifiedAddressesTable';
 
 const VerifiedAddresses = () => {
+  const { t: tAcct } = useTranslation();
   useRedirectForInvalidAuthToken();
 
   const router = useRouter();
@@ -115,26 +118,24 @@ const VerifiedAddresses = () => {
     if (userWithoutEmail) {
       return (
         <Button disabled mt={ 8 }>
-          Add address
-        </Button>
+          { tAcct('accountUI.add_address') }</Button>
       );
     }
 
     return (
       <Button onClick={ modalProps.onOpen } loadingSkeleton={ isLoading } mt={ 8 }>
-        Add address
-      </Button>
+        { tAcct('accountUI.add_address') }</Button>
     );
   })();
 
   if (selectedAddress) {
     const addressInfo = addressesQuery.data?.verifiedAddresses.find(({ contractAddress }) => contractAddress.toLowerCase() === selectedAddress.toLowerCase());
     const tokenName = addressInfo ? `${ addressInfo.metadata.tokenName } (${ addressInfo.metadata.tokenSymbol })` : '';
-    const beforeTitle = <BackToButton onClick={ handleGoBack } hint="Back to my verified addresses" mr={ 3 }/>;
+    const beforeTitle = <BackToButton onClick={ handleGoBack } hint={ tAcct('accountUI.back_verified_addresses') } mr={ 3 }/>;
 
     return (
       <>
-        <PageTitle title="Token info application form" beforeTitle={ beforeTitle }/>
+        <PageTitle title={ tAcct('accountUI.token_info_form') } beforeTitle={ beforeTitle }/>
         <TokenInfoForm
           address={ selectedAddress }
           tokenName={ tokenName }
@@ -186,29 +187,24 @@ const VerifiedAddresses = () => {
 
   return (
     <>
-      <PageTitle title="My verified addresses"/>
+      <PageTitle title={ tAcct('accountUI.my_verified_addresses') }/>
       { userWithoutEmail && <VerifiedAddressesEmailAlert/> }
       <AccountPageDescription allowCut={ false }>
         <span>
-          Verify ownership of a smart contract address to easily update information in Blockscout.
-          You will sign a single message to verify contract ownership.
-          Once verified, you can update token information, address name tags, and address labels from the
-          Blockscout console without needing to sign additional messages.
-        </span>
+          { tAcct('accountUI.ownership_description') }</span>
         <chakra.p fontWeight={ 600 } mt={ 5 }>
-          Before starting, make sure that:
-        </chakra.p>
+          { tAcct('accountUI.before_starting') }</chakra.p>
         <List.Root pl={ 5 } as="ol">
-          <List.Item>The source code for the smart contract is deployed on “{ config.chain.name }”.</List.Item>
+          <List.Item>{ tAcct('accountUI.source_deployed', { chain: config.chain.name }) }</List.Item>
           <List.Item>
-            <span>The source code is verified (if not yet verified, you can use </span>
-            <Link href="https://docs.blockscout.com/devs/verification" external noIcon>this tool</Link>
-            <span>).</span>
+            <Trans
+              i18nKey="accountUI.source_verified"
+              components={{ tool: <Link href="https://docs.blockscout.com/devs/verification" external noIcon/> }}
+            />
           </List.Item>
         </List.Root>
         <chakra.div mt={ 5 }>
-          Once these steps are complete, click the Add address button below to get started.
-        </chakra.div>
+          { tAcct('accountUI.ownership_get_started') }</chakra.div>
         <AdminSupportText mt={ 5 }/>
       </AccountPageDescription>
       <DataListDisplay

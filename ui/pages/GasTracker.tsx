@@ -1,12 +1,16 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import {
   Box,
   Flex,
   chakra,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 import { Alert } from 'toolkit/chakra/alert';
 import { Heading } from 'toolkit/chakra/heading';
@@ -21,6 +25,8 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import Time from 'ui/shared/time/Time';
 
 const GasTracker = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { data, isPlaceholderData, isError, error, dataUpdatedAt } = useApiQuery('general:stats', {
     queryOptions: {
       placeholderData: HOMEPAGE_STATS,
@@ -49,7 +55,7 @@ const GasTracker = () => {
         <GasTrackerNetworkUtilization percentage={ data.network_utilization_percentage } isLoading={ isLoading }/> }
       { data?.gas_price_updated_at && (
         <Skeleton loading={ isLoading } whiteSpace="pre" display="flex" alignItems="center">
-          <span>Last updated </span>
+          <span>{ t('gasTracker.last_updated') } </span>
           <Time timestamp={ data.gas_price_updated_at } format="DD MMM, HH:mm:ss" color="text.secondary"/>
           { data.gas_prices_update_in !== 0 && (
             <GasInfoUpdateTimer
@@ -65,7 +71,7 @@ const GasTracker = () => {
         <Skeleton loading={ isLoading } ml={{ base: 0, lg: 'auto' }} whiteSpace="pre" display="flex" alignItems="center">
           <NativeTokenIcon mr={ 2 } boxSize={ 6 }/>
           <chakra.span color="text.secondary">{ config.chain.currency.symbol }</chakra.span>
-          <span> ${ Number(data.coin_price).toLocaleString(undefined, { maximumFractionDigits: 2 }) }</span>
+          <span> ${ formatNumber(Number(data.coin_price), locale, { maximumFractionDigits: 2 }) }</span>
         </Skeleton>
       ) }
     </Flex>
@@ -73,7 +79,7 @@ const GasTracker = () => {
 
   const snippets = (() => {
     if (!isPlaceholderData && data?.gas_prices?.slow === null && data?.gas_prices.average === null && data.gas_prices.fast === null) {
-      return <Alert status="warning">No recent data available</Alert>;
+      return <Alert status="warning">{ t('gasTracker.no_recent') }</Alert>;
     }
 
     return data?.gas_prices ? <GasTrackerPrices prices={ data.gas_prices } isLoading={ isLoading }/> : null;
@@ -84,11 +90,11 @@ const GasTracker = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } gas tracker` : 'Gas tracker' }
+        title={ config.meta.seo.enhancedDataEnabled ? t('gasTracker.chain_title', { chain: config.chain.name }) : t('gasTracker.title') }
         secondRow={ titleSecondRow }
         withTextAd
       />
-      <Heading level="2" mt={ 8 } mb={ 4 }>{ `Track ${ config.chain.name } gas fees` }</Heading>
+      <Heading level="2" mt={ 8 } mb={ 4 }>{ t('gasTracker.track', { chain: config.chain.name }) }</Heading>
       { snippets }
       { config.features.stats.isEnabled && (
         <Box mt={ 12 } _empty={{ display: 'none' }}>

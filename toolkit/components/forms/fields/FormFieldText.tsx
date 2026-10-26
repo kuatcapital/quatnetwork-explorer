@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: runtime client validation messages. GPL-3.0.
 import React from 'react';
 import type { FieldValues, Path } from 'react-hook-form';
 import { useController, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFieldPropsBase } from './types';
 
@@ -40,6 +42,7 @@ const FormFieldTextContent = <
   const size = sizeProp || defaultSize;
   const floating = floatingProp !== undefined ? floatingProp : size === defaultSize;
 
+  const { t } = useTranslation();
   const { control } = useFormContext<FormFields>();
   const { field, fieldState, formState } = useController<FormFields, typeof name>({
     control,
@@ -85,7 +88,7 @@ const FormFieldTextContent = <
     <Field
       // for floating field label, we pass placeholder value to the label
       label={ floating ? placeholder : undefined }
-      errorText={ getFormFieldErrorText(fieldState.error) }
+      errorText={ getFormFieldErrorText(fieldState.error, t) }
       invalid={ Boolean(fieldState.error) }
       disabled={ formState.isSubmitting || disabled }
       size={ size }

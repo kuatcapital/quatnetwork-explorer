@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Box, chakra, Flex, Separator } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EntityTag } from './types';
 
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const EntityTagTooltip = ({ data, children }: Props) => {
+  const { t } = useTranslation();
   const hasPopover = Boolean(
     data.meta?.tooltipIcon ||
     data.meta?.tooltipTitle ||
@@ -55,7 +58,7 @@ const EntityTagTooltip = ({ data, children }: Props) => {
       <Flex textStyle="sm" flexDir="column" rowGap={ 2 } textAlign="left" _empty={{ display: 'none' }}>
         { (data.meta?.tooltipIcon || data.meta?.tooltipTitle) && (
           <Flex columnGap={ 3 } alignItems="center">
-            { data.meta?.tooltipIcon && <Image src={ data.meta.tooltipIcon } boxSize="30px" alt={ `${ data.name } tag logo` }/> }
+            { data.meta?.tooltipIcon && <Image src={ data.meta.tooltipIcon } boxSize="30px" alt={ t('sharedUi.tag_logo', { name: data.name }) }/> }
             { data.meta?.tooltipTitle && <chakra.span fontWeight="600">{ data.meta.tooltipTitle }</chakra.span> }
           </Flex>
         ) }
@@ -66,7 +69,7 @@ const EntityTagTooltip = ({ data, children }: Props) => {
         <>
           { (data.meta?.tooltipIcon || data.meta?.tooltipTitle || data.meta?.tooltipDescription || link) && <Separator mt={ 2 } mb={ 1 }/> }
           <Flex alignItems="center" color="text.secondary" textStyle="xs">
-            <chakra.span mr={ 2 }>Source:</chakra.span>
+            <chakra.span mr={ 2 }>{ t('sharedUi.source') }</chakra.span>
             { data.meta?.tooltipAttributionIcon && <Image src={ data.meta.tooltipAttributionIcon } boxSize={ 4 } mr={ 1 } zIndex={ 1 }/> }
             { typeof attribution === 'string' ?
               <chakra.span fontWeight="500">{ attribution }</chakra.span> :

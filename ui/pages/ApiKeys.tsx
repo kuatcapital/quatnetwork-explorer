@@ -1,16 +1,19 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { ApiKey } from 'types/api/account';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { API_KEY } from 'stubs/account';
 import { Button } from 'toolkit/chakra/button';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { useDisclosure } from 'toolkit/hooks/useDisclosure';
-import { space } from 'toolkit/utils/htmlEntities';
 import ApiKeyModal from 'ui/apiKey/ApiKeyModal/ApiKeyModal';
 import ApiKeyListItem from 'ui/apiKey/ApiKeyTable/ApiKeyListItem';
 import ApiKeyTable from 'ui/apiKey/ApiKeyTable/ApiKeyTable';
@@ -27,6 +30,8 @@ const apiKeysAlertHtml = config.UI.apiKeysAlert.message;
 const feature = config.features.account;
 
 const ApiKeysPage: React.FC = () => {
+  const { t: tAcct } = useTranslation();
+  const { locale } = useLocale();
   const apiKeyModalProps = useDisclosure();
   const deleteModalProps = useDisclosure();
   useRedirectForInvalidAuthToken();
@@ -62,8 +67,10 @@ const ApiKeysPage: React.FC = () => {
 
   const description = (
     <AccountPageDescription>
-      Create API keys to use for your RPC and EthRPC API requests. For more information, see { space }
-      <Link href="https://docs.blockscout.com/using-blockscout/my-account/api-keys#api-keys" external noIcon>"How to use a Blockscout API key"</Link>.
+      <Trans
+        i18nKey="accountUI.api_keys_description"
+        components={{ guide: <Link href="https://docs.blockscout.com/using-blockscout/my-account/api-keys#api-keys" external noIcon/> }}
+      />
     </AccountPageDescription>
   );
 
@@ -109,7 +116,7 @@ const ApiKeysPage: React.FC = () => {
       if (typeof feature.apiKeysButton === 'string') {
         return (
           <Link href={ feature.apiKeysButton } external noIcon>
-            <Button>Add API key</Button>
+            <Button>{ tAcct('accountUI.add_api_key') }</Button>
           </Link>
         );
       }
@@ -119,8 +126,7 @@ const ApiKeysPage: React.FC = () => {
           onClick={ apiKeyModalProps.onOpen }
           disabled={ !canAdd }
         >
-          Add API key
-        </Button>
+          { tAcct('accountUI.add_api_key') }</Button>
       );
     })();
 
@@ -141,7 +147,7 @@ const ApiKeysPage: React.FC = () => {
           { button }
           { !canAdd && (
             <Text fontSize="sm" color="text.secondary">
-              { `You have added the maximum number of API keys (${ DATA_LIMIT }). Contact us to request additional keys.` }
+              { tAcct('accountUI.api_keys_limit', { limit: formatNumber(DATA_LIMIT, locale) }) }
             </Text>
           ) }
         </Skeleton>
@@ -153,7 +159,7 @@ const ApiKeysPage: React.FC = () => {
 
   return (
     <>
-      <PageTitle title="API keys"/>
+      <PageTitle title={ tAcct('accountUI.api_keys') }/>
       { content }
     </>
   );

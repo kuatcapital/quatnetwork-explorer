@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
@@ -14,6 +16,7 @@ import NetworkExplorers from 'ui/shared/NetworkExplorers';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
 const BlobPageContent = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const hash = getQueryParamString(router.query.hash);
 
@@ -56,7 +59,7 @@ const BlobPageContent = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title="Blob details"
+        title={ t('blockDetails.blob_details') }
         secondRow={ titleSecondRow }
       />
       { content }

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FlashblockItem } from 'types/client/flashblocks';
 
@@ -15,19 +17,17 @@ interface Props {
 }
 
 const FlashblocksTable = ({ items, newItemsNum, showAlertError, onAlertLinkClick }: Props) => {
+  const { t } = useTranslation();
   return (
     <TableRoot>
       <TableHeaderSticky top={ 0 }>
         <TableRow>
           <TableColumnHeader width="50%">
-            Block
-          </TableColumnHeader>
+            { t('flashblocks.block') } </TableColumnHeader>
           <TableColumnHeader width="20%" isNumeric>
-            Txn
-          </TableColumnHeader>
+            { t('flashblocks.txn') } </TableColumnHeader>
           <TableColumnHeader width="30%" isNumeric>
-            Gas used
-          </TableColumnHeader>
+            { t('blockDetails.gas_used') } </TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

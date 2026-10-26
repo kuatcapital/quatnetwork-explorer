@@ -1,12 +1,13 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs/routes';
 
 import config from 'configs/app';
 import { useMultichainContext } from 'lib/contexts/multichain';
 import * as EntityBase from 'ui/shared/entities/base/components';
-import getChainTooltipText from 'ui/shared/externalChains/getChainTooltipText';
 
 import { distributeEntityProps } from '../base/utils';
 
@@ -32,6 +33,7 @@ const Link = chakra((props: LinkProps) => {
 type IconProps = EntityBase.IconBaseProps & Pick<EntityProps, 'isPendingUpdate'>;
 
 const Icon = (props: IconProps) => {
+  const { t } = useTranslation();
 
   const isPendingUpdate = props.isPendingUpdate && config.UI.views.block.pendingUpdateAlertEnabled;
 
@@ -49,10 +51,10 @@ const Icon = (props: IconProps) => {
     }
 
     if (props.chain && props.shield !== false) {
-      return getChainTooltipText(props.chain, 'Block on ');
+      return t('sharedEntities.block_on_chain', { chain: props.chain.name, chainId: props.chain.id });
     }
 
-    return isPendingUpdate ? 'Block is being re-synced. Details may be incomplete until the update is finished.' : undefined;
+    return isPendingUpdate ? t('sharedEntities.block_resync') : undefined;
   })();
 
   return (

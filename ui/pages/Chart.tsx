@@ -1,7 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: runtime stats metadata localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: runtime translation and locale formatting. GPL-3.0.
 import { createListCollection, Flex, Text } from '@chakra-ui/react';
 import type { NextRouter } from 'next/router';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Resolution } from '@blockscout/stats-types';
 import type { StatsIntervalIds } from 'types/client/stats';
@@ -15,6 +18,7 @@ import * as metadata from 'lib/metadata';
 import * as mixpanel from 'lib/mixpanel/index';
 import useRoutedChainSelect from 'lib/multichain/useRoutedChainSelect';
 import getQueryParamString from 'lib/router/getQueryParamString';
+import { localizeStatsMetadata } from 'lib/stats/localizeStatsMetadata';
 import { Button } from 'toolkit/chakra/button';
 import type { SelectOption } from 'toolkit/chakra/select';
 import { Select } from 'toolkit/chakra/select';
@@ -30,7 +34,7 @@ import useChartQuery from 'ui/shared/chart/useChartQuery';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import IconSvg from 'ui/shared/IconSvg';
 import PageTitle from 'ui/shared/Page/PageTitle';
-import { STATS_RESOLUTIONS } from 'ui/stats/constants';
+import { getStatsResolutions } from 'ui/stats/constants';
 
 const DEFAULT_RESOLUTION = Resolution.DAY;
 
@@ -70,6 +74,7 @@ const getResolutionFromQuery = (router: NextRouter) => {
 };
 
 const Chart = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const id = getQueryParamString(router.query.id);
   const intervalFromQuery = getIntervalFromQuery(router);
@@ -118,6 +123,7 @@ const Chart = () => {
   }, [ handleZoomReset, onResolutionChange ]);
 
   const { items, info, lineQuery } = useChartQuery(id, resolution, interval);
+  const fallbackInfo = lineQuery.data?.info ? localizeStatsMetadata(lineQuery.data.info, t, config.chain.currency.symbol) : undefined;
 
   const charts = React.useMemo(() => {
     if (!info || !items) {
@@ -127,13 +133,13 @@ const Chart = () => {
     return [
       {
         id: info.id,
-        name: 'Value',
+        name: t('statistics.chart_value'),
         items,
         charts: chartsConfig,
         units: info.units,
       },
     ];
-  }, [ chartsConfig, info, items ]);
+  }, [ chartsConfig, info, items, t ]);
 
   const hasNonEmptyCharts = charts.some((chart) => chart.items.length > 2);
 
@@ -173,26 +179,26 @@ const Chart = () => {
       loadingSkeleton={ lineQuery.isPlaceholderData }
     >
       <IconSvg name="share" w={ 4 } h={ 4 }/>
-      Share
+      { t('statistics.share') }
     </Button>
   );
 
   const resolutionCollection = React.useMemo(() => {
     const resolutions = lineQuery.data?.info?.resolutions || [];
-    const items = STATS_RESOLUTIONS
+    const items = getStatsResolutions(t)
       .filter((resolution) => resolutions.includes(resolution.id))
       .map((resolution) => ({ value: resolution.id, label: resolution.title }));
 
     return createListCollection<SelectOption>({ items });
-  }, [ lineQuery.data?.info?.resolutions ]);
+  }, [ lineQuery.data?.info?.resolutions, t ]);
 
   return (
     <>
       <PageTitle
-        title={ info?.title || lineQuery.data?.info?.title || '' }
+        title={ info?.title || fallbackInfo?.title || '' }
         mb={ 3 }
         isLoading={ isInfoLoading }
-        secondRow={ info?.description || lineQuery.data?.info?.description }
+        secondRow={ info?.description || fallbackInfo?.description }
         withTextAd
       />
       <Flex alignItems="center" justifyContent="space-between">
@@ -205,7 +211,7 @@ const Chart = () => {
             />
           ) }
           <Flex alignItems="center" gap={ 3 }>
-            { !isMobile && <Text>Period</Text> }
+            { !isMobile && <Text>{ t('statistics.period') }</Text> }
             <ChartIntervalSelect interval={ interval } onIntervalChange={ onIntervalChange }/>
           </Flex>
           { (
@@ -214,12 +220,12 @@ const Chart = () => {
           ) && (
             <Flex alignItems="center" gap={ 3 }>
               <Skeleton loading={ isInfoLoading }>
-                { isMobile ? 'Res.' : 'Resolution' }
+                { isMobile ? t('statistics.resolution_short') : t('statistics.resolution') }
               </Skeleton>
               <Select
                 collection={ resolutionCollection }
-                placeholder="Select resolution"
-                defaultValue={ [ defaultResolution ] }
+                placeholder={ t('statistics.select_resolution') }
+                value={ [ resolution ] }
                 onValueChange={ onResolutionChange }
                 w={{ base: 'fit-content', lg: '160px' }}
                 loading={ isInfoLoading }
@@ -235,7 +241,7 @@ const Chart = () => {
               gap={ 2 }
             >
               <IconSvg name="repeat" w={ 5 } h={ 5 }/>
-              { !isMobile && 'Reset' }
+              { !isMobile && t('statistics.reset') }
             </Button>
           ) }
         </Flex>
@@ -287,7 +293,7 @@ const Chart = () => {
           zoomRange={ zoomRange }
           handleZoom={ handleZoom }
           empty={ !hasNonEmptyCharts }
-          emptyText="No data for the selected resolution & interval."
+          emptyText={ t('statistics.no_data') }
           resolution={ resolution }
         />
       </Flex>

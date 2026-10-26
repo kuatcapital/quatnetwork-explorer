@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 
@@ -12,7 +14,6 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import { TruncatedTextTooltip } from 'toolkit/components/truncation/TruncatedTextTooltip';
 import * as EntityBase from 'ui/shared/entities/base/components';
-import getChainTooltipText from 'ui/shared/externalChains/getChainTooltipText';
 import IconSvg from 'ui/shared/IconSvg';
 import TokenLogoPlaceholder from 'ui/shared/TokenLogoPlaceholder';
 
@@ -39,6 +40,7 @@ const Link = chakra((props: LinkProps) => {
 type IconProps = Pick<EntityProps, 'token' | 'className'> & EntityBase.IconBaseProps;
 
 const Icon = (props: IconProps) => {
+  const { t } = useTranslation();
   if (props.noIcon) {
     return null;
   }
@@ -63,10 +65,10 @@ const Icon = (props: IconProps) => {
       { ...styles }
       className={ props.className }
       src={ props.token.icon_url ?? undefined }
-      alt={ `${ props.token.name || 'token' } logo` }
+      alt={ t('sharedEntities.token_logo', { name: props.token.name || t('sharedEntities.token') }) }
       fallback={ <TokenLogoPlaceholder/> }
       shield={ shield }
-      hint={ props.chain && props.shield !== false ? getChainTooltipText(props.chain, 'Token on ') : undefined }
+      hint={ props.chain && props.shield !== false ? t('sharedEntities.token_on_chain', { chain: props.chain.name, chainId: props.chain.id }) : undefined }
       { ...props }
     />
   );
@@ -75,9 +77,10 @@ const Icon = (props: IconProps) => {
 type ContentProps = Omit<EntityBase.ContentBaseProps, 'text'> & Pick<EntityProps, 'token' | 'jointSymbol' | 'onlySymbol'>;
 
 const Content = chakra((props: ContentProps) => {
+  const { t } = useTranslation();
   const nameString = [
-    !props.onlySymbol && (props.token.name ?? 'Unnamed token'),
-    props.onlySymbol && (props.token.symbol ?? props.token.name ?? 'Unnamed token'),
+    !props.onlySymbol && (props.token.name ?? t('sharedEntities.unnamed_token')),
+    props.onlySymbol && (props.token.symbol ?? props.token.name ?? t('sharedEntities.unnamed_token')),
     props.token.symbol && props.jointSymbol && !props.onlySymbol && `(${ props.token.symbol })`,
   ].filter(Boolean).join(' ');
 
@@ -143,9 +146,10 @@ interface ReputationProps extends BoxProps {
 }
 
 const Reputation = ({ value, ...rest }: ReputationProps) => {
+  const { t } = useTranslation();
   if (config.UI.views.token.hideScamTokensEnabled && value === 'scam') {
     return (
-      <Tooltip content="This token has been flagged as a potential scam. You enabled the display of flagged tokens in the explorer — proceed with caution.">
+      <Tooltip content={ t('sharedEntities.scam_warning') }>
         <IconSvg name="scam" boxSize={ 5 } ml={ 2 } { ...rest }/>
       </Tooltip>
     );

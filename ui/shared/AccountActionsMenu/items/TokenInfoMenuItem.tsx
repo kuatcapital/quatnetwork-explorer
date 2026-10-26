@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemProps } from '../types';
 
@@ -17,6 +19,7 @@ import useIsAuth from 'ui/snippets/auth/useIsAuth';
 import ButtonItem from '../parts/ButtonItem';
 
 const TokenInfoMenuItem = ({ hash, type }: ItemProps) => {
+  const { t: tAcct } = useTranslation();
   const router = useRouter();
   const modal = useDisclosure();
   const isAuth = useIsAuth();
@@ -59,10 +62,10 @@ const TokenInfoMenuItem = ({ hash, type }: ItemProps) => {
 
     const label = (() => {
       if (!isVerifiedAddress) {
-        return tokenInfoQuery.data?.tokenAddress ? 'Update token info' : 'Add token info';
+        return tokenInfoQuery.data?.tokenAddress ? tAcct('accountUI.update_token_info') : tAcct('accountUI.add_token_info');
       }
 
-      return hasApplication || tokenInfoQuery.data?.tokenAddress ? 'Update token info' : 'Add token info';
+      return hasApplication || tokenInfoQuery.data?.tokenAddress ? tAcct('accountUI.update_token_info') : tAcct('accountUI.add_token_info');
     })();
 
     const onAuthSuccess = isVerifiedAddress ? handleAddApplicationClick : modal.onOpen;

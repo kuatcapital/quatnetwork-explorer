@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: runtime translation and locale formatting. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import { Resolution } from '@blockscout/stats-types';
 import type { StatsIntervalIds } from 'types/client/stats';
 
@@ -51,4 +54,24 @@ function getStartDateInPast(months: number): Date {
   const date = new Date();
   date.setMonth(date.getMonth() - months);
   return date;
+}
+
+// Retain raw constants for query date ranges; UI labels are translated per render.
+export function getStatsResolutions(t: TFunction): typeof STATS_RESOLUTIONS {
+  return [
+    { id: Resolution.DAY, title: t('statistics.day') },
+    { id: Resolution.WEEK, title: t('statistics.week') },
+    { id: Resolution.MONTH, title: t('statistics.month') },
+    { id: Resolution.YEAR, title: t('statistics.year') },
+  ];
+}
+
+export function getStatsIntervals(t: TFunction): typeof STATS_INTERVALS {
+  return {
+    all: { ...STATS_INTERVALS.all, title: t('statistics.all_time'), shortTitle: t('statistics.all_time') },
+    oneMonth: { ...STATS_INTERVALS.oneMonth, title: t('statistics.one_month'), shortTitle: t('statistics.one_month_short') },
+    threeMonths: { ...STATS_INTERVALS.threeMonths, title: t('statistics.three_months'), shortTitle: t('statistics.three_months_short') },
+    sixMonths: { ...STATS_INTERVALS.sixMonths, title: t('statistics.six_months'), shortTitle: t('statistics.six_months_short') },
+    oneYear: { ...STATS_INTERVALS.oneYear, title: t('statistics.one_year'), shortTitle: t('statistics.one_year_short') },
+  };
 }

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import { createListCollection, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as stats from '@blockscout/stats-types';
 import type { StatsIntervalIds } from 'types/client/stats';
@@ -29,15 +31,16 @@ const StatsFilters = ({
   isLoading,
   initialFilterValue,
 }: Props) => {
+  const { t } = useTranslation();
 
   const collection = React.useMemo(() => {
     return createListCollection({
       items: [
-        { value: 'all', label: 'All stats' },
+        { value: 'all', label: t('statistics.all') },
         ...(sections || []).map((section) => ({ value: section.id, label: section.title })),
       ],
     });
-  }, [ sections ]);
+  }, [ sections, t ]);
 
   const handleItemSelect = React.useCallback(({ value }: { value: Array<string> }) => {
     onSectionChange(value[0]);
@@ -60,8 +63,8 @@ const StatsFilters = ({
       >
         <Select
           collection={ collection }
-          placeholder="Select section"
-          defaultValue={ [ currentSection ] }
+          placeholder={ t('statistics.section') }
+          value={ [ currentSection ] }
           onValueChange={ handleItemSelect }
           w={{ base: '100%', lg: '136px' }}
           loading={ isLoading }
@@ -83,7 +86,7 @@ const StatsFilters = ({
           key={ initialFilterValue }
           loading={ isLoading }
           onChange={ onFilterInputChange }
-          placeholder="Find chart, metric..."
+          placeholder={ t('statistics.find') }
           initialValue={ initialFilterValue }
           size="sm"
         />

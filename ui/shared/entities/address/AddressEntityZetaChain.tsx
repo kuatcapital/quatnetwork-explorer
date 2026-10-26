@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ExternalChain } from 'types/externalChains';
 
@@ -8,7 +10,6 @@ import { route } from 'nextjs/routes';
 import config from 'configs/app';
 import { useColorModeValue } from 'toolkit/chakra/color-mode';
 import { unknownAddress } from 'ui/shared/address/utils';
-import getChainTooltipText from 'ui/shared/externalChains/getChainTooltipText';
 import IconSvg from 'ui/shared/IconSvg';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
 
@@ -21,6 +22,7 @@ interface Props extends Omit<AddressEntityBase.EntityProps, 'address'> {
 }
 
 const AddressEntityZetaChain = ({ chainId, address, ...props }: Props) => {
+  const { t } = useTranslation();
   const { data: chainsConfig } = useZetaChainConfig();
 
   const addressFull = { ...unknownAddress, hash: address.hash };
@@ -57,7 +59,7 @@ const AddressEntityZetaChain = ({ chainId, address, ...props }: Props) => {
       href={ href }
       icon={{
         ...(chainLogo ? { src: chainLogo, fallback: iconStub } : { name: 'networks/icon-placeholder', color: 'icon.primary' }),
-        hint: getChainTooltipText(chain ? { ...chain, name: chainName ?? chain.name } : undefined, 'Address on '),
+        hint: chain ? t('sharedEntities.address_on_chain', { chain: chainName ?? chain.name, chainId: chain.id }) : t('sharedEntities.unknown_chain'),
       }}
       link={{ external: !isCurrentChain }}
       { ...props }

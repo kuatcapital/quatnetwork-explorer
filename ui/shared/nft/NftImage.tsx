@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Image } from 'toolkit/chakra/image';
 
@@ -8,6 +10,7 @@ import type { MediaElementProps } from './utils';
 interface Props extends MediaElementProps<'img'> {}
 
 const NftImage = ({ src, srcSet, onLoad, onError, transport, onClick, ...rest }: Props) => {
+  const { t } = useTranslation();
   const ref = React.useRef<HTMLImageElement>(null);
   const [ isLoaded, setIsLoaded ] = React.useState(false);
 
@@ -57,7 +60,7 @@ const NftImage = ({ src, srcSet, onLoad, onError, transport, onClick, ...rest }:
       w="100%"
       h="100%"
       opacity={ isLoaded ? 1 : 0 }
-      alt="Token instance image"
+      alt={ t('sharedUi.token_instance_image') }
       onClick={ onClick }
       { ...rest }
     />

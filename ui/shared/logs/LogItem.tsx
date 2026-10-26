@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import { Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { Log } from 'types/api/log';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -10,7 +12,6 @@ import { route } from 'nextjs-routes';
 import { Alert } from 'toolkit/chakra/alert';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { space } from 'toolkit/utils/htmlEntities';
 import DetailedInfoTimestamp from 'ui/shared/DetailedInfo/DetailedInfoTimestamp';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
@@ -47,6 +48,7 @@ const LogItem = ({
   defaultDataType,
   chainData,
 }: Props) => {
+  const { t } = useTranslation();
 
   const hasTxInfo = type === 'address' && txHash;
 
@@ -66,12 +68,15 @@ const LogItem = ({
       { !decoded && !address.is_verified && type === 'transaction' && (
         <GridItem colSpan={{ base: 1, lg: 2 }}>
           <Alert status="warning" display="inline-table" whiteSpace="normal">
-            To see accurate decoded input data, the contract must be verified.{ space }
-            <Link href={ route({ pathname: '/address/[hash]/contract-verification', query: { hash: address.hash } }) }>Verify the contract here</Link>
+            <Trans
+              t={ t }
+              i18nKey="sharedLogs.verification_required"
+              components={{ verify: <Link href={ route({ pathname: '/address/[hash]/contract-verification', query: { hash: address.hash } }) }/> }}
+            />
           </Alert>
         </GridItem>
       ) }
-      { hasTxInfo ? <RowHeader isLoading={ isLoading }>Transaction</RowHeader> : <RowHeader isLoading={ isLoading }>Address</RowHeader> }
+      <RowHeader isLoading={ isLoading }>{ hasTxInfo ? t('common.transaction') : t('common.address') }</RowHeader>
       <GridItem display="flex" alignItems="center">
         { type === 'address' && txHash ? (
           <TxEntity
@@ -107,7 +112,7 @@ const LogItem = ({
       </GridItem>
       { hasTxInfo && blockTimestamp ? (
         <>
-          <RowHeader isLoading={ isLoading }>Timestamp</RowHeader>
+          <RowHeader isLoading={ isLoading }>{ t('common.timestamp') }</RowHeader>
           <GridItem>
             <DetailedInfoTimestamp timestamp={ blockTimestamp } isLoading={ isLoading }/>
           </GridItem>
@@ -115,13 +120,13 @@ const LogItem = ({
       ) : null }
       { decoded && (
         <>
-          <RowHeader isLoading={ isLoading }>Decode input data</RowHeader>
+          <RowHeader isLoading={ isLoading }>{ t('sharedLogs.decode_input') }</RowHeader>
           <GridItem>
             <LogDecodedInputData data={ decoded } isLoading={ isLoading }/>
           </GridItem>
         </>
       ) }
-      <RowHeader isLoading={ isLoading }>Topics</RowHeader>
+      <RowHeader isLoading={ isLoading }>{ t('sharedLogs.topics') }</RowHeader>
       <GridItem>
         { topics.filter(Boolean).map((item, index) => (
           <LogTopic
@@ -132,7 +137,7 @@ const LogItem = ({
           />
         )) }
       </GridItem>
-      <RowHeader isLoading={ isLoading }>Data</RowHeader>
+      <RowHeader isLoading={ isLoading }>{ t('sharedLogs.data') }</RowHeader>
       { defaultDataType ? (
         <RawInputData hex={ data } isLoading={ isLoading } defaultDataType={ defaultDataType } minHeight="53px"/>
       ) : (

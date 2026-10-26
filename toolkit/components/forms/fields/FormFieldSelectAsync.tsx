@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: runtime client validation messages. GPL-3.0.
 import React from 'react';
 import type { Path, FieldValues } from 'react-hook-form';
 import { useController, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFieldPropsBase } from './types';
 
@@ -19,6 +21,7 @@ const FormFieldSelectAsyncContent = <
 >(props: FormFieldSelectAsyncProps<FormFields, Name>) => {
   const { name, rules, size = 'lg', controllerProps, ...rest } = props;
 
+  const { t } = useTranslation();
   const { control } = useFormContext<FormFields>();
   const { field, fieldState, formState } = useController<FormFields, typeof name>({
     control,
@@ -47,7 +50,7 @@ const FormFieldSelectAsyncContent = <
       onInteractOutside={ handleBlur }
       disabled={ isDisabled }
       invalid={ Boolean(fieldState.error) }
-      errorText={ getFormFieldErrorText(fieldState.error) }
+      errorText={ getFormFieldErrorText(fieldState.error, t) }
       size={ size }
       positioning={{ sameWidth: true }}
       { ...rest }

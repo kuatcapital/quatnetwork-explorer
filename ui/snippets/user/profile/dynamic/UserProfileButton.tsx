@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useMarketplaceContext } from 'lib/contexts/marketplace';
 import shortenString from 'lib/shortenString';
@@ -15,6 +17,7 @@ interface Props extends ButtonProps {
 }
 
 const UserProfileButton = ({ selected, email, ...rest }: Props) => {
+  const { t: tAcct } = useTranslation();
   const { isAutoConnectDisabled } = useMarketplaceContext();
   const accountWithDomain = useAccountWithDomain(true);
 
@@ -32,12 +35,12 @@ const UserProfileButton = ({ selected, email, ...rest }: Props) => {
       ) : (
         <HStack gap={ 2 }>
           <IconSvg name="profile" boxSize={ 5 }/>
-          <Box display={{ base: 'none', md: 'block' }}>{ email ? getUserHandle(email) : 'My profile' }</Box>
+          <Box display={{ base: 'none', md: 'block' }}>{ email ? getUserHandle(email) : tAcct('accountUI.my_profile') }</Box>
         </HStack>
       );
     }
 
-    return 'Log in';
+    return tAcct('accountUI.log_in');
   })();
 
   return (

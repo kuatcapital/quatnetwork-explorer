@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TransactionTag } from 'types/api/account';
 
@@ -16,8 +18,9 @@ type Props = {
 };
 
 const TransactionModal: React.FC<Props> = ({ open, onOpenChange, onSuccess, data }) => {
-  const title = data ? 'Edit transaction tag' : 'New transaction tag';
-  const text = !data ? 'Label any transaction with a private transaction tag (up to 35 chars) to customize your explorer experience.' : '';
+  const { t: tAcct } = useTranslation();
+  const title = data ? tAcct('accountUI.edit_transaction_tag') : tAcct('accountUI.new_transaction_tag');
+  const text = !data ? tAcct('accountUI.transaction_tag_help') : '';
 
   const [ isAlertVisible, setAlertVisible ] = useState(false);
 

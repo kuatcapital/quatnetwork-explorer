@@ -1,9 +1,14 @@
+// Modified by Quat Capital, 2026-10-26: runtime stats metadata localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
 import { Box, Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
+import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { localizeStatsMetadata } from 'lib/stats/localizeStatsMetadata';
 import { STATS_CHARTS_SECTION_GAS } from 'stubs/stats';
 import { Link } from 'toolkit/chakra/link';
 import { ContentLoader } from 'toolkit/components/loaders/ContentLoader';
@@ -13,6 +18,7 @@ import ChartWidgetContainer from 'ui/stats/ChartWidgetContainer';
 const GAS_PRICE_CHART_ID = 'averageGasPrice';
 
 const GasTrackerChart = () => {
+  const { t } = useTranslation();
   const [ isChartLoadingError, setChartLoadingError ] = React.useState(false);
   const { data, isPlaceholderData, isError } = useApiQuery('stats:lines', {
     queryOptions: {
@@ -41,11 +47,12 @@ const GasTrackerChart = () => {
       return null;
     }
 
+    const metadata = localizeStatsMetadata(chart, t, config.chain.currency.symbol);
     return (
       <ChartWidgetContainer
         id={ GAS_PRICE_CHART_ID }
-        title={ chart.title }
-        description={ chart.description }
+        title={ metadata.title }
+        description={ metadata.description }
         interval="oneMonth"
         isPlaceholderData={ isPlaceholderData }
         onLoadingError={ handleLoadingError }
@@ -61,8 +68,8 @@ const GasTrackerChart = () => {
   return (
     <Box>
       <Flex justifyContent="space-between" alignItems="center" mb={ 6 }>
-        <chakra.h3 textStyle="h3">Gas price history</chakra.h3>
-        <Link href={ route({ pathname: '/stats', hash: 'gas' }) }>Charts & stats</Link>
+        <chakra.h3 textStyle="h3">{ t('gasTracker.history') }</chakra.h3>
+        <Link href={ route({ pathname: '/stats', hash: 'gas' }) }>{ t('gasTracker.charts') }</Link>
       </Flex>
       { content }
     </Box>

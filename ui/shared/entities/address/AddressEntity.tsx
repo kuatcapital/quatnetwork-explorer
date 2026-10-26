@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { Box, Flex, chakra, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressParam } from 'types/api/addressParams';
 
@@ -12,7 +14,6 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import * as EntityBase from 'ui/shared/entities/base/components';
 import { getTagName } from 'ui/shared/EntityTags/utils';
-import getChainTooltipText from 'ui/shared/externalChains/getChainTooltipText';
 import type { IconName } from 'ui/shared/IconSvg';
 
 import { distributeEntityProps, getContentProps, getIconProps } from '../base/utils';
@@ -45,6 +46,7 @@ const Link = chakra((props: LinkProps) => {
 type IconProps = Pick<EntityProps, 'address' | 'isSafeAddress'> & EntityBase.IconBaseProps;
 
 const Icon = (props: IconProps) => {
+  const { t } = useTranslation();
   if (props.noIcon) {
     return null;
   }
@@ -58,7 +60,13 @@ const Icon = (props: IconProps) => {
       return props.chain.logo ? { src: props.chain.logo } : { name: 'networks/icon-placeholder' as const };
     }
   })();
-  const hintPostfix: string = props.hintPostfix ?? (props.chain && props.shield !== false ? getChainTooltipText(props.chain, ' on ') : '');
+  const withChain = (label: string): string => {
+    if (props.hintPostfix !== undefined) return label + props.hintPostfix;
+    if (props.chain && props.shield !== false) {
+      return t('sharedEntities.label_on_chain', { label, chain: props.chain.name, chainId: props.chain.id });
+    }
+    return label;
+  };
 
   const styles = getIconProps(props, Boolean(shield));
 
@@ -86,7 +94,13 @@ const Icon = (props: IconProps) => {
     const isProxy = Boolean(props.address.implementations?.length);
     const isVerified = isProxy ? props.address.is_verified && props.address.implementations?.every(({ name }) => Boolean(name)) : props.address.is_verified;
     const contractIconName: IconName = props.address.is_verified ? 'contracts/verified' : 'contracts/regular';
-    const label = (isVerified ? 'verified ' : '') + (isProxy ? 'proxy contract' : 'contract') + hintPostfix;
+    const contractLabel = (() => {
+      if (isProxy) {
+        return isVerified ? t('sharedEntities.verified_proxy') : t('sharedEntities.proxy_contract');
+      }
+      return isVerified ? t('sharedEntities.verified_contract') : t('sharedEntities.contract');
+    })();
+    const label = withChain(contractLabel);
 
     return (
       <EntityBase.Icon
@@ -95,18 +109,18 @@ const Icon = (props: IconProps) => {
         name={ isProxy ? 'contracts/proxy' : contractIconName }
         color={ isVerified ? 'green.500' : undefined }
         borderRadius={ 0 }
-        hint={ label.slice(0, 1).toUpperCase() + label.slice(1) }
+        hint={ label }
       />
     );
   }
 
   const label = (() => {
     if (isDelegatedAddress) {
-      return (props.address.is_verified ? 'EOA + verified code' : 'EOA + code') + hintPostfix;
+      return withChain(props.address.is_verified ? t('sharedEntities.eoa_verified') : t('sharedEntities.eoa_code'));
     }
 
     if (props.chain) {
-      return 'Address' + hintPostfix;
+      return withChain(t('sharedEntities.address'));
     }
 
     return props.hint;

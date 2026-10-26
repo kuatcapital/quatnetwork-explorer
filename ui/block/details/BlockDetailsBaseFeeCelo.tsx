@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { AddressParam } from 'types/api/addressParams';
 import type { BlockBaseFeeCelo } from 'types/api/block';
 import type { TokenInfo } from 'types/api/token';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { ZERO_ADDRESS } from 'toolkit/utils/consts';
 import AddressFromTo from 'ui/shared/address/AddressFromTo';
@@ -19,11 +23,13 @@ type ItemProps = BlockBaseFeeCelo['breakdown'][number] & {
 };
 
 const BreakDownItem = ({ amount, percentage, address, addressFrom, token }: ItemProps) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const isBurning = address.hash === ZERO_ADDRESS;
 
   return (
     <Flex alignItems="center" columnGap={ 2 } flexWrap="wrap">
-      <Box color="text.secondary">{ percentage }% of amount</Box>
+      <Box color="text.secondary">{ t('blockDetails.celo_amount', { value: formatNumber(percentage, locale) }) }</Box>
       <TokenValue
         amount={ amount }
         token={ token }
@@ -32,7 +38,7 @@ const BreakDownItem = ({ amount, percentage, address, addressFrom, token }: Item
         <>
           <AddressEntity address={ addressFrom } truncation="constant"/>
           <IconSvg name="flame" boxSize={ 5 } color="icon.primary"/>
-          <Box color="text.secondary">burnt</Box>
+          <Box color="text.secondary">{ t('blockDetails.celo_burnt') }</Box>
         </>
       ) : <AddressFromTo from={ addressFrom } to={ address }/> }
     </Flex>
@@ -44,27 +50,24 @@ interface Props {
 }
 
 const BlockDetailsBaseFeeCelo = ({ data }: Props) => {
+  const { t } = useTranslation();
   const totalFeeLabel = (
     <Box whiteSpace="pre-wrap">
-      <span>The FeeHandler regularly burns 80% of its tokens. Non-CELO tokens are swapped to CELO beforehand. The remaining 20% are sent to the </span>
-      <Link external href="https://www.ultragreen.money">Green Fund</Link>
-      <span>.</span>
+      <Trans i18nKey="blockDetails.celo_distribution" components={{ fund: <Link external href="https://www.ultragreen.money"/> }}/>
     </Box>
   );
 
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="The contract receiving the base fee, responsible for handling fee usage. This contract is controlled by governance process."
+        hint={ t('blockDetails.base_handler_hint') }
       >
-        Base fee handler
-      </DetailedInfo.ItemLabel>
+        { t('blockDetails.base_handler') } </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressEntity address={ data.recipient }/>
       </DetailedInfo.ItemValue>
       <DetailedInfo.ItemLabel hint={ totalFeeLabel }>
-        Base fee total
-      </DetailedInfo.ItemLabel>
+        { t('blockDetails.base_total') } </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow flexDirection="column" alignItems="flex-start">
         <TokenValue
           amount={ data.amount }

@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Screen, ScreenSuccess } from './types';
 
@@ -35,6 +37,7 @@ interface Props {
 }
 
 const AuthModal = ({ initialScreen, onClose, mixpanelConfig, closeOnError }: Props) => {
+  const { t: tAcct } = useTranslation();
   const [ steps, setSteps ] = React.useState<Array<Screen>>([ initialScreen ]);
   const [ isSuccess, setIsSuccess ] = React.useState(false);
   const [ rewardsApiToken, setRewardsApiToken ] = React.useState<string | undefined>(undefined);
@@ -111,16 +114,16 @@ const AuthModal = ({ initialScreen, onClose, mixpanelConfig, closeOnError }: Pro
   const header = (() => {
     switch (currentStep.type) {
       case 'select_method':
-        return 'Select a way to login';
+        return tAcct('accountUI.select_login_method');
       case 'connect_wallet':
-        return currentStep.isAuth ? 'Add wallet' : 'Continue with wallet';
+        return currentStep.isAuth ? tAcct('accountUI.add_wallet') : tAcct('accountUI.continue_wallet');
       case 'email':
-        return currentStep.isAuth ? 'Add email' : 'Continue with email';
+        return currentStep.isAuth ? tAcct('accountUI.add_email') : tAcct('accountUI.continue_email');
       case 'otp_code':
-        return 'Confirmation code';
+        return tAcct('accountUI.confirmation_code');
       case 'success_email':
       case 'success_wallet':
-        return 'Congrats!';
+        return tAcct('accountUI.congrats');
     }
   })();
 

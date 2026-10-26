@@ -1,7 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import { chakra, Flex } from '@chakra-ui/react';
-import { capitalize } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { PaginationParams } from 'ui/shared/pagination/types';
@@ -12,7 +13,9 @@ import config from 'configs/app';
 import { useMultichainContext } from 'lib/contexts/multichain';
 import throwOnAbsentParamError from 'lib/errors/throwOnAbsentParamError';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -49,11 +52,17 @@ const TABS_HEIGHT = 88;
 const beaconChainFeature = config.features.beaconChain;
 
 const BlockPageContent = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const router = useRouter();
   const isMobile = useIsMobile();
   const heightOrHash = getQueryParamString(router.query.height_or_hash);
   const tab = getQueryParamString(router.query.tab);
   const multichainContext = useMultichainContext();
+  const validatorLabels = {
+    validator: t('common.validator'), miner: t('home.miner'), poster: t('home.poster'),
+    sequencer: t('home.sequencer'), 'fee recipient': t('home.fee_recipient'),
+  };
 
   const blockQuery = useBlockQuery({ heightOrHash });
   const blockTxsQuery = useBlockTxsQuery({ heightOrHash, blockQuery, tab });
@@ -72,7 +81,7 @@ const BlockPageContent = () => {
   const tabs: Array<TabItemRegular> = React.useMemo(() => ([
     {
       id: 'index',
-      title: 'Details',
+      title: t('blockDetails.details'),
       component: (
         <>
           <Flex rowGap={{ base: 1, lg: 2 }} mb={{ base: 3, lg: 6 }} flexDir="column">
@@ -85,7 +94,7 @@ const BlockPageContent = () => {
     },
     {
       id: 'txs',
-      title: 'Transactions',
+      title: t('blockDetails.transactions'),
       component: (
         <>
           { blockTxsQuery.isDegradedData && <ServiceDegradationWarning isLoading={ blockTxsQuery.isPlaceholderData } mb={{ base: 3, lg: 6 }}/> }
@@ -95,7 +104,7 @@ const BlockPageContent = () => {
     },
     {
       id: 'internal_txs',
-      title: 'Internal txns',
+      title: t('blockDetails.internals'),
       component: (
         <>
           { blockTxsQuery.isDegradedData && <ServiceDegradationWarning isLoading={ blockTxsQuery.isPlaceholderData } mb={{ base: 3, lg: 6 }}/> }
@@ -106,7 +115,7 @@ const BlockPageContent = () => {
     config.features.dataAvailability.isEnabled && blockQuery.data?.blob_transactions_count ?
       {
         id: 'blob_txs',
-        title: 'Blob txns',
+        title: t('blockDetails.blob_txns'),
         component: (
           <TxsWithFrontendSorting query={ blockBlobTxsQuery } showBlockInfo={ false }/>
         ),
@@ -114,7 +123,7 @@ const BlockPageContent = () => {
     beaconChainFeature.isEnabled && !beaconChainFeature.withdrawalsOnly && Boolean(blockQuery.data?.beacon_deposits_count) ?
       {
         id: 'deposits',
-        title: 'Deposits',
+        title: t('blockDetails.deposits'),
         component: (
           <>
             { blockDepositsQuery.isDegradedData && <ServiceDegradationWarning isLoading={ blockDepositsQuery.isPlaceholderData } mb={{ base: 3, lg: 6 }}/> }
@@ -125,7 +134,7 @@ const BlockPageContent = () => {
     config.features.beaconChain.isEnabled && Boolean(blockQuery.data?.withdrawals_count) ?
       {
         id: 'withdrawals',
-        title: 'Withdrawals',
+        title: t('blockDetails.withdrawals'),
         component: (
           <>
             { blockWithdrawalsQuery.isDegradedData &&
@@ -134,7 +143,7 @@ const BlockPageContent = () => {
           </>
         ),
       } : null,
-  ].filter(Boolean)), [ blockBlobTxsQuery, blockDepositsQuery, blockInternalTxsQuery, blockQuery, blockTxsQuery, blockWithdrawalsQuery, hasPagination ]);
+  ].filter(Boolean)), [ blockBlobTxsQuery, blockDepositsQuery, blockInternalTxsQuery, blockQuery, blockTxsQuery, blockWithdrawalsQuery, hasPagination, t ]);
 
   let pagination;
   if (tab === 'txs') {
@@ -162,13 +171,13 @@ const BlockPageContent = () => {
   const title = (() => {
     switch (blockQuery.data?.type) {
       case 'reorg':
-        return `Reorged block #${ blockQuery.data?.height }`;
+        return t('blockDetails.reorg_title', { number: blockQuery.data ? formatNumber(blockQuery.data.height, locale) : '' });
 
       case 'uncle':
-        return `Uncle block #${ blockQuery.data?.height }`;
+        return t('blockDetails.uncle_title', { number: blockQuery.data ? formatNumber(blockQuery.data.height, locale) : '' });
 
       default:
-        return `Block #${ blockQuery.data?.height }`;
+        return t('blockDetails.block_title', { number: blockQuery.data ? formatNumber(blockQuery.data.height, locale) : '' });
     }
   })();
 
@@ -188,7 +197,7 @@ const BlockPageContent = () => {
           fontWeight={ 500 }
         >
           <chakra.span flexShrink={ 0 }>
-            { capitalize(getNetworkValidatorTitle()) }
+            { validatorLabels[getNetworkValidatorTitle()] }
           </chakra.span>
           <AddressEntity address={ blockQuery.data.miner }/>
         </Skeleton>

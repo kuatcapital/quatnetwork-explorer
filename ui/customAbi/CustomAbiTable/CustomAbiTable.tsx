@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CustomAbis, CustomAbi } from 'types/api/account';
 
@@ -14,11 +16,12 @@ interface Props {
 }
 
 const CustomAbiTable = ({ data, isLoading, onDeleteClick, onEditClick }: Props) => {
+  const { t: tAcct } = useTranslation();
   return (
     <TableRoot minWidth="600px">
       <TableHeader>
         <TableRow>
-          <TableColumnHeader>ABI for Smart contract address (0x...)</TableColumnHeader>
+          <TableColumnHeader>{ tAcct('accountUI.abi_for_address') }</TableColumnHeader>
           <TableColumnHeader width="108px"></TableColumnHeader>
         </TableRow>
       </TableHeader>

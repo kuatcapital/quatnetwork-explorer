@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize blob and statistics metadata. GPL-3.0.
 import { createListCollection, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as blobUtils from 'lib/blob';
 import removeNonSignificantZeroBytes from 'lib/blob/removeNonSignificantZeroBytes';
@@ -34,6 +36,7 @@ interface Props {
 }
 
 const BlobData = ({ data, isLoading, hash }: Props) => {
+  const { t } = useTranslation();
   const [ format, setFormat ] = React.useState<Array<Format>>([ 'Raw' ]);
 
   const guessedType = React.useMemo(() => {
@@ -45,11 +48,15 @@ const BlobData = ({ data, isLoading, hash }: Props) => {
 
   const isImage = guessedType?.mime?.startsWith('image/');
   const collection = React.useMemo(() => {
-    const formats = isImage ? FORMATS : FORMATS.filter((format) => format.value !== 'Image');
+    const availableFormats = isImage ? FORMATS : FORMATS.filter((format) => format.value !== 'Image');
+    const labels: Record<Format, string> = {
+      Image: t('blobUI.image'), Raw: t('blobUI.raw'), 'UTF-8': 'UTF-8', Base64: 'Base64',
+    };
+    const formats = availableFormats.map(item => ({ ...item, label: labels[item.value] }));
     return createListCollection<SelectOption>({
       items: formats,
     });
-  }, [ isImage ]);
+  }, [ isImage, t ]);
 
   React.useEffect(() => {
     if (isImage) {
@@ -89,7 +96,7 @@ const BlobData = ({ data, isLoading, hash }: Props) => {
     switch (format[0]) {
       case 'Image': {
         if (!guessedType?.mime?.startsWith('image/')) {
-          return <RawDataSnippet data="Not an image" showCopy={ false } isLoading={ isLoading } w="100%"/>;
+          return <RawDataSnippet data={ t('blobUI.not_image') } showCopy={ false } isLoading={ isLoading } w="100%"/>;
         }
 
         const bytes = hexToBytes(data);
@@ -114,16 +121,16 @@ const BlobData = ({ data, isLoading, hash }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Blob data"
+        hint={ t('blobUI.data') }
         isLoading={ isLoading }
       >
-        Blob data
+        { t('blobUI.data') }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexWrap="wrap">
         <Flex alignItems="center" w="100%" mb={{ base: 1, lg: 3 }} mt={{ base: 1, lg: 0 }}>
           <Select
             collection={ collection }
-            placeholder="Select type"
+            placeholder={ t('blobUI.type') }
             value={ format }
             onValueChange={ handleFormatChange }
             w="100px"
@@ -135,7 +142,7 @@ const BlobData = ({ data, isLoading, hash }: Props) => {
               size="sm"
               onClick={ handleDownloadButtonClick }
             >
-              Download
+              { t('blobUI.download') }
             </Button>
           </Skeleton>
           <CopyToClipboard text={ data } isLoading={ isLoading }/>

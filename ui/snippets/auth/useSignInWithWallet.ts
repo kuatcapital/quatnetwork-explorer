@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSignMessage, useSwitchChain } from 'wagmi';
 
 import type * as rewards from '@blockscout/points-types';
@@ -45,6 +47,7 @@ interface Props {
 }
 
 function useSignInWithWallet({ onSuccess, onError, source = 'Login', isAuth, loginToRewards, fetchProtectedResource }: Props) {
+  const { t: tAcct } = useTranslation();
   const [ isPending, setIsPending ] = React.useState(false);
   const isConnectingWalletRef = React.useRef(false);
 
@@ -130,7 +133,7 @@ function useSignInWithWallet({ onSuccess, onError, source = 'Login', isAuth, log
         }) as rewards.AuthLoginResponse : undefined;
 
       if (!('name' in authResponse)) {
-        throw Error('Something went wrong');
+        throw Error(tAcct('accountUI.unexpected_error'));
       }
       onSuccess?.({ address, profile: authResponse, rewardsToken: rewardsLoginResponse?.token });
     } catch (error) {
@@ -139,13 +142,13 @@ function useSignInWithWallet({ onSuccess, onError, source = 'Login', isAuth, log
       const shortMessage = errorObj && 'shortMessage' in errorObj && typeof errorObj.shortMessage === 'string' ? errorObj.shortMessage : undefined;
       onError?.();
       toaster.error({
-        title: 'Error',
-        description: apiErrorMessage || shortMessage || getErrorMessage(error) || 'Something went wrong',
+        title: tAcct('accountUI.error'),
+        description: apiErrorMessage || shortMessage || getErrorMessage(error) || tAcct('accountUI.unexpected_error'),
       });
     } finally {
       setIsPending(false);
     }
-  }, [ switchChainAsync, getSiweMessage, signMessageAsync, fetchProtectedResource, authFetchFactory, apiFetch, onSuccess, onError ]);
+  }, [ switchChainAsync, getSiweMessage, signMessageAsync, fetchProtectedResource, authFetchFactory, apiFetch, onSuccess, onError, tAcct ]);
 
   const start = React.useCallback(() => {
     setIsPending(true);

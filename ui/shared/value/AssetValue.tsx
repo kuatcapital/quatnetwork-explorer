@@ -1,6 +1,7 @@
 import type { BoxProps } from '@chakra-ui/react';
 import { Box, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Tag } from 'toolkit/chakra/tag';
 import { thinsp } from 'toolkit/utils/htmlEntities';
@@ -41,6 +42,7 @@ const AssetValue = ({
   tooltipContent,
   ...rest
 }: Props) => {
+  const { t } = useTranslation();
   const hasHistorical = Boolean(historicalExchangeRate);
   const hasCurrent = Boolean(exchangeRate);
   const hasToggle = hasHistorical && hasCurrent && hasExchangeRateToggle && amount !== '0';
@@ -107,7 +109,7 @@ const AssetValue = ({
       return undefined;
     }
 
-    return <Box>{ showHistorical ? 'Estimated value on day of txn' : 'Current value' }</Box>;
+    return <Box>{ showHistorical ? t('sharedUi.estimated_historical') : t('sharedUi.current_value') }</Box>;
   })();
 
   const usdValue = hasToggle ? (
@@ -155,3 +157,4 @@ const AssetValue = ({
 };
 
 export default React.memo(AssetValue);
+// Modified by Quat Capital, 2026-10-26: localized historical/current value hints. GPL-3.0.

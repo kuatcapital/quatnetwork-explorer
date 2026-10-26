@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { Button } from 'toolkit/chakra/button';
@@ -24,6 +26,7 @@ const DeleteModal: React.FC<Props> = ({
   mutationFn,
   onSuccess,
 }) => {
+  const { t } = useTranslation();
   const [ isAlertVisible, setAlertVisible ] = useState(false);
 
   const onModalOpenChange = useCallback(({ open }: { open: boolean }) => {
@@ -62,7 +65,7 @@ const DeleteModal: React.FC<Props> = ({
             onClick={ onDeleteClick }
             loading={ isPending }
           >
-            Delete
+            { t('common.delete') }
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box, Text, HStack, Flex } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { WatchlistAddress } from 'types/api/account';
 
@@ -23,6 +25,7 @@ interface Props {
 }
 
 const WatchListItem = ({ item, isLoading, onEditClick, onDeleteClick, hasEmail }: Props) => {
+  const { t: tAcct } = useTranslation();
   const [ notificationEnabled, setNotificationEnabled ] = useState(item.notification_methods.email);
   const [ switchDisabled, setSwitchDisabled ] = useState(false);
   const onItemEditClick = useCallback(() => {
@@ -37,17 +40,17 @@ const WatchListItem = ({ item, isLoading, onEditClick, onDeleteClick, hasEmail }
 
   const showErrorToast = useCallback(() => {
     toaster.error({
-      title: 'Error',
-      description: 'There has been an error processing your request',
+      title: tAcct('accountUI.error'),
+      description: tAcct('accountUI.processing_error'),
     });
-  }, [ ]);
+  }, [ tAcct ]);
 
   const showNotificationToast = useCallback((isOn: boolean) => {
     toaster.success({
-      title: 'Success',
-      description: isOn ? 'Email notification is ON' : 'Email notification is OFF',
+      title: tAcct('accountUI.success'),
+      description: isOn ? tAcct('accountUI.notifications_on') : tAcct('accountUI.notifications_off'),
     });
-  }, [ ]);
+  }, [ tAcct ]);
 
   const { mutate } = useMutation<WatchlistAddress>({
     mutationFn: () => {
@@ -79,18 +82,18 @@ const WatchListItem = ({ item, isLoading, onEditClick, onDeleteClick, hasEmail }
       <Box maxW="100%">
         <WatchListAddressItem item={ item } isLoading={ isLoading }/>
         <HStack gap={ 3 } mt={ 6 }>
-          <Text textStyle="sm" fontWeight={ 500 }>Private tag</Text>
+          <Text textStyle="sm" fontWeight={ 500 }>{ tAcct('accountUI.private_tag') }</Text>
           <Tag loading={ isLoading } truncated>{ item.name }</Tag>
         </HStack>
       </Box>
       <Flex alignItems="center" justifyContent="space-between" mt={ 6 } w="100%">
         <HStack gap={ 3 }>
-          <Text textStyle="sm" fontWeight={ 500 }>Email notification</Text>
+          <Text textStyle="sm" fontWeight={ 500 }>{ tAcct('accountUI.email_notification') }</Text>
           <Skeleton loading={ isLoading } display="inline-block">
             <Switch
               checked={ notificationEnabled }
               onCheckedChange={ onSwitch }
-              aria-label="Email notification"
+              aria-label={ tAcct('accountUI.email_notification') }
               disabled={ !hasEmail || switchDisabled }
             />
           </Skeleton>

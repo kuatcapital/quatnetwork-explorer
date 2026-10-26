@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenInfoApplication, VerifiedAddress } from 'types/api/account';
 
-import dayjs from 'lib/date/dayjs';
 import { IconButton } from 'toolkit/chakra/icon-button';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -11,6 +12,7 @@ import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import IconSvg from 'ui/shared/IconSvg';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
+import Time from 'ui/shared/time/Time';
 
 import VerifiedAddressesStatus from './VerifiedAddressesStatus';
 
@@ -23,6 +25,7 @@ interface Props {
 }
 
 const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading }: Props) => {
+  const { t: tAcct } = useTranslation();
   const handleAddClick = React.useCallback(() => {
     if (isLoading) {
       return;
@@ -43,11 +46,11 @@ const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading
     }
 
     if (!item.metadata.tokenName) {
-      return <span>Not a token</span>;
+      return <span>{ tAcct('accountUI.not_a_token') }</span>;
     }
 
     if (!application) {
-      return <Link onClick={ handleAddClick }>Add details</Link>;
+      return <Link onClick={ handleAddClick }>{ tAcct('accountUI.add_details') }</Link>;
     }
 
     const token = {
@@ -67,9 +70,9 @@ const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading
           noCopy
           noSymbol
         />
-        <Tooltip content="Edit" disabled={ isLoading } disableOnMobile>
+        <Tooltip content={ tAcct('accountUI.edit') } disabled={ isLoading } disableOnMobile>
           <IconButton
-            aria-label="edit"
+            aria-label={ tAcct('accountUI.edit') }
             variant="link"
             size="2xs"
             borderRadius="none"
@@ -84,7 +87,7 @@ const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading
 
   return (
     <ListItemMobileGrid.Container>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Address</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tAcct('accountUI.address') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity
           address={{ hash: item.contractAddress, is_contract: true }}
@@ -95,7 +98,7 @@ const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading
 
       { item.metadata.tokenName && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Token Info</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tAcct('accountUI.token_info_title') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value display="flex" alignItems="center">
             { tokenInfo }
           </ListItemMobileGrid.Value>
@@ -104,7 +107,7 @@ const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading
 
       { item.metadata.tokenName && application && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tAcct('accountUI.status') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Skeleton loading={ isLoading } display="inline-block">
               <VerifiedAddressesStatus status={ application.status }/>
@@ -115,10 +118,10 @@ const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading
 
       { item.metadata.tokenName && application && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Date</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tAcct('accountUI.date') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Skeleton loading={ isLoading } display="inline-block">
-              { dayjs(application.updatedAt).format('MMM DD, YYYY') }
+              <Time timestamp={ application.updatedAt } format="ll"/>
             </Skeleton>
           </ListItemMobileGrid.Value>
         </>

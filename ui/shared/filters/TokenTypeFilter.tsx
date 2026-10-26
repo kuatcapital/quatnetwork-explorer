@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Text, Flex, useCheckboxGroup, Fieldset } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NFTTokenType, TokenType } from 'types/api/token';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -15,6 +17,7 @@ type Props<T extends TokenType | NFTTokenType> = {
   chainConfig?: Array<ClusterChainConfig['app_config']> | ClusterChainConfig['app_config'];
 };
 const TokenTypeFilter = <T extends TokenType | NFTTokenType>({ nftOnly, onChange, defaultValue, chainConfig }: Props<T>) => {
+  const { t } = useTranslation();
   const { value, setValue } = useCheckboxGroup({ defaultValue });
 
   const handleReset = React.useCallback(() => {
@@ -37,14 +40,14 @@ const TokenTypeFilter = <T extends TokenType | NFTTokenType>({ nftOnly, onChange
   return (
     <>
       <Flex justifyContent="space-between" textStyle="sm">
-        <Text fontWeight={ 600 } color="text.secondary">Type</Text>
+        <Text fontWeight={ 600 } color="text.secondary">{ t('common.type') }</Text>
         <Button
           variant="link"
           onClick={ handleReset }
           disabled={ value.length === 0 }
           textStyle="sm"
         >
-          Reset
+          { t('common.reset') }
         </Button>
       </Flex>
       <Fieldset.Root>

@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { ImageData, getNounData, getNounSeedFromBlockHash } from '@nouns/assets';
 import { buildSVG } from '@nouns/sdk';
 import CryptoJS from 'crypto-js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Image } from 'toolkit/chakra/image';
 
@@ -36,6 +38,7 @@ export const getNumberFromString = (input: string): number => {
 };
 
 const NounsIdenticon: React.FC<NounsIdenticonProps> = ({ hash, size }) => {
+  const { t } = useTranslation();
   const id = getNumberFromString(hash);
   const seed = getNounSeedFromBlockHash(id, MAGIC_HASH);
 
@@ -49,7 +52,7 @@ const NounsIdenticon: React.FC<NounsIdenticonProps> = ({ hash, size }) => {
   return (
     <Image
       src={ `data:image/svg+xml;base64,${ svgData }` }
-      alt={ `Nouns identicon for ${ hash }` }
+      alt={ t('sharedEntities.nouns_identicon', { hash }) }
       width={ `${ size }px` }
       height={ `${ size }px` }
     />

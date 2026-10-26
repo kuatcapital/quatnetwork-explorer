@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const PublicTagsSubmitFieldTagIcon = ({ index }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   const imageField = useImageField({ name: `tags.${ index }.iconUrl`, isRequired: false });
 
@@ -22,7 +25,7 @@ const PublicTagsSubmitFieldTagIcon = ({ index }: Props) => {
     <Flex columnGap={ 3 }>
       <FormFieldUrl<FormFields>
         name={ `tags.${ index }.iconUrl` }
-        placeholder="Label icon URL"
+        placeholder={ tAcct('accountUI.label_icon_url') }
         { ...imageField.input }
       />
       <PublicTagsSubmitFieldTagIconPreview url={ imageField.preview.src } isInvalid={ imageField.preview.isInvalid }>

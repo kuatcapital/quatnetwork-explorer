@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Flex, Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -41,6 +43,7 @@ const TokenTransferTableItem = ({
   isLoading,
   chainData,
 }: Props) => {
+  const { t } = useTranslation();
 
   return (
     <TableRow alignItems="top">
@@ -74,10 +77,10 @@ const TokenTransferTableItem = ({
             />
             <Flex columnGap={ 2 } rowGap={ 2 } mt={ 2 } flexWrap="wrap">
               <Badge loading={ isLoading }>{ getTokenTypeName(token.type, chainData?.app_config) }</Badge>
-              <Badge colorPalette="orange" loading={ isLoading }>{ getTokenTransferTypeText(type) }</Badge>
+              <Badge colorPalette="orange" loading={ isLoading }>{ getTokenTransferTypeText(type, t) }</Badge>
             </Flex>
           </>
-        ) : 'N/A' }
+        ) : t('sharedUi.not_available') }
       </TableCell>
       <TableCell>
         { total && 'token_id' in total && total.token_id !== null && token && (

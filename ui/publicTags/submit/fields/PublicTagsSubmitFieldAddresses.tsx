@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -11,6 +13,7 @@ import { FormFieldAddress } from 'toolkit/components/forms/fields/FormFieldAddre
 const LIMIT = 20;
 
 const PublicTagsSubmitFieldAddresses = () => {
+  const { t: tAcct } = useTranslation();
   const { control, formState } = useFormContext<FormFields>();
   const { fields, insert, remove } = useFieldArray<FormFields, 'addresses'>({
     name: 'addresses',
@@ -42,7 +45,7 @@ const PublicTagsSubmitFieldAddresses = () => {
               <FormFieldAddress<FormFields>
                 name={ `addresses.${ index }.hash` }
                 required
-                placeholder="Smart contract / Address (0x...)"
+                placeholder={ tAcct('accountUI.contract_or_address') }
               />
             </GridItem>
             <GridItem display="flex" alignItems="center" columnGap={ 3 } justifyContent={{ base: 'flex-end', lg: 'flex-start' }}>

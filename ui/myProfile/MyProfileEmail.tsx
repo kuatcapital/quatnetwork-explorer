@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from './types';
 import type { UserInfo } from 'types/api/account';
@@ -34,6 +36,7 @@ interface Props {
 }
 
 const MyProfileEmail = ({ profileQuery }: Props) => {
+  const { t: tAcct } = useTranslation();
   const authModal = useDisclosure();
   const apiFetch = useApiFetch();
   const recaptcha = useReCaptcha();
@@ -70,23 +73,23 @@ const MyProfileEmail = ({ profileQuery }: Props) => {
     } catch (error) {
       const apiError = getErrorObjPayload<{ message: string }>(error);
       toaster.error({
-        title: 'Error',
-        description: apiError?.message || getErrorMessage(error) || 'Something went wrong',
+        title: tAcct('accountUI.error'),
+        description: apiError?.message || getErrorMessage(error) || tAcct('accountUI.unexpected_error'),
       });
     }
-  }, [ authFetchFactory, authModal, recaptcha ]);
+  }, [ authFetchFactory, authModal, recaptcha, tAcct ]);
 
   const hasDirtyFields = Object.keys(formApi.formState.dirtyFields).length > 0;
 
   return (
     <section>
-      <Heading level="2" mb={ 3 }>Notifications</Heading>
+      <Heading level="2" mb={ 3 }>{ tAcct('accountUI.notifications') }</Heading>
       <FormProvider { ...formApi }>
         <chakra.form
           noValidate
           onSubmit={ formApi.handleSubmit(onFormSubmit) }
         >
-          <FormFieldText<FormFields> name="name" placeholder="Name" readOnly mb={ 3 }/>
+          <FormFieldText<FormFields> name="name" placeholder={ tAcct('accountUI.name') } readOnly mb={ 3 }/>
           <MyProfileFieldsEmail
             isReadOnly={ !config.services.reCaptchaV2.siteKey || Boolean(profileQuery.data?.email) }
             defaultValue={ profileQuery.data?.email || undefined }
@@ -100,10 +103,9 @@ const MyProfileEmail = ({ profileQuery }: Props) => {
               type="submit"
               disabled={ formApi.formState.isSubmitting || !hasDirtyFields || recaptcha.isInitError }
               loading={ formApi.formState.isSubmitting }
-              loadingText="Save changes"
+              loadingText={ tAcct('accountUI.save_changes') }
             >
-              Save changes
-            </Button>
+              { tAcct('accountUI.save_changes') }</Button>
           ) }
         </chakra.form>
       </FormProvider>

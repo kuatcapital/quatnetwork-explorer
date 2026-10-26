@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CustomAbi } from 'types/api/account';
 
@@ -18,6 +20,7 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import useRedirectForInvalidAuthToken from 'ui/snippets/auth/useRedirectForInvalidAuthToken';
 
 const CustomAbiPage: React.FC = () => {
+  const { t: tAcct } = useTranslation();
   const customAbiModalProps = useDisclosure();
   const deleteModalProps = useDisclosure();
   useRedirectForInvalidAuthToken();
@@ -53,8 +56,7 @@ const CustomAbiPage: React.FC = () => {
 
   const description = (
     <AccountPageDescription>
-      Add custom ABIs for any contract and access when logged into your account. Helpful for debugging, functional testing and contract interaction.
-    </AccountPageDescription>
+      { tAcct('accountUI.custom_abi_description') }</AccountPageDescription>
   );
 
   const content = (() => {
@@ -94,8 +96,7 @@ const CustomAbiPage: React.FC = () => {
           <Button
             onClick={ customAbiModalProps.onOpen }
           >
-            Add custom ABI
-          </Button>
+            { tAcct('accountUI.add_custom_abi') }</Button>
         </Skeleton>
         <CustomAbiModal open={ customAbiModalProps.open } onOpenChange={ onCustomAbiModalOpenChange } data={ customAbiModalData }/>
         { deleteModalData && <DeleteCustomAbiModal open={ deleteModalProps.open } onOpenChange={ onDeleteModalOpenChange } data={ deleteModalData }/> }
@@ -105,7 +106,7 @@ const CustomAbiPage: React.FC = () => {
 
   return (
     <>
-      <PageTitle title="Custom ABI"/>
+      <PageTitle title={ tAcct('accountUI.custom_abi') }/>
       { content }
     </>
   );

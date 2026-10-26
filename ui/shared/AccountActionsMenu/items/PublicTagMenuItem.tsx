@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ItemProps } from '../types';
 
@@ -9,6 +11,7 @@ import IconSvg from 'ui/shared/IconSvg';
 import ButtonItem from '../parts/ButtonItem';
 
 const PublicTagMenuItem = ({ hash, type }: ItemProps) => {
+  const { t: tAcct } = useTranslation();
   const router = useRouter();
 
   const handleClick = React.useCallback(() => {
@@ -18,14 +21,14 @@ const PublicTagMenuItem = ({ hash, type }: ItemProps) => {
   switch (type) {
     case 'button': {
       // FIXME use non-navigation icon
-      return <ButtonItem label="Add public tag" icon="navigation/public_tags" onClick={ handleClick }/>;
+      return <ButtonItem label={ tAcct('accountUI.add_public_tag') } icon="navigation/public_tags" onClick={ handleClick }/>;
     }
     case 'menu_item': {
       return (
         <MenuItem onClick={ handleClick } value="add-public-tag">
           { /* FIXME use non-navigation icon */ }
           <IconSvg name="navigation/public_tags" boxSize={ 6 }/>
-          <span>Add public tag</span>
+          <span>{ tAcct('accountUI.add_public_tag') }</span>
         </MenuItem>
       );
     }

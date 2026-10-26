@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ExternalChain } from 'types/externalChains';
 
@@ -17,6 +19,7 @@ interface Props extends ImageProps {
 }
 
 const ChainIcon = ({ data, boxSize = 5, borderRadius = 'none', isLoading, noTooltip, ...rest }: Props) => {
+  const { t } = useTranslation();
   if (isLoading) {
     return <Skeleton boxSize={ boxSize } borderRadius={ borderRadius === 'none' ? 'full' : borderRadius } { ...rest } loading/>;
   }
@@ -28,14 +31,14 @@ const ChainIcon = ({ data, boxSize = 5, borderRadius = 'none', isLoading, noTool
       boxSize={ boxSize }
       borderRadius={ borderRadius }
       fallback={ placeholder }
-      alt={ `${ data?.name || 'Unknown' } chain icon` }
+      alt={ data?.name ? t('sharedUi.chain_icon', { chain: data.name }) : t('sharedUi.unknown_chain_icon') }
       { ...rest }
     />
   );
 
   if (!noTooltip) {
     return (
-      <Tooltip content={ getChainTooltipText(data) }>
+      <Tooltip content={ getChainTooltipText(data, t) }>
         { content }
       </Tooltip>
     );

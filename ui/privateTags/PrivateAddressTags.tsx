@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTag } from 'types/api/account';
 
@@ -20,6 +22,7 @@ import AddressTagTable from './AddressTagTable/AddressTagTable';
 import DeletePrivateTagModal from './DeletePrivateTagModal';
 
 const PrivateAddressTags = () => {
+  const { t: tAcct } = useTranslation();
   const { data: addressTagsData, isError, isPlaceholderData, refetch, pagination } = useQueryWithPages({
     resourceName: 'general:private_tags_address',
     options: {
@@ -67,9 +70,7 @@ const PrivateAddressTags = () => {
   return (
     <>
       <AccountPageDescription>
-        Use private address tags to track any addresses of interest.
-        Private tags are saved in your account and are only visible when you are logged in.
-      </AccountPageDescription>
+        { tAcct('accountUI.private_addresses_description') }</AccountPageDescription>
       <DataListDisplay
         isError={ isError }
         itemsNum={ addressTagsData?.items.length }
@@ -101,8 +102,7 @@ const PrivateAddressTags = () => {
         <Button
           onClick={ addressModalProps.onOpen }
         >
-          Add address tag
-        </Button>
+          { tAcct('accountUI.add_address_tag') }</Button>
       </Skeleton>
       <AddressModal
         { ...addressModalProps }

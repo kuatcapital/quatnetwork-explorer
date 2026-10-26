@@ -1,10 +1,14 @@
 import { HStack, VStack, Flex, Text } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
+// Modified by Quat Capital, 2026-10-26: locale-aware watchlist values. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { WatchlistAddress } from 'types/api/account';
 
 import config from 'configs/app';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { currencyUnits } from 'lib/units';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { nbsp } from 'toolkit/utils/htmlEntities';
@@ -17,6 +21,8 @@ import SimpleValue from 'ui/shared/value/SimpleValue';
 import { DEFAULT_ACCURACY_USD } from 'ui/shared/value/utils';
 
 const WatchListAddressItem = ({ item, isLoading }: { item: WatchlistAddress; isLoading?: boolean }) => {
+  const { t: tAcct } = useTranslation();
+  const { locale } = useLocale();
   const nativeTokenData = React.useMemo(() => ({
     name: config.chain.currency.name || '',
     icon_url: '',
@@ -48,7 +54,7 @@ const WatchListAddressItem = ({ item, isLoading }: { item: WatchlistAddress; isL
           isLoading={ isLoading }
         />
         <Skeleton loading={ isLoading } whiteSpace="pre" display="inline-flex">
-          <span>{ currencyUnits.ether } balance: </span>
+          <span>{ tAcct('accountUI.native_balance', { symbol: currencyUnits.ether }) }{ ' ' }</span>
           <NativeCoinValue
             amount={ item.address_balance }
             exchangeRate={ item.exchange_rate }
@@ -60,8 +66,10 @@ const WatchListAddressItem = ({ item, isLoading }: { item: WatchlistAddress; isL
         <HStack gap={ 2 } fontSize="sm" pl={ 7 }>
           <IconSvg name="tokens" boxSize={ 5 } isLoading={ isLoading } borderRadius="sm"/>
           <Skeleton loading={ isLoading } display="inline-flex">
-            <span>{ `Tokens:${ nbsp }` + item.tokens_count + (item.tokens_overflow ? '+' : '') }</span>
-            <Text color="text.secondary">{ `${ nbsp }($${ BigNumber(item.tokens_fiat_value).toFormat(2) })` }</Text>
+            <span>{ tAcct('accountUI.tokens_balance', {
+              value: formatNumber(item.tokens_count, locale) + (item.tokens_overflow ? '+' : ''),
+            }) }</span>
+            <Text color="text.secondary">{ `${ nbsp }($${ formatBigNumber(BigNumber(item.tokens_fiat_value), locale, 2) })` }</Text>
           </Skeleton>
         </HStack>
       ) }
@@ -72,7 +80,7 @@ const WatchListAddressItem = ({ item, isLoading }: { item: WatchlistAddress; isL
           startElement={ (
             <HStack>
               <IconSvg boxSize={ 5 } name="wallet" isLoading={ isLoading }/>
-              <span>Net worth:{ nbsp }</span>
+              <span>{ tAcct('accountUI.net_worth') }{ nbsp }</span>
             </HStack>
           ) }
           accuracy={ DEFAULT_ACCURACY_USD }

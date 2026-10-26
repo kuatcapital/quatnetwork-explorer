@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsInitialLoading from 'lib/hooks/useIsInitialLoading';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -13,6 +15,7 @@ export interface Props extends SelectRootProps {
 }
 
 const Sort = (props: Props) => {
+  const { t } = useTranslation();
   const { collection, isLoading, ...rest } = props;
   const isMobile = useIsMobile();
   const isInitialLoading = useIsInitialLoading(isLoading);
@@ -23,7 +26,7 @@ const Sort = (props: Props) => {
         <SelectControl triggerProps={{ asChild: true }} noIndicator>
           <IconButton
             loadingSkeleton={ isInitialLoading }
-            aria-label="sort"
+            aria-label={ t('sharedUi.sort') }
             size="md"
             variant="dropdown"
             disabled={ isLoading }
@@ -47,7 +50,7 @@ const Sort = (props: Props) => {
           _groupHover={{ color: 'inherit' }}
           _groupExpanded={{ color: 'inherit' }}
         >
-          Sort by
+          { t('sharedUi.sort_by') }
         </chakra.span>
         <SelectValueText
           color={{ _light: 'blackAlpha.800', _dark: 'whiteAlpha.800' }}

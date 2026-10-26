@@ -2,6 +2,7 @@ import type { BoxProps } from '@chakra-ui/react';
 import { Box, chakra } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressParam } from 'types/api/addressParams';
 import type {
@@ -14,7 +15,8 @@ import type { ClusterChainConfig } from 'types/multichain';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
-import dayjs from 'lib/date/dayjs';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import * as mixpanel from 'lib/mixpanel/index';
 import { currencyUnits } from 'lib/units';
 import { Badge } from 'toolkit/chakra/badge';
@@ -30,6 +32,7 @@ import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import ChainIcon from 'ui/shared/externalChains/ChainIcon';
 import getChainTooltipText from 'ui/shared/externalChains/getChainTooltipText';
 import IconSvg from 'ui/shared/IconSvg';
+import Time from 'ui/shared/time/Time';
 
 import {
   extractVariables,
@@ -56,6 +59,7 @@ type NonStringTxInterpretationVariable = Exclude<TxInterpretationVariable, TxInt
 const TxInterpretationElementByType = (
   { variable, addressDataMap }: { variable?: NonStringTxInterpretationVariable; addressDataMap?: Record<string, AddressParam> },
 ) => {
+  const { locale } = useLocale();
   const onAddressClick = React.useCallback(() => {
     mixpanel.logEvent(mixpanel.EventTypes.TX_INTERPRETATION_INTERACTION, { Type: 'Address click' });
   }, []);
@@ -123,18 +127,18 @@ const TxInterpretationElementByType = (
     case 'currency': {
       let numberString = '';
       if (BigNumber(value).isLessThan(0.1)) {
-        numberString = BigNumber(value).toPrecision(2);
+        numberString = formatBigNumber(BigNumber(BigNumber(value).toPrecision(2)), locale);
       } else if (BigNumber(value).isLessThan(10000)) {
-        numberString = BigNumber(value).dp(2).toFormat();
+        numberString = formatBigNumber(BigNumber(value), locale, 2);
       } else if (BigNumber(value).isLessThan(1000000)) {
-        numberString = BigNumber(value).dividedBy(1000).toFormat(2) + 'K';
+        numberString = formatBigNumber(BigNumber(value).dividedBy(1000), locale, 2) + 'K';
       } else {
-        numberString = BigNumber(value).dividedBy(1000000).toFormat(2) + 'M';
+        numberString = formatBigNumber(BigNumber(value).dividedBy(1000000), locale, 2) + 'M';
       }
       return <chakra.span>{ numberString + ' ' }</chakra.span>;
     }
     case 'timestamp': {
-      return <chakra.span color="text.secondary" whiteSpace="pre">{ dayjs(Number(value) * SECOND).format('MMM DD YYYY') }</chakra.span>;
+      return <Time timestamp={ Number(value) * SECOND } format="LL" color="text.secondary" whiteSpace="pre"/>;
     }
     case 'external_link': {
       return <Link external href={ value.link }>{ value.name }</Link>;
@@ -188,6 +192,7 @@ const TxInterpretationElementByType = (
 };
 
 const TxInterpretation = ({ summary, isLoading, addressDataMap, className, chainData, isNoves, ...rest }: Props) => {
+  const { t } = useTranslation();
   const novesLogoUrl = useColorModeValue('/static/noves-logo.svg', '/static/noves-logo-dark.svg');
   if (!summary) {
     return null;
@@ -205,7 +210,7 @@ const TxInterpretation = ({ summary, isLoading, addressDataMap, className, chain
   const variablesNames = extractVariables(intermediateResult);
   const chunks = getStringChunks(intermediateResult);
 
-  const tooltipContent = 'Transaction summary' + (chainData ? `\n${ getChainTooltipText(chainData) }` : '');
+  const tooltipContent = t('sharedUi.transaction_summary') + (chainData ? `\n${ getChainTooltipText(chainData, t) }` : '');
 
   return (
     <Skeleton loading={ isLoading } className={ className } fontWeight={ 500 } whiteSpace="pre-wrap" { ...rest }>
@@ -251,10 +256,10 @@ const TxInterpretation = ({ summary, isLoading, addressDataMap, className, chain
         );
       }) }
       { isNoves && (
-        <Tooltip content="Human readable transaction provided by Noves.fi">
+        <Tooltip content={ t('sharedUi.noves_summary') }>
           <Badge ml={ 2 } verticalAlign="unset" transform="translateY(-2px)">
-            by
-            <Image src={ novesLogoUrl } alt="Noves logo" h="12px" ml={ 1.5 } display="inline"/>
+            { t('sharedUi.provided_by') }
+            <Image src={ novesLogoUrl } alt={ t('sharedEntities.token_logo', { name: 'Noves' }) } h="12px" ml={ 1.5 } display="inline"/>
           </Badge>
         </Tooltip>
       ) }
@@ -263,3 +268,4 @@ const TxInterpretation = ({ summary, isLoading, addressDataMap, className, chain
 };
 
 export default chakra(TxInterpretation);
+// Modified by Quat Capital, 2026-10-26: localized summary controls, dates and numeric variables. GPL-3.0.

@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { chakra, Text } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { EmailFormFields, Screen } from '../types';
 
@@ -26,6 +28,7 @@ interface Props {
 }
 
 const AuthModalScreenEmail = ({ onSubmit, isAuth, mixpanelConfig }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   const apiFetch = useApiFetch();
   const recaptcha = useReCaptcha();
@@ -68,11 +71,11 @@ const AuthModalScreenEmail = ({ onSubmit, isAuth, mixpanelConfig }: Props) => {
       onSubmit({ type: 'otp_code', email: formData.email, isAuth });
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: getErrorObjPayload<{ message: string }>(error)?.message || getErrorMessage(error) || 'Something went wrong',
+        title: tAcct('accountUI.error'),
+        description: getErrorObjPayload<{ message: string }>(error)?.message || getErrorMessage(error) || tAcct('accountUI.unexpected_error'),
       });
     }
-  }, [ recaptcha, sendCodeFetchFactory, isAuth, onSubmit, mixpanelConfig?.account_link_info.source ]);
+  }, [ recaptcha, sendCodeFetchFactory, isAuth, onSubmit, mixpanelConfig?.account_link_info.source, tAcct ]);
 
   return (
     <FormProvider { ...formApi }>
@@ -80,11 +83,11 @@ const AuthModalScreenEmail = ({ onSubmit, isAuth, mixpanelConfig }: Props) => {
         noValidate
         onSubmit={ formApi.handleSubmit(onFormSubmit) }
       >
-        <Text>Account email, used for transaction notifications from your watchlist.</Text>
+        <Text>{ tAcct('accountUI.account_email_description') }</Text>
         <FormFieldEmail<EmailFormFields>
           name="email"
           required
-          placeholder="Email"
+          placeholder={ tAcct('accountUI.email') }
           bgColor="dialog.bg"
           mt={ 6 }
         />
@@ -94,10 +97,9 @@ const AuthModalScreenEmail = ({ onSubmit, isAuth, mixpanelConfig }: Props) => {
           type="submit"
           disabled={ formApi.formState.isSubmitting || recaptcha.isInitError }
           loading={ formApi.formState.isSubmitting }
-          loadingText="Send a code"
+          loadingText={ tAcct('accountUI.send_code') }
         >
-          Send a code
-        </Button>
+          { tAcct('accountUI.send_code') }</Button>
       </chakra.form>
     </FormProvider>
   );

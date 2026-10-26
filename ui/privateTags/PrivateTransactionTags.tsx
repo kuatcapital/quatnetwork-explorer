@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TransactionTag } from 'types/api/account';
 
@@ -19,6 +21,7 @@ import TransactionTagListItem from './TransactionTagTable/TransactionTagListItem
 import TransactionTagTable from './TransactionTagTable/TransactionTagTable';
 
 const PrivateTransactionTags = () => {
+  const { t: tAcct } = useTranslation();
   const { data: transactionTagsData, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'general:private_tags_tx',
     options: {
@@ -55,9 +58,7 @@ const PrivateTransactionTags = () => {
 
   const description = (
     <AccountPageDescription>
-      Use private transaction tags to label any transactions of interest.
-      Private tags are saved in your account and are only visible when you are logged in.
-    </AccountPageDescription>
+      { tAcct('accountUI.private_transactions_description') }</AccountPageDescription>
   );
 
   const actionBar = pagination.isVisible ? (
@@ -100,8 +101,7 @@ const PrivateTransactionTags = () => {
         <Button
           onClick={ transactionModalProps.onOpen }
         >
-          Add transaction tag
-        </Button>
+          { tAcct('accountUI.add_transaction_tag') }</Button>
       </Skeleton>
       <TransactionModal
         { ...transactionModalProps }

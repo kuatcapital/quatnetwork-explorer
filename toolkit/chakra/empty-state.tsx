@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-26: runtime empty-state messages. GPL-3.0.
 import { EmptyState as ChakraEmptyState, VStack } from '@chakra-ui/react';
 import { upperFirst } from 'es-toolkit';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { apos } from '../utils/htmlEntities';
 import ComingSoonIcon from './assets/empty_state_coming_soon.svg';
 import QueryIcon from './assets/empty_state_query.svg';
 import StatsIcon from './assets/empty_state_stats.svg';
@@ -25,7 +26,16 @@ export interface EmptyStateProps extends ChakraEmptyState.RootProps {
 
 export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
   function EmptyState(props, ref) {
+    const { t } = useTranslation();
     const { title, description, term, type = 'query', icon, children, ...rest } = props;
+    const localizedTerm = (() => {
+      switch (term) {
+        case 'chart': return t('toolkit.term_chart');
+        case 'transaction': return t('toolkit.term_transaction');
+        case 'transactions': return t('toolkit.term_transactions');
+        default: return term;
+      }
+    })();
 
     const titleContent = (() => {
       if (title) {
@@ -33,14 +43,14 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
       }
 
       if (type === 'stats') {
-        return 'Collecting data';
+        return t('toolkit.collecting');
       }
 
       if (type === 'coming_soon') {
-        return 'Coming soon';
+        return t('toolkit.coming_soon');
       }
 
-      return 'No results';
+      return t('toolkit.no_results');
     })();
 
     const descriptionContent = (() => {
@@ -49,15 +59,15 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
       }
 
       if (term && type === 'query') {
-        return `Couldn${ apos }t find any ${ term } that matches your query.`;
+        return t('toolkit.query_empty', { term: localizedTerm });
       }
 
       if (type === 'stats') {
-        return term ? `${ upperFirst(term) } stats will be added soon` : 'Charts and statistics will be available soon';
+        return term ? t('toolkit.stats_term', { term: upperFirst(localizedTerm || term) }) : t('toolkit.stats_soon');
       }
 
       if (type === 'coming_soon') {
-        return 'The information will be available soon. Stay tuned!';
+        return t('toolkit.info_soon');
       }
     })();
 

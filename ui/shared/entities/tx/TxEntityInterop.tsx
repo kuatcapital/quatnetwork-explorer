@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ChainInfo } from 'types/api/interop';
 
@@ -44,6 +46,7 @@ const IconStub = ({ isLoading }: { isLoading?: boolean }) => {
 };
 
 const TxEntityInterop = ({ chain, hash, ...props }: Props) => {
+  const { t } = useTranslation();
   const partsProps = distributeEntityProps(props);
 
   const href = (chain?.instance_url && hash) ? stripTrailingSlash(chain.instance_url) + route({
@@ -57,12 +60,12 @@ const TxEntityInterop = ({ chain, hash, ...props }: Props) => {
   return (
     <TxEntity.Container { ...partsProps.container }>
       { chain && !props.noIcon && (
-        <Tooltip content={ `${ chain.chain_name ? chain.chain_name : 'External chain' } (chain id ${ chain.chain_id })` }>
+        <Tooltip content={ t('sharedEntities.chain_identity', { chain: chain.chain_name || t('sharedEntities.external_chain'), chainId: chain.chain_id }) }>
           <Box>
             { chain.chain_logo ? (
               <Image
                 src={ chain.chain_logo }
-                alt={ chain.chain_name || 'external chain logo' }
+                alt={ chain.chain_name || t('sharedEntities.external_chain_logo') }
                 width="20px"
                 height="20px"
                 mr={ 2 }
@@ -92,7 +95,7 @@ const TxEntityInterop = ({ chain, hash, ...props }: Props) => {
         </>
       ) }
       { !hash && (
-        'N/A'
+        t('sharedEntities.not_available')
       ) }
     </TxEntity.Container>
   );

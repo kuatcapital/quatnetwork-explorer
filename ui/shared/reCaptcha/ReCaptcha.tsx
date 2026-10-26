@@ -1,8 +1,10 @@
 import React from 'react';
 import ReCaptcha from 'react-google-recaptcha';
+import { Trans, useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { useMultichainContext } from 'lib/contexts/multichain';
+import { useLocale } from 'lib/i18n/provider';
 import { Alert } from 'toolkit/chakra/alert';
 import { Link } from 'toolkit/chakra/link';
 
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const ReCaptchaInvisible = ({ onInitError, hideWarning = false }: Props, ref: React.Ref<ReCaptcha>) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const [ attempt, setAttempt ] = React.useState(0);
   const [ isError, setIsError ] = React.useState(false);
   const [ , setIsVisible ] = React.useState(false);
@@ -48,7 +52,8 @@ const ReCaptchaInvisible = ({ onInitError, hideWarning = false }: Props, ref: Re
     <>
       <ReCaptcha
         ref={ ref }
-        key={ attempt }
+        key={ `${ attempt }-${ locale }` }
+        hl={ locale }
         sitekey={ chainConfig.services.reCaptchaV2.siteKey }
         size="invisible"
         onChange={ handleChange }
@@ -56,8 +61,7 @@ const ReCaptchaInvisible = ({ onInitError, hideWarning = false }: Props, ref: Re
       />
       { isError && !hideWarning && (
         <Alert status="warning" whiteSpace="pre-wrap" w="fit-content" mt={ 3 } descriptionProps={{ display: 'block' }}>
-          This feature is not available due to a reCAPTCHA initialization error. Please contact the project team on Discord to report this issue.
-          Click <Link onClick={ handleClick } display="inline">here</Link> to show/hide reCAPTCHA widget content.
+          <Trans t={ t } i18nKey="sharedUi.recaptcha_error" components={{ toggle: <Link onClick={ handleClick } display="inline"/> }}/>
         </Alert>
       ) }
     </>
@@ -65,3 +69,4 @@ const ReCaptchaInvisible = ({ onInitError, hideWarning = false }: Props, ref: Re
 };
 
 export default React.forwardRef(ReCaptchaInvisible);
+// Modified by Quat Capital, 2026-10-26: localize reCAPTCHA UI and complete failure explanation. GPL-3.0.

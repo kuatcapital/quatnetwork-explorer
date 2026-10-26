@@ -1,16 +1,21 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { Center, chakra, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props extends BoxProps {
   term?: string;
 }
 
 const FallbackChart = ({ term, ...props }: Props) => {
+  const { t } = useTranslation();
   return (
     <Center { ...props } w="100%">
       <VStack rowGap={ 3 }>
-        <chakra.span textStyle="xs" color="text.secondary">{ term } stats unavailable</chakra.span>
+        <chakra.span textStyle="xs" color="text.secondary">
+          { term ? t('sharedUi.term_stats_unavailable', { term }) : t('sharedUi.stats_unavailable') }
+        </chakra.span>
         <chakra.div width="100px" height="41px">
           <chakra.svg viewBox="0 0 100 41" fill="none" xmlns="http://www.w3.org/2000/svg">
             <chakra.path

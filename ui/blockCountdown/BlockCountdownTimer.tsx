@@ -1,6 +1,10 @@
+// Modified by Quat Capital, 2026-10-26: runtime translation and locale formatting. GPL-3.0.
 import { HStack, StackSeparator } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { SECOND } from 'toolkit/utils/consts';
 
 import BlockCountdownTimerItem from './BlockCountdownTimerItem';
@@ -12,6 +16,8 @@ interface Props {
 }
 
 const BlockCountdownTimer = ({ value: initialValue, onFinish }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
 
   const [ value, setValue ] = React.useState(initialValue);
 
@@ -42,10 +48,22 @@ const BlockCountdownTimer = ({ value: initialValue, onFinish }: Props) => {
       borderRadius="base"
       separator={ <StackSeparator borderColor="border.divider"/> }
     >
-      <BlockCountdownTimerItem label="Days" value={ periods.days }/>
-      <BlockCountdownTimerItem label="Hours" value={ periods.hours }/>
-      <BlockCountdownTimerItem label="Minutes" value={ periods.minutes }/>
-      <BlockCountdownTimerItem label="Seconds" value={ periods.seconds }/>
+      <BlockCountdownTimerItem
+        label={ t('blockCountdown.days') }
+        value={ formatNumber(Number(periods.days), locale, { minimumIntegerDigits: 2, useGrouping: false }) }
+      />
+      <BlockCountdownTimerItem
+        label={ t('blockCountdown.hours') }
+        value={ formatNumber(Number(periods.hours), locale, { minimumIntegerDigits: 2, useGrouping: false }) }
+      />
+      <BlockCountdownTimerItem
+        label={ t('blockCountdown.minutes') }
+        value={ formatNumber(Number(periods.minutes), locale, { minimumIntegerDigits: 2, useGrouping: false }) }
+      />
+      <BlockCountdownTimerItem
+        label={ t('blockCountdown.seconds') }
+        value={ formatNumber(Number(periods.seconds), locale, { minimumIntegerDigits: 2, useGrouping: false }) }
+      />
     </HStack>
   );
 };

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { MessageStatus } from '@blockscout/interchain-indexer-types';
 
@@ -12,15 +14,16 @@ interface Props extends BadgeProps {
 }
 
 const CrossChainTxsStatusTag = ({ status: statusProp, mode = 'compact', ...rest }: Props) => {
+  const { t } = useTranslation();
 
   const { status, text } = (() => {
     switch (statusProp) {
       case MessageStatus.MESSAGE_STATUS_COMPLETED:
-        return { status: 'ok' as const, text: 'Completed' };
+        return { status: 'ok' as const, text: t('sharedStatus.completed') };
       case MessageStatus.MESSAGE_STATUS_FAILED:
-        return { status: 'error' as const, text: 'Failed' };
+        return { status: 'error' as const, text: t('common.failed') };
       case MessageStatus.MESSAGE_STATUS_INITIATED:
-        return { status: 'pending' as const, text: 'Initiated' };
+        return { status: 'pending' as const, text: t('sharedStatus.initiated') };
       default:
         return { status: undefined, text: undefined };
     }

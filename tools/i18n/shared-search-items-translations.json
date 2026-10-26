@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-26",
+    "license": "GPL-3.0",
+    "purpose": "Search result entity labels; data, code and custom operator names stay intact.",
+    "kazakhReview": "Native-speaker review required before publication."
+  },
+  "en": {
+    "searchItem": {
+      "app": "App",
+      "confidential_token": "Confidential Token",
+      "confidential_short": "Conf. Token",
+      "public_tag": "Public tag",
+      "tag": "Tag",
+      "user_operation": "User operation",
+      "user_op": "User op",
+      "blob": "Blob"
+    }
+  },
+  "ru": {
+    "searchItem": {
+      "app": "Приложение",
+      "confidential_token": "Конфиденциальный токен",
+      "confidential_short": "Конф. токен",
+      "public_tag": "Публичная метка",
+      "tag": "Метка",
+      "user_operation": "Пользовательская операция",
+      "user_op": "Операция",
+      "blob": "Блоб"
+    }
+  },
+  "kk": {
+    "searchItem": {
+      "app": "Қолданба",
+      "confidential_token": "Құпия токен",
+      "confidential_short": "Құпия токен",
+      "public_tag": "Жария белгі",
+      "tag": "Белгі",
+      "user_operation": "Пайдаланушы операциясы",
+      "user_op": "Операция",
+      "blob": "Блоб"
+    }
+  }
+}

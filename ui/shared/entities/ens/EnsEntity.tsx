@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-25: localized entity labels and accessibility text. GPL-3.0.
 import { chakra, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 
@@ -35,6 +37,7 @@ const Link = chakra((props: LinkProps) => {
 type IconProps = Pick<EntityProps, 'protocol'> & EntityBase.IconBaseProps;
 
 const Icon = (props: IconProps) => {
+  const { t } = useTranslation();
   const icon = <EntityBase.Icon { ...props } name={ 'name' in props ? props.name : 'ENS' }/>;
 
   if (props.protocol) {
@@ -52,7 +55,7 @@ const Icon = (props: IconProps) => {
             boxSize={ 5 }
             borderRadius="sm"
             mr={ 2 }
-            alt={ `${ props.protocol.title } protocol icon` }
+            alt={ t('sharedEntities.protocol_icon', { name: props.protocol.title }) }
             fallback={ icon }
           />
           <div>
@@ -69,7 +72,7 @@ const Icon = (props: IconProps) => {
             external
           >
             <IconSvg name="docs" boxSize={ 5 } color="icon.primary" mr={ 2 }/>
-            <span>Documentation</span>
+            <span>{ t('sharedEntities.documentation') }</span>
           </LinkToolkit>
         ) }
       </>
@@ -98,7 +101,7 @@ const Icon = (props: IconProps) => {
           src={ props.protocol.icon_url }
           borderRadius="sm"
           flexShrink={ 0 }
-          alt={ `${ props.protocol.title } protocol icon` }
+          alt={ t('sharedEntities.protocol_icon', { name: props.protocol.title }) }
           fallback={ icon }
         />
       </Tooltip>

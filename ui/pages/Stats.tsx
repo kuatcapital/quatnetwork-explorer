@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useEtherscanRedirects from 'lib/router/useEtherscanRedirects';
@@ -11,6 +13,7 @@ import StatsFilters from '../stats/StatsFilters';
 import useStats from '../stats/useStats';
 
 const Stats = () => {
+  const { t } = useTranslation();
   const {
     isPlaceholderData,
     isError,
@@ -29,7 +32,8 @@ const Stats = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } statistic & data` : `${ config.chain.name } stats` }
+        title={ config.meta.seo.enhancedDataEnabled ?
+          t('statistics.enhanced_title', { chain: config.chain.name }) : t('statistics.title', { chain: config.chain.name }) }
       />
 
       <Box mb={{ base: 6, sm: 8 }}>

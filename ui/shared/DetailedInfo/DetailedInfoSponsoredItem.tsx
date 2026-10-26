@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import * as cookies from 'lib/cookies';
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const DetailedInfoSponsoredItem = ({ isLoading }: Props) => {
+  const { t } = useTranslation();
   const hasAdblockCookie = cookies.get(cookies.NAMES.ADBLOCK_DETECTED);
 
   if (!feature.isEnabled || hasAdblockCookie === 'true') {
@@ -22,10 +25,10 @@ const DetailedInfoSponsoredItem = ({ isLoading }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Sponsored banner advertisement"
+        hint={ t('sharedUi.sponsored_banner') }
         isLoading={ isLoading }
       >
-        Sponsored
+        { t('sharedUi.sponsored') }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue mt={{ base: 0, lg: 1 }}>
         <AdBanner format="responsive" isLoading={ isLoading }/>

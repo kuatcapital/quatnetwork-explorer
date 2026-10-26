@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from '../types';
 
@@ -11,14 +13,15 @@ interface Props {
 }
 
 const MyProfileFieldsEmail = ({ isReadOnly, defaultValue }: Props) => {
+  const { t: tAcct } = useTranslation();
 
   return (
     <FormFieldEmail<FormFields>
       name="email"
-      placeholder="Email"
+      placeholder={ tAcct('accountUI.email') }
       required
       readOnly={ isReadOnly }
-      helperText="Email for watch list notifications and private tags"
+      helperText={ tAcct('accountUI.email_placeholder') }
       group={{
         endElement: ({ field }) => {
           const isVerified = defaultValue && field.value === defaultValue;

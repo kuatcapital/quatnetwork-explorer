@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-26: account interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TransactionTags, TransactionTag } from 'types/api/account';
 
@@ -15,12 +17,13 @@ interface Props {
 }
 
 const TransactionTagTable = ({ data, isLoading, onDeleteClick, onEditClick, top }: Props) => {
+  const { t: tAcct } = useTranslation();
   return (
     <TableRoot minWidth="600px">
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader width="75%">Transaction</TableColumnHeader>
-          <TableColumnHeader width="25%">Private tag</TableColumnHeader>
+          <TableColumnHeader width="75%">{ tAcct('accountUI.transaction') }</TableColumnHeader>
+          <TableColumnHeader width="25%">{ tAcct('accountUI.private_tag') }</TableColumnHeader>
           <TableColumnHeader width="108px"></TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
