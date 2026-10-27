@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
@@ -43,7 +44,7 @@ const ZkEvmTxnBatchesTableItem = ({ item, isLoading }: Props) => {
       <TableCell verticalAlign="middle">
         <TimeWithTooltip
           timestamp={ item.timestamp }
-          fallbackText="Undefined"
+          fallbackText={ tQuat('l2Ui.undefined') }
           isLoading={ isLoading }
           color="text.secondary"
         />

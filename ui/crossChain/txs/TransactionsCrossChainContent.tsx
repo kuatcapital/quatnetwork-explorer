@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -10,6 +11,8 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 
 import TransactionsCrossChainListItem from './TransactionsCrossChainListItem';
 import TransactionsCrossChainTable from './TransactionsCrossChainTable';
+import { useTranslation } from 'react-i18next';
+
 
 export interface Props extends Omit<DataListDisplayProps, 'children'> {
   items?: Array<InterchainMessage>;
@@ -21,6 +24,8 @@ export interface Props extends Omit<DataListDisplayProps, 'children'> {
 }
 
 const TransactionsCrossChainContent = ({ items, isLoading, pagination, isTableView, stickyHeader = true, currentAddress, ...rest }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const content = items ? (
     <>
       <Box display={{ base: isTableView ? 'none' : 'block', lg: 'none' }}>
@@ -53,7 +58,7 @@ const TransactionsCrossChainContent = ({ items, isLoading, pagination, isTableVi
   return (
     <DataListDisplay
       itemsNum={ items?.length }
-      emptyText="There are no cross-chain transactions."
+      emptyText={ tQuat('multiUi.no_cross_tx') }
       emptyStateProps={{
         term: 'transaction',
       }}

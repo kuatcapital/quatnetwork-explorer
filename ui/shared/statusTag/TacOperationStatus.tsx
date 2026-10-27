@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: localize event log and status labels. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: explicit locale for TAC status helper fallback. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -23,7 +23,7 @@ const TacOperationStatus = ({ status, isLoading, noTooltip }: Props) => {
       case tac.OperationType.ROLLBACK: return t('sharedStatus.rollback');
       case tac.OperationType.INSUFFICIENT_FEE: return t('sharedStatus.insufficient_fee');
       case tac.OperationType.PENDING: return t('common.pending');
-      default: return getTacOperationStatus(status);
+      default: return getTacOperationStatus(status, t);
     }
   })();
 

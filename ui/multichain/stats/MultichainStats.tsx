@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,8 +13,12 @@ import StatsFilters from 'ui/stats/StatsFilters';
 import useStats from 'ui/stats/useStats';
 
 import ChainSelect from '../components/ChainSelect';
+import { useTranslation } from 'react-i18next';
+
 
 const MultichainStats = () => {
+  const { t: tQuat } = useTranslation();
+
   useEtherscanRedirects();
 
   const chainIds = React.useMemo(() => {
@@ -43,7 +48,7 @@ const MultichainStats = () => {
 
   return (
     <>
-      <PageTitle title="Charts & stats"/>
+      <PageTitle title={ tQuat('multiUi.charts_stats') }/>
       <ChainSelect
         value={ chainSelect.value }
         onValueChange={ chainSelect.onValueChange }

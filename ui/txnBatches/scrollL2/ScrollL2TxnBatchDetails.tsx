@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
@@ -68,10 +69,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
     >
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Batch number indicates the length of batches produced by grouping ${ layerLabels.current } blocks to be proven on ${ layerLabels.parent }` }
-      >
-        Txn batch number
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.batch_number_hint', { current: layerLabels.current, parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.txn_batch_number') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.number }
@@ -79,8 +78,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
         <PrevNext
           ml={ 6 }
           onClick={ handlePrevNextClick }
-          prevLabel="View previous txn batch"
-          nextLabel="View next txn batch"
+          prevLabel={ tQuat('l2Ui.previous_batch') }
+          nextLabel={ tQuat('l2Ui.next_batch') }
           isPrevDisabled={ data.number === 0 }
           isLoading={ isPlaceholderData }
         />
@@ -88,17 +87,15 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Data availability container"
-      >
-        Container
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.da_container_hint') }
+      >{ tQuat('l2Ui.container') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <ScrollL2TxnBatchDA container={ data.data_availability.batch_data_container } isLoading={ isPlaceholderData }/>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Status of this batch"
+        hint={ tQuat('l2Ui.batch_status_hint') }
       >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <ScrollL2TxnBatchStatus status={ data.confirmation_transaction.hash ? 'Finalized' : 'Committed' } isLoading={ isPlaceholderData }/>
@@ -106,10 +103,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Date and time at which batch is finalized to ${ layerLabels.parent }` }
-      >
-        Finalized timestamp
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.finalized_hint', { parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.finalized_timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.confirmation_transaction.timestamp ?
           <DetailedInfoTimestamp timestamp={ data.confirmation_transaction.timestamp } isLoading={ isPlaceholderData }/> :
@@ -121,7 +116,7 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
         <>
           <DetailedInfo.ItemLabel
             isLoading={ isPlaceholderData }
-            hint="Number of transactions in this batch"
+            hint={ tQuat('l2Ui.batch_transactions_hint') }
           >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
@@ -136,20 +131,18 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Number of ${ layerLabels.current } blocks in this batch` }
+        hint={ tQuat('l2Ui.blocks_hint', { current: layerLabels.current }) }
       >{ tQuat('common.blocks') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
-        <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }>
-          { blocksCount.toLocaleString() } block{ blocksCount === 1 ? '' : 's' }
+        <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: tQuat('l2Ui.blocks') } }) }>
+          { tQuat('l2Ui.block_total', { count: blocksCount, value: formatNumber(blocksCount, locale) }) }
         </Link>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Date and time at which batch is committed to ${ layerLabels.parent }` }
-      >
-        Committed timestamp
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.committed_hint', { parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.committed_timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.commitment_transaction.timestamp ?
           <DetailedInfoTimestamp timestamp={ data.commitment_transaction.timestamp } isLoading={ isPlaceholderData }/> :
@@ -159,10 +152,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Hash of ${ layerLabels.parent } transaction this batch was committed in` }
-      >
-        Committed transaction hash
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.committed_in_hint', { parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.committed_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue alignSelf="flex-start">
         <TxEntityL1
           isLoading={ isPlaceholderData }
@@ -175,10 +166,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `${ layerLabels.parent } block that includes transaction with this batch commitment` }
-      >
-        Committed block
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.committed_block_hint', { parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.committed_block') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <BlockEntityL1
           isLoading={ isPlaceholderData }
@@ -188,10 +177,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Hash of ${ layerLabels.parent } transaction this batch was finalized in` }
-      >
-        Finalized transaction hash
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.finalized_in_hint', { parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.finalized_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue alignSelf="flex-start">
         { data.confirmation_transaction.hash ? (
           <TxEntityL1
@@ -205,10 +192,8 @@ const ScrollL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `${ layerLabels.parent } block that includes transaction with this batch finalization data` }
-      >
-        Finalized block
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.finalized_block_hint', { parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.finalized_block') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.confirmation_transaction.block_number ? (
           <BlockEntityL1

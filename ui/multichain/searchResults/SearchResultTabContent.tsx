@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 
 import { EmptyState } from 'toolkit/chakra/empty-state';
@@ -6,6 +7,8 @@ import { ContentLoader } from 'toolkit/components/loaders/ContentLoader';
 import SearchResultsList from './SearchResultsList';
 import SearchResultsTabAll from './SearchResultsTabAll';
 import type { QueryType, SearchQueries } from './utils';
+import { useTranslation } from 'react-i18next';
+
 
 const EMPTY_SEARCH_NAME_MAP: Record<QueryType, string> = {
   addresses: 'addresses',
@@ -26,6 +29,8 @@ interface Props {
 }
 
 const SearchResultTabContent = ({ isLoading, searchTerm, queries, queryType, beforeContent }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const content = (() => {
     if (isLoading) {
       return <ContentLoader maxW="240px"/>;
@@ -34,8 +39,8 @@ const SearchResultTabContent = ({ isLoading, searchTerm, queries, queryType, bef
     if (!searchTerm) {
       return (
         <EmptyState
-          title="Looking for something?"
-          description="Try searching by address, smart contract, transaction, block, token or NFT"
+          title={ tQuat('multiUi.looking') }
+          description={ tQuat('multiUi.search_help') }
         />
       );
     }
@@ -47,8 +52,8 @@ const SearchResultTabContent = ({ isLoading, searchTerm, queries, queryType, bef
     if (!hasResults) {
       return (
         <EmptyState
-          title={ queryType ? `No ${ EMPTY_SEARCH_NAME_MAP[queryType] } found` : 'No results found' }
-          description="It seems we can't find any results based on your request."
+          title={ queryType ? `No ${ EMPTY_SEARCH_NAME_MAP[queryType] } found` : tQuat('multiUi.no_results') }
+          description={ tQuat('multiUi.no_results_hint') }
         />
       );
     }

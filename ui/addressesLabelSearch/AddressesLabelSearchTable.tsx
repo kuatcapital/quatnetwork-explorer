@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 
 import type { AddressesItem } from 'types/api/addresses';
@@ -6,6 +7,8 @@ import { currencyUnits } from 'lib/units';
 import { TableBody, TableColumnHeader, TableHeaderSticky, TableRoot, TableRow } from 'toolkit/chakra/table';
 
 import AddressesLabelSearchTableItem from './AddressesLabelSearchTableItem';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   items: Array<AddressesItem>;
@@ -14,13 +17,15 @@ interface Props {
 }
 
 const AddressesLabelSearchTable = ({ items, top, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRoot>
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader width="70%">Address</TableColumnHeader>
+          <TableColumnHeader width="70%">{ tQuat('common.address') }</TableColumnHeader>
           <TableColumnHeader width="15%" isNumeric>{ `Balance ${ currencyUnits.ether }` }</TableColumnHeader>
-          <TableColumnHeader width="15%" isNumeric>Txn count</TableColumnHeader>
+          <TableColumnHeader width="15%" isNumeric>{ tQuat('addresses.transaction_count') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

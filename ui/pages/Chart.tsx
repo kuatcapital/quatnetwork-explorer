@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: runtime stats metadata localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: runtime stats and selected-language page metadata. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: runtime translation and locale formatting. GPL-3.0.
 import { createListCollection, Flex, Text } from '@chakra-ui/react';
 import type { NextRouter } from 'next/router';
@@ -145,9 +145,9 @@ const Chart = () => {
 
   React.useEffect(() => {
     if (info && !config.meta.seo.enhancedDataEnabled) {
-      metadata.update({ pathname: '/stats/[id]', query: { id } }, info);
+      metadata.update({ pathname: '/stats/[id]', query: { id } }, info, t);
     }
-  }, [ info, id ]);
+  }, [ info, id, t ]);
 
   const onShare = React.useCallback(async() => {
     mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, { Type: 'Share chart', Info: id });

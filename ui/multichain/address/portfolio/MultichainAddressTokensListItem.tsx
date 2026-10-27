@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Grid } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
@@ -86,7 +86,7 @@ const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
           </>
         ) : null }
         <Skeleton loading={ isLoading } fontWeight="500">
-          <span>Quantity</span>
+          <span>{ tQuat('multiUi.quantity') }</span>
         </Skeleton>
         <SimpleValue
           value={ tokenQuantity }

@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-27",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "pageUi": {
+      "user_operation_details": "User operation details",
+      "user_operations": "User operations",
+      "chain_user_operations": "{{chain}} user operations",
+      "api_documentation": "API documentation",
+      "chain_api_documentation": "{{chain}} API documentation",
+      "rpc_endpoints": "RPC API endpoints",
+      "no_api_documentation": "No API documentation available",
+      "rpc_description": "This API is provided for developers transitioning applications from Etherscan to BlockScout and applications requiring general API and data support. It supports GET and POST requests.",
+      "view_modules": "View modules",
+      "eth_rpc_description": "In addition to the custom RPC endpoints documented here, the Blockscout ETH RPC API supports 3 methods in the exact format specified for Ethereum nodes, ee the Ethereum JSON-RPC Specification for more details.",
+      "view_examples": "View examples",
+      "core_api": "Blockscout core API",
+      "stats_api": "Stats API",
+      "name_api": "Name service API",
+      "user_ops_api": "User ops indexer API",
+      "tac_api": "TAC operation lifecycle API",
+      "zeta_api": "Zetachain CCTX API",
+      "interchain_api": "Interchain indexer API"
+    }
+  },
+  "ru": {
+    "pageUi": {
+      "user_operation_details": "Подробности операции пользователя",
+      "user_operations": "Операции пользователей",
+      "chain_user_operations": "Операции пользователей сети {{chain}}",
+      "api_documentation": "Документация API",
+      "chain_api_documentation": "Документация API сети {{chain}}",
+      "rpc_endpoints": "Конечные точки RPC API",
+      "no_api_documentation": "Документация API недоступна",
+      "rpc_description": "Этот API предназначен для разработчиков, переносящих приложения с Etherscan на BlockScout, а также для приложений, которым нужен общий API и доступ к данным. Поддерживаются запросы GET и POST.",
+      "view_modules": "Посмотреть модули",
+      "eth_rpc_description": "Помимо описанных здесь собственных RPC-методов, ETH RPC API Blockscout поддерживает 3 метода в формате, установленном для нод Ethereum. Подробности приведены в спецификации Ethereum JSON-RPC.",
+      "view_examples": "Посмотреть примеры",
+      "core_api": "Основной API Blockscout",
+      "stats_api": "API статистики",
+      "name_api": "API службы имён",
+      "user_ops_api": "API индексатора операций пользователей",
+      "tac_api": "API жизненного цикла операций TAC",
+      "zeta_api": "API CCTX Zetachain",
+      "interchain_api": "API межсетевого индексатора"
+    }
+  },
+  "kk": {
+    "pageUi": {
+      "user_operation_details": "Пайдаланушы операциясының мәліметтері",
+      "user_operations": "Пайдаланушы операциялары",
+      "chain_user_operations": "{{chain}} желісінің пайдаланушы операциялары",
+      "api_documentation": "API құжаттамасы",
+      "chain_api_documentation": "{{chain}} желісінің API құжаттамасы",
+      "rpc_endpoints": "RPC API нүктелері",
+      "no_api_documentation": "API құжаттамасы қолжетімсіз",
+      "rpc_description": "Бұл API қолданбаларын Etherscan жүйесінен BlockScout жүйесіне көшіретін әзірлеушілерге және жалпы API мен деректерге қолжетімділікті қажет ететін қолданбаларға арналған. GET және POST сұраулары қолдау табады.",
+      "view_modules": "Модульдерді көру",
+      "eth_rpc_description": "Мұнда сипатталған арнайы RPC нүктелерінен бөлек, Blockscout ETH RPC API Ethereum түйіндеріне арналған форматтағы 3 әдісті қолдайды. Толығырақ Ethereum JSON-RPC спецификациясынан қараңыз.",
+      "view_examples": "Мысалдарды көру",
+      "core_api": "Blockscout негізгі API",
+      "stats_api": "Статистика API",
+      "name_api": "Атаулар қызметінің API",
+      "user_ops_api": "Пайдаланушы операцияларының индекстеу API",
+      "tac_api": "TAC операцияларының өмірлік цикл API",
+      "zeta_api": "Zetachain CCTX API",
+      "interchain_api": "Желіаралық индекстеу API"
+    }
+  }
+}

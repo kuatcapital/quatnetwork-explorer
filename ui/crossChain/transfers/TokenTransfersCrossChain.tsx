@@ -1,3 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 import useApiQuery from 'lib/api/useApiQuery';
@@ -10,6 +14,8 @@ import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 import TokenTransfersCrossChainContent from './TokenTransfersCrossChainContent';
 
 const TokenTransfersCrossChain = () => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
   const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'interchainIndexer:transfers',
     options: {
@@ -24,7 +30,7 @@ const TokenTransfersCrossChain = () => {
 
   const actionBarText = (
     <Skeleton loading={ statsQuery.isPlaceholderData || isPlaceholderData }>
-      A total of { Number(statsQuery.data?.total_transfers).toLocaleString() } cross-chain token transfers found
+      { tQuat('multiUi.cross_transfers_found', { count: Number(statsQuery.data?.total_transfers), value: formatNumber(Number(statsQuery.data?.total_transfers), locale) }) }
     </Skeleton>
   );
 

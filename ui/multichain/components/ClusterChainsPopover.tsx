@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, chakra, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,7 +45,7 @@ const ClusterChainsPopover = ({ addressHash, data, isLoading }: Props) => {
           <Button
             size="sm"
             variant="dropdown"
-            aria-label="Chains this address has interacted with"
+            aria-label={ tQuat('multiUi.chains_hint') }
             px={ 2 }
             fontWeight={ 500 }
             flexShrink={ 0 }
@@ -62,7 +62,7 @@ const ClusterChainsPopover = ({ addressHash, data, isLoading }: Props) => {
       </Box>
       <PopoverContent w="auto" maxH="400px" overflowY="auto">
         <PopoverBody >
-          <chakra.span color="text.secondary" textStyle="xs">Chains this address has interacted with</chakra.span>
+          <chakra.span color="text.secondary" textStyle="xs">{ tQuat('multiUi.chains_hint') }</chakra.span>
           <VStack gap={ 2 } mt={ 1 } alignItems="flex-start">
             { activeChains.map((chain) => (
               <Link

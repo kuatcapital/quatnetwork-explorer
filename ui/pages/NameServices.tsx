@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
@@ -11,15 +13,16 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 const feature = config.features.nameServices;
 
 const NameServices = () => {
+  const { t: tQuat } = useTranslation();
   const tabs: Array<TabItemRegular> = [
-    feature.isEnabled && feature.ens.isEnabled && { id: 'domains', title: 'Domains', component: <NameDomains/> },
-    feature.isEnabled && feature.clusters.isEnabled && { id: 'directories', title: 'Directories', component: <Clusters/> },
+    feature.isEnabled && feature.ens.isEnabled && { id: 'domains', title: tQuat('multiUi.domains'), component: <NameDomains/> },
+    feature.isEnabled && feature.clusters.isEnabled && { id: 'directories', title: tQuat('multiUi.directories'), component: <Clusters/> },
   ].filter(Boolean);
 
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } name services` : 'Name services lookup' }
+        title={ config.meta.seo.enhancedDataEnabled ? tQuat('multiUi.name_services_chain', { chain: config.chain.name }) : tQuat('multiUi.name_lookup') }
         withTextAd
       />
       <RoutedTabs tabs={ tabs }/>

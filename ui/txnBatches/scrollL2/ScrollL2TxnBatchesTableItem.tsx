@@ -1,3 +1,6 @@
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +25,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ScrollL2TxnBatch; isLoading?: boolean };
 
 const ScrollL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'scroll') {
@@ -61,7 +65,7 @@ const ScrollL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
       <TableCell verticalAlign="middle">
         <TimeWithTooltip
           timestamp={ item.commitment_transaction.timestamp }
-          fallbackText="Undefined"
+          fallbackText={ tQuat('l2Ui.undefined') }
           isLoading={ isLoading }
           color="text.secondary"
         />
@@ -86,10 +90,10 @@ const ScrollL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
         <Link
-          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'blocks' } }) }
+          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: tQuat('l2Ui.blocks') } }) }
           loading={ isLoading }
         >
-          { (item.end_block_number - item.start_block_number + 1).toLocaleString() }
+          { (item.end_block_number - item.start_block_number + 1).toLocaleString(NUMBER_LOCALES[locale]) }
         </Link>
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
@@ -98,9 +102,9 @@ const ScrollL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
             href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'txs' } }) }
             loading={ isLoading }
           >
-            { item.transactions_count.toLocaleString() }
+            { item.transactions_count.toLocaleString(NUMBER_LOCALES[locale]) }
           </Link>
-        ) : 'N/A' }
+        ) : tQuat('l2Ui.not_available') }
       </TableCell>
     </TableRow>
   );

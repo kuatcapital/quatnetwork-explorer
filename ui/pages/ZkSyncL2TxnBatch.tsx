@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -28,6 +30,7 @@ const TAB_LIST_PROPS = {
 const TABS_HEIGHT = 80;
 
 const ZkSyncL2TxnBatch = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const number = getQueryParamString(router.query.number);
   const tab = getQueryParamString(router.query.tab);
@@ -61,18 +64,18 @@ const ZkSyncL2TxnBatch = () => {
   const hasPagination = !isMobile && batchTxsQuery.pagination.isVisible && tab === 'txs';
 
   const tabs: Array<TabItemRegular> = React.useMemo(() => ([
-    { id: 'index', title: 'Details', component: <ZkSyncL2TxnBatchDetails query={ batchQuery }/> },
+    { id: 'index', title: tQuat('l2Ui.details'), component: <ZkSyncL2TxnBatchDetails query={ batchQuery }/> },
     {
       id: 'txs',
-      title: 'Transactions',
+      title: tQuat('l2Ui.transactions'),
       component: <TxsWithFrontendSorting query={ batchTxsQuery } top={ hasPagination ? TABS_HEIGHT : 0 }/>,
     },
-  ].filter(Boolean)), [ batchQuery, batchTxsQuery, hasPagination ]);
+  ].filter(Boolean)), [ batchQuery, batchTxsQuery, hasPagination , tQuat ]);
 
   return (
     <>
       <TextAd mb={ 6 }/>
-      <PageTitle title={ `Txn batch #${ number }` }/>
+      <PageTitle title={ tQuat('l2Ui.batch_title', { number: number }) }/>
       <RoutedTabs
         tabs={ tabs }
         isLoading={ batchQuery.isPlaceholderData }

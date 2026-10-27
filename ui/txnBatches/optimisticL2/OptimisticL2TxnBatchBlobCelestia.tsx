@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, GridItem, VStack } from '@chakra-ui/react';
 import React from 'react';
@@ -35,7 +36,7 @@ const OptimisticL2TxnBatchBlobCelestia = ({ blobs, isLoading }: Props) => {
               </Flex>
             </GridItem>
             <CeleniumLink commitment={ blob.commitment } namespace={ blob.namespace } height={ blob.height } fallback={ <GridItem/> }/>
-            <GridItem fontWeight={ 600 }>Height</GridItem>
+            <GridItem fontWeight={ 600 }>{ tQuat('l2Ui.height') }</GridItem>
             <GridItem colSpan={ 2 }>
               { blob.height }
             </GridItem>
@@ -43,7 +44,7 @@ const OptimisticL2TxnBatchBlobCelestia = ({ blobs, isLoading }: Props) => {
             <GridItem overflow="hidden" colSpan={ 2 }>
               <DetailedInfoTimestamp timestamp={ blob.l1_timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }}/>
             </GridItem>
-            <GridItem fontWeight={ 600 }>{ layerLabels.parent } txn hash</GridItem>
+            <GridItem fontWeight={ 600 }>{ tQuat('l2Ui.layer_txn_hash', { layer: layerLabels.parent }) }</GridItem>
             <GridItem overflow="hidden" colSpan={ 2 }>
               <TxEntityL1 hash={ blob.l1_transaction_hash } noIcon/>
             </GridItem>

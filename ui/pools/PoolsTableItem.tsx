@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-27: selected-locale supplemental numeric values. GPL-3.0.
 import { Flex, Box, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import type { Pool } from 'types/api/pools';
 
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import getItemIndex from 'lib/getItemIndex';
+import { useLocale } from 'lib/i18n/provider';
 import getPoolLinks from 'lib/pools/getPoolLinks';
 import { Image } from 'toolkit/chakra/image';
 import { Link } from 'toolkit/chakra/link';
@@ -28,6 +31,7 @@ const PoolsTableItem = ({
   index,
   isLoading,
 }: Props) => {
+  const { locale } = useLocale();
   const externalLinks = getPoolLinks(item);
 
   return (
@@ -35,7 +39,7 @@ const PoolsTableItem = ({
       <TableCell>
         <Flex gap={ 2 } alignItems="start">
           <Skeleton loading={ isLoading }>
-            <Text px={ 2 }>{ getItemIndex(index, page) }</Text>
+            <Text px={ 2 }>{ getItemIndex(index, page).toLocaleString(NUMBER_LOCALES[locale]) }</Text>
           </Skeleton>
           <Box overflow="hidden">
             <PoolEntity pool={ item } fontWeight={ 700 } mb={ 2 } isLoading={ isLoading }/>
@@ -61,7 +65,7 @@ const PoolsTableItem = ({
       </TableCell>
       <TableCell isNumeric>
         <Skeleton loading={ isLoading }>
-          ${ Number(item.liquidity).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }
+          ${ Number(item.liquidity).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }
         </Skeleton>
       </TableCell>
       <TableCell isNumeric>

@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { OptimismL2TxnBatch } from 'types/api/optimisticL2';
 
@@ -70,10 +71,8 @@ const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
     >
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Batch ID indicates the length of batches produced by grouping ${ layerLabels.current } blocks to be proven on ${ layerLabels.parent }` }
-      >
-        Batch ID
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.batch_id_hint', { current: layerLabels.current, parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.batch_id') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.number }
@@ -81,8 +80,8 @@ const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
         <PrevNext
           ml={ 6 }
           onClick={ handlePrevNextClick }
-          prevLabel="View previous txn batch"
-          nextLabel="View next txn batch"
+          prevLabel={ tQuat('l2Ui.previous_batch') }
+          nextLabel={ tQuat('l2Ui.next_batch') }
           isPrevDisabled={ data.number === 0 }
           isLoading={ isPlaceholderData }
         />
@@ -90,50 +89,45 @@ const OptimisticL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Date and time at which batch is submitted to ${ layerLabels.parent }` }
+        hint={ tQuat('l2Ui.submitted_hint', { parent: layerLabels.parent }) }
       >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.l1_timestamp ?
           <DetailedInfoTimestamp timestamp={ data.l1_timestamp } isLoading={ isPlaceholderData }/> :
-          'Undefined'
+          tQuat('l2Ui.undefined')
         }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Number of transactions in this batch"
+        hint={ tQuat('l2Ui.batch_transactions_hint') }
       >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
-          <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
-            { tQuat('sectionCounts.transactions', {
-              count: data.transactions_count,
-              value: formatNumber(data.transactions_count, locale),
-            }) }
-          </Link>
-          { ' ' }in this batch
+          <Trans t={ tQuat } i18nKey="l2Ui.transactions_in_batch" count={ data.transactions_count }
+            values={{ value: formatNumber(data.transactions_count, locale) }}
+            components={{ transactions: <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }/> }}
+          />
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Number of ${ layerLabels.current } blocks in this batch` }
+        hint={ tQuat('l2Ui.blocks_hint', { current: layerLabels.current }) }
       >{ tQuat('common.blocks') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
-          <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }>
-            { blocksCount.toLocaleString() } block{ blocksCount === 1 ? '' : 's' }
-          </Link>
-          { ' ' }in this batch
+          <Trans t={ tQuat } i18nKey="l2Ui.blocks_in_batch" count={ blocksCount }
+            values={{ value: formatNumber(blocksCount, locale) }}
+            components={{ blocks: <Link href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }/> }}
+          />
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Where the batch data is stored"
-      >
-        Batch data container
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.storage_hint') }
+      >{ tQuat('l2Ui.batch_data_container') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexDir="column" alignItems="flex-start" rowGap={ 2 }>
         <OptimisticL2TxnBatchDA container={ data.batch_data_container } isLoading={ isPlaceholderData } mt={{ base: 0, lg: 1 }}/>
         { data.batch_data_container === 'in_blob4844' && data.blobs &&

@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type { ChainMetricsSortingField, ChainMetricsSortingValue } from 'types/client/multichainAggregator';
 
 import type { SelectOption } from 'toolkit/chakra/select';
@@ -20,3 +22,18 @@ export const SORT_SEQUENCE: Record<ChainMetricsSortingField, Array<ChainMetricsS
   new_addresses: [ 'new_addresses-desc', 'new_addresses-asc', 'default' ],
   tps: [ 'tps-desc', 'tps-asc', 'default' ],
 };
+
+export function getEcosystemSortOptions(t: TFunction): Array<SelectOption<ChainMetricsSortingValue>> {
+  const labels: Record<ChainMetricsSortingValue, string> = {
+    'default': t('multiUi.default_sort'),
+    'active_accounts-desc': t('multiUi.active_desc'),
+    'active_accounts-asc': t('multiUi.active_asc'),
+    'daily_transactions-desc': t('multiUi.daily_desc'),
+    'daily_transactions-asc': t('multiUi.daily_asc'),
+    'new_addresses-desc': t('multiUi.new_desc'),
+    'new_addresses-asc': t('multiUi.new_asc'),
+    'tps-desc': t('multiUi.tps_desc'),
+    'tps-asc': t('multiUi.tps_asc'),
+  };
+  return SORT_OPTIONS.map(option => ({ ...option, label: labels[option.value] }));
+}

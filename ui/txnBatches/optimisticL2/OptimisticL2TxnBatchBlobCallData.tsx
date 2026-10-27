@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import React from 'react';
@@ -24,7 +25,7 @@ const OptimisticL2TxnBatchBlobCallData = ({ l1TxHashes, l1Timestamp, isLoading }
       <GridItem overflow="hidden">
         <DetailedInfoTimestamp timestamp={ l1Timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }}/>
       </GridItem>
-      <GridItem fontWeight={ 600 }>{ layerLabels.parent } txn hash{ l1TxHashes.length > 1 ? 'es' : '' }</GridItem>
+      <GridItem fontWeight={ 600 }>{ tQuat('l2Ui.layer_tx_hash_count', { layer: layerLabels.parent, count: l1TxHashes.length }) }</GridItem>
       <GridItem overflow="hidden" display="flex" flexDir="column" rowGap={ 2 }>
         { l1TxHashes.map((hash) => <TxEntityL1 key={ hash } hash={ hash } noIcon/>) }
       </GridItem>

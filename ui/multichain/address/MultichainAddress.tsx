@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -31,6 +33,7 @@ import MultichainAddressTxs, { ADDRESS_MULTICHAIN_TXS_TAB_IDS } from './Multicha
 const TABS_PRESERVED_PARAMS = [ 'chain_id' ];
 
 const MultichainAddress = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -61,44 +64,44 @@ const MultichainAddress = () => {
     return [
       {
         id: 'portfolio',
-        title: 'Portfolio',
+        title: tQuat('multiUi.portfolio'),
         component: <MultichainAddressPortfolio addressData={ addressQuery.data } isLoading={ isLoading }/>,
       },
       isContractSomewhere && {
         id: 'contract',
-        title: 'Contract',
+        title: tQuat('common.contract'),
         component: <MultichainAddressContract addressHash={ checkSummedHash } data={ addressQuery.data } isLoading={ isLoading }/>,
         subTabs: CONTRACT_TAB_IDS,
       },
       {
         id: 'txs',
-        title: 'Transactions',
+        title: tQuat('common.transactions'),
         component: <MultichainAddressTxs addressData={ addressQuery.data } isLoading={ isLoading }/>,
         subTabs: ADDRESS_MULTICHAIN_TXS_TAB_IDS,
       },
       {
         id: 'token_transfers',
-        title: 'Token transfers',
+        title: tQuat('common.token_transfers'),
         component: <MultichainAddressTokenTransfers addressData={ addressQuery.data } isLoading={ isLoading }/>,
         subTabs: ADDRESS_MULTICHAIN_TOKEN_TRANSFERS_TAB_IDS,
       },
       {
         id: 'internal_txs',
-        title: 'Internal txns',
+        title: tQuat('common.internal_txns'),
         component: <MultichainAddressInternalTxs addressData={ addressQuery.data } isLoading={ isLoading }/>,
       },
       {
         id: 'coin_balance_history',
-        title: 'Coin balance history',
+        title: tQuat('multiUi.coin_history'),
         component: <MultichainAddressCoinBalanceHistory addressData={ addressQuery.data } isLoading={ isLoading }/>,
       },
       isContractSomewhere && {
         id: 'logs',
-        title: 'Logs',
+        title: tQuat('common.logs'),
         component: <MultichainAddressLogs addressData={ addressQuery.data } isLoading={ isLoading }/>,
       },
     ].filter(Boolean);
-  }, [ addressQuery.data, isLoading, isContractSomewhere, checkSummedHash ]);
+  }, [ addressQuery.data, isLoading, isContractSomewhere, checkSummedHash , tQuat ]);
 
   const titleSecondRow = (
     <Flex alignItems="center" w="100%" columnGap={ 2 } rowGap={ 2 } flexWrap={{ base: 'wrap', lg: 'nowrap' }}>
@@ -145,7 +148,7 @@ const MultichainAddress = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title={ `${ isContract ? 'Contract' : 'Address' } details` }
+        title={ isContract ? tQuat('multiUi.contract_details') : tQuat('multiUi.address_details') }
         isLoading={ isLoading }
         secondRow={ titleSecondRow }
       />

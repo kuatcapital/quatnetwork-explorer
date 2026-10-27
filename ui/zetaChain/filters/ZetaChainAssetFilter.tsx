@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text, Spinner } from '@chakra-ui/react';
 import { isEqual } from 'es-toolkit';
 import React from 'react';
@@ -16,6 +17,8 @@ import { FilterInput } from 'toolkit/components/filters/FilterInput';
 import * as TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import TableColumnFilter from 'ui/shared/filters/TableColumnFilter';
 import NativeTokenIcon from 'ui/shared/NativeTokenIcon';
+import { useTranslation } from 'react-i18next';
+
 
 const FILTER_PARAM_SYMBOL = 'token_symbol';
 const FILTER_PARAM_COIN_TYPE = 'coin_type';
@@ -55,6 +58,8 @@ type Props = {
 };
 
 const ZetaChainAssetFilter = ({ value = null, handleFilterChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const [ currentValue, setCurrentValue ] = React.useState<Value>(value);
   const [ searchTerm, setSearchTerm ] = React.useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -130,7 +135,7 @@ const ZetaChainAssetFilter = ({ value = null, handleFilterChange }: Props) => {
       hasReset
     >
       <FilterInput
-        placeholder="Search by token name or symbol"
+        placeholder={ tQuat('multiUi.token_search') }
         initialValue={ searchTerm }
         onChange={ onSearchChange }
         loading={ tokensQuery.isLoading }
@@ -151,7 +156,7 @@ const ZetaChainAssetFilter = ({ value = null, handleFilterChange }: Props) => {
       { tokensQuery.isLoading && <Spinner display="block" mt={ 3 }/> }
       { tokensQuery.data && !searchTerm && (
         <>
-          <Text color="text.secondary" fontWeight="600" mt={ 3 }>Popular</Text>
+          <Text color="text.secondary" fontWeight="600" mt={ 3 }>{ tQuat('advancedFilterUi.popular') }</Text>
           <Flex rowGap={ 3 } flexWrap="wrap" gap={ 3 } mb={ 2 }>
             { [ ZETA_NATIVE_TOKEN, ...filteredTokens.map(token => ({
               address_hash: token.zrc20_contract_address,
@@ -181,7 +186,7 @@ const ZetaChainAssetFilter = ({ value = null, handleFilterChange }: Props) => {
           </Flex>
         </>
       ) }
-      { searchTerm && tokensQuery.data && !filteredTokens.length && <Text>No tokens found</Text> }
+      { searchTerm && tokensQuery.data && !filteredTokens.length && <Text>{ tQuat('advancedFilterUi.no_tokens') }</Text> }
       { searchTerm && tokensQuery.data && Boolean(filteredTokens.length) && (
         <Flex display="flex" flexDir="column" rowGap={ 3 } maxH="250px" overflowY="scroll" mt={ 3 } ml="-4px">
           { filteredTokens.map(token => (

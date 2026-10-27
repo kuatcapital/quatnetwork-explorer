@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -13,6 +14,8 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
 import TokenTransfersListItem from 'ui/tokenTransfers/TokenTransfersListItem';
 import TokenTransfersTable from 'ui/tokenTransfers/TokenTransfersTable';
+import { useTranslation } from 'react-i18next';
+
 
 const ACTION_BAR_HEIGHT = 24 * 2 + 40;
 
@@ -23,6 +26,8 @@ interface Props {
 }
 
 const MultichainTokenTransfersLocal = ({ query, typeFilter, onTokenTypesChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
 
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
@@ -46,7 +51,7 @@ const MultichainTokenTransfersLocal = ({ query, typeFilter, onTokenTypesChange }
     <DataListDisplay
       isError={ query.isError }
       itemsNum={ query.data?.items.length }
-      emptyText="There are no token transfers."
+      emptyText={ tQuat('multiUi.no_transfers') }
       actionBar={ actionBar }
     >
       <Box hideFrom="lg">

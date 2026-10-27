@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, createListCollection } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -18,14 +18,13 @@ import Sort from 'ui/shared/sort/Sort';
 
 import MultichainEcosystemsListItem from './MultichainEcosystemsListItem';
 import MultichainEcosystemsTable from './MultichainEcosystemsTable';
-import { SORT_OPTIONS } from './utils';
+import { SORT_OPTIONS, getEcosystemSortOptions } from './utils';
 
-const sortCollection = createListCollection({
-  items: SORT_OPTIONS,
-});
+
 
 const MultichainEcosystems = () => {
   const { t: tQuat } = useTranslation();
+  const sortCollection = React.useMemo(() => createListCollection({ items: getEcosystemSortOptions(tQuat) }), [ tQuat ]);
 
   const router = useRouter();
 
@@ -86,7 +85,7 @@ const MultichainEcosystems = () => {
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no chains in the cluster."
+        emptyText={ tQuat('multiUi.no_cluster_chains') }
       >
         { content }
       </DataListDisplay>

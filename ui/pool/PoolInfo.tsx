@@ -1,6 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Pool } from 'types/api/pools';
+
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
@@ -13,14 +18,15 @@ type Props = {
 };
 
 const PoolInfo = ({ data, isPlaceholderData }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   return (
     <DetailedInfo.Container>
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="The base token in a liquidity pool pair"
-      >
-        Base token
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.base_hint') }
+      >{ tQuat('suppUi.base_token') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <TokenEntity
           token={{
@@ -37,10 +43,8 @@ const PoolInfo = ({ data, isPlaceholderData }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="The quote token in a liquidity pool pair"
-      >
-        Quote token
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.quote_hint') }
+      >{ tQuat('suppUi.quote_token') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <TokenEntity
           token={{
@@ -57,79 +61,69 @@ const PoolInfo = ({ data, isPlaceholderData }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Fully Diluted Valuation: theoretical market cap if all tokens were in circulation"
-      >
-        Base token FDV
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.fdv_hint') }
+      >{ tQuat('suppUi.base_fdv') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.base_token_fully_diluted_valuation_usd ?
-            `$${ Number(data.base_token_fully_diluted_valuation_usd).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }` :
-            'N/A'
+            `$${ Number(data.base_token_fully_diluted_valuation_usd).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }` :
+            tQuat('suppUi.not_available')
           }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Current market capitalization of the base token"
-      >
-        Base token market cap
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.cap_hint') }
+      >{ tQuat('suppUi.base_cap') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.base_token_market_cap_usd ?
-            `$${ Number(data.base_token_market_cap_usd).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }` :
-            'N/A'
+            `$${ Number(data.base_token_market_cap_usd).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }` :
+            tQuat('suppUi.not_available')
           }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Fully Diluted Valuation: theoretical market cap if all tokens were in circulation"
-      >
-        Quote token FDV
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.fdv_hint') }
+      >{ tQuat('suppUi.quote_fdv') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.quote_token_fully_diluted_valuation_usd ?
-            `$${ Number(data.quote_token_fully_diluted_valuation_usd).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }` :
-            'N/A'
+            `$${ Number(data.quote_token_fully_diluted_valuation_usd).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }` :
+            tQuat('suppUi.not_available')
           }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Current market capitalization of the base token"
-      >
-        Quote token market cap
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.cap_hint') }
+      >{ tQuat('suppUi.quote_cap') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.quote_token_market_cap_usd ?
-            `$${ Number(data.quote_token_market_cap_usd).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }` :
-            'N/A'
+            `$${ Number(data.quote_token_market_cap_usd).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }` :
+            tQuat('suppUi.not_available')
           }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Current liquidity of the pool"
-      >
-        Liquidity
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('suppUi.liquidity_hint') }
+      >{ tQuat('suppUi.liquidity') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
-          ${ Number(data.liquidity).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }
+          ${ Number(data.liquidity).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }
         </Skeleton>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="DEX where the pool is traded"
+        hint={ tQuat('suppUi.dex_hint') }
       >
         DEX
       </DetailedInfo.ItemLabel>

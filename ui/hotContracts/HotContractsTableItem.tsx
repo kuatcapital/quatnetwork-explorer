@@ -1,9 +1,12 @@
+// Modified by Quat Capital, 2026-10-27: selected-locale supplemental numeric values. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
 
 import type { HotContract } from 'types/api/contracts';
 
+import { formatBigNumber, NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -22,6 +25,7 @@ const HotContractsTableItem = ({
   data,
   exchangeRate,
 }: Props) => {
+  const { locale } = useLocale();
   const protocolTags = data?.contract_address?.metadata?.tags?.filter(tag => tag.tagType === 'protocol');
 
   return (
@@ -44,10 +48,10 @@ const HotContractsTableItem = ({
         ) }
       </TableCell>
       <TableCell isNumeric>
-        <TruncatedText text={ Number(data.transactions_count).toLocaleString() } loading={ isLoading } maxW="100%"/>
+        <TruncatedText text={ Number(data.transactions_count).toLocaleString(NUMBER_LOCALES[locale]) } loading={ isLoading } maxW="100%"/>
       </TableCell>
       <TableCell isNumeric>
-        <TruncatedText text={ BigNumber(data.total_gas_used || 0).toFormat() } loading={ isLoading } maxW="100%"/>
+        <TruncatedText text={ formatBigNumber(BigNumber(data.total_gas_used || 0), locale) } loading={ isLoading } maxW="100%"/>
       </TableCell>
       <TableCell isNumeric>
         <NativeCoinValue

@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, HStack, Text, Grid } from '@chakra-ui/react';
 import React from 'react';
 
@@ -13,6 +15,8 @@ import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
 import InteropMessageAdditionalInfo from './InteropMessageAdditionalInfo';
 import InteropMessageDestinationTx from './InteropMessageDestinationTx';
 import InteropMessageSourceTx from './InteropMessageSourceTx';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   item: InteropMessage;
@@ -20,6 +24,8 @@ interface Props {
 }
 
 const InteropMessagesListItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ListItemMobile rowGap={ 2 }>
       <Flex alignItems="center" justifyContent="space-between" w="100%">
@@ -32,9 +38,9 @@ const InteropMessagesListItem = ({ item, isLoading }: Props) => {
           <TimeWithTooltip timestamp={ item.timestamp } isLoading={ isLoading } color="text.secondary"/>
         </HStack>
         <Grid templateColumns="120px 1fr" rowGap={ 2 }>
-          <Text as="span" color="text.secondary">Source tx</Text>
+          <Text as="span" color="text.secondary">{ tQuat('l2Ui.source_tx') }</Text>
           <InteropMessageSourceTx { ...item } isLoading={ isLoading }/>
-          <Text as="span" color="text.secondary">Destination tx</Text>
+          <Text as="span" color="text.secondary">{ tQuat('l2Ui.destination_tx') }</Text>
           <InteropMessageDestinationTx { ...item } isLoading={ isLoading }/>
         </Grid>
         <Flex gap={ 2 } justifyContent="space-between" mt={ 2 }>

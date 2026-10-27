@@ -1,3 +1,6 @@
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Flex, Grid, Box, Text } from '@chakra-ui/react';
 import React from 'react';
 import xss from 'xss';
@@ -38,6 +41,8 @@ import TacOperationStatus from 'ui/shared/statusTag/TacOperationStatus';
 import Time from 'ui/shared/time/Time';
 
 import SearchResultEntityTag from './SearchResultEntityTag';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   data: SearchResultItem | SearchResultAppItem;
@@ -47,6 +52,9 @@ interface Props {
 }
 
 const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const searchItemTitles = useLocalizedSearchItemTitles();
   const handleLinkClick = React.useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     saveToRecentKeywords(searchTerm);
@@ -153,7 +161,7 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
               boxSize={ 6 }
               mr={ 2 }
               src={ colorMode === 'dark' && data.app.logoDarkMode ? data.app.logoDarkMode : data.app.logo }
-              alt={ `${ data.app.title } app icon` }
+              alt={ tQuat('multiUi.app_icon', { app: data.app.title }) }
             />
             <Link
               href={ data.app.external ?
@@ -194,8 +202,8 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
                 isLoading={ isLoading }
               />
             </BlockEntity.Link>
-            { data.block_type === 'reorg' && !isLoading && <Tag ml={ 2 }>Reorg</Tag> }
-            { data.block_type === 'uncle' && !isLoading && <Tag ml={ 2 }>Uncle</Tag> }
+            { data.block_type === 'reorg' && !isLoading && <Tag ml={ 2 }>{ tQuat('multiUi.reorg') }</Tag> }
+            { data.block_type === 'uncle' && !isLoading && <Tag ml={ 2 }>{ tQuat('multiUi.uncle') }</Tag> }
           </BlockEntity.Container>
         );
       }
@@ -347,8 +355,8 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
               { data.is_smart_contract_verified && <IconSvg name="status/success" boxSize="14px" color="green.500" ml={ 1 } flexShrink={ 0 }/> }
             </Skeleton>
             <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight={ 700 }>
-              { data.token_type === 'ERC-20' && data.exchange_rate && `$${ Number(data.exchange_rate).toLocaleString() }` }
-              { data.token_type !== 'ERC-20' && data.total_supply && `Items ${ Number(data.total_supply).toLocaleString() }` }
+              { data.token_type === 'ERC-20' && data.exchange_rate && `$${ formatNumber(Number(data.exchange_rate), locale) }` }
+              { data.token_type !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', { value: formatNumber(Number(data.total_supply), locale) }) }
             </Skeleton>
           </Grid>
         );
@@ -358,7 +366,7 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
         const isFutureBlock = data.timestamp === undefined;
 
         if (isFutureBlock) {
-          return <Skeleton loading={ isLoading }>Learn estimated time for this block to be created.</Skeleton>;
+          return <Skeleton loading={ isLoading }>{ tQuat('multiUi.estimated_block_hint') }</Skeleton>;
         }
 
         return (
@@ -417,7 +425,7 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
       case 'address': {
         const shouldHighlightHash = ADDRESS_REGEXP.test(searchTerm);
         const addressName = data.name || data.ens_info?.name;
-        const expiresText = data.ens_info?.expiry_date ? ` (expires ${ dayjs(data.ens_info.expiry_date).fromNow() })` : '';
+        const expiresText = data.ens_info?.expiry_date ? tQuat('multiUi.expires_at', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
 
         return (addressName || data.type === 'metadata_tag') ? (
           <Flex alignItems="center" gap={ 2 } justifyContent="space-between" flexWrap="wrap">
@@ -446,7 +454,7 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
           null;
       }
       case 'ens_domain': {
-        const expiresText = data.ens_info?.expiry_date ? ` expires ${ dayjs(data.ens_info.expiry_date).fromNow() }` : '';
+        const expiresText = data.ens_info?.expiry_date ? tQuat('multiUi.expires_inline', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
         const hash = data.filecoin_robust_address || (addressFormat === 'bech32' && data.address_hash ? toBech32Address(data.address_hash) : data.address_hash);
 
         return (
@@ -490,4 +498,4 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
 };
 
 export default SearchResultListItem;
-// Modified by Quat Capital, 2026-10-26: reactive search category labels. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: reactive search category labels. GPL-3.0.

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: translated route titles preserve chain names. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { USER_OPS_ITEM } from 'stubs/userOps';
@@ -8,6 +10,7 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import UserOpsContent from 'ui/userOps/UserOpsContent';
 
 const UserOps = () => {
+  const { t } = useTranslation();
   const query = useQueryWithPages({
     resourceName: 'general:user_ops',
     options: {
@@ -21,7 +24,8 @@ const UserOps = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } user operations` : 'User operations' }
+        title={ config.meta.seo.enhancedDataEnabled ?
+          t('pageUi.chain_user_operations', { chain: config.chain.name }) : t('pageUi.user_operations') }
         withTextAd
       />
       <UserOpsContent query={ query }/>

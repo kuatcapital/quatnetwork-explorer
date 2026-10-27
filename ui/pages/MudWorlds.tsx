@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { MUD_WORLD } from 'stubs/mud';
 import { generateListStub } from 'stubs/utils';
@@ -12,6 +14,8 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 
 const MudWorlds = () => {
+  const { t: tQuat } = useTranslation();
+
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:mud_worlds',
     options: {
@@ -53,11 +57,11 @@ const MudWorlds = () => {
 
   return (
     <>
-      <PageTitle title="MUD worlds" withTextAd/>
+      <PageTitle title={ tQuat('suppUi.mud_worlds') } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no MUD worlds."
+        emptyText={ tQuat('suppUi.no_mud_worlds') }
         actionBar={ actionBar }
       >
         { content }

@@ -1,6 +1,9 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import type { ZetaChainCCTXFilterParams } from 'types/client/zetaChain';
 
 import ZetaChainAddressFilter from './ZetaChainAddressFilter';
+import { useTranslation } from 'react-i18next';
+
 
 const FILTER_PARAM_RECEIVER = 'receiver_address';
 const FILTER_PARAM_RECEIVER_CHAIN = 'target_chain_id';
@@ -15,13 +18,15 @@ type Props = {
 };
 
 const ZetaChainReceiverFilter = (props: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <ZetaChainAddressFilter
       { ...props }
       filterParam={ FILTER_PARAM_RECEIVER }
       chainFilterParam={ FILTER_PARAM_RECEIVER_CHAIN }
-      title="Receiver"
-      placeholder="Receiver address"
+      title={ tQuat('multiUi.receiver') }
+      placeholder={ tQuat('multiUi.receiver_address') }
     />
   );
 };

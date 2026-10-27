@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex, HStack, Text } from '@chakra-ui/react';
 import { castArray } from 'es-toolkit/compat';
 import React from 'react';
@@ -12,6 +13,8 @@ import { Tag } from 'toolkit/chakra/tag';
 import { SECOND } from 'toolkit/utils/consts';
 import IconSvg from 'ui/shared/IconSvg';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   filters: ZetaChainCCTXFilterParams;
@@ -20,6 +23,8 @@ type Props = {
 };
 
 const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data: chains = [] } = useZetaChainConfig();
 
   const filterTags: Array<{ key: keyof ZetaChainCCTXFilterParams; name: string; value: string }> = [];
@@ -133,7 +138,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
   return (
     <Flex justifyContent="space-between" alignItems="center" mb={ 6 }>
       <Flex alignItems="center" gap={ 2 }>
-        <Text fontSize="lg" lineHeight="24px" w="100px">Filtered by:</Text>
+        <Text fontSize="lg" lineHeight="24px" w="100px">{ tQuat('multiUi.filtered_by') }</Text>
         <HStack gap={ 2 } flexWrap="wrap">
           { filterTags.map(t => (
             <Tag key={ t.name } variant="filter" onClose={ onClearFilter(t.key) } closable label={ t.name }>
@@ -144,9 +149,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
       </Flex>
       { filterTags.length !== 0 && (
         <Link onClick={ onClearAll } display="flex" alignItems="center" justifyContent="end" gap={ 2 } fontSize="sm" w="150px">
-          <IconSvg name="repeat" boxSize={ 5 }/>
-          Reset filters
-        </Link>
+          <IconSvg name="repeat" boxSize={ 5 }/>{ tQuat('multiUi.reset_filters') }</Link>
       ) }
     </Flex>
   );

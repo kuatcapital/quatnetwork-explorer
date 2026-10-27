@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
@@ -74,10 +75,8 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
     >
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Batch number indicates the length of batches produced by grouping ${ layerLabels.current } blocks to be proven on ${ layerLabels.parent }` }
-      >
-        Txn batch number
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.batch_number_hint', { current: layerLabels.current, parent: layerLabels.parent }) }
+      >{ tQuat('l2Ui.txn_batch_number') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.number }
@@ -85,8 +84,8 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
         <PrevNext
           ml={ 6 }
           onClick={ handlePrevNextClick }
-          prevLabel="View previous txn batch"
-          nextLabel="View next txn batch"
+          prevLabel={ tQuat('l2Ui.previous_batch') }
+          nextLabel={ tQuat('l2Ui.next_batch') }
           isPrevDisabled={ data.number === 0 }
           isLoading={ isPlaceholderData }
         />
@@ -94,18 +93,18 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Date and time at which batch is submitted to ${ layerLabels.parent }` }
+        hint={ tQuat('l2Ui.submitted_hint', { parent: layerLabels.parent }) }
       >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         { data.commitment_transaction.timestamp ?
           <DetailedInfoTimestamp timestamp={ data.commitment_transaction.timestamp } isLoading={ isPlaceholderData }/> :
-          'Undefined'
+          tQuat('l2Ui.undefined')
         }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="Number of transactions in this batch"
+        hint={ tQuat('l2Ui.batch_transactions_hint') }
       >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'txs' } }) }>
@@ -118,19 +117,19 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Number of ${ layerLabels.current } blocks in this batch` }
+        hint={ tQuat('l2Ui.blocks_hint', { current: layerLabels.current }) }
       >{ tQuat('common.blocks') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
-        <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }>
-          { blocksCount.toLocaleString() } block{ blocksCount === 1 ? '' : 's' }
+        <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: tQuat('l2Ui.blocks') } }) }>
+          { tQuat('l2Ui.block_total', { count: blocksCount, value: formatNumber(blocksCount, locale) }) }
         </Link>
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Hash of ${ layerLabels.parent } transaction in which transactions was committed` }
+        hint={ tQuat('l2Ui.committed_transaction_hint', { parent: layerLabels.parent }) }
       >
-        { layerLabels.parent } transaction hash
+        { tQuat('l2Ui.layer_transaction_hash', { layer: layerLabels.parent }) }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <TxEntityL1
@@ -143,9 +142,9 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint={ `Height of ${ layerLabels.parent } block which includes ${ layerLabels.parent } transactions` }
+        hint={ tQuat('l2Ui.parent_block_hint', { parent: layerLabels.parent, chain: layerLabels.parent }) }
       >
-        { layerLabels.parent } block
+        { tQuat('l2Ui.layer_block', { layer: layerLabels.parent }) }
       </DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <BlockEntityL1
@@ -158,10 +157,8 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
         <>
           <DetailedInfo.ItemLabel
             isLoading={ isPlaceholderData }
-            hint="Where the batch data is stored"
-          >
-            Batch data container
-          </DetailedInfo.ItemLabel><DetailedInfo.ItemValue>
+            hint={ tQuat('l2Ui.storage_hint') }
+          >{ tQuat('l2Ui.batch_data_container') }</DetailedInfo.ItemLabel><DetailedInfo.ItemValue>
             <ArbitrumL2TxnBatchDA dataContainer={ data.data_availability.batch_data_container } isLoading={ isPlaceholderData }/>
           </DetailedInfo.ItemValue>
         </>
@@ -169,10 +166,8 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="The hash of the state before the batch"
-      >
-        Before acc
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.before_hint') }
+      >{ tQuat('l2Ui.before_acc') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexWrap="nowrap" >
         <Skeleton loading={ isPlaceholderData } overflow="hidden">
           <HashStringShortenDynamic hash={ data.before_acc_hash }/>
@@ -182,10 +177,8 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-        hint="The hash of the state after the batch"
-      >
-        After acc
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.after_hint') }
+      >{ tQuat('l2Ui.after_acc') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexWrap="nowrap">
         <Skeleton loading={ isPlaceholderData } overflow="hidden">
           <HashStringShortenDynamic hash={ data.after_acc_hash }/>
@@ -198,7 +191,7 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
           loading={ isPlaceholderData }
           mt={ 6 }
           gridColumn={{ base: undefined, lg: '1 / 3' }}
-          text={ [ 'Show data availability info', 'Hide data availability info' ] }
+          text={ [ tQuat('l2Ui.show_da'), tQuat('l2Ui.hide_da') ] }
         >
           <GridItem colSpan={{ base: undefined, lg: 2 }} mt={{ base: 1, lg: 4 }}/>
 

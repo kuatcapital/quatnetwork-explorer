@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
@@ -14,6 +15,8 @@ import IconSvg from 'ui/shared/IconSvg';
 import StatusTag from 'ui/shared/statusTag/StatusTag';
 import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   outboundParam: OutboundParams;
@@ -24,6 +27,8 @@ type Props = {
 };
 
 const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast, hasTxAfter }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data: chainsConfig } = useZetaChainConfig();
   const chainToId = outboundParam.receiver_chain_id?.toString() || '';
   const chainTo = chainsConfig?.find((chain) => chain.id.toString() === chainToId);
@@ -57,7 +62,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
     }
     return (
       <>
-        <Text color="text.secondary" fontWeight="medium">Transaction</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('common.transaction') }</Text>
         { chainToId !== config.chain.id ? (
           <TxEntityZetaChainExternal chainId={ chainToId } hash={ outboundParam.hash } noIcon/>
         ) : (
@@ -71,16 +76,16 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
     content = (
       <>
         { transactionOrCCTX }
-        <Text color="text.secondary" fontWeight="medium">Status</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
         <StatusTag type="ok" text="Success"/>
-        <Text color="text.secondary" fontWeight="medium">Receiver</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.receiver') }</Text>
         <AddressEntityZetaChain
           address={{ hash: outboundParam.receiver }}
           chainId={ outboundParam.receiver_chain_id?.toString() }
           isLoading={ isLoading }
           truncation="constant"
         />
-        <Text color="text.secondary" fontWeight="medium">Transferred</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.transferred') }</Text>
         <ZetaChainCCTXValue
           coinType={ outboundParam.coin_type }
           tokenSymbol={ tx.token_symbol }
@@ -88,7 +93,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
           decimals={ tx.decimals ?? null }
           isLoading={ isLoading }
         />
-        <Text color="text.secondary" fontWeight="medium">Gas used</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('common.gas_used') }</Text>
         <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
           { BigNumber(outboundParam.gas_used || 0).div(10 ** gasDecimals).toFormat() }
         </Text>
@@ -101,7 +106,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
       content = (
         <>
           { transactionOrCCTX }
-          <Text color="text.secondary" fontWeight="medium">Status</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
           <StatusTag type="error" text="Failed"/>
         </>
       );
@@ -110,7 +115,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
     } else {
       content = (
         <>
-          <Text color="text.secondary" fontWeight="medium">Reverting to</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.reverting') }</Text>
           <AddressEntityZetaChain
             address={{ hash: outboundParam.receiver }}
             chainId={ outboundParam.receiver_chain_id?.toString() }
@@ -125,7 +130,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
   } else if (tx.cctx_status?.status === CctxStatus.PENDING_OUTBOUND) {
     content = (
       <>
-        <Text color="text.secondary" fontWeight="medium">Destination</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.destination') }</Text>
         <AddressEntityZetaChain
           address={{ hash: outboundParam.receiver }}
           chainId={ outboundParam.receiver_chain_id?.toString() }
@@ -143,7 +148,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
       content = (
         <>
           { transactionOrCCTX }
-          <Text color="text.secondary" fontWeight="medium">Status</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
           <StatusTag type="error" text="Failed"/>
         </>
       );
@@ -152,7 +157,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
     } else {
       content = (
         <>
-          <Text color="text.secondary" fontWeight="medium">Origin</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.origin') }</Text>
           <AddressEntityZetaChain
             address={{ hash: outboundParam.receiver }}
             chainId={ outboundParam.receiver_chain_id?.toString() }
@@ -160,9 +165,9 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
             truncation="constant"
           />
           { transactionOrCCTX }
-          <Text color="text.secondary" fontWeight="medium">Status</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
           <StatusTag type="ok" text="Success"/>
-          <Text color="text.secondary" fontWeight="medium">Transferred</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.transferred') }</Text>
           <ZetaChainCCTXValue
             coinType={ outboundParam.coin_type }
             tokenSymbol={ tx.token_symbol }
@@ -170,7 +175,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
             decimals={ tx.decimals ?? null }
             isLoading={ isLoading }
           />
-          <Text color="text.secondary" fontWeight="medium">Gas used</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('common.gas_used') }</Text>
           <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
             { BigNumber(outboundParam.gas_used || 0).div(10 ** gasDecimals).toFormat() }&nbsp;
           </Text>
@@ -183,7 +188,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
     if (!isLast) {
       content = (
         <>
-          <Text color="text.secondary" fontWeight="medium">Receiver</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.receiver') }</Text>
           <AddressEntityZetaChain
             address={{ hash: outboundParam.receiver }}
             chainId={ outboundParam.receiver_chain_id?.toString() }
@@ -197,7 +202,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
     } else {
       content = (
         <>
-          <Text color="text.secondary" fontWeight="medium">Sender</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('transactions.sender') }</Text>
           <AddressEntityZetaChain
             address={{ hash: outboundParam.receiver }}
             chainId={ outboundParam.receiver_chain_id?.toString() }

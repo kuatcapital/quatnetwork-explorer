@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, chakra, Flex, Grid, Text } from '@chakra-ui/react';
 import { clamp } from 'es-toolkit';
 import React from 'react';
@@ -65,7 +65,7 @@ const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => 
 
   return (
     <PopoverRoot open={ popover.open } onOpenChange={ popover.onOpenChange }>
-      <Tooltip content="List of names resolved or owned by this address" disabled={ popover.open } disableOnMobile closeOnClick>
+      <Tooltip content={ tQuat('multiUi.domains_hint') } disabled={ popover.open } disableOnMobile closeOnClick>
         <div>
           <PopoverTrigger>
             <Button
@@ -112,7 +112,7 @@ const MultichainAddressEnsDomains = ({ mainDomain, isLoading, hash }: Props) => 
 
           { isFetching && <ContentLoader maxW="200px" mt={ 3 }/> }
 
-          { isError && <Text color="text.error" mt={ 3 }>Something went wrong. Unable to load next page.</Text> }
+          { isError && <Text color="text.error" mt={ 3 }>{ tQuat('multiUi.next_page_error') }</Text> }
 
           <Box h="0" w="100px" ref={ cutRef }/>
 

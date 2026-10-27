@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -81,9 +81,9 @@ const MultichainBlocks = () => {
   });
 
   const tabs: Array<TabItemRegular> = [
-    { id: 'blocks', title: 'All', component: <MultichainBlocksContent type="block" query={ blocksQuery } chainId={ blocksQuery.chainValue?.[0] }/> },
-    { id: 'reorgs', title: 'Forked', component: <MultichainBlocksContent type="reorg" query={ reorgsQuery } chainId={ reorgsQuery.chainValue?.[0] }/> },
-    { id: 'uncles', title: 'Uncles', component: <MultichainBlocksContent type="uncle" query={ unclesQuery } chainId={ unclesQuery.chainValue?.[0] }/> },
+    { id: 'blocks', title: tQuat('multiUi.all'), component: <MultichainBlocksContent type="block" query={ blocksQuery } chainId={ blocksQuery.chainValue?.[0] }/> },
+    { id: 'reorgs', title: tQuat('multiUi.forked'), component: <MultichainBlocksContent type="reorg" query={ reorgsQuery } chainId={ reorgsQuery.chainValue?.[0] }/> },
+    { id: 'uncles', title: tQuat('multiUi.uncles'), component: <MultichainBlocksContent type="uncle" query={ unclesQuery } chainId={ unclesQuery.chainValue?.[0] }/> },
   ];
 
   const currentQuery = (() => {
@@ -107,7 +107,7 @@ const MultichainBlocks = () => {
     <HStack gap={ 8 } hideBelow="lg">
       <Link href={ route({ pathname: '/block/countdown' }, { chain: currentChainInfo }) }>
         <IconSvg name="hourglass" boxSize={ 5 } mr={ 2 }/>
-        <span>Block countdown</span>
+        <span>{ tQuat('multiUi.block_countdown') }</span>
       </Link>
       <Pagination { ...currentQuery.pagination }/>
     </HStack>

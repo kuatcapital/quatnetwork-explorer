@@ -1,3 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,8 +16,13 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
+import { useTranslation } from 'react-i18next';
+
 
 const InteropMessages = () => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const interopMessagesQuery = useQueryWithPages({
     resourceName: 'general:optimistic_l2_interop_messages',
     options: {
@@ -38,7 +47,7 @@ const InteropMessages = () => {
 
     return (
       <Skeleton loading={ countQuery.isPlaceholderData }>
-        A total of { countQuery.data?.toLocaleString() } messages found
+        { tQuat('l2Ui.interop_found', { count: countQuery.data ?? 0, value: formatNumber(countQuery.data ?? 0, locale) }) }
       </Skeleton>
     );
   })();
@@ -69,13 +78,13 @@ const InteropMessages = () => {
   return (
     <>
       <PageTitle
-        title="Interop messages"
+        title={ tQuat('l2Ui.interop_messages') }
         withTextAd
       />
       <DataListDisplay
         isError={ interopMessagesQuery.isError }
         itemsNum={ interopMessagesQuery.data?.items.length }
-        emptyText="There are no interop messages."
+        emptyText={ tQuat('l2Ui.no_interop_messages') }
         actionBar={ actionBar }
       >
         { content }

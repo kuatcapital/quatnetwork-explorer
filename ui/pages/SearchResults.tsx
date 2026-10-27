@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
@@ -31,10 +32,14 @@ import HeaderDesktop from 'ui/snippets/header/HeaderDesktop';
 import HeaderMobile from 'ui/snippets/header/HeaderMobile';
 import SearchBarSuggestBlockCountdown from 'ui/snippets/searchBar/SearchBarSuggest/SearchBarSuggestBlockCountdown';
 import useSearchQuery from 'ui/snippets/searchBar/useSearchQuery';
+import { useTranslation } from 'react-i18next';
+
 
 const nameServicesFeature = config.features.nameServices;
 
 const SearchResultsPageContent = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const withRedirectCheck = getQueryParamString(router.query.redirect) === 'true';
   const {
@@ -202,7 +207,7 @@ const SearchResultsPageContent = () => {
                 <TableColumnHeader width="30%">Search result</TableColumnHeader>
                 <TableColumnHeader width="35%"/>
                 <TableColumnHeader width="35%" pr={ 10 }/>
-                <TableColumnHeader width="150px">Category</TableColumnHeader>
+                <TableColumnHeader width="150px">{ tQuat('multiUi.category') }</TableColumnHeader>
               </TableRow>
             </TableHeaderSticky>
             <TableBody>
@@ -281,7 +286,7 @@ const SearchResultsPageContent = () => {
 
   const pageContent = !showContent ? <ContentLoader/> : (
     <>
-      <PageTitle title="Search results"/>
+      <PageTitle title={ tQuat('common.search_results') }/>
       { bar }
       { content }
     </>

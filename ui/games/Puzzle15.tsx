@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Grid, Box, Flex, Text } from '@chakra-ui/react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { Button } from 'toolkit/chakra/button';
@@ -63,6 +65,8 @@ const shuffleBoard = (initialBoard: Array<number>): Array<number> => {
 };
 
 const Puzzle15 = () => {
+  const { t: tQuat } = useTranslation();
+
   const [ tiles, setTiles ] = useState<Array<number>>(Array.from({ length: 16 }, (_, i) => i));
   const [ isWon, setIsWon ] = useState(false);
   const [ image, setImage ] = useState<HTMLImageElement | null>(null);
@@ -192,19 +196,19 @@ const Puzzle15 = () => {
       </Grid>
       { !isWon && (
         <>
-          <Text mt={ 10 }>Put the pieces together and win a prize</Text>
-          <Text mb={ 1 }>Click on a square to move it</Text>
+          <Text mt={ 10 }>{ tQuat('suppUi.puzzle_goal') }</Text>
+          <Text mb={ 1 }>{ tQuat('suppUi.puzzle_help') }</Text>
         </>
       ) }
       { isWon && easterEggPuzzleBadgeFeature.isEnabled && (
         <Flex flexDirection="column" alignItems="center" justifyContent="center" gap={ 4 } mt={ 10 }>
-          <Text fontSize="2xl" fontWeight="bold">You unlocked a hidden badge!</Text>
-          <Text fontSize="lg" textAlign="center">Congratulations! You're eligible to claim an epic hidden badge!</Text>
+          <Text fontSize="2xl" fontWeight="bold">{ tQuat('suppUi.badge_unlocked') }</Text>
+          <Text fontSize="lg" textAlign="center">{ tQuat('suppUi.badge_congrats_ascii') }</Text>
           <Link
             href={ easterEggPuzzleBadgeFeature.badgeClaimLink }
             external noIcon
           >
-            <Button>Claim</Button>
+            <Button>{ tQuat('suppUi.claim') }</Button>
           </Link>
         </Flex>
       ) }

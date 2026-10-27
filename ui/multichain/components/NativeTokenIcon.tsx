@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
@@ -9,6 +10,8 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import TokenLogoPlaceholder from 'ui/shared/TokenLogoPlaceholder';
 
 import useFetchParentChainApi from '../home/useFetchParentChainApi';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   isLoading?: boolean;
@@ -16,6 +19,8 @@ interface Props {
 };
 
 const NativeTokenIcon = ({ isLoading, className }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const parentChainApiFetch = useFetchParentChainApi();
   const parentChainStatsQuery = useQuery({
     queryKey: [ 'parent_chain', 'stats' ],
@@ -32,7 +37,7 @@ const NativeTokenIcon = ({ isLoading, className }: Props) => {
       className={ className }
       borderRadius="base"
       src={ parentChainStatsQuery.data?.coin_image || undefined }
-      alt="Native token logo"
+      alt={ tQuat('multiUi.native_logo') }
       fallback={ <TokenLogoPlaceholder/> }
     />
   );

@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -23,9 +23,7 @@ const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }:
 
   return (
     <ListItemMobileGrid.Container>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>
-        Cluster name
-      </ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.cluster_name') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <ClustersEntity clusterName={ item.name } isLoading={ isLoading } fontWeight={ 500 }/>
       </ListItemMobileGrid.Value>
@@ -43,9 +41,7 @@ const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }:
         { !item.owner && <Skeleton loading={ isLoading }>—</Skeleton> }
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>
-        Joined
-      </ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.joined') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
           <Time timestamp={ item.createdAt } display="block"/>
@@ -53,9 +49,7 @@ const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }:
         </Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>
-        Active chains
-      </ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.active_chains') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading || isClusterDetailsLoading }>
           { (item.chainIds?.length || 1) } { (item.chainIds?.length || 1) === 1 ? 'chain' : 'chains' }

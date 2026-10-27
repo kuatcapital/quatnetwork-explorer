@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -9,8 +10,12 @@ import TextAd from 'ui/shared/ad/TextAd';
 import TxEntityZetaChainCC from 'ui/shared/entities/tx/TxEntityZetaChainCC';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import ZetaChainCCTXDetails from 'ui/zetaChain/cctxDetails/ZetaChainCCTXDetails';
+import { useTranslation } from 'react-i18next';
+
 
 const ZetaChainCCTX = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -28,7 +33,7 @@ const ZetaChainCCTX = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title="Cross-chain tx details"
+        title={ tQuat('multiUi.cross_details') }
         secondRow={ <TxEntityZetaChainCC hash={ hash } noLink variant="subheading" mr={{ base: 0, lg: 2 }}/> }
       />
       <ZetaChainCCTXDetails data={ cctxQuery.data } isLoading={ cctxQuery.isPlaceholderData }/>

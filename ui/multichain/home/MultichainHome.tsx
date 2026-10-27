@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,8 +13,12 @@ import HeroBanner from 'ui/home/HeroBanner';
 import ChainWidget from './ChainWidget';
 import LatestTxs from './LatestTxs';
 import Stats from './Stats';
+import { useTranslation } from 'react-i18next';
+
 
 const MultichainHome = () => {
+  const { t: tQuat } = useTranslation();
+
   const chains = multichainConfig()?.chains;
 
   const chainMetricsQuery = useApiQuery('multichainAggregator:chain_metrics');
@@ -36,7 +41,7 @@ const MultichainHome = () => {
               </MultichainProvider>
             )) }
           </HStack>
-          <Link textStyle="sm" justifyContent="center" href={ route({ pathname: '/ecosystems' }) }>View all chains</Link>
+          <Link textStyle="sm" justifyContent="center" href={ route({ pathname: '/ecosystems' }) }>{ tQuat('multiUi.all_chains') }</Link>
         </VStack>
       ) }
     </Box>

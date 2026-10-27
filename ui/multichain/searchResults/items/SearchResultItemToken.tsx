@@ -1,3 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+import { useTranslation } from 'react-i18next';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { mapValues } from 'es-toolkit';
 import React from 'react';
@@ -23,6 +27,8 @@ interface Props {
 }
 
 const SearchResultItemToken = ({ data, chain, isMobile }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const isVerified = contract.isVerified({ chain_infos: mapValues(data.chain_infos, (chainInfo) => ({ ...chainInfo, is_contract: true, coin_balance: '0' })) });
 
@@ -69,8 +75,8 @@ const SearchResultItemToken = ({ data, chain, isMobile }: Props) => {
           ml="auto"
           maxW={{ base: '60%', lg: 'unset' }}
         >
-          { (data.type as string) === 'ERC-20' && data.exchange_rate && `$${ Number(data.exchange_rate).toLocaleString() }` }
-          { (data.type as string) !== 'ERC-20' && data.total_supply && `Items ${ Number(data.total_supply).toLocaleString() }` }
+          { (data.type as string) === 'ERC-20' && data.exchange_rate && `$${ formatNumber(Number(data.exchange_rate), locale) }` }
+          { (data.type as string) !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', { value: formatNumber(Number(data.total_supply), locale) }) }
         </Text>
       </Flex>
     </SearchResultListItem>

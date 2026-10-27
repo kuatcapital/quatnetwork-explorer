@@ -1,11 +1,16 @@
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import * as d3 from 'd3';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AxesConfigFn } from 'toolkit/components/charts/types';
 import type { UptimeHistoryFull, UptimeHistoryItem } from 'types/api/megaEth';
 
 import { useSettingsContext } from 'lib/contexts/settings';
+import { timestampDate } from 'lib/date/timestamp';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+
 import { Heading } from 'toolkit/chakra/heading';
 import { ChartWidget } from 'toolkit/components/charts/ChartWidget';
 import { DAY, HOUR, SECOND } from 'toolkit/utils/consts';
@@ -20,7 +25,7 @@ const INTERVALS = [
 
 type IntervalId = (typeof INTERVALS)[number]['id'];
 
-const TIME_FORMAT = '%e %b %Y, %H:%M:%S';
+const TIME_FORMAT = 'D MMM YYYY, HH:mm:ss';
 
 const AXES_CONFIG_BASE: (isLocalTime: boolean) => AxesConfigFn = (isLocalTime) => ({ isEnlarged, isMobile }) => ({
   y: {
@@ -78,6 +83,17 @@ interface Props {
 }
 
 const UptimeCharts = ({ historyData }: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+  const intervalItems = React.useMemo(() => {
+    const labels: Record<IntervalId, string> = {
+      '3h': tQuat('suppUi.interval_3h_short'),
+      '24h': tQuat('suppUi.uptime_24h'),
+      '7d': tQuat('suppUi.uptime_7d'),
+    };
+    return INTERVALS.map((item) => ({ ...item, title: labels[item.id] }));
+  }, [ tQuat ]);
+
   const [ interval, setInterval ] = React.useState<IntervalId>('3h');
   const chartsConfig = useChartsConfig();
 
@@ -117,7 +133,7 @@ const UptimeCharts = ({ historyData }: Props) => {
         return {
           date,
           value: Number(value.toFixed(0)),
-          dateLabel: isLocalTime ? d3.timeFormat(TIME_FORMAT)(date) : d3.utcFormat(TIME_FORMAT)(date),
+          dateLabel: timestampDate(date.getTime(), locale, isLocalTime).format(TIME_FORMAT),
         };
       })
       .filter(filterByInterval(interval, now));
@@ -125,12 +141,12 @@ const UptimeCharts = ({ historyData }: Props) => {
     return [
       {
         id: 'tps',
-        name: 'Value',
+        name: tQuat('suppUi.value'),
         items,
         charts: chartsConfig,
       },
     ];
-  }, [ chartsConfig, historyData, interval, isLocalTime ]);
+  }, [ chartsConfig, historyData, interval, isLocalTime, locale, tQuat ]);
 
   const gasCharts = React.useMemo(() => {
     if (!historyData) {
@@ -158,7 +174,7 @@ const UptimeCharts = ({ historyData }: Props) => {
         return {
           date,
           value: Number((value / 1_000_000).toFixed(2)),
-          dateLabel: isLocalTime ? d3.timeFormat(TIME_FORMAT)(date) : d3.utcFormat(TIME_FORMAT)(date),
+          dateLabel: timestampDate(date.getTime(), locale, isLocalTime).format(TIME_FORMAT),
         };
       })
       .filter(filterByInterval(interval, now));
@@ -166,12 +182,12 @@ const UptimeCharts = ({ historyData }: Props) => {
     return [
       {
         id: 'gas',
-        name: 'Value',
+        name: tQuat('suppUi.value'),
         items,
         charts: chartsConfig,
       },
     ];
-  }, [ chartsConfig, historyData, interval, isLocalTime ]);
+  }, [ chartsConfig, historyData, interval, isLocalTime, locale, tQuat ]);
 
   const blockIntervalCharts = React.useMemo(() => {
     if (!historyData) {
@@ -199,7 +215,7 @@ const UptimeCharts = ({ historyData }: Props) => {
         return {
           date,
           value: Number(value.toFixed(1)),
-          dateLabel: isLocalTime ? d3.timeFormat(TIME_FORMAT)(date) : d3.utcFormat(TIME_FORMAT)(date),
+          dateLabel: timestampDate(date.getTime(), locale, isLocalTime).format(TIME_FORMAT),
         };
       })
       .filter(filterByInterval(interval, now));
@@ -207,12 +223,12 @@ const UptimeCharts = ({ historyData }: Props) => {
     return [
       {
         id: 'blockInterval',
-        name: 'Value',
+        name: tQuat('suppUi.value'),
         items,
         charts: chartsConfig,
       },
     ];
-  }, [ chartsConfig, historyData, interval, isLocalTime ]);
+  }, [ chartsConfig, historyData, interval, isLocalTime, locale, tQuat ]);
 
   const handleIntervalChange = React.useCallback((newInterval: IntervalId) => {
     setInterval(newInterval);
@@ -225,8 +241,8 @@ const UptimeCharts = ({ historyData }: Props) => {
         justifyContent="space-between"
         mb={ 6 }
       >
-        <Heading level="2">Real-time statistics</Heading>
-        <TagGroupSelect<IntervalId> items={ INTERVALS } onChange={ handleIntervalChange } value={ interval } tagSize="lg"/>
+        <Heading level="2">{ tQuat('suppUi.real_time') }</Heading>
+        <TagGroupSelect<IntervalId> items={ intervalItems } onChange={ handleIntervalChange } value={ interval } tagSize="lg"/>
       </Flex>
       <Grid
         templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
@@ -243,7 +259,7 @@ const UptimeCharts = ({ historyData }: Props) => {
         </GridItem>
         <GridItem minH={{ base: '220px', lg: '320px' }}>
           <ChartWidget
-            title="MGas/s"
+            title={ tQuat('suppUi.mgas_second') }
             charts={ gasCharts }
             isLoading={ false }
             isError={ false }
@@ -252,7 +268,7 @@ const UptimeCharts = ({ historyData }: Props) => {
         </GridItem>
         <GridItem minH={{ base: '220px', lg: '320px' }}>
           <ChartWidget
-            title="Block time (ms)"
+            title={ tQuat('suppUi.block_time_ms') }
             charts={ blockIntervalCharts }
             isLoading={ false }
             isError={ false }

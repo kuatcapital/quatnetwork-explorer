@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenType } from 'types/api/token';
 
@@ -14,6 +16,8 @@ import TokenTransfersTable from './TokenTransfersTable';
 import useTokenTransfersQuery from './useTokenTransfersQuery';
 
 const TokenTransfersLocal = () => {
+  const { t: tQuat } = useTranslation();
+
   const { query, typeFilter, onTokenTypesChange } = useTokenTransfersQuery({ enabled: true });
 
   const content = (
@@ -54,11 +58,11 @@ const TokenTransfersLocal = () => {
     <DataListDisplay
       isError={ query.isError }
       itemsNum={ query.data?.items.length }
-      emptyText="There are no token transfers."
+      emptyText={ tQuat('suppUi.no_token_transfers') }
       actionBar={ actionBar }
       hasActiveFilters={ Boolean(typeFilter.length) }
       emptyStateProps={{
-        term: 'token transfer',
+        term: tQuat('suppUi.token_transfer_term'),
       }}
     >
       { content }

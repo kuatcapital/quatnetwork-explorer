@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
 import type { ApiData, Metadata } from './types';
 import type { RouteParams } from 'nextjs/types';
 
@@ -13,7 +14,9 @@ import getCanonicalUrl from './getCanonicalUrl';
 import getPageOgType from './getPageOgType';
 import * as templates from './templates';
 
-export default function generate<Pathname extends Route['pathname']>(route: RouteParams<Pathname>, apiData: ApiData<Pathname> = null): Metadata {
+export default function generate<Pathname extends Route['pathname']>(
+  route: RouteParams<Pathname>, apiData: ApiData<Pathname> = null, t?: TFunction,
+): Metadata {
   const idCap = route.pathname === '/essential-dapps/[id]' && typeof route.query?.id === 'string' ?
     route.query.id.charAt(0).toUpperCase() + route.query.id.slice(1) : undefined;
 
@@ -26,8 +29,10 @@ export default function generate<Pathname extends Route['pathname']>(route: Rout
     id_cap: idCap,
   };
 
-  const title = compileValue(templates.title.make(route.pathname, Boolean(apiData)), params);
-  const description = compileValue(templates.description.make(route.pathname, Boolean(apiData)), params);
+  const title = t ? templates.title.make(route.pathname, Boolean(apiData), t, params) :
+    compileValue(templates.title.make(route.pathname, Boolean(apiData)), params);
+  const description = t ? templates.description.make(route.pathname, Boolean(apiData), t, params) :
+    compileValue(templates.description.make(route.pathname, Boolean(apiData)), params);
 
   const pageOgType = getPageOgType(route.pathname);
   const jsonLd = generateProductSchema(route, apiData);
@@ -44,3 +49,5 @@ export default function generate<Pathname extends Route['pathname']>(route: Rout
     jsonLd,
   };
 }
+// Modified by Quat Capital, 2026-10-27: generate localized metadata with a request-scoped translator. GPL-3.0.
+import type { TFunction } from 'i18next';

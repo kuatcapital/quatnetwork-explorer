@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import { Box, createListCollection, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { HotContractsInterval, HotContractsSorting, HotContractsSortingField, HotContractsSortingValue } from 'types/api/contracts';
 
@@ -11,7 +13,7 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import HotContractsIntervalSelect from 'ui/hotContracts/HotContractsIntervalSelect';
 import HotContractsListItem from 'ui/hotContracts/HotContractsListItem';
 import HotContractsTable from 'ui/hotContracts/HotContractsTable';
-import { getIntervalValueFromQuery, SORT_OPTIONS } from 'ui/hotContracts/utils';
+import { getIntervalValueFromQuery, getSortOptions, SORT_OPTIONS } from 'ui/hotContracts/utils';
 import ActionBar from 'ui/shared/ActionBar';
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import PageTitle from 'ui/shared/Page/PageTitle';
@@ -21,11 +23,10 @@ import getSortParamsFromValue from 'ui/shared/sort/getSortParamsFromValue';
 import getSortValueFromQuery from 'ui/shared/sort/getSortValueFromQuery';
 import Sort from 'ui/shared/sort/Sort';
 
-const sortCollection = createListCollection({
-  items: SORT_OPTIONS,
-});
-
 const HotContracts = () => {
+  const { t: tQuat } = useTranslation();
+  const sortCollection = React.useMemo(() => createListCollection({ items: getSortOptions(tQuat) }), [ tQuat ]);
+
   const router = useRouter();
   const [ interval, setInterval ] = React.useState<HotContractsInterval>(getIntervalValueFromQuery(router.query.scale));
   const [ sort, setSort ] =
@@ -94,7 +95,7 @@ const HotContracts = () => {
         />
         { [ '1d', '7d', '30d' ].includes(interval) && (
           <Skeleton loading={ isPlaceholderData } color="text.secondary" hideBelow="lg" textStyle="sm" ml={ 6 }>
-            <span>The data is updated once a day.</span>
+            <span>{ tQuat('suppUi.updated_daily') }</span>
           </Skeleton>
         ) }
         <Sort
@@ -114,17 +115,17 @@ const HotContracts = () => {
   return (
     <>
       <PageTitle
-        title="Hot contracts"
+        title={ tQuat('suppUi.hot_contracts') }
         withTextAd
       />
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no hot contracts."
+        emptyText={ tQuat('suppUi.no_hot_contracts') }
         actionBar={ actionBar }
         hasActiveFilters={ Boolean(interval) }
         emptyStateProps={{
-          term: 'hot contract',
+          term: tQuat('suppUi.hot_contract_term'),
         }}
       >
         { content }

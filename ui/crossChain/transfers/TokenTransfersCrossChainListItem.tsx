@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Grid, HStack, type JsxStyleProps } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -52,9 +52,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
         </Skeleton>
       ) }
       <Grid templateColumns="100px minmax(0, 1fr)" columnGap={ 2 } rowGap={ rowGap }>
-        <Skeleton loading={ isLoading }>
-          Source token
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.source_token') }</Skeleton>
         { data.source_token ? (
           <TokenValueInterchain
             token={ data.source_token }
@@ -73,9 +71,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
             currentAddress={ currentAddress }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Target token
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.target_token') }</Skeleton>
         { data.destination_token ? (
           <TokenValueInterchain
             token={ data.destination_token }
@@ -84,9 +80,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
             loading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Recipient
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.recipient') }</Skeleton>
         { data.recipient ? (
           <AddressEntityInterchain
             chain={ data.destination_chain }
@@ -112,15 +106,11 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
             isLoading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Protocol
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.protocol') }</Skeleton>
         { data.bridge ? (
           <CrossChainBridgeLink data={ data.bridge } isLoading={ isLoading }/>
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Message
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.message') }</Skeleton>
         { data.message_id ? (
           <CrossChainMessageEntity id={ data.message_id } isLoading={ isLoading }/>
         ) : dashElement }

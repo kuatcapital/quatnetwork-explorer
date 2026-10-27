@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { capitalize, omit } from 'es-toolkit/compat';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -37,6 +39,7 @@ const hasNextPageFn = (nextPageParams: Record<string, unknown>) => {
 };
 
 const ZetaChainCCTXsTab = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const tab = getQueryParamString(router.query.tab);
   const isMobile = useIsMobile();
@@ -141,7 +144,7 @@ const ZetaChainCCTXsTab = () => {
         /> },
     {
       id: 'cctx_pending',
-      title: 'Pending',
+      title: tQuat('common.pending'),
       component: (
         <ZetaChainCCTxs
           pagination={ cctxsPendingQuery.pagination }

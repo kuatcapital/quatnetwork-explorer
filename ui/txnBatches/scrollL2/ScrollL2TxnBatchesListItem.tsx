@@ -1,3 +1,6 @@
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +25,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ScrollL2TxnBatch; isLoading?: boolean };
 
 const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'scroll') {
@@ -31,7 +35,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="110px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Batch #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.batch_marker') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BatchEntityL2
           isLoading={ isLoading }
@@ -40,7 +44,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Data availability</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.data_availability') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <ScrollL2TxnBatchDA container={ item.data_availability.batch_data_container } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
@@ -50,7 +54,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         <ScrollL2TxnBatchStatus status={ item.confirmation_transaction.hash ? 'Finalized' : 'Committed' } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Committed block</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.committed_block') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BlockEntityL1
           number={ item.commitment_transaction.block_number }
@@ -58,7 +62,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Committed txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.committed_txn_hash') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TxEntityL1
           hash={ item.commitment_transaction.hash }
@@ -71,13 +75,13 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.commitment_transaction.timestamp }
-          fallbackText="Undefined"
+          fallbackText={ tQuat('l2Ui.undefined') }
           isLoading={ isLoading }
           display="inline-block"
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Finalized block</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.finalized_block') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { item.confirmation_transaction.block_number ? (
           <BlockEntityL1
@@ -87,7 +91,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         ) : <Skeleton loading={ isLoading } display="inline-block">{ tQuat('common.pending') }</Skeleton> }
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Finalized txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.finalized_txn_hash') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { item.confirmation_transaction.hash ? (
           <TxEntityL1
@@ -98,15 +102,15 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         ) : <Skeleton loading={ isLoading } display="inline-block">{ tQuat('common.pending') }</Skeleton> }
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Blocks count</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.blocks_count') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Link
-          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'blocks' } }) }
+          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: tQuat('l2Ui.blocks') } }) }
           loading={ isLoading }
           fontWeight={ 600 }
           minW="40px"
         >
-          { (item.end_block_number - item.start_block_number + 1).toLocaleString() }
+          { (item.end_block_number - item.start_block_number + 1).toLocaleString(NUMBER_LOCALES[locale]) }
         </Link>
       </ListItemMobileGrid.Value>
 
@@ -120,7 +124,7 @@ const ScrollL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
               fontWeight={ 600 }
               minW="40px"
             >
-              { item.transactions_count.toLocaleString() }
+              { item.transactions_count.toLocaleString(NUMBER_LOCALES[locale]) }
             </Link>
           </ListItemMobileGrid.Value>
         </>

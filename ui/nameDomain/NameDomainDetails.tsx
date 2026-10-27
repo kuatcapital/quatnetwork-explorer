@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
@@ -42,11 +42,9 @@ const NameDomainDetails = ({ query }: Props) => {
         { query.data?.registration_date && (
           <>
             <DetailedInfo.ItemLabel
-              hint="The date the name was registered"
+              hint={ tQuat('multiUi.registered_hint') }
               isLoading={ isLoading }
-            >
-              Registration date
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('multiUi.registered_date') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <DetailedInfoTimestamp timestamp={ query.data.registration_date } isLoading={ isLoading }/>
             </DetailedInfo.ItemValue>
@@ -57,11 +55,9 @@ const NameDomainDetails = ({ query }: Props) => {
           <>
             <DetailedInfo.ItemLabel
             // eslint-disable-next-line max-len
-              hint="The date the name expires, upon which there is a grace period for the owner to renew. After grace period ends, the name is released to the market"
+              hint={ tQuat('multiUi.expiry_hint') }
               isLoading={ isLoading }
-            >
-              Expiration date
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('multiUi.expiry_date') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue>
               <DetailedInfoTimestamp timestamp={ query.data?.expiry_date } isLoading={ isLoading } noRelativeTime/>
               <TextSeparator/>
@@ -75,11 +71,9 @@ const NameDomainDetails = ({ query }: Props) => {
         { query.data?.resolver_address && (
           <>
             <DetailedInfo.ItemLabel
-              hint="The resolver contract provides information about a domain name"
+              hint={ tQuat('multiUi.resolver_hint') }
               isLoading={ isLoading }
-            >
-              Resolver
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('multiUi.resolver') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue
             >
               <AddressEntity
@@ -93,11 +87,9 @@ const NameDomainDetails = ({ query }: Props) => {
         { query.data?.registrant && (
           <>
             <DetailedInfo.ItemLabel
-              hint="The account that owns the domain name and has the rights to edit its ownership and records"
+              hint={ tQuat('multiUi.registrant_hint') }
               isLoading={ isLoading }
-            >
-              Registrant
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('multiUi.registrant') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue
               columnGap={ 2 }
               flexWrap="nowrap"
@@ -106,7 +98,7 @@ const NameDomainDetails = ({ query }: Props) => {
                 address={ query.data.registrant }
                 isLoading={ isLoading }
               />
-              <Tooltip content="Lookup for related domain names">
+              <Tooltip content={ tQuat('multiUi.related_names') }>
                 <Link
                   flexShrink={ 0 }
                   display="inline-flex"
@@ -125,7 +117,7 @@ const NameDomainDetails = ({ query }: Props) => {
         { query.data?.owner && (
           <>
             <DetailedInfo.ItemLabel
-              hint="The account that owns the rights to edit the records of this domain name"
+              hint={ tQuat('multiUi.manager_hint') }
               isLoading={ isLoading }
             >{ tQuat('tokenUi.owner') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue
@@ -136,7 +128,7 @@ const NameDomainDetails = ({ query }: Props) => {
                 address={ query.data.owner }
                 isLoading={ isLoading }
               />
-              <Tooltip content="Lookup for related domain names">
+              <Tooltip content={ tQuat('multiUi.related_names') }>
                 <Link
                   flexShrink={ 0 }
                   display="inline-flex"
@@ -155,11 +147,9 @@ const NameDomainDetails = ({ query }: Props) => {
         { query.data?.wrapped_owner && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Owner of this NFT domain in NameWrapper contract"
+              hint={ tQuat('multiUi.wrapper_owner_hint') }
               isLoading={ isLoading }
-            >
-              Manager
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('multiUi.manager') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue
               columnGap={ 2 }
               flexWrap="nowrap"
@@ -168,7 +158,7 @@ const NameDomainDetails = ({ query }: Props) => {
                 address={ query.data.wrapped_owner }
                 isLoading={ isLoading }
               />
-              <Tooltip content="Lookup for related domain names">
+              <Tooltip content={ tQuat('multiUi.related_names') }>
                 <Link
                   flexShrink={ 0 }
                   display="inline-flex"
@@ -197,10 +187,10 @@ const NameDomainDetails = ({ query }: Props) => {
           return (
             <React.Fragment key={ token.type }>
               <DetailedInfo.ItemLabel
-                hint={ `The ${ token.type === bens.TokenType.WRAPPED_DOMAIN_TOKEN ? 'wrapped ' : '' }token ID of this domain name NFT` }
+                hint={ token.type === bens.TokenType.WRAPPED_DOMAIN_TOKEN ? tQuat('multiUi.wrapped_token_hint') : tQuat('multiUi.token_hint') }
                 isLoading={ isLoading }
               >
-                { token.type === bens.TokenType.WRAPPED_DOMAIN_TOKEN ? 'Wrapped token ID' : 'Token ID' }
+                { token.type === bens.TokenType.WRAPPED_DOMAIN_TOKEN ? tQuat('multiUi.wrapped_token_id') : tQuat('multiUi.token_id') }
               </DetailedInfo.ItemLabel>
               <DetailedInfo.ItemValue
                 wordBreak="break-all"
@@ -215,11 +205,9 @@ const NameDomainDetails = ({ query }: Props) => {
         { otherAddresses.length > 0 && (
           <>
             <DetailedInfo.ItemLabel
-              hint="Other cryptocurrency addresses added to this domain name"
+              hint={ tQuat('multiUi.other_addresses_hint') }
               isLoading={ isLoading }
-            >
-              Other addresses
-            </DetailedInfo.ItemLabel>
+            >{ tQuat('multiUi.other_addresses') }</DetailedInfo.ItemLabel>
             <DetailedInfo.ItemValue
               flexDir="column"
               alignItems="flex-start"

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Grid, HStack, Stat } from '@chakra-ui/react';
 import React from 'react';
 
@@ -10,6 +11,8 @@ import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import ChainIcon from 'ui/shared/externalChains/ChainIcon';
 import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   data: multichain.ChainMetrics;
@@ -18,6 +21,8 @@ interface Props {
 }
 
 const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const activeAddresses = {
     value: data.active_accounts?.current_full_week ? Number(data.active_accounts.current_full_week) : 0,
     delta: data.active_accounts?.wow_diff_percent ? Number(data.active_accounts.wow_diff_percent) : 0,
@@ -54,8 +59,8 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
       </HStack>
       <Grid gridTemplateColumns="140px 1fr" columnGap={ 2 } rowGap={ 3 }>
         <Skeleton loading={ isLoading } fontWeight={ 500 }>
-          <span>Active addresses</span>
-          <chakra.span color="text.secondary"> 7D</chakra.span>
+          <span>{ tQuat('multiUi.active_addresses') }</span>
+          <chakra.span color="text.secondary">{ ' ' }{ tQuat('multiUi.seven_days') }</chakra.span>
         </Skeleton>
         <HStack gap={ 1 }>
           <Skeleton loading={ isLoading }>
@@ -74,8 +79,8 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
         </HStack>
 
         <Skeleton loading={ isLoading } fontWeight={ 500 }>
-          <span>New addresses</span>
-          <chakra.span color="text.secondary"> 7D</chakra.span>
+          <span>{ tQuat('multiUi.new_addresses') }</span>
+          <chakra.span color="text.secondary">{ ' ' }{ tQuat('multiUi.seven_days') }</chakra.span>
         </Skeleton>
         <HStack gap={ 1 }>
           <Skeleton loading={ isLoading }>
@@ -94,8 +99,8 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
         </HStack>
 
         <Skeleton loading={ isLoading } fontWeight={ 500 }>
-          <span>Daily txs</span>
-          <chakra.span color="text.secondary"> 7D</chakra.span>
+          <span>{ tQuat('multiUi.daily_txs') }</span>
+          <chakra.span color="text.secondary">{ ' ' }{ tQuat('multiUi.seven_days') }</chakra.span>
         </Skeleton>
         <HStack gap={ 1 }>
           <Skeleton loading={ isLoading }>

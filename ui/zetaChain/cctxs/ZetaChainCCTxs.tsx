@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
@@ -19,6 +20,8 @@ import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
 
 import ZetaChainCCTxsListItem from './ZetaChainCCTXListItem';
 import ZetaChainCCTxsTable from './ZetaChainCCTxsTable';
+import { useTranslation } from 'react-i18next';
+
 
 const OVERLOAD_COUNT = 75;
 
@@ -45,6 +48,8 @@ const ZetaChainCCTxs = ({
   showStatusFilter = true,
   type,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
   const [ showSocketErrorAlert, setShowSocketErrorAlert ] = React.useState(false);
@@ -182,7 +187,7 @@ const ZetaChainCCTxs = ({
     <DataListDisplay
       isError={ isError }
       itemsNum={ items?.length }
-      emptyText="There are no cross chain transactions."
+      emptyText={ tQuat('multiUi.no_cross_tx_alt') }
       hasActiveFilters={ hasFilters }
       emptyStateProps={{
         term: 'cross chain transaction',

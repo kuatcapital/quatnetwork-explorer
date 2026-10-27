@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -25,6 +26,8 @@ import { getTokenFilterValue } from 'ui/tokens/utils';
 
 import ListCounterText from '../components/ListCounterText';
 import getAvailableChainIds from './getAvailableChainIds';
+import { useTranslation } from 'react-i18next';
+
 
 export const ADDRESS_MULTICHAIN_TOKEN_TRANSFERS_TAB_IDS = [ 'token_transfers_cross_chain' as const, 'token_transfers_local' as const ];
 const TABS_RIGHT_SLOT_PROPS = {
@@ -46,6 +49,8 @@ interface Props {
 }
 
 const MultichainAddressTokenTransfers = ({ addressData, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const isMobile = useIsMobile();
 
@@ -160,12 +165,12 @@ const MultichainAddressTokenTransfers = ({ addressData, isLoading }: Props) => {
   const tabs: Array<TabItemRegular> = [
     {
       id: 'token_transfers_cross_chain',
-      title: 'Cross-chain',
+      title: tQuat('multiUi.cross_chain'),
       component: <EmptyState type="coming_soon"/>,
     },
     {
       id: [ 'token_transfers_local', 'token_transfers' ],
-      title: 'Local',
+      title: tQuat('multiUi.local'),
       component: chainIds.length > 0 ? (
         <MultichainProvider chainId={ transfersQueryLocal.query.chainValue?.[0] }>
           <SocketProvider url={ getSocketUrl(chainData?.app_config) }>
@@ -179,7 +184,7 @@ const MultichainAddressTokenTransfers = ({ addressData, isLoading }: Props) => {
             />
           </SocketProvider>
         </MultichainProvider>
-      ) : <p>There are no token transfers.</p>,
+      ) : <p>{ tQuat('multiUi.no_transfers') }</p>,
     },
   ];
 

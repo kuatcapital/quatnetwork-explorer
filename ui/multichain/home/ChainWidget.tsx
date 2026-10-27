@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ const ChainWidget = ({ data, isLoading, metrics }: Props) => {
     <VStack gap={ 2 } alignItems="flex-start" fontWeight={ 500 }>
       <HStack gap={ 2 }>
         <Skeleton loading={ isLoading } color="text.secondary">
-          <span>Chain ID</span>
+          <span>{ tQuat('multiUi.chain_id') }</span>
         </Skeleton>
         <Skeleton loading={ isLoading }>{ data.id }</Skeleton>
         <CopyToClipboard text={ String(data.id) } ml={ 0 } isLoading={ isLoading }/>
@@ -112,7 +112,7 @@ const ChainWidget = ({ data, isLoading, metrics }: Props) => {
       <HStack justifyContent="space-between">
         <ChainIcon data={ data } boxSize="30px" isLoading={ isLoading } noTooltip/>
         { walletIcon && (
-          <Tooltip content="Add to wallet">
+          <Tooltip content={ tQuat('multiUi.add_wallet') }>
             <IconButton
               onClick={ handleAddToWalletClick }
               size="md"

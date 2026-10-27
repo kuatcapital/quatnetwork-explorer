@@ -1,3 +1,6 @@
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Text, Flex, Box } from '@chakra-ui/react';
 import React from 'react';
 import xss from 'xss';
@@ -38,6 +41,8 @@ import TacOperationStatus from 'ui/shared/statusTag/TacOperationStatus';
 import Time from 'ui/shared/time/Time';
 
 import SearchResultEntityTag from './SearchResultEntityTag';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   data: SearchResultItem | SearchResultAppItem;
@@ -47,6 +52,9 @@ interface Props {
 }
 
 const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const searchItemTitles = useLocalizedSearchItemTitles();
   const handleLinkClick = React.useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     saveToRecentKeywords(searchTerm);
@@ -102,8 +110,8 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
             <TableCell verticalAlign="middle" isNumeric>
               <Skeleton loading={ isLoading } whiteSpace="nowrap" overflow="hidden">
                 <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight={ 700 }>
-                  { data.token_type === 'ERC-20' && data.exchange_rate && `$${ Number(data.exchange_rate).toLocaleString() }` }
-                  { data.token_type !== 'ERC-20' && data.total_supply && `Items ${ Number(data.total_supply).toLocaleString() }` }
+                  { data.token_type === 'ERC-20' && data.exchange_rate && `$${ formatNumber(Number(data.exchange_rate), locale) }` }
+                  { data.token_type !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', { value: formatNumber(Number(data.total_supply), locale) }) }
                 </Text>
               </Skeleton>
             </TableCell>
@@ -127,7 +135,7 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
           implementations: null,
           ens_domain_name: null,
         };
-        const expiresText = data.ens_info?.expiry_date ? ` (expires ${ dayjs(data.ens_info.expiry_date).fromNow() })` : '';
+        const expiresText = data.ens_info?.expiry_date ? tQuat('multiUi.expires_at', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
         const hash = addressFormat === 'bech32' ? toBech32Address(data.address_hash) : data.address_hash;
 
         return (
@@ -223,7 +231,7 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
                   boxSize={ 6 }
                   mr={ 2 }
                   src={ colorMode === 'dark' && data.app.logoDarkMode ? data.app.logoDarkMode : data.app.logo }
-                  alt={ `${ data.app.title } app icon` }
+                  alt={ tQuat('multiUi.app_icon', { app: data.app.title }) }
                 />
                 <Link
                   href={ data.app.external ?
@@ -281,11 +289,11 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
             </TableCell>
             <TableCell fontSize="sm" verticalAlign="middle" colSpan={ isFutureBlock ? 2 : 1 }>
               { isFutureBlock ? (
-                <Skeleton loading={ isLoading }>Learn estimated time for this block to be created.</Skeleton>
+                <Skeleton loading={ isLoading }>{ tQuat('multiUi.estimated_block_hint') }</Skeleton>
               ) : (
                 <Flex columnGap={ 2 } alignItems="center">
-                  { data.block_type === 'reorg' && !isLoading && <Tag flexShrink={ 0 }>Reorg</Tag> }
-                  { data.block_type === 'uncle' && !isLoading && <Tag flexShrink={ 0 }>Uncle</Tag> }
+                  { data.block_type === 'reorg' && !isLoading && <Tag flexShrink={ 0 }>{ tQuat('multiUi.reorg') }</Tag> }
+                  { data.block_type === 'uncle' && !isLoading && <Tag flexShrink={ 0 }>{ tQuat('multiUi.uncle') }</Tag> }
                   <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="nowrap" display="block">
                     <HashStringShortenDynamic hash={ data.block_hash } as={ shouldHighlightHash ? 'mark' : 'span' }/>
                   </Skeleton>
@@ -437,7 +445,7 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
       }
 
       case 'ens_domain': {
-        const expiresText = data.ens_info?.expiry_date ? ` expires ${ dayjs(data.ens_info.expiry_date).fromNow() }` : '';
+        const expiresText = data.ens_info?.expiry_date ? tQuat('multiUi.expires_inline', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
         const hash = data.filecoin_robust_address || (addressFormat === 'bech32' && data.address_hash ? toBech32Address(data.address_hash) : data.address_hash);
 
         return (
@@ -502,4 +510,4 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
 };
 
 export default React.memo(SearchResultTableItem);
-// Modified by Quat Capital, 2026-10-26: reactive search category labels. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: reactive search category labels. GPL-3.0.

@@ -1,3 +1,6 @@
+import { localizeDisputeGameStatus } from './localizeDisputeGameStatus';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
@@ -16,6 +19,7 @@ const faultProofSystemFeature = config.features.faultProofSystem;
 type Props = { item: OptimisticL2DisputeGamesItem; isLoading?: boolean };
 
 const OptimisticL2DisputeGamesTableItem = ({ item, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
   if (!faultProofSystemFeature.isEnabled) {
     return null;
   }
@@ -51,12 +55,12 @@ const OptimisticL2DisputeGamesTableItem = ({ item, isLoading }: Props) => {
         />
       </TableCell>
       <TableCell verticalAlign="middle">
-        <Skeleton loading={ isLoading } display="inline-block">{ item.status }</Skeleton>
+        <Skeleton loading={ isLoading } display="inline-block">{ localizeDisputeGameStatus(item.status, tQuat) }</Skeleton>
       </TableCell>
       <TableCell>
         <TimeWithTooltip
           timestamp={ item.resolved_at }
-          fallbackText="N/A"
+          fallbackText={ tQuat('l2Ui.not_available') }
           isLoading={ isLoading }
           display="inline-block"
         />

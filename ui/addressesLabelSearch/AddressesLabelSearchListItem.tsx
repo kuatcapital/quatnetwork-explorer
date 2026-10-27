@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
 
@@ -8,6 +9,8 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
 import NativeCoinValue from 'ui/shared/value/NativeCoinValue';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   item: AddressesItem;
@@ -18,6 +21,8 @@ const AddressesLabelSearchListItem = ({
   item,
   isLoading,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
 
   return (
     <ListItemMobile rowGap={ 3 }>
@@ -38,7 +43,7 @@ const AddressesLabelSearchListItem = ({
         />
       </HStack>
       <HStack gap={ 3 }>
-        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Txn count</Skeleton>
+        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.transaction_count') }</Skeleton>
         <Skeleton loading={ isLoading } fontSize="sm" color="text.secondary">
           <span>{ Number(item.transactions_count).toLocaleString() }</span>
         </Skeleton>

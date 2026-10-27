@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { HotContract, HotContractsSortingField, HotContractsSortingValue } from 'types/api/contracts';
 
@@ -19,6 +21,7 @@ interface Props {
 };
 
 const HotContractsTable = ({ items, isLoading, sort, setSorting, exchangeRate }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const onSortToggle = React.useCallback((field: HotContractsSortingField) => {
     const value = getNextSortValue<HotContractsSortingField, HotContractsSortingValue>(SORT_SEQUENCE, field)(sort);
@@ -29,7 +32,7 @@ const HotContractsTable = ({ items, isLoading, sort, setSorting, exchangeRate }:
     <TableRoot minWidth="900px">
       <TableHeaderSticky top={ ACTION_BAR_HEIGHT_DESKTOP }>
         <TableRow>
-          <TableColumnHeader width="25%">Contract</TableColumnHeader>
+          <TableColumnHeader width="25%">{ tQuat('suppUi.contract') }</TableColumnHeader>
           <TableColumnHeaderSortable
             width="25%"
             isNumeric
@@ -37,9 +40,7 @@ const HotContractsTable = ({ items, isLoading, sort, setSorting, exchangeRate }:
             sortValue={ sort }
             onSortToggle={ onSortToggle }
             disabled={ isLoading }
-          >
-            Txn count
-          </TableColumnHeaderSortable>
+          >{ tQuat('suppUi.txn_count') }</TableColumnHeaderSortable>
           <TableColumnHeaderSortable
             width="25%"
             isNumeric
@@ -47,10 +48,8 @@ const HotContractsTable = ({ items, isLoading, sort, setSorting, exchangeRate }:
             sortValue={ sort }
             onSortToggle={ onSortToggle }
             disabled={ isLoading }
-          >
-            Gas used
-          </TableColumnHeaderSortable>
-          <TableColumnHeader width="25%" isNumeric>Balance { currencyUnits.ether }</TableColumnHeader>
+          >{ tQuat('suppUi.gas_used') }</TableColumnHeaderSortable>
+          <TableColumnHeader width="25%" isNumeric>{ tQuat('suppUi.balance_currency', { currency: currencyUnits.ether }) }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

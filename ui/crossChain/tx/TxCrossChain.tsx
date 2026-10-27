@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -14,8 +15,12 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 
 import TxCrossChainDetails from './TxCrossChainDetails';
 import TxCrossChainTransfers from './TxCrossChainTransfers';
+import { useTranslation } from 'react-i18next';
+
 
 const TxCrossChain = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const messageId = getQueryParamString(router.query.id);
 
@@ -31,12 +36,12 @@ const TxCrossChain = () => {
   const tabs: Array<TabItemRegular> = [
     {
       id: 'index',
-      title: 'Details',
+      title: tQuat('common.details'),
       component: <TxCrossChainDetails data={ query.data } isLoading={ query.isPlaceholderData }/>,
     },
     {
       id: 'transfers',
-      title: 'Token transfers',
+      title: tQuat('common.token_transfers'),
       component: <TxCrossChainTransfers data={ query.data?.transfers } isLoading={ query.isPlaceholderData } isError={ query.isError }/>,
     },
   ];
@@ -58,7 +63,7 @@ const TxCrossChain = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title="Cross-chain tx details"
+        title={ tQuat('multiUi.cross_details') }
         secondRow={ titleSecondRow }
       />
       <RoutedTabs tabs={ tabs } isLoading={ query.isPlaceholderData }/>

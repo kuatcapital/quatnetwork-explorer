@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,6 +13,8 @@ import TimeFormatToggle from 'ui/shared/time/TimeFormatToggle';
 
 import ZetaChainFilterByColumn from '../filters/ZetaChainFilterByColumn';
 import ZetaChainCCTxsTableItem from './ZetaChainCCTxsTableItem';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   txs: Array<CctxListItem>;
@@ -40,6 +43,8 @@ const ZetaChainCCTxsTable = ({
   showSocketErrorAlert = false,
   socketInfoNum = 0,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const initialList = useInitialList({
     data: txs ?? [],
     idFn: (item) => item.index,
@@ -53,9 +58,7 @@ const ZetaChainCCTxsTable = ({
           <TableRow>
             <TableColumnHeader width="300px">
               <Flex alignItems="center" columnGap={ 2 }>
-                <chakra.span lineHeight="24px" verticalAlign="middle">
-                  CCTx hash
-                </chakra.span>
+                <chakra.span lineHeight="24px" verticalAlign="middle">{ tQuat('multiUi.cctx_hash_alt') }</chakra.span>
                 <ZetaChainFilterByColumn
                   column="age"
                   columnName="Age"
@@ -67,9 +70,7 @@ const ZetaChainCCTxsTable = ({
               </Flex>
             </TableColumnHeader>
             <TableColumnHeader width="105px">
-              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">
-                Status
-              </chakra.span>
+              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">{ tQuat('common.status') }</chakra.span>
               { showStatusFilter && (
                 <ZetaChainFilterByColumn
                   column="status"
@@ -81,9 +82,7 @@ const ZetaChainCCTxsTable = ({
               ) }
             </TableColumnHeader>
             <TableColumnHeader width="200px">
-              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">
-                Sender
-              </chakra.span>
+              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">{ tQuat('transactions.sender') }</chakra.span>
               <ZetaChainFilterByColumn
                 column="sender"
                 columnName="Sender"
@@ -93,9 +92,7 @@ const ZetaChainCCTxsTable = ({
               />
             </TableColumnHeader>
             <TableColumnHeader width="165px">
-              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">
-                Receiver
-              </chakra.span>
+              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">{ tQuat('multiUi.receiver') }</chakra.span>
               <ZetaChainFilterByColumn
                 column="receiver"
                 columnName="Receiver"

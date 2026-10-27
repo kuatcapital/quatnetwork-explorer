@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,19 +31,19 @@ const TransactionsCrossChainTable = ({ data, isLoading, top, stickyHeader, curre
           <TableRow>
             <TableColumnHeader w="42px"/>
             { currentAddress && <TableColumnHeader w="44px"/> }
-            <TableColumnHeader>Message</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.message') }</TableColumnHeader>
             <TableColumnHeader>
               <Flex alignItems="center" flexWrap="nowrap">{ tQuat('common.timestamp') }<TimeFormatToggle/>
               </Flex>
             </TableColumnHeader>
-            <TableColumnHeader>Msg sender</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.message_sender') }</TableColumnHeader>
             <TableColumnHeader>{ tQuat('transactions.source_tx') }</TableColumnHeader>
-            <TableColumnHeader>Dest tx</TableColumnHeader>
-            <TableColumnHeader>Transf</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.destination_tx_short') }</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.transfers_short') }</TableColumnHeader>
             <TableColumnHeader>{ tQuat('transactions.sender') }</TableColumnHeader>
             <TableColumnHeader/>
-            <TableColumnHeader>Recipient</TableColumnHeader>
-            <TableColumnHeader>Protocol</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.recipient') }</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.protocol') }</TableColumnHeader>
           </TableRow>
         </TableHeaderComponent>
         <TableBody>

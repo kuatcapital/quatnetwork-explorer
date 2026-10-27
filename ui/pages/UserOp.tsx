@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: reactive operation page labels. GPL-3.0.
 import { inRange } from 'es-toolkit';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { Log } from 'types/api/log';
@@ -22,6 +24,7 @@ import UserOpRaw from 'ui/userOp/UserOpRaw';
 import UserOpSubHeading from 'ui/userOp/UserOpSubHeading';
 
 const UserOp = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const hash = getQueryParamString(router.query.hash);
 
@@ -68,15 +71,15 @@ const UserOp = () => {
   }, [ userOpQuery.data ]);
 
   const tabs: Array<TabItemRegular> = React.useMemo(() => ([
-    { id: 'index', title: 'Details', component: <UserOpDetails query={ userOpQuery }/> },
+    { id: 'index', title: t('common.details'), component: <UserOpDetails query={ userOpQuery }/> },
     {
       id: 'token_transfers',
-      title: 'Token transfers',
+      title: t('common.token_transfers'),
       component: <TxTokenTransfer txQuery={ txQuery } tokenTransferFilter={ filterTokenTransfersByLogIndex }/>,
     },
-    { id: 'logs', title: 'Logs', component: <TxLogs txQuery={ txQuery } logsFilter={ filterLogsByLogIndex }/> },
-    { id: 'raw', title: 'Raw', component: <UserOpRaw rawData={ userOpQuery.data?.raw } isLoading={ userOpQuery.isPlaceholderData }/> },
-  ]), [ userOpQuery, txQuery, filterTokenTransfersByLogIndex, filterLogsByLogIndex ]);
+    { id: 'logs', title: t('common.logs'), component: <TxLogs txQuery={ txQuery } logsFilter={ filterLogsByLogIndex }/> },
+    { id: 'raw', title: t('sharedUi.raw'), component: <UserOpRaw rawData={ userOpQuery.data?.raw } isLoading={ userOpQuery.isPlaceholderData }/> },
+  ]), [ userOpQuery, txQuery, filterTokenTransfersByLogIndex, filterLogsByLogIndex, t ]);
 
   throwOnAbsentParamError(hash);
   throwOnResourceLoadError(userOpQuery);
@@ -87,7 +90,7 @@ const UserOp = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title="User operation details"
+        title={ t('pageUi.user_operation_details') }
         secondRow={ titleSecondRow }
       />
       <RoutedTabs tabs={ tabs } isLoading={ userOpQuery.isPlaceholderData }/>

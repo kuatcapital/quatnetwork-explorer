@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import type { JsxStyleProps } from '@chakra-ui/react';
 import { chakra, Grid, HStack } from '@chakra-ui/react';
 import React from 'react';
@@ -87,9 +87,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             isLoading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Msg sender
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.message_sender') }</Skeleton>
         { data.sender ? (
           <AddressEntityInterchain
             chain={ data.source_chain }
@@ -99,9 +97,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             currentAddress={ currentAddress }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Transf
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.transfers_short') }</Skeleton>
         { txHashWithTransfers ? (
           <Link
             href={ route({ pathname: '/tx/[hash]', query: { hash: txHashWithTransfers, tab: 'token_transfers_cross_chain' } }) }
@@ -122,9 +118,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             currentAddress={ currentAddress }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Source token
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.source_token') }</Skeleton>
         { firstTransfer?.source_token ? (
           <TokenValueInterchain
             token={ firstTransfer.source_token }
@@ -133,9 +127,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             loading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Recipient
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.recipient') }</Skeleton>
         { firstTransfer?.recipient ? (
           <AddressEntityInterchain
             chain={ data.destination_chain }
@@ -145,9 +137,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             currentAddress={ currentAddress }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Target token
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.target_token') }</Skeleton>
         { firstTransfer?.destination_token ? (
           <TokenValueInterchain
             token={ firstTransfer.destination_token }
@@ -156,9 +146,7 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
             loading={ isLoading }
           />
         ) : dashElement }
-        <Skeleton loading={ isLoading }>
-          Protocol
-        </Skeleton>
+        <Skeleton loading={ isLoading }>{ tQuat('multiUi.protocol') }</Skeleton>
         { data.bridge ? (
           <CrossChainBridgeLink data={ data.bridge } isLoading={ isLoading }/>
         ) : dashElement }

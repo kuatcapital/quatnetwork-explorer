@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 
@@ -17,12 +19,16 @@ import ArbitrumL2MessageStatus from 'ui/shared/statusTag/ArbitrumL2MessageStatus
 import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
 
 import type { MessagesDirection } from './ArbitrumL2Messages';
+import { useTranslation } from 'react-i18next';
+
 
 const rollupFeature = config.features.rollup;
 
 type Props = { item: ArbitrumL2MessagesItem; isLoading?: boolean; direction: MessagesDirection };
 
 const ArbitrumL2MessagesTableItem = ({ item, direction, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'arbitrum') {
     return null;
   }
@@ -41,7 +47,7 @@ const ArbitrumL2MessagesTableItem = ({ item, direction, isLoading }: Props) => {
               fontWeight={ 600 }
               noIcon
             />
-          ) : <chakra.span color="text.secondary">N/A</chakra.span> }
+          ) : <chakra.span color="text.secondary">{ tQuat('l2Ui.not_available') }</chakra.span> }
         </TableCell>
       ) }
       { direction === 'from-rollup' && (
@@ -68,9 +74,7 @@ const ArbitrumL2MessagesTableItem = ({ item, direction, isLoading }: Props) => {
             noIcon
           />
         ) : (
-          <chakra.span color="text.secondary">
-            N/A
-          </chakra.span>
+          <chakra.span color="text.secondary">{ tQuat('l2Ui.not_available') }</chakra.span>
         ) }
       </TableCell>
       <TableCell verticalAlign="middle" pr={ 12 }>
@@ -81,8 +85,8 @@ const ArbitrumL2MessagesTableItem = ({ item, direction, isLoading }: Props) => {
         />
       </TableCell>
       <TableCell verticalAlign="middle">
-        { item.status === 'confirmed' && direction === 'from-rollup' ?
-          <Link href={ route({ pathname: '/txn-withdrawals', query: { q: item.origination_transaction_hash } }) }>Ready for relay</Link> :
+        { item.status === "confirmed" && direction === 'from-rollup' ?
+          <Link href={ route({ pathname: '/txn-withdrawals', query: { q: item.origination_transaction_hash } }) }>{ tQuat('l2Ui.ready_relay') }</Link> :
           <ArbitrumL2MessageStatus status={ item.status } isLoading={ isLoading }/> }
       </TableCell>
       <TableCell verticalAlign="middle">
@@ -95,9 +99,7 @@ const ArbitrumL2MessagesTableItem = ({ item, direction, isLoading }: Props) => {
             noCopy
           />
         ) : (
-          <chakra.span color="text.secondary">
-            N/A
-          </chakra.span>
+          <chakra.span color="text.secondary">{ tQuat('l2Ui.not_available') }</chakra.span>
         ) }
       </TableCell>
     </TableRow>

@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -26,6 +28,7 @@ const ZETACHAIN_TABS = [ 'zetachain_validated', 'zetachain_pending' ];
 const CROSS_CHAIN_TABS = [ 'cctx_pending', 'cctx_mined' ];
 
 const TransactionsZetaChain = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const isMobile = useIsMobile();
   const tab = getQueryParamString(router.query.tab);
@@ -97,7 +100,7 @@ const TransactionsZetaChain = () => {
   const tabs: Array<TabItemRegular> = [
     {
       id: 'cctx',
-      title: 'Cross chain',
+      title: tQuat('multiUi.cross_chain_tab'),
       component: (
         <SocketProvider url={ config.apis.zetachain?.socketEndpoint } name="zetachain">
           <ZetaChainCCTXsTab/>
@@ -113,7 +116,7 @@ const TransactionsZetaChain = () => {
     },
     config.features.dataAvailability.isEnabled && {
       id: 'blob_txs',
-      title: 'Blob txns',
+      title: tQuat('multiUi.blob_txs'),
       component: (
         <>
           <TxsStats/>
@@ -124,7 +127,7 @@ const TransactionsZetaChain = () => {
     },
     isAuth ? {
       id: 'watchlist',
-      title: 'Watch list',
+      title: tQuat('multiUi.watchlist'),
       component: (
         <>
           <TxsStats/>
@@ -138,7 +141,7 @@ const TransactionsZetaChain = () => {
   return (
     <>
       <PageTitle
-        title={ config.meta.seo.enhancedDataEnabled ? `${ config.chain.name } transactions` : 'Transactions' }
+        title={ config.meta.seo.enhancedDataEnabled ? tQuat('multiUi.transactions_chain', { chain: config.chain.name }) : tQuat('common.transactions') }
         withTextAd
       />
       <RoutedTabs tabs={ tabs } defaultTabId="zetachain"/>

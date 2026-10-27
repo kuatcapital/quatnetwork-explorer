@@ -1,3 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -13,8 +17,13 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
+import { useTranslation } from 'react-i18next';
+
 
 const OptimisticL2OutputRoots = () => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:optimistic_l2_output_roots',
     options: {
@@ -61,10 +70,9 @@ const OptimisticL2OutputRoots = () => {
 
     return (
       <Skeleton loading={ countersQuery.isPlaceholderData || isPlaceholderData } display="flex" flexWrap="wrap">
-        { layerLabels.current } output index
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[0].l2_output_index } </Text>to
+        { layerLabels.current }{ ' ' }{ tQuat('l2Ui.output_index') }<Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[0].l2_output_index } </Text>to
         <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[data.items.length - 1].l2_output_index } </Text>
-        (total of { countersQuery.data?.toLocaleString() } roots)
+        (total of { countersQuery.data?.toLocaleString(NUMBER_LOCALES[locale]) } roots)
       </Skeleton>
     );
   })();
@@ -73,11 +81,11 @@ const OptimisticL2OutputRoots = () => {
 
   return (
     <>
-      <PageTitle title="Output roots" withTextAd/>
+      <PageTitle title={ tQuat('l2Ui.output_roots') } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no output roots."
+        emptyText={ tQuat('l2Ui.no_output_roots') }
         actionBar={ actionBar }
       >
         { content }

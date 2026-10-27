@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,11 +30,9 @@ const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint={ `Hash of ${ layerLabels.parent } tx on which the batch was committed` }
+        hint={ tQuat('l2Ui.commit_hash_hint', { parent: layerLabels.parent }) }
         isLoading={ isLoading }
-      >
-        Commit tx hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.commit_tx_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow >
         { data.commit_transaction_hash ? (
           <>
@@ -50,11 +49,9 @@ const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint={ `Hash of ${ layerLabels.parent } tx on which the batch was proven` }
+        hint={ tQuat('l2Ui.prove_hash_hint', { parent: layerLabels.parent }) }
         isLoading={ isLoading }
-      >
-        Prove tx hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.prove_tx_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow>
         { data.prove_transaction_hash ? (
           <>
@@ -71,11 +68,9 @@ const ZkSyncL2TxnBatchHashesInfo = ({ isLoading, data }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint={ `Hash of ${ layerLabels.parent } tx on which the batch was executed and finalized` }
+        hint={ tQuat('l2Ui.execute_hash_hint', { parent: layerLabels.parent }) }
         isLoading={ isLoading }
-      >
-        Execute tx hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.execute_tx_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue multiRow>
         { data.execute_transaction_hash ? (
           <>

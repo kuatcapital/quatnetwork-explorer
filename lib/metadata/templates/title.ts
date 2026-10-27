@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
 import { getFeaturePayload } from 'configs/app/features/types';
 
 import type { Route } from 'nextjs-routes';
 
 import config from 'configs/app';
 import { layerLabels } from 'lib/rollups/utils';
+
+import type { MetadataTemplateParams } from './localize';
+import { localizeMetadataTemplate, metadataRouteKey } from './localize';
 
 const dappEntityName = (getFeaturePayload(config.features.marketplace)?.titles.entity_name ?? '').toLowerCase();
 
@@ -112,9 +116,24 @@ const TEMPLATE_MAP_ENHANCED: Partial<Record<Route['pathname'], string>> = {
   '/stats/[id]': '%title% chart on %network_name%',
 };
 
-export function make(pathname: Route['pathname'], isEnriched = false) {
-  const template = (isEnriched ? TEMPLATE_MAP_ENHANCED[pathname] : undefined) ?? TEMPLATE_MAP[pathname];
+export function make(pathname: Route['pathname'], isEnriched = false, t?: TFunction, params: MetadataTemplateParams = {}): string {
+  const enrichedTemplate = isEnriched ? TEMPLATE_MAP_ENHANCED[pathname] : undefined;
+  const template = enrichedTemplate ?? TEMPLATE_MAP[pathname];
   const postfix = config.meta.promoteBlockscoutInTitle ? ' | Blockscout' : '';
 
-  return (template + postfix).trim();
+  if (!t) return (template + postfix).trim();
+
+  const knownEntity = dappEntityName === 'dapp' || dappEntityName === 'app';
+  const entityName = knownEntity ? t(`metaSeo.${ dappEntityName }_entity`) : dappEntityName;
+  const entityPlural = knownEntity ? t(`metaSeo.${ dappEntityName }_entities`) : `${ dappEntityName }s`;
+  const key = `metaSeo.title.${ enrichedTemplate ? 'enriched' : 'routes' }.${ metadataRouteKey(pathname) }`;
+  return (localizeMetadataTemplate(template, key, t, {
+    ...params,
+    current_layer: layerLabels.current,
+    parent_layer: layerLabels.parent,
+    app_entity_name: entityName,
+    apps_entity_plural: entityPlural,
+  }) + postfix).trim();
 }
+// Modified by Quat Capital, 2026-10-27: localized runtime title templates. GPL-3.0.
+import type { TFunction } from 'i18next';

@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -16,21 +18,21 @@ interface Props {
 }
 
 const TokenTransferTable = ({ items, top, isLoading, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <AddressHighlightProvider>
       <TableRoot minW="950px" tableLayout="auto">
         <TableHeaderSticky top={ top }>
           <TableRow>
             { chainData && <TableColumnHeader width="38px"/> }
-            <TableColumnHeader>
-              Txn hash
-              <TimeFormatToggle/>
+            <TableColumnHeader>{ tQuat('suppUi.txn_hash') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader>Method</TableColumnHeader>
-            <TableColumnHeader>Block</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('suppUi.method') }</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('suppUi.block') }</TableColumnHeader>
             <TableColumnHeader>From/To</TableColumnHeader>
-            <TableColumnHeader>Token ID</TableColumnHeader>
-            <TableColumnHeader isNumeric>Amount</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('suppUi.token_id') }</TableColumnHeader>
+            <TableColumnHeader isNumeric>{ tQuat('suppUi.amount') }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

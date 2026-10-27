@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -23,7 +23,7 @@ const MultichainAddressTokensTable = ({ data, top, isLoading }: Props) => {
         <TableRow>
           <TableColumnHeader width="55%">{ tQuat('addresses.asset') }</TableColumnHeader>
           <TableColumnHeader width="15%" isNumeric>{ tQuat('common.price') }</TableColumnHeader>
-          <TableColumnHeader width="15%" isNumeric>Quantity</TableColumnHeader>
+          <TableColumnHeader width="15%" isNumeric>{ tQuat('multiUi.quantity') }</TableColumnHeader>
           <TableColumnHeader width="15%" isNumeric>Value</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

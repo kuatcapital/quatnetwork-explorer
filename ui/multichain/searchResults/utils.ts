@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+import type { TFunction } from 'i18next';
 import type { ReturnType } from 'lib/api/useApiInfiniteQuery';
 
 export interface SearchQueries {
@@ -31,3 +33,15 @@ export const SEARCH_TABS_IDS: Record<QueryType, string> = {
   nfts: 'nfts',
   domains: 'names',
 };
+
+export function getSearchTabsNames(t: TFunction): Record<QueryType, string> {
+  return {
+    tokens: t('multiUi.search_tokens'),
+    nfts: t('multiUi.search_nfts'),
+    addresses: t('common.addresses'),
+    blockNumbers: t('multiUi.block_numbers'),
+    blocks: t('common.blocks'),
+    transactions: t('common.transactions'),
+    domains: t('search.categories.names'),
+  };
+}

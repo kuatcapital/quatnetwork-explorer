@@ -1,3 +1,7 @@
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
 
@@ -21,6 +25,8 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ArbitrumL2TxnBatchesItem; isLoading?: boolean };
 
 const ArbitrumL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'arbitrum') {
     return null;
   }
@@ -48,7 +54,7 @@ const ArbitrumL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
         />
       </TableCell>
       <TableCell verticalAlign="middle">
-        <Skeleton loading={ isLoading } display="inline-block">{ item.blocks_count ? item.blocks_count.toLocaleString() : 'N/A' }</Skeleton>
+        <Skeleton loading={ isLoading } display="inline-block">{ item.blocks_count ? item.blocks_count.toLocaleString(NUMBER_LOCALES[locale]) : tQuat('l2Ui.not_available') }</Skeleton>
       </TableCell>
       <TableCell pr={ 12 } verticalAlign="middle">
         <TxEntityL1
@@ -61,7 +67,7 @@ const ArbitrumL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
       <TableCell verticalAlign="middle">
         <TimeWithTooltip
           timestamp={ item.commitment_transaction.timestamp }
-          fallbackText="Undefined"
+          fallbackText={ tQuat('l2Ui.undefined') }
           isLoading={ isLoading }
           color="text.secondary"
         />
@@ -72,7 +78,7 @@ const ArbitrumL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
           loading={ isLoading }
           minW="40px"
         >
-          { item.transactions_count.toLocaleString() }
+          { item.transactions_count.toLocaleString(NUMBER_LOCALES[locale]) }
         </Link>
       </TableCell>
     </TableRow>

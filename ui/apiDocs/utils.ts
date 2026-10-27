@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
 import type { SwaggerRequest } from './types';
 
 import config from 'configs/app';
@@ -110,3 +111,24 @@ export const REST_API_SECTIONS = [
     },
   },
 ].filter(Boolean);
+// Modified by Quat Capital, 2026-10-27: translate section names without changing API wiring. GPL-3.0.
+import type { TFunction } from 'i18next';
+
+
+export function getRestApiSections(t: TFunction): typeof REST_API_SECTIONS {
+  return REST_API_SECTIONS.map((section) => {
+    const title = (() => {
+      switch (section.id) {
+        case 'blockscout-core-api': return t('pageUi.core_api');
+        case 'stats-api': return t('pageUi.stats_api');
+        case 'bens-api': return t('pageUi.name_api');
+        case 'user-ops-api': return t('pageUi.user_ops_api');
+        case 'tac-api': return t('pageUi.tac_api');
+        case 'zetachain-api': return t('pageUi.zeta_api');
+        case 'interchain-indexer-api': return t('pageUi.interchain_api');
+        default: return section.title;
+      }
+    })();
+    return { ...section, title };
+  });
+}

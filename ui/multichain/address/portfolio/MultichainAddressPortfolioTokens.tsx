@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import { groupBy, mapValues } from 'es-toolkit';
@@ -26,6 +27,8 @@ import MultichainAddressPortfolioCards from './MultichainAddressPortfolioCards';
 import MultichainAddressPortfolioNetWorth from './MultichainAddressPortfolioNetWorth';
 import MultichainAddressTokensListItem from './MultichainAddressTokensListItem';
 import MultichainAddressTokensTable from './MultichainAddressTokensTable';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   addressData: multichain.GetAddressResponse | undefined;
@@ -34,6 +37,8 @@ interface Props {
 }
 
 const MultichainAddressPortfolioTokens = ({ addressData, isLoading, onChainChange }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const config = multichainConfig();
   const router = useRouter();
 
@@ -182,7 +187,7 @@ const MultichainAddressPortfolioTokens = ({ addressData, isLoading, onChainChang
       w={{ base: '100%', lg: '350px' }}
       size="sm"
       onChange={ handleSearchTermChange }
-      placeholder="Filter by token name or symbol"
+      placeholder={ tQuat('multiUi.filter_token') }
       initialValue={ searchTerm }
     />
   );

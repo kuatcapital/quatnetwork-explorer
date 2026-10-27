@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,13 +24,13 @@ const OptimisticL2TxnBatchesTable = ({ items, top, isLoading }: Props) => {
     <TableRoot tableLayout="auto" minW="850px">
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader>Batch ID</TableColumnHeader>
-          <TableColumnHeader>Storage</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.batch_id') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.storage') }</TableColumnHeader>
           <TableColumnHeader>{ tQuat('common.timestamp') }<TimeFormatToggle/>
           </TableColumnHeader>
-          <TableColumnHeader isNumeric>{ layerLabels.parent } txn count</TableColumnHeader>
-          <TableColumnHeader isNumeric>{ layerLabels.current } blocks</TableColumnHeader>
-          <TableColumnHeader isNumeric>Txn</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ tQuat('l2Ui.layer_txn_count', { layer: layerLabels.parent }) }</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ tQuat('l2Ui.layer_blocks', { layer: layerLabels.current }) }</TableColumnHeader>
+          <TableColumnHeader isNumeric>{ tQuat('l2Ui.txn') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

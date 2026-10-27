@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, createListCollection, HStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,18 +13,17 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import Pagination from 'ui/shared/pagination/Pagination';
 import Sort from 'ui/shared/sort/Sort';
 import useVerifiedContractsQuery from 'ui/verifiedContracts/useVerifiedContractsQuery';
-import { SORT_OPTIONS } from 'ui/verifiedContracts/utils';
+import { getVerifiedContractsSortOptions } from 'ui/verifiedContracts/utils';
 import VerifiedContractsCounters from 'ui/verifiedContracts/VerifiedContractsCounters';
 import VerifiedContractsFilter from 'ui/verifiedContracts/VerifiedContractsFilter';
 import VerifiedContractsList from 'ui/verifiedContracts/VerifiedContractsList';
 import VerifiedContractsTable from 'ui/verifiedContracts/VerifiedContractsTable';
 
-const sortCollection = createListCollection({
-  items: SORT_OPTIONS,
-});
+
 
 const MultichainVerifiedContracts = () => {
   const { t: tQuat } = useTranslation();
+  const sortCollection = React.useMemo(() => createListCollection({ items: getVerifiedContractsSortOptions(tQuat) }), [ tQuat ]);
 
   const isMobile = useIsMobile();
 
@@ -92,7 +91,7 @@ const MultichainVerifiedContracts = () => {
   return (
     <Box>
       <PageTitle
-        title="Verified contracts"
+        title={ tQuat('multiUi.verified_contracts') }
         withTextAd
       />
       <ChainSelect

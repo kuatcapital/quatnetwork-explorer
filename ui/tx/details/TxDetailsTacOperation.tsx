@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: runtime transaction localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localized TAC stages in transaction details. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ const TxDetailsTacOperation = ({ tacOperations, isLoading, txHash }: Props) => {
       >
         { tacOperations.map((tacOperation) => {
           const tags = [
-            ...(getTacOperationStage(tacOperation, txHash) || []),
+            ...(getTacOperationStage(tacOperation, txHash, tTx) || []),
           ];
 
           return (

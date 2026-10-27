@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Flex, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,11 +29,9 @@ const TxCrossChainDetailsTransfers = ({ data, id, isLoading }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Tokens moved as part of the cross-chain operation"
+        hint={ tQuat('multiUi.transfers_hint') }
         isLoading={ isLoading }
-      >
-        Token transferred
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('multiUi.token_transferred') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue position="relative" multiRow>
         <Flex
           flexDirection="column"
@@ -53,7 +51,7 @@ const TxCrossChainDetailsTransfers = ({ data, id, isLoading }: Props) => {
                     noIcon
                     truncation="constant"
                   />
-                ) : <chakra.span color="text.secondary">Unknown</chakra.span> }
+                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
                 <AddressFromToIcon
                   isLoading={ isLoading }
                   type="unspecified"
@@ -66,7 +64,7 @@ const TxCrossChainDetailsTransfers = ({ data, id, isLoading }: Props) => {
                     noIcon
                     truncation="constant"
                   />
-                ) : <chakra.span color="text.secondary">Unknown</chakra.span> }
+                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
                 <Skeleton loading={ isLoading } color="text.secondary">
                   <span>for</span>
                 </Skeleton>
@@ -77,7 +75,7 @@ const TxCrossChainDetailsTransfers = ({ data, id, isLoading }: Props) => {
                     chain={ item.source_chain }
                     loading={ isLoading }
                   />
-                ) : <chakra.span color="text.secondary">Unknown</chakra.span> }
+                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
                 <AddressFromToIcon
                   isLoading={ isLoading }
                   type="unspecified"
@@ -89,7 +87,7 @@ const TxCrossChainDetailsTransfers = ({ data, id, isLoading }: Props) => {
                     chain={ item.destination_chain }
                     loading={ isLoading }
                   />
-                ) : <chakra.span color="text.secondary">Unknown</chakra.span> }
+                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
               </Flex>
             );
           }) }

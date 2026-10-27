@@ -1,3 +1,6 @@
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +26,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ArbitrumL2TxnBatchesItem; isLoading?: boolean };
 
 const ArbitrumL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'arbitrum') {
@@ -32,7 +36,7 @@ const ArbitrumL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="110px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Batch #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.batch_marker') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BatchEntityL2
           isLoading={ isLoading }
@@ -41,12 +45,12 @@ const ArbitrumL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>{ layerLabels.parent } status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_status', { layer: layerLabels.parent }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <ArbitrumL2TxnBatchStatus status={ item.commitment_transaction.status } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>{ layerLabels.parent } block</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_block', { layer: layerLabels.parent }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BlockEntityL1
           number={ item.commitment_transaction.block_number }
@@ -56,14 +60,14 @@ const ArbitrumL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
 
       { item.blocks_count && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Block count</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.block_count') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
-            <Skeleton loading={ isLoading } display="inline-block">{ item.blocks_count.toLocaleString() }</Skeleton>
+            <Skeleton loading={ isLoading } display="inline-block">{ item.blocks_count.toLocaleString(NUMBER_LOCALES[locale]) }</Skeleton>
           </ListItemMobileGrid.Value>
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>{ layerLabels.parent }{ ' ' }{ tQuat('toolkit.term_transaction') }</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_transaction', { layer: layerLabels.parent }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TxEntityL1
           hash={ item.commitment_transaction.hash }
@@ -77,7 +81,7 @@ const ArbitrumL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.commitment_transaction.timestamp }
-          fallbackText="Undefined"
+          fallbackText={ tQuat('l2Ui.undefined') }
           isLoading={ isLoading }
           display="inline-block"
         />
@@ -91,11 +95,11 @@ const ArbitrumL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
           fontWeight={ 600 }
           minW="40px"
         >
-          { item.transactions_count.toLocaleString() }
+          { item.transactions_count.toLocaleString(NUMBER_LOCALES[locale]) }
         </Link>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Data container</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.data_container') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <ArbitrumL2TxnBatchDA dataContainer={ item.batch_data_container } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>

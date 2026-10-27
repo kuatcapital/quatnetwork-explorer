@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -82,7 +82,7 @@ const MultichainUserOps = () => {
       <DataListDisplay
         isError={ query.isError }
         itemsNum={ query.data?.items?.length }
-        emptyText="There are no user operations."
+        emptyText={ tQuat('operationsUi.empty') }
         actionBar={ actionBar }
         showActionBarIfError
         showActionBarIfEmpty

@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+import { useTranslation , Trans } from 'react-i18next';
 import { Box, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
@@ -28,6 +30,7 @@ import ClustersLeaderboardListItem from './ClustersLeaderboardListItem';
 import ClustersLeaderboardTable from './ClustersLeaderboardTable';
 
 const Clusters = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const { updateQuery } = useQueryParams();
 
@@ -138,8 +141,11 @@ const Clusters = () => {
   return (
     <>
       <Text mb={ 6 } textStyle={{ base: 'sm', lg: 'md' }}>
-        <Link href="https://clusters.xyz/?utm_source=blockscout" external noIcon>Clusters</Link>{ ' ' }
-        is a cross-chain name service for managing addresses on multiple blockchains using a universal naming directory.
+        <Trans
+          t={ tQuat }
+          i18nKey="multiUi.clusters_explanation"
+          components={{ clusters: <Link href="https://clusters.xyz/?utm_source=blockscout" external noIcon>Clusters</Link> }}
+        />
       </Text>
       <DataListDisplay
         isError={ isError }

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -33,12 +34,12 @@ const MultichainTxs = () => {
     return [
       {
         id: 'txs_cross_chain',
-        title: 'Cross-chain',
+        title: tQuat('multiUi.cross_chain'),
         component: <EmptyState type="coming_soon"/>,
       },
       {
         id: 'txs_local',
-        title: 'Local',
+        title: tQuat('multiUi.local'),
         component: (
           <MultichainProvider chainId={ chainSelect.value?.[0] }>
             <MultichainTxsLocal/>
@@ -47,7 +48,7 @@ const MultichainTxs = () => {
         subTabs: MULTICHAIN_TXS_LOCAL_TAB_IDS,
       },
     ];
-  }, [ chainSelect.value ]);
+  }, [ chainSelect.value , tQuat ]);
 
   const rightSlot = isLocalTxs && (
     <ChainSelect

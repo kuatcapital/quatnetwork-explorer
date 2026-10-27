@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: reactive API documentation sections. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -9,9 +11,11 @@ import { ContentLoader } from 'toolkit/components/loaders/ContentLoader';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 
 import SwaggerUI from './SwaggerUI';
-import { REST_API_SECTIONS } from './utils';
+import { getRestApiSections } from './utils';
 
 const RestApi = () => {
+  const { t } = useTranslation();
+  const apiSections = React.useMemo(() => getRestApiSections(t), [ t ]);
 
   const configQuery = useApiQuery('general:config_backend', {
     queryOptions: {
@@ -28,7 +32,7 @@ const RestApi = () => {
 
   const isLoading = config.features.apiDocs.isEnabled ? configQuery.isPending || configVersionQuery.isPending : false;
 
-  const { value, onValueChange, scrollToItemFromUrl } = useAccordion(REST_API_SECTIONS);
+  const { value, onValueChange, scrollToItemFromUrl } = useAccordion(apiSections);
 
   React.useEffect(() => {
     if (!isLoading) {
@@ -56,10 +60,10 @@ const RestApi = () => {
 
   const sections = React.useMemo(() => {
     if (!coreApiSwaggerUrl) {
-      return REST_API_SECTIONS;
+      return apiSections;
     }
 
-    return REST_API_SECTIONS.map((section) => {
+    return apiSections.map((section) => {
       if (section.id === 'blockscout-core-api') {
         return {
           ...section,
@@ -71,7 +75,7 @@ const RestApi = () => {
       }
       return section;
     });
-  }, [ coreApiSwaggerUrl ]);
+  }, [ coreApiSwaggerUrl, apiSections ]);
 
   if (isLoading) {
     return <ContentLoader/>;

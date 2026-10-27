@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -18,6 +20,7 @@ import ZkEvmL2TxnBatchDetails from 'ui/txnBatches/zkEvmL2/ZkEvmL2TxnBatchDetails
 import TxsWithFrontendSorting from 'ui/txs/TxsWithFrontendSorting';
 
 const ZkEvmL2TxnBatch = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const number = getQueryParamString(router.query.number);
   const tab = getQueryParamString(router.query.tab);
@@ -44,14 +47,14 @@ const ZkEvmL2TxnBatch = () => {
   throwOnResourceLoadError(batchQuery);
 
   const tabs: Array<TabItemRegular> = React.useMemo(() => ([
-    { id: 'index', title: 'Details', component: <ZkEvmL2TxnBatchDetails query={ batchQuery }/> },
-    { id: 'txs', title: 'Transactions', component: <TxsWithFrontendSorting query={ batchTxsQuery }/> },
-  ].filter(Boolean)), [ batchQuery, batchTxsQuery ]);
+    { id: 'index', title: tQuat('l2Ui.details'), component: <ZkEvmL2TxnBatchDetails query={ batchQuery }/> },
+    { id: 'txs', title: tQuat('l2Ui.transactions'), component: <TxsWithFrontendSorting query={ batchTxsQuery }/> },
+  ].filter(Boolean)), [ batchQuery, batchTxsQuery , tQuat ]);
 
   return (
     <>
       <TextAd mb={ 6 }/>
-      <PageTitle title={ `Txn batch #${ number }` }/>
+      <PageTitle title={ tQuat('l2Ui.batch_title', { number: number }) }/>
       <RoutedTabs
         tabs={ tabs }
         isLoading={ batchQuery.isPlaceholderData }

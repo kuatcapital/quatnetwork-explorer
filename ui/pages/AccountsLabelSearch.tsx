@@ -1,3 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+import { useTranslation , Trans } from 'react-i18next';
 import { Box, chakra, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -18,6 +22,8 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 
 const AccountsLabelSearch = () => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const router = useRouter();
   const slug = getQueryParamString(router.query.slug);
@@ -81,13 +87,14 @@ const AccountsLabelSearch = () => {
     return (
       <Flex alignItems="center" columnGap={ 2 } flexWrap="wrap" rowGap={ 1 }>
         <Skeleton loading={ isPlaceholderData } display="inline-block">
-          Found{ ' ' }
-          <chakra.span fontWeight={ 700 }>
-            { num }{ data?.next_page_params || pagination.page > 1 ? '+' : '' }
-          </chakra.span>{ ' ' }
-          matching result{ num > 1 ? 's' : '' } for
+          <Trans
+            t={ tQuat }
+            i18nKey="multiUi.matching_tag"
+            count={ num }
+            values={{ value: `${ formatNumber(num, locale) }${ data?.next_page_params || pagination.page > 1 ? '+' : '' }` }}
+            components={{ value: <chakra.span fontWeight={ 700 }/>, tag: <EntityTag data={ tagData } isLoading={ isPlaceholderData } noLink/> }}
+          />
         </Skeleton>
-        <EntityTag data={ tagData } isLoading={ isPlaceholderData } noLink/>
       </Flex>
     );
   })();
@@ -96,7 +103,7 @@ const AccountsLabelSearch = () => {
 
   return (
     <>
-      <PageTitle title="Search result" withTextAd/>
+      <PageTitle title={ tQuat('multiUi.search_result_title', { count: data?.items.length ?? 0 }) } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }

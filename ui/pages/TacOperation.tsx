@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -10,8 +12,12 @@ import TextAd from 'ui/shared/ad/TextAd';
 import OperationEntity from 'ui/shared/entities/operation/OperationEntity';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import TacOperationTag from 'ui/shared/TacOperationTag';
+import { useTranslation } from 'react-i18next';
+
 
 const TacOperation = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const id = getQueryParamString(router.query.id);
 
@@ -36,7 +42,7 @@ const TacOperation = () => {
     <>
       <TextAd mb={ 6 }/>
       <PageTitle
-        title="Operation details"
+        title={ tQuat('l2Ui.operation_details') }
         contentAfter={ titleContentAfter }
         isLoading={ query.isPlaceholderData }
         secondRow={ titleSecondRow }

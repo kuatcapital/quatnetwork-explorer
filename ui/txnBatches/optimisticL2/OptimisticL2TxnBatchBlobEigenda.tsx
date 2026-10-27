@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, GridItem, VStack } from '@chakra-ui/react';
 import React from 'react';
@@ -26,7 +27,7 @@ const OptimisticL2TxnBatchBlobEigenda = ({ blobs, isLoading }: Props) => {
       { blobs.map((blob) => {
         return (
           <OptimisticL2TxnBatchBlobWrapper key={ blob.cert } isLoading={ isLoading }>
-            <GridItem fontWeight={ 600 }>Cert</GridItem>
+            <GridItem fontWeight={ 600 }>{ tQuat('l2Ui.certificate') }</GridItem>
             <GridItem overflow="hidden">
               <Flex minW="0" w="calc(100% - 20px)">
                 <HashStringShortenDynamic hash={ blob.cert }/>
@@ -37,7 +38,7 @@ const OptimisticL2TxnBatchBlobEigenda = ({ blobs, isLoading }: Props) => {
             <GridItem overflow="hidden">
               <DetailedInfoTimestamp timestamp={ blob.l1_timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }}/>
             </GridItem>
-            <GridItem fontWeight={ 600 }>{ layerLabels.parent } txn hash</GridItem>
+            <GridItem fontWeight={ 600 }>{ tQuat('l2Ui.layer_txn_hash', { layer: layerLabels.parent }) }</GridItem>
             <GridItem overflow="hidden">
               <TxEntityL1 hash={ blob.l1_transaction_hash } noIcon/>
             </GridItem>

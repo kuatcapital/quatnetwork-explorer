@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { Box, HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -41,6 +43,7 @@ interface Props {
 }
 
 const MultichainAddressPortfolio = ({ addressData, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobile();
@@ -107,7 +110,7 @@ const MultichainAddressPortfolio = ({ addressData, isLoading }: Props) => {
   const tabs: Array<TabItemRegular> = [
     {
       id: 'portfolio_tokens',
-      title: 'Tokens',
+      title: tQuat('common.tokens'),
       component: <MultichainAddressPortfolioTokens addressData={ addressData } isLoading={ isLoading } onChainChange={ handleChainChange }/>,
     },
     {

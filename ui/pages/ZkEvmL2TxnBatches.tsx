@@ -1,3 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,8 +16,13 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 import ZkEvmTxnBatchesListItem from 'ui/txnBatches/zkEvmL2/ZkEvmTxnBatchesListItem';
 import ZkEvmTxnBatchesTable from 'ui/txnBatches/zkEvmL2/ZkEvmTxnBatchesTable';
+import { Trans, useTranslation } from 'react-i18next';
+
 
 const ZkEvmL2TxnBatches = () => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:zkevm_l2_txn_batches',
     options: {
@@ -60,10 +69,10 @@ const ZkEvmL2TxnBatches = () => {
 
     return (
       <Skeleton loading={ countersQuery.isPlaceholderData || isPlaceholderData } display="flex" flexWrap="wrap">
-        Txn batch
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[0].number } </Text>to
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[data.items.length - 1].number } </Text>
-        (total of { countersQuery.data?.toLocaleString() } batches)
+        <Trans t={ tQuat } i18nKey="l2Ui.batches_range" count={ countersQuery.data ?? 0 }
+          values={{ from: formatNumber(data.items[0].number, locale), to: formatNumber(data.items[data.items.length - 1].number, locale), total: formatNumber(countersQuery.data ?? 0, locale) }}
+          components={{ from: <Text fontWeight={ 600 } whiteSpace="pre"/>, to: <Text fontWeight={ 600 } whiteSpace="pre"/> }}
+        />
       </Skeleton>
     );
   })();
@@ -72,11 +81,11 @@ const ZkEvmL2TxnBatches = () => {
 
   return (
     <>
-      <PageTitle title="Txn batches" withTextAd/>
+      <PageTitle title={ tQuat('l2Ui.batches') } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText="There are no txn batches."
+        emptyText={ tQuat('l2Ui.no_batches') }
         actionBar={ actionBar }
       >
         { content }

@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: refresh localized token metadata when the UI language changes. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -93,9 +93,10 @@ const TokenInstanceContent = () => {
       metadata.update(
         { pathname: '/token/[hash]/instance/[id]', query: { hash: tokenQuery.data.address_hash, id: tokenInstanceQuery.data.id } },
         { symbol_or_name: tokenQuery.data.symbol ?? tokenQuery.data.name ?? '' },
+        tQuat,
       );
     }
-  }, [ tokenInstanceQuery.data, tokenInstanceQuery.isPlaceholderData, tokenQuery.data, tokenQuery.isPlaceholderData ]);
+  }, [ tokenInstanceQuery.data, tokenInstanceQuery.isPlaceholderData, tokenQuery.data, tokenQuery.isPlaceholderData, tQuat ]);
 
   const tabs: Array<TabItemRegular> = [
     {

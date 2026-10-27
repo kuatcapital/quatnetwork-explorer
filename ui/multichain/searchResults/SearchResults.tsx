@@ -1,7 +1,9 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation , Trans } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import useRoutedChainSelect from 'lib/multichain/useRoutedChainSelect';
@@ -21,7 +23,7 @@ import SearchResultTabContent from './SearchResultTabContent';
 import useSearchQuery from './useSearchQuery';
 import useSearchRedirect from './useSearchRedirect';
 import type { QueryType } from './utils';
-import { SEARCH_TABS_IDS, SEARCH_TABS_NAMES } from './utils';
+import { SEARCH_TABS_IDS, getSearchTabsNames } from './utils';
 
 const TAB_LIST_PROPS = {
   marginBottom: 0,
@@ -33,7 +35,9 @@ const TAB_LIST_PROPS = {
 const PRESERVED_PARAMS = [ 'q', 'tab', 'chain_id' ];
 
 const SearchResults = () => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
+  const searchTabNames = React.useMemo(() => getSearchTabsNames(tQuat), [ tQuat ]);
 
   const isMobile = useIsMobile();
 
@@ -94,7 +98,7 @@ const SearchResults = () => {
 
     return {
       id: value,
-      title: SEARCH_TABS_NAMES[queryType],
+      title: searchTabNames[queryType],
       component: (
         <SearchResultTabContent
           queries={ queries }
@@ -110,7 +114,7 @@ const SearchResults = () => {
   const tabs = [
     {
       id: 'all',
-      title: 'All',
+      title: tQuat('multiUi.all'),
       component: (
         <SearchResultTabContent
           queries={ queries }
@@ -130,7 +134,12 @@ const SearchResults = () => {
       <>
         <PageTitle title={ tQuat('common.search_results') }/>
         <Skeleton loading={ totalResults === undefined } mb={ 6 } w="fit-content">
-          Found <chakra.span fontWeight={ 700 }>{ totalResults?.num }{ totalResults?.isOverflow ? '+' : '' }</chakra.span> matching results
+          <Trans
+            t={ tQuat }
+            i18nKey="multiUi.search_found"
+            values={{ value: `${ formatNumber(totalResults?.num ?? 0, locale) }${ totalResults?.isOverflow ? '+' : '' }` }}
+            components={{ value: <chakra.span fontWeight={ 700 }/> }}
+          />
         </Skeleton>
         <RoutedTabs
           tabs={ tabs }

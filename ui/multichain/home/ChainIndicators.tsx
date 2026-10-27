@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
@@ -17,6 +19,7 @@ import useChartDataQuery from './useChartDataQuery';
 import useFetchParentChainApi from './useFetchParentChainApi';
 
 const ChainIndicators = () => {
+  const { t: tQuat } = useTranslation();
   const statsQuery = useApiQuery('multichainStats:pages_main', {
     queryOptions: {
       refetchOnMount: false,
@@ -63,7 +66,7 @@ const ChainIndicators = () => {
     },
     parentChainStatsQuery.data && {
       id: 'coin_price' as const,
-      title: 'ETH price',
+      title: tQuat('multiUi.eth_price'),
       value: (() => {
         if (parentChainStatsQuery.data.coin_price) {
           return '$' + Number(parentChainStatsQuery.data.coin_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 });
@@ -72,11 +75,11 @@ const ChainIndicators = () => {
       })(),
       valueDiff: parentChainStatsQuery.data.coin_price_change_percentage ?? undefined,
       icon: <NativeTokenIcon boxSize={ 6 }/>,
-      hint: 'ETH token daily price in USD.',
+      hint: tQuat('multiUi.eth_daily_hint'),
     },
     parentChainStatsQuery.data && {
       id: 'market_cap' as const,
-      title: 'Market cap',
+      title: tQuat('common.market_cap'),
       value: (() => {
         if (parentChainStatsQuery.data.market_cap) {
           return '$' + Number(parentChainStatsQuery.data.market_cap).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' });
@@ -85,13 +88,13 @@ const ChainIndicators = () => {
       })(),
       icon: <IconSvg name="globe" boxSize={ 6 } bgColor="#6A5DCC" borderRadius="base" color="white"/>,
       // eslint-disable-next-line max-len
-      hint: 'The total market value of a cryptocurrency\'s circulating supply. It is analogous to the free-float capitalization in the stock market. Market Cap = Current Price x Circulating Supply.',
+      hint: tQuat('multiUi.market_hint'),
     },
   ]
     .filter(Boolean)
     .filter(isIndicatorEnabled)
     .sort(sortIndicators)
-  ), [ parentChainStatsQuery.data, statsQuery.data ]);
+  ), [ parentChainStatsQuery.data, statsQuery.data , tQuat ]);
 
   const [ selectedIndicatorId, selectIndicatorId ] = React.useState(indicators[0]?.id);
   const selectedIndicator = indicators.find(({ id }) => id === selectedIndicatorId);

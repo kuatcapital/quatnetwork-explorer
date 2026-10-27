@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized multichain messages. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { Box, HStack, Stat } from '@chakra-ui/react';
 import React from 'react';
 
@@ -24,6 +26,7 @@ interface Props {
 }
 
 const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const { data: { wallet } = {} } = useProvider();
   const walletIcon = wallet ? WALLETS_INFO[wallet].icon : undefined;
@@ -124,7 +127,7 @@ const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) =>
             <span>{ Number(data.tps ?? 0).toLocaleString(undefined, { maximumFractionDigits: 2 }) }</span>
           </Skeleton>
           { walletIcon ? (
-            <Tooltip content="Add to wallet">
+            <Tooltip content={ tQuat('multiUi.add_wallet') }>
               <IconButton
                 onClick={ handleAddToWalletClick }
                 size="md"

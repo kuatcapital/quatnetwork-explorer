@@ -1,3 +1,5 @@
+import type { TFunction } from 'i18next';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
@@ -14,7 +16,7 @@ import type { ResourceError } from 'lib/api/resources';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
 import { formatNumber } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
-import { formatZkEvmL2TxnBatchStatus } from 'lib/rollups/utils';
+import { formatZkEvmL2TxnBatchStatus, layerLabels } from 'lib/rollups/utils';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import isCustomAppError from 'ui/shared/AppError/isCustomAppError';
@@ -27,7 +29,7 @@ import HashStringShortenDynamic from 'ui/shared/HashStringShortenDynamic';
 import PrevNext from 'ui/shared/PrevNext';
 import VerificationSteps from 'ui/shared/verificationSteps/VerificationSteps';
 
-const verificationSteps = ZKEVM_L2_TX_BATCH_STATUSES.map(formatZkEvmL2TxnBatchStatus);
+
 
 interface Props {
   query: UseQueryResult<ZkEvmL2TxnBatch, ResourceError>;
@@ -35,6 +37,7 @@ interface Props {
 
 const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
   const { t: tQuat } = useTranslation();
+  const verificationSteps = React.useMemo(() => ZKEVM_L2_TX_BATCH_STATUSES.map(status => getLocalizedBatchStatus(status, tQuat)), [ tQuat ]);
   const { locale } = useLocale();
 
   const router = useRouter();
@@ -70,9 +73,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
     >
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Txn batch number
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.txn_batch_number') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.number }
@@ -80,8 +81,8 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
         <PrevNext
           ml={ 6 }
           onClick={ handlePrevNextClick }
-          prevLabel="View previous txn batch"
-          nextLabel="View next txn batch"
+          prevLabel={ tQuat('l2Ui.previous_batch') }
+          nextLabel={ tQuat('l2Ui.next_batch') }
           isPrevDisabled={ data.number === 0 }
           isLoading={ isPlaceholderData }
         />
@@ -93,7 +94,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
       <DetailedInfo.ItemValue>
         <VerificationSteps
           steps={ verificationSteps }
-          currentStep={ formatZkEvmL2TxnBatchStatus(data.status) }
+          currentStep={ getLocalizedBatchStatus(data.status, tQuat) }
           isLoading={ isPlaceholderData }
         />
       </DetailedInfo.ItemValue>
@@ -102,7 +103,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
         isLoading={ isPlaceholderData }
       >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
-        { data.timestamp ? <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/> : 'Undefined' }
+        { data.timestamp ? <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/> : tQuat('l2Ui.undefined') }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
@@ -137,9 +138,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Global exit root
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.global_exit_root') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue
         flexWrap="nowrap"
       >
@@ -151,9 +150,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        Acc input hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.acc_input_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue
         flexWrap="nowrap"
       >
@@ -179,9 +176,7 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 
       <DetailedInfo.ItemLabel
         isLoading={ isPlaceholderData }
-      >
-        State root
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.state_root') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue
         flexWrap="nowrap"
       >
@@ -195,3 +190,12 @@ const ZkEvmL2TxnBatchDetails = ({ query }: Props) => {
 };
 
 export default ZkEvmL2TxnBatchDetails;
+
+function getLocalizedBatchStatus(status: string, t: TFunction): string {
+  switch (status) {
+    case 'Unfinalized': return t('sharedStatus.unfinalized');
+    case 'L1 Sequence Confirmed': return t('sharedStatus.sequence_confirmed', { layer: layerLabels.parent });
+    case 'Finalized': return t('sharedStatus.finalized');
+    default: return formatZkEvmL2TxnBatchStatus(status);
+  }
+}

@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
@@ -26,6 +28,8 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import VerifyWith from 'ui/shared/VerifyWith';
 
 const Pool = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const hash = getQueryParamString(router.query.hash);
 
@@ -74,12 +78,12 @@ const Pool = () => {
       .map((link) => {
         return (
           <Link external h="34px" key={ link.url } href={ link.url } alignItems="center" display="inline-flex" minW="120px">
-            <Image boxSize={ 5 } mr={ 2 } src={ link.image } alt={ `${ link.title } icon` }/>
+            <Image boxSize={ 5 } mr={ 2 } src={ link.image } alt={ tQuat('common.icon', { name: link.title }) }/>
             { link.title }
           </Link>
         );
       });
-  }, [ externalLinks ]);
+  }, [ externalLinks, tQuat ]);
 
   const poolIdOrContract = React.useMemo(() => {
     if (data?.is_contract && addressQuery.data) {
@@ -103,13 +107,13 @@ const Pool = () => {
       { poolIdOrContract }
       <Flex gap={ 2 } ml={ 2 }>
         <InfoButton>
-          { `This Liquidity Provider (LP) token represents ${ data?.base_token_symbol }/${ data?.quote_token_symbol } pairing.` }
+          { tQuat('suppUi.lp_hint', { base: data?.base_token_symbol, quote: data?.quote_token_symbol }) }
         </InfoButton>
         { hasLinks && (
           <VerifyWith
             links={ externalLinksComponents }
-            label="Verify with"
-            longText="View in"
+            label={ tQuat('suppUi.verify_with') }
+            longText={ tQuat('suppUi.view_in') }
             shortText=""
           />
         ) }
@@ -130,7 +134,7 @@ const Pool = () => {
             variant="heading"
           />
         ) : null }
-        contentAfter={ <Skeleton loading={ isPlaceholderData }><Tag>Pool</Tag></Skeleton> }
+        contentAfter={ <Skeleton loading={ isPlaceholderData }><Tag>{ tQuat('suppUi.pool') }</Tag></Skeleton> }
         secondRow={ titleSecondRow }
         isLoading={ isPlaceholderData }
         withTextAd

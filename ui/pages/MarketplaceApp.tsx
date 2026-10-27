@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-27: page metadata follows locale without resetting wallet preferences. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MarketplaceApp } from 'types/client/marketplace';
 
@@ -26,6 +28,7 @@ import { getAppUrl } from '../marketplace/utils';
 const feature = config.features.marketplace;
 
 export default function MarketplaceApp() {
+  const { t } = useTranslation();
   const fetch = useFetch();
   const apiFetch = useApiFetch();
   const router = useRouter();
@@ -81,7 +84,13 @@ export default function MarketplaceApp() {
       metadata.update(
         { pathname: '/apps/[id]', query: { id: data.id } },
         { app_name: data.title },
+        t,
       );
+    }
+  }, [ data, t ]);
+
+  useEffect(() => {
+    if (data) {
       setIsAutoConnectDisabled(!data.internalWallet);
     }
   }, [ data, setIsAutoConnectDisabled ]);

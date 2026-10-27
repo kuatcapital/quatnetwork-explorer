@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useDebounce from 'lib/hooks/useDebounce';
@@ -16,6 +18,8 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 
 const Pools = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const q = getQueryParamString(router.query.query);
 
@@ -63,7 +67,7 @@ const Pools = () => {
       w={{ base: '100%', lg: '360px' }}
       size="sm"
       onChange={ handleSearchTermChange }
-      placeholder="Pair, token symbol or token address"
+      placeholder={ tQuat('suppUi.pool_search') }
       initialValue={ searchTerm }
     />
   );
@@ -88,17 +92,17 @@ const Pools = () => {
   return (
     <>
       <PageTitle
-        title="DEX tracker"
+        title={ tQuat('suppUi.dex_tracker') }
         withTextAd
       />
       <DataListDisplay
         isError={ poolsQuery.isError }
         itemsNum={ poolsQuery.data?.items.length }
-        emptyText="There are no pools."
+        emptyText={ tQuat('suppUi.no_pools') }
         actionBar={ actionBar }
         hasActiveFilters={ Boolean(debouncedSearchTerm) }
         emptyStateProps={{
-          term: 'pool',
+          term: tQuat('suppUi.pool_term'),
         }}
       >
         { content }

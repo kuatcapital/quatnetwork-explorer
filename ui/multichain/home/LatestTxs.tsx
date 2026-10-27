@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -11,6 +13,7 @@ import ChainSelect from 'ui/multichain/components/ChainSelect';
 import LatestTxsLocal from './LatestTxsLocal';
 
 const LatestTxs = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const tab = getQueryParamString(router.query.tab);
   const chainSelect = useRoutedChainSelect();
@@ -25,7 +28,7 @@ const LatestTxs = () => {
     },
     {
       id: 'txs_local',
-      title: 'Local txns',
+      title: tQuat('multiUi.local_txs'),
       component: chainSelect.value ? (
         <MultichainProvider chainId={ chainSelect.value[0] }>
           <LatestTxsLocal/>

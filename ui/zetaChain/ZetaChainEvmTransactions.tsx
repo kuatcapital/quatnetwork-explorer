@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@chakra-ui/react';
 import { capitalize } from 'es-toolkit/compat';
 import { useRouter } from 'next/router';
@@ -27,6 +29,7 @@ const TAB_LIST_PROPS = {
 const TABS_HEIGHT = 88;
 
 const ZetaChainEvmTransactions = () => {
+  const { t: tQuat } = useTranslation();
   const router = useRouter();
   const tab = getQueryParamString(router.query.tab);
   const isMobile = useIsMobile();
@@ -72,7 +75,7 @@ const ZetaChainEvmTransactions = () => {
         /> },
     {
       id: 'zetachain_pending',
-      title: 'Pending',
+      title: tQuat('common.pending'),
       component: (
         <TxsWithFrontendSorting
           query={ txsPendingQuery }

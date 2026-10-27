@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -21,11 +22,15 @@ import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import EnsEntity from 'ui/shared/entities/ens/EnsEntity';
 import IconSvg from 'ui/shared/IconSvg';
 import PageTitle from 'ui/shared/Page/PageTitle';
+import { useTranslation } from 'react-i18next';
+
 
 const feature = config.features.nameServices;
 const availableProtocols = feature.isEnabled && feature.ens.isEnabled ? feature.ens.protocols : [];
 
 const NameDomain = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const domainName = getQueryParamString(router.query.name);
   const protocolId = getQueryParamString(router.query.protocol_id) || availableProtocols[0];
@@ -41,8 +46,8 @@ const NameDomain = () => {
   });
 
   const tabs: Array<TabItemRegular> = [
-    { id: 'details', title: 'Details', component: <NameDomainDetails query={ infoQuery }/> },
-    { id: 'history', title: 'History', component: <NameDomainHistory domain={ infoQuery.data }/> },
+    { id: 'details', title: tQuat('common.details'), component: <NameDomainDetails query={ infoQuery }/> },
+    { id: 'history', title: tQuat('multiUi.history'), component: <NameDomainHistory domain={ infoQuery.data }/> },
   ];
 
   throwOnResourceLoadError(infoQuery);
@@ -72,7 +77,7 @@ const NameDomain = () => {
             isLoading={ isLoading }
             variant="subheading"
           />
-          <Tooltip content="Lookup for related domain names">
+          <Tooltip content={ tQuat('multiUi.related_names') }>
             <Link
               flexShrink={ 0 }
               display="inline-flex"
@@ -92,7 +97,7 @@ const NameDomain = () => {
   return (
     <>
       <TextAd mb={ 6 }/>
-      <PageTitle title="Name details" secondRow={ titleSecondRow }/>
+      <PageTitle title={ tQuat('multiUi.name_details') } secondRow={ titleSecondRow }/>
       <RoutedTabs tabs={ tabs } isLoading={ infoQuery.isPlaceholderData }/>
     </>
   );

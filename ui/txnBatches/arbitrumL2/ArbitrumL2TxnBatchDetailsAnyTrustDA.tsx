@@ -1,3 +1,6 @@
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Grid, Text, Flex, Box, VStack } from '@chakra-ui/react';
 import React from 'react';
@@ -18,40 +21,39 @@ type Props = {
 };
 
 const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
+
+  const remainingDays = dayjs(data.timeout).diff(dayjs(), 'day');
 
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="Aggregated BLS signature of AnyTrust committee members"
+        hint={ tQuat('l2Ui.bls_hint') }
       >{ tQuat('blockDetails.signature') }</DetailedInfo.ItemLabel><DetailedInfo.ItemValue wordBreak="break-all" whiteSpace="break-spaces">
         { data.bls_signature }
       </DetailedInfo.ItemValue><DetailedInfo.ItemLabel
-        hint="The hash of the data blob stored by the AnyTrust committee"
-      >
-        Data hash
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.blob_hash_hint') }
+      >{ tQuat('l2Ui.data_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue whiteSpace="pre-wrap" wordBreak="break-all" alignItems={{ base: 'flex-start', lg: 'center' }}>
         { data.data_hash }
         <CopyToClipboard text={ data.data_hash } ml={ 2 }/>
       </DetailedInfo.ItemValue>
       <DetailedInfo.ItemLabel
-        hint="Expiration timeout for the data blob"
-      >
-        Timeout
-      </DetailedInfo.ItemLabel><DetailedInfo.ItemValue multiRow>
+        hint={ tQuat('l2Ui.timeout_hint') }
+      >{ tQuat('l2Ui.timeout') }</DetailedInfo.ItemLabel><DetailedInfo.ItemValue multiRow>
         { dayjs(data.timeout) < dayjs() ?
           <DetailsTimestamp timestamp={ data.timeout }/> :
           (
             <>
               <DetailsTimestamp timestamp={ data.timeout } noRelativeTime/>
               <TextSeparator/>
-              <Text color="red.500">{ dayjs(data.timeout).diff(dayjs(), 'day') } days left</Text>
+              <Text color="red.500">{ tQuat('l2Ui.days_left', { count: remainingDays, value: formatNumber(remainingDays, locale) }) }</Text>
             </>
           ) }
       </DetailedInfo.ItemValue>
       <DetailedInfo.ItemLabel
-        hint="Members of AnyTrust committee"
+        hint={ tQuat('l2Ui.committee_hint') }
       >{ tQuat('blockDetails.signers') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue overflowX="scroll" fontSize="sm">
         <Grid
@@ -64,7 +66,7 @@ const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
           minW="600px"
         >
           <Text fontWeight={ 600 }>{ tQuat('addresses.key') }</Text>
-          <Text fontWeight={ 600 }>Trusted</Text>
+          <Text fontWeight={ 600 }>{ tQuat('l2Ui.trusted') }</Text>
           <Text fontWeight={ 600 }>{ tQuat('blobUI.proof') }</Text>
           { data.signers.map(signer => (
             <>
@@ -95,7 +97,7 @@ const ArbitrumL2TxnBatchDetailsAnyTrustDA = ({ data }: Props) => {
               <Text wordBreak="break-all" whiteSpace="break-spaces">{ signer.key }</Text>
               <Flex w="100%" alignItems="center">
                 <Flex alignItems="center" w="50%">
-                  <Text fontWeight={ 600 } mr={ 2 }>Trusted</Text>
+                  <Text fontWeight={ 600 } mr={ 2 }>{ tQuat('l2Ui.trusted') }</Text>
                   { signer.trusted ? <IconSvg name="check" boxSize={ 6 }/> : <IconSvg name="cross" boxSize={ 6 }/> }
                 </Flex>
                 <Flex alignItems="center" w="50%">

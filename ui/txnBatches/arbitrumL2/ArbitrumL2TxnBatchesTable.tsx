@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,11 +24,11 @@ const ArbitrumL2TxnBatchesTable = ({ items, top, isLoading }: Props) => {
     <TableRoot tableLayout="auto" minW="1000px">
       <TableHeaderSticky top={ top }>
         <TableRow>
-          <TableColumnHeader>Batch #</TableColumnHeader>
-          <TableColumnHeader>{ layerLabels.parent } status</TableColumnHeader>
-          <TableColumnHeader>{ layerLabels.parent } block</TableColumnHeader>
-          <TableColumnHeader>Block count</TableColumnHeader>
-          <TableColumnHeader>{ layerLabels.parent }{ ' ' }{ tQuat('toolkit.term_transaction') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.batch_marker') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.layer_status', { layer: layerLabels.parent }) }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.layer_block', { layer: layerLabels.parent }) }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.block_count') }</TableColumnHeader>
+          <TableColumnHeader>{ tQuat('l2Ui.layer_transaction', { layer: layerLabels.parent }) }</TableColumnHeader>
           <TableColumnHeader>{ tQuat('common.timestamp') }<TimeFormatToggle/>
           </TableColumnHeader>
           <TableColumnHeader>{ tQuat('addresses.transaction_count') }</TableColumnHeader>

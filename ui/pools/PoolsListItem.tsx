@@ -1,6 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Pool } from 'types/api/pools';
+
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 
 import getPoolLinks from 'lib/pools/getPoolLinks';
 import { Image } from 'toolkit/chakra/image';
@@ -18,18 +23,21 @@ type Props = {
 };
 
 const PoolsListItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const externalLinks = getPoolLinks(item);
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="100px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Pool</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.pool') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <PoolEntity pool={ item } fontWeight={ 700 } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
       { item.is_contract && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Contract</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.contract') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <AddressEntity address={{ hash: item.pool_id }} noIcon link={{ variant: 'secondary' }} isLoading={ isLoading } truncation="constant_long"/>
           </ListItemMobileGrid.Value>
@@ -38,7 +46,7 @@ const PoolsListItem = ({ item, isLoading }: Props) => {
 
       { !item.is_contract && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Pool ID</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.pool_id') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <HashStringShorten hash={ item.pool_id } type="long"/>
             <CopyToClipboard text={ item.pool_id }/>
@@ -46,14 +54,14 @@ const PoolsListItem = ({ item, isLoading }: Props) => {
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Liquidity</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.liquidity') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
-          ${ Number(item.liquidity).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' }) }
+          ${ Number(item.liquidity).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }
         </Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>View in</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.view_in') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
           { externalLinks.map((link) => (

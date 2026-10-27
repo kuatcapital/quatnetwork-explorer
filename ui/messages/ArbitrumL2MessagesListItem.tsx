@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 
@@ -18,12 +20,16 @@ import ArbitrumL2MessageStatus from 'ui/shared/statusTag/ArbitrumL2MessageStatus
 import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
 
 import type { MessagesDirection } from './ArbitrumL2Messages';
+import { useTranslation } from 'react-i18next';
+
 
 const rollupFeature = config.features.rollup;
 
 type Props = { item: ArbitrumL2MessagesItem; isLoading?: boolean; direction: MessagesDirection };
 
 const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'arbitrum') {
     return null;
   }
@@ -36,7 +42,7 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
 
       { direction === 'to-rollup' && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>{ layerLabels.parent } block</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_block', { layer: layerLabels.parent }) }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             { item.origination_transaction_block_number ? (
               <BlockEntityL1
@@ -44,14 +50,14 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
                 isLoading={ isLoading }
                 fontWeight={ 600 }
               />
-            ) : <chakra.span>N/A</chakra.span> }
+            ) : <chakra.span>{ tQuat('l2Ui.not_available') }</chakra.span> }
           </ListItemMobileGrid.Value>
         </>
       ) }
 
       { direction === 'from-rollup' && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>From</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.from') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <AddressEntity
               address={{ hash: item.origination_address_hash }}
@@ -63,14 +69,14 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Message #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.message_marker') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading } display="inline-block">
           { item.id }
         </Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>{ layerLabels.current } transaction</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_transaction', { layer: layerLabels.current }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { l2TxHash ? (
           <TxEntity
@@ -79,15 +85,13 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
             truncation="constant_long"
           />
         ) : (
-          <chakra.span>
-            N/A
-          </chakra.span>
+          <chakra.span>{ tQuat('l2Ui.not_available') }</chakra.span>
         ) }
       </ListItemMobileGrid.Value>
 
       { item.origination_timestamp && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.age') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <TimeWithTooltip
               timestamp={ item.origination_timestamp }
@@ -98,14 +102,14 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.status') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        { item.status === 'confirmed' && direction === 'from-rollup' ?
-          <Link href={ route({ pathname: '/txn-withdrawals', query: { q: item.origination_transaction_hash } }) }>Ready for relay</Link> :
+        { item.status === "confirmed" && direction === 'from-rollup' ?
+          <Link href={ route({ pathname: '/txn-withdrawals', query: { q: item.origination_transaction_hash } }) }>{ tQuat('l2Ui.ready_relay') }</Link> :
           <ArbitrumL2MessageStatus status={ item.status } isLoading={ isLoading }/> }
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>{ layerLabels.parent } transaction</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_transaction', { layer: layerLabels.parent }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { l1TxHash ? (
           <TxEntityL1
@@ -115,9 +119,7 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
             noCopy
           />
         ) : (
-          <chakra.span>
-            N/A
-          </chakra.span>
+          <chakra.span>{ tQuat('l2Ui.not_available') }</chakra.span>
         ) }
       </ListItemMobileGrid.Value>
 

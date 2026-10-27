@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +28,7 @@ const Transactions = () => {
     return [
       {
         id: LOCAL_TAB_ID,
-        title: 'Txns',
+        title: tQuat('multiUi.txns'),
         component: (
           <>
             <TxsStats mb={ 0 }/>
@@ -48,7 +49,7 @@ const Transactions = () => {
         component: <TransactionsCrossChain/>,
       },
     ];
-  }, [ ]);
+  }, [  tQuat ]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
@@ -5,6 +6,8 @@ import type { ZetaChainCCTXFilterParams, StatusReducedFilters } from 'types/clie
 
 import { Radio, RadioGroup } from 'toolkit/chakra/radio';
 import TableColumnFilter from 'ui/shared/filters/TableColumnFilter';
+import { useTranslation } from 'react-i18next';
+
 
 const FILTER_PARAM_STATUS = 'status_reduced';
 
@@ -25,6 +28,8 @@ type Props = {
 };
 
 const ZetaChainStatusFilter = ({ value = [], handleFilterChange, onClose }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   // Convert API values to internal format and determine initial state
   const getInitialValue = React.useCallback((): FilterValue => {
     if (value.length === 1) {
@@ -68,7 +73,7 @@ const ZetaChainStatusFilter = ({ value = [], handleFilterChange, onClose }: Prop
 
   return (
     <TableColumnFilter
-      title="Status"
+      title={ tQuat('common.status') }
       isFilled={ currentValue !== 'all' }
       isTouched={ isTouched }
       onFilter={ onFilter }

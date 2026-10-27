@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -13,6 +14,8 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 import NameDomainHistoryListItem from './history/NameDomainHistoryListItem';
 import NameDomainHistoryTable from './history/NameDomainHistoryTable';
 import { getNextSortValue, type Sort, type SortField } from './history/utils';
+import { useTranslation } from 'react-i18next';
+
 
 const feature = config.features.nameServices;
 const availableProtocols = feature.isEnabled && feature.ens.isEnabled ? feature.ens.protocols : [];
@@ -22,6 +25,8 @@ interface Props {
 }
 
 const NameDomainHistory = ({ domain }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const domainName = getQueryParamString(router.query.name);
   const protocolId = getQueryParamString(router.query.protocol_id) || availableProtocols[0];
@@ -76,7 +81,7 @@ const NameDomainHistory = ({ domain }: Props) => {
     <DataListDisplay
       isError={ isError }
       itemsNum={ data?.items.length }
-      emptyText="There are no events for this domain."
+      emptyText={ tQuat('multiUi.no_domain_events') }
     >
       { content }
     </DataListDisplay>

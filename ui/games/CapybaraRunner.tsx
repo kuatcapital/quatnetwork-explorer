@@ -1,16 +1,21 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 /* eslint-disable @next/next/no-img-element */
 import { Box, Text, Flex } from '@chakra-ui/react';
 import Script from 'next/script';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { Button } from 'toolkit/chakra/button';
 import { Heading } from 'toolkit/chakra/heading';
 import { Link } from 'toolkit/chakra/link';
+
 const easterEggBadgeFeature = config.features.easterEggBadge;
 
 const CapybaraRunner = () => {
+  const { t: tQuat } = useTranslation();
+
   const [ hasReachedHighScore, setHasReachedHighScore ] = React.useState(false);
 
   const isMobile = useIsMobile();
@@ -37,8 +42,8 @@ const CapybaraRunner = () => {
 
   return (
     <>
-      <Heading level="2" mt={ 12 } mb={ 2 }>Score 1000 to win a special prize!</Heading>
-      <Box mb={ 4 }>{ isMobile ? 'Tap below to start' : 'Press space to start' }</Box>
+      <Heading level="2" mt={ 12 } mb={ 2 }>{ tQuat('suppUi.runner_goal') }</Heading>
+      <Box mb={ 4 }>{ isMobile ? tQuat('suppUi.tap_start') : tQuat('suppUi.space_start') }</Box>
       <Script strategy="lazyOnload" src="/static/capybara/index.js"/>
       <Box width={{ base: '100%', lg: '600px' }} height="300px" p="50px 0">
         <div id="main-frame-error" className="interstitial-wrapper" style={{ marginTop: '20px' }}>
@@ -51,13 +56,13 @@ const CapybaraRunner = () => {
       </Box>
       { easterEggBadgeFeature.isEnabled && hasReachedHighScore && (
         <Flex flexDirection="column" alignItems="center" justifyContent="center" gap={ 4 } mt={ 10 }>
-          <Text fontSize="2xl" fontWeight="bold">You unlocked a hidden badge!</Text>
-          <Text fontSize="lg" textAlign="center">Congratulations! You’re eligible to claim an epic hidden badge!</Text>
+          <Text fontSize="2xl" fontWeight="bold">{ tQuat('suppUi.badge_unlocked') }</Text>
+          <Text fontSize="lg" textAlign="center">{ tQuat('suppUi.badge_congrats') }</Text>
           <Link
             href={ easterEggBadgeFeature.badgeClaimLink }
             external noIcon
           >
-            <Button>Claim</Button>
+            <Button>{ tQuat('suppUi.claim') }</Button>
           </Link>
         </Flex>
       ) }

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 
@@ -11,6 +12,8 @@ import getNextSortValue from 'ui/shared/sort/getNextSortValue';
 
 import MultichainEcosystemsTableItem from './MultichainEcosystemsTableItem';
 import { SORT_SEQUENCE } from './utils';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   data: Array<multichain.ChainMetrics>;
@@ -20,6 +23,8 @@ interface Props {
 }
 
 const MultichainEcosystemsTable = ({ data, isLoading, sort, setSorting }: Props) => {
+  const { t: tQuat } = useTranslation();
+
 
   const chains = multichainConfig()?.chains;
 
@@ -32,18 +37,12 @@ const MultichainEcosystemsTable = ({ data, isLoading, sort, setSorting }: Props)
     <TableRoot minW="1000px">
       <TableHeaderSticky>
         <TableRow>
-          <TableColumnHeader width="30%">Chain name</TableColumnHeader>
-          <TableColumnHeaderSortable width="17.5%" sortField="active_accounts" sortValue={ sort } onSortToggle={ onSortToggle }>
-            Active addresses
-            <chakra.span color="text.secondary" whiteSpace="pre"> 7D</chakra.span>
+          <TableColumnHeader width="30%">{ tQuat('multiUi.chain_name') }</TableColumnHeader>
+          <TableColumnHeaderSortable width="17.5%" sortField="active_accounts" sortValue={ sort } onSortToggle={ onSortToggle }>{ tQuat('multiUi.active_addresses') }<chakra.span color="text.secondary" whiteSpace="pre">{ ' ' }{ tQuat('multiUi.seven_days') }</chakra.span>
           </TableColumnHeaderSortable>
-          <TableColumnHeaderSortable width="17.5%" sortField="new_addresses" sortValue={ sort } onSortToggle={ onSortToggle }>
-            New addresses
-            <chakra.span color="text.secondary" whiteSpace="pre"> 7D</chakra.span>
+          <TableColumnHeaderSortable width="17.5%" sortField="new_addresses" sortValue={ sort } onSortToggle={ onSortToggle }>{ tQuat('multiUi.new_addresses') }<chakra.span color="text.secondary" whiteSpace="pre">{ ' ' }{ tQuat('multiUi.seven_days') }</chakra.span>
           </TableColumnHeaderSortable>
-          <TableColumnHeaderSortable width="17.5%" sortField="daily_transactions" sortValue={ sort } onSortToggle={ onSortToggle }>
-            Daily txs
-            <chakra.span color="text.secondary" whiteSpace="pre"> 7D</chakra.span>
+          <TableColumnHeaderSortable width="17.5%" sortField="daily_transactions" sortValue={ sort } onSortToggle={ onSortToggle }>{ tQuat('multiUi.daily_txs') }<chakra.span color="text.secondary" whiteSpace="pre">{ ' ' }{ tQuat('multiUi.seven_days') }</chakra.span>
           </TableColumnHeaderSortable>
           <TableColumnHeaderSortable width="17.5%" sortField="tps" sortValue={ sort } onSortToggle={ onSortToggle }>
             TPS

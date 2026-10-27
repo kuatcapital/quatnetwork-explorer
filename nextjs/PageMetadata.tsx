@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: SSR and client metadata follow runtime locale. GPL-3.0.
 import Head from 'next/head';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Route } from 'nextjs-routes';
 import type { Props as PageProps } from 'nextjs/getServerSideProps/handlers';
@@ -14,7 +16,8 @@ interface Props<Pathname extends Route['pathname']> {
 }
 
 const PageMetadata = <Pathname extends Route['pathname']>(props: Props<Pathname>) => {
-  const { title, description, opengraph, canonical } = metadata.generate(props, props.apiData);
+  const { t } = useTranslation();
+  const { title, description, opengraph, canonical } = metadata.generate(props, props.apiData, t);
 
   return (
     <Head>

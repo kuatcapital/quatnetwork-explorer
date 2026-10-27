@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -14,6 +15,8 @@ import IconSvg from 'ui/shared/IconSvg';
 import StatusTag from 'ui/shared/statusTag/StatusTag';
 import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   tx: CrossChainTx;
@@ -21,6 +24,8 @@ type Props = {
 };
 
 const ZetaChainCCTXDetailsLifecycleIn = ({ tx, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const { data: chainsConfig } = useZetaChainConfig();
   const inboundParams = tx.inbound_params;
   if (!inboundParams) {
@@ -62,7 +67,7 @@ const ZetaChainCCTXDetailsLifecycleIn = ({ tx, isLoading }: Props) => {
             </>
           ) : (
             <>
-              <Text color="text.secondary" fontWeight="medium">Transaction</Text>
+              <Text color="text.secondary" fontWeight="medium">{ tQuat('common.transaction') }</Text>
               { chainFromId !== config.chain.id ? (
                 <TxEntityZetaChainExternal chainId={ chainFromId } hash={ inboundParams.observed_hash } noIcon/>
               ) : (
@@ -70,14 +75,14 @@ const ZetaChainCCTXDetailsLifecycleIn = ({ tx, isLoading }: Props) => {
               ) }
             </>
           ) }
-          <Text color="text.secondary" fontWeight="medium">Status</Text>
+          <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
           <StatusTag
             type={ inboundParams.status === InboundStatus.INBOUND_SUCCESS ? 'ok' : 'error' }
-            text={ inboundParams.status === InboundStatus.INBOUND_SUCCESS ? 'Success' : 'Failed' }
+            text={ inboundParams.status === InboundStatus.INBOUND_SUCCESS ? tQuat('common.success') : tQuat('common.failed') }
           />
           { inboundParams.sender && (
             <>
-              <Text color="text.secondary" fontWeight="medium">Sender</Text>
+              <Text color="text.secondary" fontWeight="medium">{ tQuat('transactions.sender') }</Text>
               <AddressEntityZetaChain
                 address={{ hash: inboundParams.sender }}
                 chainId={ inboundParams.sender_chain_id.toString() }
@@ -88,7 +93,7 @@ const ZetaChainCCTXDetailsLifecycleIn = ({ tx, isLoading }: Props) => {
           ) }
           { inboundParams.amount && (
             <>
-              <Text color="text.secondary" fontWeight="medium">Transferred</Text>
+              <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.transferred') }</Text>
               <ZetaChainCCTXValue
                 coinType={ inboundParams.coin_type }
                 tokenSymbol={ tx.token_symbol }

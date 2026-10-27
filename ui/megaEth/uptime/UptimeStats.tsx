@@ -1,7 +1,12 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UptimeRealTimeData } from 'types/api/megaEth';
+
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 
 import StatsWidget from 'ui/shared/stats/StatsWidget';
 
@@ -10,6 +15,8 @@ interface Props {
 }
 
 const UptimeStats = ({ realtimeData }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
 
   return (
     <Box
@@ -20,25 +27,25 @@ const UptimeStats = ({ realtimeData }: Props) => {
       gridTemplateColumns={{ base: '1fr', lg: 'repeat(4, 1fr)' }}
     >
       <StatsWidget
-        label="Current TPS"
-        hint="Number of transactions processed per second on the network"
-        value={ realtimeData ? Number(realtimeData.instant_tps).toLocaleString() : '-' }
+        label={ tQuat('suppUi.current_tps') }
+        hint={ tQuat('suppUi.tps_hint') }
+        value={ realtimeData ? Number(realtimeData.instant_tps).toLocaleString(NUMBER_LOCALES[locale]) : '-' }
       />
       <StatsWidget
-        label="MGas/s"
-        hint="Number of computational gas consumed per second on the network"
-        value={ realtimeData ? Number(realtimeData.instant_mgas_per_second).toLocaleString(undefined, { maximumFractionDigits: 2 }) : '-' }
+        label={ tQuat('suppUi.mgas_second') }
+        hint={ tQuat('suppUi.gas_second_hint') }
+        value={ realtimeData ? Number(realtimeData.instant_mgas_per_second).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2 }) : '-' }
       />
       <StatsWidget
-        label="Block height"
-        hint="Number of blocks created since the genesis block"
-        value={ realtimeData ? Number(realtimeData.latest_mini_block_id).toLocaleString() : '-' }
+        label={ tQuat('suppUi.block_height') }
+        hint={ tQuat('suppUi.height_hint') }
+        value={ realtimeData ? Number(realtimeData.latest_mini_block_id).toLocaleString(NUMBER_LOCALES[locale]) : '-' }
       />
       <StatsWidget
-        label="Block time"
-        hint="Time taken by the sequencer to produce a new block"
-        valuePostfix=" ms"
-        value={ realtimeData ? Number(realtimeData.instant_mini_block_interval).toLocaleString(undefined, { maximumFractionDigits: 2 }) : '-' }
+        label={ tQuat('suppUi.block_time') }
+        hint={ tQuat('suppUi.block_time_hint') }
+        valuePostfix={ tQuat('suppUi.milliseconds') }
+        value={ realtimeData ? Number(realtimeData.instant_mini_block_interval).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2 }) : '-' }
       />
     </Box>
   );

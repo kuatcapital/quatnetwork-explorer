@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: reactive labels preserve sorting and interval API values. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { HotContractsSortingValue, HotContractsSortingField, HotContractsInterval } from 'types/api/contracts';
 
 import getQueryParamString from 'lib/router/getQueryParamString';
@@ -24,6 +27,29 @@ export const INTERVAL_ITEMS: Array<{ id: HotContractsInterval; labelShort: strin
   { id: '7d', labelShort: '1W', labelFull: '1 week' },
   { id: '30d', labelShort: '1M', labelFull: '1 month' },
 ];
+
+export function getSortOptions(t: TFunction): Array<SelectOption<HotContractsSortingValue>> {
+  const labels: Record<HotContractsSortingValue, string> = {
+    'default': t('suppUi.default_sort'),
+    'transactions_count-desc': t('suppUi.txs_desc'),
+    'transactions_count-asc': t('suppUi.txs_asc'),
+    'total_gas_used-desc': t('suppUi.gas_desc'),
+    'total_gas_used-asc': t('suppUi.gas_asc'),
+  };
+  return SORT_OPTIONS.map((option) => ({ ...option, label: labels[option.value] }));
+}
+
+export function getIntervalItems(t: TFunction): typeof INTERVAL_ITEMS {
+  const keys: Record<HotContractsInterval, [string, string]> = {
+    '5m': [ 'suppUi.interval_5m_short', 'suppUi.interval_5m' ],
+    '1h': [ 'suppUi.interval_1h_short', 'suppUi.interval_1h' ],
+    '3h': [ 'suppUi.interval_3h_short', 'suppUi.interval_3h' ],
+    '1d': [ 'suppUi.interval_1d_short', 'suppUi.interval_1d' ],
+    '7d': [ 'suppUi.interval_7d_short', 'suppUi.interval_7d' ],
+    '30d': [ 'suppUi.interval_30d_short', 'suppUi.interval_30d' ],
+  };
+  return INTERVAL_ITEMS.map((item) => ({ ...item, labelShort: t(keys[item.id][0]), labelFull: t(keys[item.id][1]) }));
+}
 
 export const getIntervalValueFromQuery = (query: string | Array<string> | undefined): HotContractsInterval => {
   const queryString = getQueryParamString(query);

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Grid, VStack, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,6 +13,8 @@ import TextSeparator from 'ui/shared/TextSeparator';
 import Time from 'ui/shared/time/Time';
 import ZetaChainCCTXReducedStatus from 'ui/shared/zetaChain/ZetaChainCCTXReducedStatus';
 import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   tx: CctxListItem;
@@ -20,6 +23,8 @@ type Props = {
 };
 
 const LatestZetaChainCCTXItem = ({ tx, isLoading, animation }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <VStack
       width="100%"
@@ -39,14 +44,14 @@ const LatestZetaChainCCTXItem = ({ tx, isLoading, animation }: Props) => {
         <Time timestamp={ Number(tx.last_update_timestamp) * SECOND } format="lll_s"/>
       </Skeleton>
       <Grid gridTemplateColumns="100px 1fr" gap={ 2 }>
-        <Text>Sender</Text>
+        <Text>{ tQuat('transactions.sender') }</Text>
         <AddressEntityZetaChain
           address={{ hash: tx.sender_address }}
           chainId={ tx.source_chain_id.toString() }
           isLoading={ isLoading }
           truncation="constant"
         />
-        <Text>Receiver</Text>
+        <Text>{ tQuat('multiUi.receiver') }</Text>
         <AddressEntityZetaChain
           address={{ hash: tx.receiver_address }}
           chainId={ tx.target_chain_id.toString() }

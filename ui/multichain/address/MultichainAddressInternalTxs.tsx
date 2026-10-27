@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -16,6 +17,8 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 import Pagination from 'ui/shared/pagination/Pagination';
 
 import getAvailableChainIds from './getAvailableChainIds';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   addressData: multichain.GetAddressResponse | undefined;
@@ -23,6 +26,8 @@ interface Props {
 }
 
 const MultichainAddressInternalTxs = ({ addressData, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const chainIds = React.useMemo(() => getAvailableChainIds(addressData), [ addressData ]);
 
   const { hash, query, filterValue, onFilterChange } = useAddressInternalTxsQuery({
@@ -38,7 +43,7 @@ const MultichainAddressInternalTxs = ({ addressData, isLoading }: Props) => {
   }, [ chainValue ]);
 
   if (chainIds.length === 0) {
-    return <p>There are no internal transactions.</p>;
+    return <p>{ tQuat('multiUi.no_internal') }</p>;
   }
 
   const content = data?.items ? (
@@ -86,7 +91,7 @@ const MultichainAddressInternalTxs = ({ addressData, isLoading }: Props) => {
       emptyStateProps={{
         term: 'transaction',
       }}
-      emptyText="There are no internal transactions."
+      emptyText={ tQuat('multiUi.no_internal') }
       showActionBarIfEmpty
       showActionBarIfError
       actionBar={ actionBar }

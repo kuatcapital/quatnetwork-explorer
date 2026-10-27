@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex, VStack, Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -12,6 +13,8 @@ import { Button, ButtonGroupRadio } from 'toolkit/chakra/button';
 import { FilterInput } from 'toolkit/components/filters/FilterInput';
 import ActionBar from 'ui/shared/ActionBar';
 import Pagination from 'ui/shared/pagination/Pagination';
+import { useTranslation } from 'react-i18next';
+
 
 type ViewMode = 'leaderboard' | 'directory';
 
@@ -32,6 +35,8 @@ const ClustersActionBar = ({
   isLoading,
   pagination,
 }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isInitialLoading = useIsInitialLoading(isLoading);
 
   const handleViewModeChange = React.useCallback((value: string) => {
@@ -50,12 +55,8 @@ const ClustersActionBar = ({
         w={{ lg: 'fit-content' }}
         loading={ isInitialLoading }
       >
-        <Button value="directory" size="sm" px={ 3 }>
-          Directory
-        </Button>
-        <Button value="leaderboard" size="sm" px={ 3 }>
-          Leaderboard
-        </Button>
+        <Button value="directory" size="sm" px={ 3 }>{ tQuat('multiUi.directory') }</Button>
+        <Button value="leaderboard" size="sm" px={ 3 }>{ tQuat('multiUi.leaderboard') }</Button>
       </ButtonGroupRadio>
       <FilterInput
         initialValue={ searchTerm }

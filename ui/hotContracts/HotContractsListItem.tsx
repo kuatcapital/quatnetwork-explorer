@@ -1,8 +1,13 @@
 import { HStack } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { HotContract } from 'types/api/contracts';
+
+import { formatBigNumber, NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -18,6 +23,9 @@ interface Props {
 }
 
 const HotContractsListItem = ({ data, isLoading, exchangeRate }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
+
   const protocolTags = data?.contract_address?.metadata?.tags?.filter(tag => tag.tagType === 'protocol');
 
   return (
@@ -37,19 +45,19 @@ const HotContractsListItem = ({ data, isLoading, exchangeRate }: Props) => {
         />
       ) }
       <HStack>
-        <Skeleton loading={ isLoading } fontWeight={ 500 } w="100px">Txn count</Skeleton>
+        <Skeleton loading={ isLoading } fontWeight={ 500 } w="100px">{ tQuat('suppUi.txn_count') }</Skeleton>
         <Skeleton loading={ isLoading }>
-          <span>{ Number(data.transactions_count).toLocaleString() }</span>
+          <span>{ Number(data.transactions_count).toLocaleString(NUMBER_LOCALES[locale]) }</span>
         </Skeleton>
       </HStack>
       <HStack>
-        <Skeleton loading={ isLoading } fontWeight={ 500 } w="100px">Gas used</Skeleton>
+        <Skeleton loading={ isLoading } fontWeight={ 500 } w="100px">{ tQuat('suppUi.gas_used') }</Skeleton>
         <Skeleton loading={ isLoading }>
-          <span>{ BigNumber(data.total_gas_used || 0).toFormat() }</span>
+          <span>{ formatBigNumber(BigNumber(data.total_gas_used || 0), locale) }</span>
         </Skeleton>
       </HStack>
       <HStack alignItems="flex-start">
-        <Skeleton loading={ isLoading } fontWeight={ 500 } w="100px">Balance</Skeleton>
+        <Skeleton loading={ isLoading } fontWeight={ 500 } w="100px">{ tQuat('suppUi.balance') }</Skeleton>
         <NativeCoinValue
           amount={ data.balance }
           loading={ isLoading }

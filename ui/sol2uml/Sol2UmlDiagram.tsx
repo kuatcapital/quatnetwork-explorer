@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as visualizer from '@blockscout/visualizer-types';
 import type { SmartContract } from 'types/api/contract';
@@ -31,6 +33,8 @@ function composeSources(contract: SmartContract | undefined): visualizer.Visuali
 }
 
 const Sol2UmlDiagram = ({ addressHash }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const contractQuery = useApiQuery<'general:contract', ResourceError>('general:contract', {
     pathParams: { hash: addressHash },
     queryOptions: {
@@ -72,14 +76,14 @@ const Sol2UmlDiagram = ({ addressHash }: Props) => {
   }
 
   if (!umlQuery.data?.svg || !contractQuery.data) {
-    return <span>No data for visualization</span>;
+    return <span>{ tQuat('suppUi.no_visualization') }</span>;
   }
 
   return (
-    <Tooltip content="Click on image to zoom" positioning={{ placement: 'top' }}>
+    <Tooltip content={ tQuat('suppUi.zoom_hint') } positioning={{ placement: 'top' }}>
       <chakra.img
         src={ imgUrl }
-        alt={ `Contract ${ contractQuery.data.name } UML diagram` }
+        alt={ tQuat('suppUi.uml_alt', { name: contractQuery.data.name }) }
         onClick={ handleClick }
         cursor="pointer"
         filter={{ _light: 'invert(0)', _dark: 'invert(1)' }}

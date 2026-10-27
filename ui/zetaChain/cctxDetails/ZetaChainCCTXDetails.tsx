@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Grid, VStack, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -24,6 +25,8 @@ import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
 import ZetaChainCCTXDetailsLifecycleIn from './ZetaChainCCTXDetailsLifecycleIn';
 import ZetaChainCCTXDetailsLifecycleOut from './ZetaChainCCTXDetailsLifecycleOut';
 import ZetaChainCCTXDetailsRelatedTx from './ZetaChainCCTXDetailsRelatedTx';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   data?: CrossChainTx;
@@ -41,6 +44,8 @@ const getTransactionsBeforeAndAfter = (data: CrossChainTx) => {
 };
 
 const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const statsQuery = useApiQuery('general:stats', {
     queryOptions: {
       placeholderData: HOMEPAGE_STATS,
@@ -58,11 +63,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { data.inbound_params?.sender && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Address that initiated the cross-chain transaction"
+            hint={ tQuat('multiUi.zeta_sender_hint') }
             isLoading={ isLoading }
-          >
-            Sender
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('transactions.sender') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <AddressEntityZetaChain
               address={{ hash: data.inbound_params?.sender }}
@@ -73,11 +76,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
         </>
       ) }
       <DetailedInfo.ItemLabel
-        hint="Destination address for the transferred assets"
+        hint={ tQuat('multiUi.zeta_receiver_hint') }
         isLoading={ isLoading }
-      >
-        Receiver
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('multiUi.receiver') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <AddressEntityZetaChain
           key={ data.outbound_params[0].receiver }
@@ -89,11 +90,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { data.inbound_params?.coin_type && data.inbound_params?.amount && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Type and amount of tokens being transferred across chains"
+            hint={ tQuat('multiUi.asset_hint') }
             isLoading={ isLoading }
-          >
-            Asset transferred
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('multiUi.asset_transferred') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <ZetaChainCCTXValue
               coinType={ data.inbound_params?.coin_type }
@@ -106,11 +105,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
         </>
       ) }
       <DetailedInfo.ItemLabel
-        hint="Fee charged by ZetaChain for processing the transaction"
+        hint={ tQuat('multiUi.zeta_fee_hint') }
         isLoading={ isLoading }
-      >
-        Cross-chain fee
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('multiUi.cross_fee') }</DetailedInfo.ItemLabel>
       <DetailedInfoNativeCoinValue
         amount={ data.zeta_fees }
         exchangeRate={ statsQuery.data?.coin_price }
@@ -121,11 +118,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { data.relayed_message && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Optional message data sent with the transaction"
+            hint={ tQuat('multiUi.optional_message_hint') }
             isLoading={ isLoading }
-          >
-            Message
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('multiUi.message') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <RawDataSnippet
               data={ data.relayed_message }
@@ -138,22 +133,18 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
         </>
       ) }
       <DetailedInfo.ItemLabel
-        hint="Unique identifier for this cross-chain transaction"
+        hint={ tQuat('multiUi.cctx_hint') }
         isLoading={ isLoading }
-      >
-        CCTX hash
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('multiUi.cctx_hash') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isLoading } display="flex" flexWrap="nowrap" alignItems="center" overflow="hidden">
           <TxEntityZetaChainCC hash={ data.index } isLoading={ isLoading } noIcon noLink/>
         </Skeleton>
       </DetailedInfo.ItemValue>
       <DetailedInfo.ItemLabel
-        hint="Current state and status of the cross-chain transaction"
+        hint={ tQuat('multiUi.zeta_status_hint') }
         isLoading={ isLoading }
-      >
-        Status and state
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('multiUi.status_state') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexWrap="wrap">
         <Flex alignItems="center" gap={ 2 }>
           <ZetaChainCCTXReducedStatus status={ data.cctx_status_reduced } isLoading={ isLoading } type="full"/>
@@ -168,11 +159,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { data.cctx_status?.status_message && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Detailed status message"
+            hint={ tQuat('multiUi.status_message_hint') }
             isLoading={ isLoading }
-          >
-            Status message
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('multiUi.status_message') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <RawDataSnippet data={ data.cctx_status.status_message } minW="100%" showCopy={ false }/>
           </DetailedInfo.ItemValue>
@@ -181,11 +170,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { Boolean(Number(data.cctx_status?.created_timestamp)) && (
         <>
           <DetailedInfo.ItemLabel
-            hint="When the transaction was first created"
+            hint={ tQuat('multiUi.first_created_hint') }
             isLoading={ isLoading }
-          >
-            Created
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('multiUi.created') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <DetailedInfoTimestamp timestamp={ Number(data.cctx_status?.created_timestamp) * SECOND } isLoading={ isLoading }/>
           </DetailedInfo.ItemValue>
@@ -194,22 +181,18 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { Boolean(Number(data.cctx_status?.last_update_timestamp)) && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Most recent update to transaction status"
+            hint={ tQuat('multiUi.updated_hint') }
             isLoading={ isLoading }
-          >
-            Last updated
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('multiUi.last_updated') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <DetailedInfoTimestamp timestamp={ Number(data.cctx_status?.last_update_timestamp) * SECOND } isLoading={ isLoading }/>
           </DetailedInfo.ItemValue>
         </>
       ) }
       <DetailedInfo.ItemLabel
-        hint="Complete journey from source to destination chain(s)"
+        hint={ tQuat('multiUi.journey_hint') }
         isLoading={ isLoading }
-      >
-        Lifecycle
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('multiUi.lifecycle') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue position="relative" mb={ 7 } pl={ 0 } mt={{ base: 2, lg: 1 }}>
         <Box position="absolute" top="4px" left="9px" width="2px" height="100%" bg="border.divider"/>
         <Grid templateColumns="20px 1fr" rowGap={ 6 } columnGap={ 2 } w="100%">
@@ -271,11 +254,9 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
       { data.revert_options && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Configuration for handling transaction failures"
+            hint={ tQuat('multiUi.revert_options_hint') }
             isLoading={ isLoading }
-          >
-            Revert options
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('multiUi.revert_options') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue gap={ 2 } flexWrap="wrap">
             <Grid
               templateColumns="130px 1fr"
@@ -287,16 +268,16 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
               borderRadius="md"
               fontSize="sm"
             >
-              <Text fontWeight="medium" color="text.secondary">Abort address</Text>
+              <Text fontWeight="medium" color="text.secondary">{ tQuat('multiUi.abort_address') }</Text>
               <AddressEntityZetaChain
                 address={{ hash: data.revert_options.abort_address }}
                 chainId={ data.outbound_params[0].receiver_chain_id?.toString() }
                 isLoading={ isLoading }
                 w="100%"
               />
-              <Text fontWeight="medium" color="text.secondary">Call</Text>
+              <Text fontWeight="medium" color="text.secondary">{ tQuat('multiUi.call') }</Text>
               <Skeleton loading={ isLoading }>{ data.revert_options.call_on_revert.toString() }</Skeleton>
-              <Text fontWeight="medium" color="text.secondary">Revert address</Text>
+              <Text fontWeight="medium" color="text.secondary">{ tQuat('multiUi.revert_address') }</Text>
               <AddressEntityZetaChain
                 address={{ hash: data.revert_options.revert_address }}
                 chainId={ data.outbound_params[1]?.receiver_chain_id?.toString() }
@@ -305,7 +286,7 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
               />
               { data.revert_options.revert_message && (
                 <>
-                  <Text fontWeight="medium" color="text.secondary">Message</Text>
+                  <Text fontWeight="medium" color="text.secondary">{ tQuat('multiUi.message') }</Text>
                   <Skeleton loading={ isLoading } display="flex" justifyContent="space-between">
                     <Text
                       wordBreak="break-all"
@@ -319,7 +300,7 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
                   </Skeleton>
                 </>
               ) }
-              <Text fontWeight="medium" color="text.secondary">Gas limit</Text>
+              <Text fontWeight="medium" color="text.secondary">{ tQuat('common.gas_limit') }</Text>
               <Skeleton loading={ isLoading }>{ Number(data.revert_options.revert_gas_limit).toLocaleString() }</Skeleton>
             </Grid>
           </DetailedInfo.ItemValue>

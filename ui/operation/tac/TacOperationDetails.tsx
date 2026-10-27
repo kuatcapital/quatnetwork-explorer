@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 
 import type * as tac from '@blockscout/tac-operation-lifecycle-types';
@@ -9,6 +11,8 @@ import AddressEntityTacTon from 'ui/shared/entities/address/AddressEntityTacTon'
 import TacOperationStatus from 'ui/shared/statusTag/TacOperationStatus';
 
 import TacOperationLifecycleAccordion from './TacOperationLifecycleAccordion';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   isLoading?: boolean;
@@ -16,6 +20,8 @@ interface Props {
 }
 
 const TacOperationDetails = ({ isLoading, data }: Props) => {
+  const { t: tQuat } = useTranslation();
+
 
   const statusHistory = data.status_history.filter((item) => item.is_exist).sort(sortStatusHistory);
 
@@ -26,11 +32,9 @@ const TacOperationDetails = ({ isLoading, data }: Props) => {
       { data?.sender && (
         <>
           <DetailedInfo.ItemLabel
-            hint="The address on the source chain that starts a cross‑chain operation"
+            hint={ tQuat('l2Ui.sender_hint') }
             isLoading={ isLoading }
-          >
-            Sender
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('l2Ui.sender') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <AddressEntityTacTon
               address={{ hash: data.sender.address }}
@@ -42,11 +46,9 @@ const TacOperationDetails = ({ isLoading, data }: Props) => {
       ) }
 
       <DetailedInfo.ItemLabel
-        hint="The status of the operation"
+        hint={ tQuat('l2Ui.operation_status_hint') }
         isLoading={ isLoading }
-      >
-        Status
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <TacOperationStatus status={ data.type } isLoading={ isLoading }/>
       </DetailedInfo.ItemValue>
@@ -54,11 +56,9 @@ const TacOperationDetails = ({ isLoading, data }: Props) => {
       { data.timestamp && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Block time on the source chain when a cross‑chain operation is formed and sent"
+            hint={ tQuat('l2Ui.operation_time_hint') }
             isLoading={ isLoading }
-          >
-            Timestamp
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('l2Ui.timestamp') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue>
             <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isLoading }/>
           </DetailedInfo.ItemValue>
@@ -68,11 +68,9 @@ const TacOperationDetails = ({ isLoading, data }: Props) => {
       { statusHistory.length > 0 && (
         <>
           <DetailedInfo.ItemLabel
-            hint="Stages of a cross‑chain operation"
+            hint={ tQuat('l2Ui.lifecycle_hint') }
             isLoading={ isLoading }
-          >
-            Lifecycle
-          </DetailedInfo.ItemLabel>
+          >{ tQuat('l2Ui.lifecycle') }</DetailedInfo.ItemLabel>
           <DetailedInfo.ItemValue mt={ 1 }>
             <TacOperationLifecycleAccordion data={ statusHistory } isLoading={ isLoading } type={ data.type }/>
           </DetailedInfo.ItemValue>

@@ -1,3 +1,7 @@
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+import { useTranslation } from 'react-i18next';
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -6,7 +10,7 @@ import { layerLabels } from 'lib/rollups/utils';
 import { ARBITRUM_MESSAGES_ITEM } from 'stubs/arbitrumL2';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { rightLineArrow, nbsp } from 'toolkit/utils/htmlEntities';
+
 import ArbitrumL2MessagesListItem from 'ui/messages/ArbitrumL2MessagesListItem';
 import ArbitrumL2MessagesTable from 'ui/messages/ArbitrumL2MessagesTable';
 import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
@@ -22,6 +26,8 @@ type Props = {
 };
 
 const ArbitrumL2Messages = ({ direction }: Props) => {
+  const { locale } = useLocale();
+  const { t: tQuat } = useTranslation();
   const type = direction === 'from-rollup' ? 'withdrawals' : 'deposits';
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'general:arbitrum_l2_messages',
@@ -75,7 +81,7 @@ const ArbitrumL2Messages = ({ direction }: Props) => {
         loading={ countersQuery.isPlaceholderData }
         display="inline-block"
       >
-        A total of { countersQuery.data?.toLocaleString() } { type } found
+        { type === 'withdrawals' ? tQuat('l2Ui.withdrawals_found', { count: countersQuery.data ?? 0, value: formatNumber(countersQuery.data ?? 0, locale) }) : tQuat('l2Ui.deposits_found', { count: countersQuery.data ?? 0, value: formatNumber(countersQuery.data ?? 0, locale) }) }
       </Skeleton>
     );
   })();
@@ -86,14 +92,14 @@ const ArbitrumL2Messages = ({ direction }: Props) => {
     <>
       <PageTitle
         title={ direction === 'from-rollup' ?
-          `Withdrawals (${ layerLabels.current }${ nbsp }${ rightLineArrow }${ nbsp }${ layerLabels.parent })` :
-          `Deposits (${ layerLabels.parent }${ nbsp }${ rightLineArrow }${ nbsp }${ layerLabels.current })` }
+          tQuat('l2Ui.withdrawals_route', { from: layerLabels.current, to: layerLabels.parent }) :
+          tQuat('l2Ui.deposits_route', { from: layerLabels.parent, to: layerLabels.current }) }
         withTextAd
       />
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items.length }
-        emptyText={ `There are no ${ type }.` }
+        emptyText={ type === 'withdrawals' ? tQuat('l2Ui.no_withdrawals') : tQuat('l2Ui.no_deposits') }
         actionBar={ actionBar }
       >
         { content }

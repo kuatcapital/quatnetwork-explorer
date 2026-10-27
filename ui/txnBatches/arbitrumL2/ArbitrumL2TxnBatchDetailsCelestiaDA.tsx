@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
@@ -23,16 +24,14 @@ const ArbitrumL2TxnBatchDetailsCelestiaDA = ({ data }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint="The block number in Celestia where the Data Availability blob was published"
-      >
-        Height
-      </DetailedInfo.ItemLabel>
+        hint={ tQuat('l2Ui.celestia_block_hint') }
+      >{ tQuat('l2Ui.height') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue wordBreak="break-all" whiteSpace="break-spaces">
         { data.height }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="The Data Availability blob’s unique cryptographic proof"
+        hint={ tQuat('l2Ui.da_proof_hint') }
       >{ tQuat('blobUI.commitment') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue flexWrap="nowrap">
         <Flex overflow="hidden" minW="0">

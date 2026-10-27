@@ -1,8 +1,10 @@
+// Modified by Quat Capital, 2026-10-27: optional localized TAC labels with stable protocol values. GPL-3.0.
+import type { TFunction } from 'i18next';
 import * as tac from '@blockscout/tac-operation-lifecycle-types';
 
 import { rightLineArrow } from 'toolkit/utils/htmlEntities';
 
-export function getTacOperationStatus(type: tac.OperationType) {
+export function getTacOperationStatus(type: tac.OperationType, t?: TFunction) {
   switch (type) {
     case tac.OperationType.TON_TAC_TON:
       return `TON ${ rightLineArrow } TAC ${ rightLineArrow } TON`;
@@ -11,24 +13,38 @@ export function getTacOperationStatus(type: tac.OperationType) {
     case tac.OperationType.TON_TAC:
       return `TON ${ rightLineArrow } TAC`;
     case tac.OperationType.ERROR:
-      return 'Error';
+      return t ? t('l2Ui.error') : 'Error';
     case tac.OperationType.ROLLBACK:
-      return 'Rollback';
+      return t ? t('l2Ui.rollback') : 'Rollback';
     case tac.OperationType.INSUFFICIENT_FEE:
-      return 'Insufficient fee';
+      return t ? t('l2Ui.insufficient_fee') : 'Insufficient fee';
     case tac.OperationType.PENDING:
-      return 'Pending';
+      return t ? t('l2Ui.pending') : 'Pending';
     default:
       return null;
   }
 }
 
-export function getTacOperationStage(data: tac.OperationDetails, txHash: string) {
+export function getTacOperationStage(data: tac.OperationDetails, txHash: string, t?: TFunction) {
   const currentStep = data.status_history.filter((step) => step.transactions.some((tx) => tx.hash.toLowerCase() === txHash.toLowerCase()));
   if (currentStep.length === 0) {
     return;
   }
-  return currentStep.map((step) => STATUS_LABELS[step.type]);
+  return currentStep.map((step) => getTacOperationStageLabel(step.type, t));
+}
+
+export function getTacOperationStageLabel(type: tac.OperationStage_StageType, t?: TFunction): string {
+  if (!t) return STATUS_LABELS[type] ?? type;
+  switch (type) {
+    case tac.OperationStage_StageType.COLLECTED_IN_TAC: return t('l2Ui.stage_collected_tac');
+    case tac.OperationStage_StageType.INCLUDED_IN_TAC_CONSENSUS: return t('l2Ui.stage_consensus_tac');
+    case tac.OperationStage_StageType.EXECUTED_IN_TAC: return t('l2Ui.stage_executed_tac');
+    case tac.OperationStage_StageType.COLLECTED_IN_TON: return t('l2Ui.stage_collected_ton');
+    case tac.OperationStage_StageType.INCLUDED_IN_TON_CONSENSUS: return t('l2Ui.stage_consensus_ton');
+    case tac.OperationStage_StageType.EXECUTED_IN_TON: return t('l2Ui.stage_executed_ton');
+    case tac.OperationStage_StageType.UNRECOGNIZED: return t('l2Ui.stage_unknown');
+    default: return type;
+  }
 }
 
 export const STATUS_SEQUENCE: Array<tac.OperationStage_StageType> = [

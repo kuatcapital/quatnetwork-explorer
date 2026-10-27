@@ -1,3 +1,5 @@
+import type { TFunction } from 'i18next';
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { GridItem } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
@@ -39,6 +41,7 @@ interface Props {
 
 const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
   const { t: tQuat } = useTranslation();
+  const verificationSteps = React.useMemo(() => ZKSYNC_L2_TX_BATCH_STATUSES.slice(1).map(status => getLocalizedBatchStatus(status, tQuat)), [ tQuat ]);
   const { locale } = useLocale();
 
   const router = useRouter();
@@ -76,11 +79,9 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
       templateColumns={{ base: 'minmax(0, 1fr)', lg: 'minmax(min-content, 200px) minmax(0, 1fr)' }}
     >
       <DetailedInfo.ItemLabel
-        hint={ `Batch number indicates the length of batches produced by grouping ${ layerLabels.current } blocks to be proven on ${ layerLabels.parent }.` }
+        hint={ tQuat('l2Ui.batch_number_hint_period', { current: layerLabels.current, parent: layerLabels.parent }) }
         isLoading={ isPlaceholderData }
-      >
-        Txn batch number
-      </DetailedInfo.ItemLabel>
+      >{ tQuat('l2Ui.txn_batch_number') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.number }
@@ -88,35 +89,35 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
         <PrevNext
           ml={ 6 }
           onClick={ handlePrevNextClick }
-          prevLabel="View previous txn batch"
-          nextLabel="View next txn batch"
+          prevLabel={ tQuat('l2Ui.previous_batch') }
+          nextLabel={ tQuat('l2Ui.next_batch') }
           isPrevDisabled={ data.number === 0 }
           isLoading={ isPlaceholderData }
         />
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Status is the short interpretation of the batch lifecycle"
+        hint={ tQuat('l2Ui.batch_status_lifecycle_hint') }
         isLoading={ isPlaceholderData }
       >{ tQuat('common.status') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
         <VerificationSteps
-          steps={ ZKSYNC_L2_TX_BATCH_STATUSES.slice(1).map(formatZkSyncL2TxnBatchStatus) }
-          currentStep={ formatZkSyncL2TxnBatchStatus(data.status) }
+          steps={ verificationSteps }
+          currentStep={ getLocalizedBatchStatus(data.status, tQuat) }
           isLoading={ isPlaceholderData }
         />
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Date and time at which batch is produced"
+        hint={ tQuat('l2Ui.batch_produced_hint') }
         isLoading={ isPlaceholderData }
       >{ tQuat('common.timestamp') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
-        { data.timestamp ? <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/> : 'Undefined' }
+        { data.timestamp ? <DetailedInfoTimestamp timestamp={ data.timestamp } isLoading={ isPlaceholderData }/> : tQuat('l2Ui.undefined') }
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint="Number of transactions inside the batch."
+        hint={ tQuat('l2Ui.batch_transactions_hint_period') }
         isLoading={ isPlaceholderData }
       >{ tQuat('common.transactions') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
@@ -138,10 +139,8 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
         <GridItem colSpan={{ base: undefined, lg: 2 }} mt={{ base: 1, lg: 4 }}/>
 
         <DetailedInfo.ItemLabel
-          hint={ `${ layerLabels.parent } batch root is a hash that summarizes batch data and submitted to ${ layerLabels.parent }` }
-        >
-          Root hash
-        </DetailedInfo.ItemLabel>
+          hint={ tQuat('l2Ui.batch_root_hint', { current: layerLabels.parent, parent: layerLabels.parent }) }
+        >{ tQuat('l2Ui.root_hash') }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue
           flexWrap="nowrap"
           alignSelf="flex-start"
@@ -151,10 +150,9 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
         </DetailedInfo.ItemValue>
 
         <DetailedInfo.ItemLabel
-          hint={ `Gas price for the batch settlement transaction on ${ layerLabels.parent }` }
+          hint={ tQuat('l2Ui.settlement_gas_hint', { parent: layerLabels.parent }) }
         >
-          { layerLabels.parent } gas price
-        </DetailedInfo.ItemLabel>
+          { tQuat('l2Ui.layer_gas_price', { layer: layerLabels.parent }) }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue multiRow>
           <GasPriceValue
             amount={ data.l1_gas_price }
@@ -164,10 +162,9 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
         </DetailedInfo.ItemValue>
 
         <DetailedInfo.ItemLabel
-          hint='The gas price below which the "baseFee" of the batch should not fall'
+          hint={ tQuat('l2Ui.fair_gas_hint') }
         >
-          { layerLabels.current } fair gas price
-        </DetailedInfo.ItemLabel>
+          { tQuat('l2Ui.layer_fair_gas', { layer: layerLabels.current }) }</DetailedInfo.ItemLabel>
         <DetailedInfo.ItemValue multiRow>
           <GasPriceValue
             amount={ data.l2_fair_gas_price }
@@ -180,3 +177,14 @@ const ZkSyncL2TxnBatchDetails = ({ query }: Props) => {
 };
 
 export default ZkSyncL2TxnBatchDetails;
+
+function getLocalizedBatchStatus(status: string, t: TFunction): string {
+  switch (status) {
+    case 'Processed on L2': return t('sharedStatus.processed_on', { layer: layerLabels.current });
+    case 'Sealed on L2': return t('sharedStatus.sealed_on', { layer: layerLabels.current });
+    case 'Sent to L1': return t('sharedStatus.sent_to', { layer: layerLabels.parent });
+    case 'Validated on L1': return t('sharedStatus.validated_on', { layer: layerLabels.parent });
+    case 'Executed on L1': return t('sharedStatus.executed_on', { layer: layerLabels.parent });
+    default: return formatZkSyncL2TxnBatchStatus(status as typeof ZKSYNC_L2_TX_BATCH_STATUSES[number]);
+  }
+}

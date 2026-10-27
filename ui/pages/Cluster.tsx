@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -6,8 +7,12 @@ import getQueryParamString from 'lib/router/getQueryParamString';
 import ClusterDetails from 'ui/cluster/ClusterDetails';
 import TextAd from 'ui/shared/ad/TextAd';
 import PageTitle from 'ui/shared/Page/PageTitle';
+import { useTranslation } from 'react-i18next';
+
 
 const Cluster = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const encodedClusterName = getQueryParamString(router.query.name);
   const clusterName = decodeURIComponent(encodedClusterName || '');
@@ -25,7 +30,7 @@ const Cluster = () => {
   return (
     <>
       <TextAd mb={ 6 }/>
-      <PageTitle title="Cluster details"/>
+      <PageTitle title={ tQuat('multiUi.cluster_details') }/>
       <ClusterDetails
         clusterData={ clusterData }
         clusterName={ clusterName }

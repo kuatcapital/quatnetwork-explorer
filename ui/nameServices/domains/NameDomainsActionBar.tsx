@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, Fieldset, Flex, HStack, Text, chakra, createListCollection } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +19,9 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import Sort from 'ui/shared/sort/Sort';
 
 import type { Sort as TSort } from './utils';
-import { SORT_OPTIONS } from './utils';
+import { getNameDomainsSortOptions } from './utils';
 
-const sortCollection = createListCollection({ items: SORT_OPTIONS });
+
 
 interface Props {
   pagination: PaginationParams;
@@ -53,6 +53,7 @@ const NameDomainsActionBar = ({
   onProtocolsFilterChange,
 }: Props) => {
   const { t: tQuat } = useTranslation();
+  const sortCollection = React.useMemo(() => createListCollection({ items: getNameDomainsSortOptions(tQuat) }), [ tQuat ]);
 
   const isInitialLoading = useIsInitialLoading(isLoading);
 
@@ -62,7 +63,7 @@ const NameDomainsActionBar = ({
       minW={{ base: 'auto', lg: '250px' }}
       size="sm"
       onChange={ onSearchChange }
-      placeholder="Search by name or address"
+      placeholder={ tQuat('multiUi.search_name_address') }
       initialValue={ searchTerm }
       loading={ isInitialLoading }
     />
@@ -90,7 +91,7 @@ const NameDomainsActionBar = ({
         { protocolsData && protocolsData.length > 1 && (
           <>
             <Flex justifyContent="space-between" textStyle="sm" mb={ 3 }>
-              <Text fontWeight={ 600 } color="text.secondary">Protocol</Text>
+              <Text fontWeight={ 600 } color="text.secondary">{ tQuat('multiUi.protocol') }</Text>
               <Button
                 variant="link"
                 onClick={ handleProtocolReset }
@@ -126,21 +127,15 @@ const NameDomainsActionBar = ({
           <CheckboxGroup defaultValue={ filterValue } onValueChange={ handleFilterValueChange } value={ filterValue } name="token_type">
             <Fieldset.Content gap={ 0 }>
               <Text color="text.secondary" fontWeight={ 600 } mb={ 3 } textStyle="sm">{ tQuat('common.address') }</Text>
-              <Checkbox value="owned_by" disabled={ !isAddressSearch }>
-                Owned by
-              </Checkbox>
+              <Checkbox value="owned_by" disabled={ !isAddressSearch }>{ tQuat('multiUi.owned_by') }</Checkbox>
               <Checkbox
                 value="resolved_to"
                 mt={ 3 }
                 disabled={ !isAddressSearch }
-              >
-                Resolved to address
-              </Checkbox>
+              >{ tQuat('multiUi.resolved_to') }</Checkbox>
               { filterGroupDivider }
               <Text color="text.secondary" fontWeight={ 600 } mb={ 3 } textStyle="sm">{ tQuat('common.status') }</Text>
-              <Checkbox value="with_inactive">
-                Include expired
-              </Checkbox>
+              <Checkbox value="with_inactive">{ tQuat('multiUi.include_expired') }</Checkbox>
             </Fieldset.Content>
           </CheckboxGroup>
         </Fieldset.Root>

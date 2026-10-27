@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,13 +29,13 @@ const TokenTransfersCrossChainTable = ({ data, isLoading, top, currentAddress }:
           <TableRow>
             <TableColumnHeader w="42px"/>
             { currentAddress && <TableColumnHeader w="44px"/> }
-            <TableColumnHeader>Source token</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.source_token') }</TableColumnHeader>
             <TableColumnHeader/>
-            <TableColumnHeader>Target token</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.target_token') }</TableColumnHeader>
             <TableColumnHeader>{ tQuat('transactions.source_tx') }</TableColumnHeader>
-            <TableColumnHeader>Dest tx</TableColumnHeader>
-            <TableColumnHeader>Protocol</TableColumnHeader>
-            <TableColumnHeader>Message</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.destination_tx_short') }</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.protocol') }</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('multiUi.message') }</TableColumnHeader>
             <TableColumnHeader>
               <Flex alignItems="center" flexWrap="nowrap">{ tQuat('common.timestamp') }<TimeFormatToggle/>
               </Flex>

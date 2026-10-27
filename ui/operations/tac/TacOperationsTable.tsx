@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 
 import type * as tac from '@blockscout/tac-operation-lifecycle-types';
@@ -7,6 +9,8 @@ import { TableBody, TableColumnHeader, TableHeaderSticky, TableRoot, TableRow } 
 import TimeFormatToggle from 'ui/shared/time/TimeFormatToggle';
 
 import TacOperationsTableItem from './TacOperationsTableItem';
+import { useTranslation } from 'react-i18next';
+
 
 type Props = {
   items: Array<tac.OperationBriefDetails>;
@@ -14,18 +18,18 @@ type Props = {
 };
 
 const TacOperationsTable = ({ items, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   return (
     <AddressHighlightProvider>
       <TableRoot minW="950px">
         <TableHeaderSticky top={ 68 }>
           <TableRow>
-            <TableColumnHeader w="200px">Status</TableColumnHeader>
-            <TableColumnHeader w="100%">Operation</TableColumnHeader>
-            <TableColumnHeader w="200px">
-              Timestamp
-              <TimeFormatToggle/>
+            <TableColumnHeader w="200px">{ tQuat('l2Ui.status') }</TableColumnHeader>
+            <TableColumnHeader w="100%">{ tQuat('l2Ui.operation') }</TableColumnHeader>
+            <TableColumnHeader w="200px">{ tQuat('l2Ui.timestamp') }<TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader w="250px">Sender</TableColumnHeader>
+            <TableColumnHeader w="250px">{ tQuat('l2Ui.sender') }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

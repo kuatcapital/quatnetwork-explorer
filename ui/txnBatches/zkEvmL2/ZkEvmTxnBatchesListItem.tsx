@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Text } from '@chakra-ui/react';
 import React from 'react';
@@ -29,7 +30,7 @@ const ZkEvmTxnBatchesListItem = ({ item, isLoading }: Props) => {
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="110px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Batch #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.batch_marker') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BatchEntityL2
           isLoading={ isLoading }
@@ -48,7 +49,7 @@ const ZkEvmTxnBatchesListItem = ({ item, isLoading }: Props) => {
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.timestamp }
-          fallbackText="Undefined"
+          fallbackText={ tQuat('l2Ui.undefined') }
           isLoading={ isLoading }
           display="inline-block"
         />
@@ -79,7 +80,7 @@ const ZkEvmTxnBatchesListItem = ({ item, isLoading }: Props) => {
         ) : <Text>{ tQuat('common.pending') }</Text> }
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Sequence hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.sequence_hash') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         { item.sequence_transaction_hash ? (
           <TxEntityL1

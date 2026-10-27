@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -21,20 +23,22 @@ type Props = {
 };
 
 const TokenTransfersListItem = ({ item, isLoading, chainData }: Props) => {
+  const { t: tQuat } = useTranslation();
+
   const isConfidential = item.token ? isConfidentialTokenType(item.token.type) : false;
 
   return (
     <ListItemMobileGrid.Container>
       { item.transaction_hash && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Txn hash</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.txn_hash') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <TxEntity hash={ item.transaction_hash } isLoading={ isLoading } truncation="constant_long" noIcon={ !chainData } chain={ chainData }/>
           </ListItemMobileGrid.Value>
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.age') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TimeWithTooltip
           timestamp={ item.timestamp }
@@ -45,30 +49,30 @@ const TokenTransfersListItem = ({ item, isLoading, chainData }: Props) => {
 
       { item.method && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Method</ListItemMobileGrid.Label><ListItemMobileGrid.Value>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.method') }</ListItemMobileGrid.Label><ListItemMobileGrid.Value>
             <Badge loading={ isLoading }>{ item.method }</Badge>
           </ListItemMobileGrid.Value>
         </>
       ) }
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Block</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.block') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <BlockEntity number={ item.block_number } isLoading={ isLoading } noIcon/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>From</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.from') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity address={ item.from } isLoading={ isLoading } truncation="constant"/>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>To</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.to') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity address={ item.to } isLoading={ isLoading } truncation="constant"/>
       </ListItemMobileGrid.Value>
 
       { item.total && 'token_id' in item.total && item.token && (NFT_TOKEN_TYPE_IDS.includes(item.token.type)) && item.total.token_id !== null && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Token ID</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.token_id') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value overflow="hidden">
             <NftEntity
               hash={ item.token.address_hash }
@@ -83,7 +87,7 @@ const TokenTransfersListItem = ({ item, isLoading, chainData }: Props) => {
 
       { item.token && item.total && 'value' in item.total && item.total.value !== null && (hasTokenTransferValue(item.token.type)) && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Amount</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.amount') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <TokenValue
               amount={ item.total.value }
@@ -97,7 +101,7 @@ const TokenTransfersListItem = ({ item, isLoading, chainData }: Props) => {
 
       { isConfidential && item.token && (!item.total || !('value' in item.total) || item.total.value === null) && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Amount</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('suppUi.amount') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <ConfidentialTokenValue
               token={ item.token }

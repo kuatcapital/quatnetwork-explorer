@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -36,12 +36,8 @@ const NameDomainsTable = ({ data, isLoading, sort, onSortToggle }: Props) => {
               sortValue={ sort }
               onSortToggle={ onSortToggle }
               contentAfter={ <TimeFormatToggle/> }
-            >
-              Registered
-            </TableColumnHeaderSortable>
-            <TableColumnHeader width="25%">
-              Expires
-              <TimeFormatToggle/>
+            >{ tQuat('multiUi.registered') }</TableColumnHeaderSortable>
+            <TableColumnHeader width="25%">{ tQuat('multiUi.expires') }<TimeFormatToggle/>
             </TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>

@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -44,7 +44,7 @@ const NameDomainsListItem = ({
 
       { registrationDate && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Registered on</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.registered_on') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Skeleton loading={ isLoading }>
               <Time timestamp={ registrationDate }/>
@@ -56,7 +56,7 @@ const NameDomainsListItem = ({
 
       { expiryDate && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Expiration date</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.expiry_date') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Skeleton loading={ isLoading } whiteSpace="pre-wrap">
               <Time timestamp={ expiryDate } display="block"/>

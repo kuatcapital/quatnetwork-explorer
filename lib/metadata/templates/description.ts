@@ -1,5 +1,10 @@
+// Modified by Quat Capital, 2026-10-27: localized runtime description templates. GPL-3.0.
 /* eslint-disable max-len */
+import type { TFunction } from 'i18next';
 import type { Route } from 'nextjs-routes';
+
+import type { MetadataTemplateParams } from './localize';
+import { localizeMetadataTemplate, metadataRouteKey } from './localize';
 
 // equal og:description
 const DEFAULT_TEMPLATE = 'Open-source block explorer by Blockscout. Search transactions, verify smart contracts, analyze addresses, and track network activity. Complete blockchain data and APIs for the %network_title% network.';
@@ -106,6 +111,11 @@ const TEMPLATE_MAP_ENHANCED: Partial<Record<Route['pathname'], string>> = {
   '/stats/[id]': '%description%',
 };
 
-export function make(pathname: Route['pathname'], isEnriched = false) {
-  return (isEnriched ? TEMPLATE_MAP_ENHANCED[pathname] : undefined) ?? TEMPLATE_MAP[pathname] ?? '';
+export function make(pathname: Route['pathname'], isEnriched = false, t?: TFunction, params: MetadataTemplateParams = {}): string {
+  const enrichedTemplate = isEnriched ? TEMPLATE_MAP_ENHANCED[pathname] : undefined;
+  const template = enrichedTemplate ?? TEMPLATE_MAP[pathname] ?? '';
+  if (!t) return template;
+  const key = template === DEFAULT_TEMPLATE ? 'metaSeo.description.default' :
+    `metaSeo.description.${ enrichedTemplate ? 'enriched' : 'routes' }.${ metadataRouteKey(pathname) }`;
+  return localizeMetadataTemplate(template, key, t, params);
 }

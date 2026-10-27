@@ -1,3 +1,5 @@
+// Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
+// Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -15,8 +17,12 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import Pagination from 'ui/shared/pagination/Pagination';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
+import { useTranslation } from 'react-i18next';
+
 
 const TacOperations = () => {
+  const { t: tQuat } = useTranslation();
+
   const router = useRouter();
   const [ searchTerm, setSearchTerm ] = React.useState(getQueryParamString(router.query.q) || undefined);
 
@@ -46,7 +52,7 @@ const TacOperations = () => {
       w={{ base: '100%', lg: '460px' }}
       size="sm"
       onChange={ handleSearchTermChange }
-      placeholder="Search by operation, tx hash, sender"
+      placeholder={ tQuat('l2Ui.operation_search') }
       initialValue={ searchTerm }
     />
   );
@@ -89,14 +95,14 @@ const TacOperations = () => {
 
   return (
     <>
-      <PageTitle title="Operations" withTextAd/>
+      <PageTitle title={ tQuat('l2Ui.operations') } withTextAd/>
       <DataListDisplay
         isError={ isError }
         itemsNum={ data?.items?.length }
-        emptyText="There are no operations."
+        emptyText={ tQuat('l2Ui.no_operations') }
         hasActiveFilters={ Boolean(debouncedSearchTerm) }
         emptyStateProps={{
-          term: 'operation',
+          term: tQuat('l2Ui.operation_term'),
         }}
         actionBar={ actionBar }
       >
