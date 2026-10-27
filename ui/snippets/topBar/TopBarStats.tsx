@@ -1,10 +1,14 @@
+// Modified by Quat Capital, 2026-10-27: runtime shell labels and locale formatting. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import dayjs from 'lib/date/dayjs';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -12,9 +16,12 @@ import GasInfoTooltip from 'ui/shared/gas/GasInfoTooltip';
 import GasPrice from 'ui/shared/gas/GasPrice';
 import TextSeparator from 'ui/shared/TextSeparator';
 
+import { formatHeaderPercentage, formatHeaderPrice } from '../localization';
 import GetGasButton from './GetGasButton';
 
 const TopBarStats = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const isMobile = useIsMobile();
 
   const { data, isPlaceholderData, isError, refetch, dataUpdatedAt } = useApiQuery('general:stats', {
@@ -64,12 +71,12 @@ const TopBarStats = () => {
           <Flex columnGap={ 1 }>
             <Skeleton loading={ isPlaceholderData }>
               <chakra.span color="text.secondary">{ config.chain.currency.symbol } </chakra.span>
-              <span>${ Number(data.coin_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) }</span>
+              <span>${ formatHeaderPrice(data.coin_price ?? '0', locale) }</span>
             </Skeleton>
             { data.coin_price_change_percentage && !(isMobile && Boolean(config.UI.featuredNetworks.items)) && (
               <Skeleton loading={ isPlaceholderData }>
-                <chakra.span color={ Number(data.coin_price_change_percentage) >= 0 ? 'green.500' : 'red.500' }>
-                  { Number(data.coin_price_change_percentage).toFixed(2) }%
+                <chakra.span color={ BigNumber(data.coin_price_change_percentage).isGreaterThanOrEqualTo(0) ? 'green.500' : 'red.500' }>
+                  { formatHeaderPercentage(data.coin_price_change_percentage, locale) }%
                 </chakra.span>
               </Skeleton>
             ) }
@@ -79,7 +86,7 @@ const TopBarStats = () => {
           <Flex columnGap={ 1 } ml={ data?.coin_price ? 3 : 0 }>
             <Skeleton loading={ isPlaceholderData }>
               <chakra.span color="text.secondary">{ config.chain.secondaryCoin.symbol } </chakra.span>
-              <span>${ Number(data.secondary_coin_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) }</span>
+              <span>${ formatHeaderPrice(data.secondary_coin_price ?? '0', locale) }</span>
             </Skeleton>
           </Flex>
         ) }
@@ -87,7 +94,7 @@ const TopBarStats = () => {
         { hasGasInfo && (
           <>
             <Skeleton loading={ isPlaceholderData } whiteSpace="pre-wrap">
-              <chakra.span color="text.secondary">Gas </chakra.span>
+              <chakra.span color="text.secondary">{ t('common.gas') } </chakra.span>
               <GasInfoTooltip data={ data } dataUpdatedAt={ dataUpdatedAt } placement={ !data?.coin_price ? 'bottom-start' : undefined }>
                 <Link>
                   <GasPrice data={ data.gas_prices?.average ?? null }/>

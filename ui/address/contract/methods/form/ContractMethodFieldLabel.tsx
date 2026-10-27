@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
@@ -28,7 +29,7 @@ const ContractMethodFieldLabel = ({ data, isOptional, level }: Props) => {
       color={ level > 1 ? { _light: 'blackAlpha.600', _dark: 'whiteAlpha.600' } : undefined }
       wordBreak="break-all"
     >
-      { getFieldLabel(data, !isOptional) }
+      { getFieldLabel(data, !isOptional, tQuat) }
       { data.type === 'string' && <Hint label={ tQuat('contracts.empty_string_hint') } ml={ 2 }/> }
     </Box>
   );

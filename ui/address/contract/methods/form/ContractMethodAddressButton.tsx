@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +22,7 @@ const ContractMethodAddressButton = ({ onClick, isDisabled }: Props) => {
   }, [ address, onClick ]);
 
   return (
-    <Tooltip content="Connect your wallet to enter your address." disabled={ Boolean(address) } disableOnMobile>
+    <Tooltip content={ tQuat('contractRemainderUi.self_address_hint') } disabled={ Boolean(address) } disableOnMobile>
       <Button
         variant="subtle"
         size="xs"

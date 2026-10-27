@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localize token group counts and sorting labels. GPL-3.0.
 import { Text, Box, Flex } from '@chakra-ui/react';
 import { sumBy } from 'es-toolkit';
 import React from 'react';
@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next';
 
 import type { FormattedData } from './types';
 
+import { useLocale } from 'lib/i18n/provider';
 import { getTokenTypeName } from 'lib/token/tokenTypes';
 import { Link } from 'toolkit/chakra/link';
 import { FilterInput } from 'toolkit/components/filters/FilterInput';
 import { thinsp } from 'toolkit/utils/htmlEntities';
 import IconSvg from 'ui/shared/IconSvg';
 
+import { getAddressCountOptions } from '../localization';
 import type { Sort } from '../utils/tokenUtils';
 import { getSortingFn, sortTokenGroups } from '../utils/tokenUtils';
 import TokenSelectItem from './TokenSelectItem';
@@ -26,6 +28,7 @@ interface Props {
 
 const TokenSelectMenu = ({ getSort, filteredData, onInputChange, onSortClick, searchTerm }: Props) => {
   const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const hasFilteredResult = sumBy(Object.values(filteredData), ({ items }) => items.length) > 0;
 
@@ -53,15 +56,16 @@ const TokenSelectMenu = ({ getSort, filteredData, onInputChange, onSortClick, se
             (type !== 'ERC-721' && tokenInfo.items.some(({ usd }) => usd))
           );
           const numPrefix = tokenInfo.isOverflow ? `>${ thinsp }` : '';
+          const countOptions = getAddressCountOptions(tokenInfo.items.length, locale);
 
           return (
             <Box key={ type }>
               <Flex justifyContent="space-between">
                 <Text mb={ 3 } color="gray.500" fontWeight={ 600 } fontSize="sm">
-                  { getTokenTypeName(type) } tokens ({ numPrefix }{ tokenInfo.items.length })
+                  { tQuat('addressTxUi.token_group', { ...countOptions, type: getTokenTypeName(type), value: numPrefix + countOptions.value }) }
                 </Text>
                 { hasSort && (
-                  <Link data-type={ type } onClick={ onSortClick } aria-label={ `Sort ${ getTokenTypeName(type) } tokens` }>
+                  <Link data-type={ type } onClick={ onSortClick } aria-label={ tQuat('addressTxUi.sort_token_group', { type: getTokenTypeName(type) }) }>
                     <IconSvg name="arrows/east" boxSize={ 5 } transform={ arrowTransform } transitionDuration="faster"/>
                   </Link>
                 ) }

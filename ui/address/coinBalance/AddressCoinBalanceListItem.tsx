@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete transaction label localization. GPL-3.0.
 import { Stat, Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -61,7 +61,7 @@ const AddressCoinBalanceListItem = (props: Props) => {
       </Flex>
       { props.transaction_hash && (
         <Flex columnGap={ 2 } w="100%">
-          <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>Txs</Skeleton>
+          <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('verification.txs') }</Skeleton>
           <TxEntity
             hash={ props.transaction_hash }
             isLoading={ props.isLoading }

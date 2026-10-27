@@ -1396,3 +1396,114 @@ Runtime-перевод собственного UI наград/каталога
 | 2026-10-27 | `ui/zetaChain/filters/ZetaChainSenderFilter.tsx` | T18: runtime-переводы, безопасная интерполяция, точные числа, тесты или документация пятой группы. |
 | 2026-10-27 | `ui/zetaChain/filters/ZetaChainStatusFilter.tsx` | T18: runtime-переводы, безопасная интерполяция, точные числа, тесты или документация пятой группы. |
 | 2026-10-27 | `vitest.i18n.config.mts` | T18: runtime-переводы, безопасная интерполяция, точные числа, тесты или документация пятой группы. |
+
+
+## 2026-10-28: проверенная шестая группа T18
+
+Контракты/ABI и локальные ошибки, ники и адреса, транзакционные подсказки, меню и настройки, flashblocks, оболочки developer pages. Canonical EN3185/RU3313/KK3185. TypeScript PASS; полный ESLint 0 ошибок и 7 старых warnings; Vitest 96/96, после исправлений двух specs повторно 14/14; tooling 11/11; check-locales PASS. Это не завершение T18; остаток в tools/i18n/REMAINING.md.
+
+| Дата | Файл | Изменение |
+|---|---|---|
+| 2026-10-28 | `locales/en.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `locales/kk.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `locales/ru.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/PHASE6-HANDOFF.md` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/REMAINING.md` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/contracts-remainder-translations.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/developer-pages-translations.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/flashblock-translations.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/inventory.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/shell-remainder-translations.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `tools/i18n/tx-address-remainder-translations.json` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/SolidityscanReport.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/address3rdPartyWidgets/useWidgetData.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/blocksValidated/AddressBlocksValidatedListItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/blocksValidated/AddressBlocksValidatedTableItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/coinBalance/AddressCoinBalanceChart.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/coinBalance/AddressCoinBalanceListItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/ContractCodeIdes.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/ContractSourceCode.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/alerts/ConflictingImplementationsModal.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/alerts/ContractDetailsAlertProxyPattern.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/alerts/ContractDetailsAlerts.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/audits/ContractSecurityAudits.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/audits/ContractSubmitAuditForm.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/info/ContractDetailsInfo.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/info/ContractDetailsInfoImplementations.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/localization.spec.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/localization.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/ContractAbi.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/ContractAbiItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/ContractMethodsContainer.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/ContractMethodsProxy.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/alerts/ConnectWalletAlert.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodAddressButton.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodFieldInput.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodFieldInputArray.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodFieldInputTuple.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodFieldLabel.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodForm.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodResultPublicClient.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/ContractMethodResultWalletClient.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/form/utils.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/useCallMethodPublicClient.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/useCallMethodWalletClient.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/contract/methods/useFormSubmit.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/details/AddressCounterItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/ensDomains/AddressEnsDomains.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/epochRewards/AddressEpochRewardsListItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/epochRewards/AddressEpochRewardsTable.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/filecoin/FilecoinActorTag.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/localization.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/mud/AddressMudRecordValues.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/mud/AddressMudRecordsTable.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/mud/AddressMudTable.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/mud/AddressMudTablesListItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/mud/AddressMudTablesTableItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/remainderLocalization.spec.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokenSelect/TokenSelectButton.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokenSelect/TokenSelectItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokenSelect/TokenSelectMenu.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokens/AddressCollections.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokens/ERC20TokensListItem.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokens/ERC20TokensTable.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/address/tokens/TokenBalances.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/blocks/Flashblocks.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/blocks/flashblocks/FlashblocksStats.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/blocks/flashblocks/localization.spec.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/blocks/flashblocks/localization.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/contractVerification/methods/ContractVerificationMultiPartFile.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/pages/Blocks.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/pages/Chakra.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/pages/Login.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/pages/Sprite.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/shared/SocketNewItemsNotice.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/header/Burger.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/header/alerts/IndexingBlocksAlert.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/localization.spec.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/localization.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/RollupStageBadge.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/TestnetBadge.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/mobile/NavLinkGroup.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/promoBanner/NavigationPromoBannerContent.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/vertical/NavLink.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/vertical/NavLinkGroup.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/navigation/vertical/NavigationDesktop.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/networkLogo/NetworkIcon.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/networkLogo/NetworkLogo.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/networkMenu/NetworkMenuContent.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/networkMenu/NetworkMenuLink.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/NetworkMenu.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/TopBarStats.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/settings/Settings.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/settings/SettingsAddressFormat.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/settings/SettingsColorTheme.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/settings/SettingsIdentIcon.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/settings/SettingsPoorReputationTokens.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/snippets/topBar/settings/SettingsScamTokens.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/tx/TxAssetFlows.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/tx/assetFlows/utils/generateFlowViewData.ts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/tx/details/TxDetailsTxFee.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/tx/details/TxInfo.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `ui/txs/TxsStats.tsx` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |
+| 2026-10-28 | `vitest.i18n.config.mts` | Шестая группа T18: runtime-локализация, проверенные словари, регрессии или передача контекста. |

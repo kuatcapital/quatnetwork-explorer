@@ -1,7 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
@@ -36,7 +37,7 @@ const ConnectWalletAlert = ({ isLoading }: Props) => {
             onClick={ web3Wallet.connect }
             size="sm"
             loading={ web3Wallet.isOpen }
-            loadingText="Connect your wallet"
+            loadingText={ tQuat('contracts.connect_wallet') }
           >{ tQuat('contracts.connect_wallet') }</Button>
         </Flex>
       );
@@ -44,14 +45,17 @@ const ConnectWalletAlert = ({ isLoading }: Props) => {
 
     return (
       <Flex alignItems="center" columnGap={ 2 }>
-        <span>Connected to </span>
-        <AddressEntity
-          address={{ hash: web3Wallet.address || '' }}
-          truncation={ isMobile ? 'constant' : 'dynamic' }
-          fontWeight={ 600 }
-          noAltHash
-          noLink
-          noCopy
+        <Trans
+          t={ tQuat }
+          i18nKey="contracts.connected_to"
+          components={{ address: <AddressEntity
+            address={{ hash: web3Wallet.address || '' }}
+            truncation={ isMobile ? 'constant' : 'dynamic' }
+            fontWeight={ 600 }
+            noAltHash
+            noLink
+            noCopy
+          /> }}
         />
         { web3Wallet.isReconnecting ? <Spinner size="sm" m="2px" flexShrink={ 0 }/> : (
           <IconButton

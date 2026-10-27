@@ -1,7 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Text, Icon } from '@chakra-ui/react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 // This icon doesn't work properly when it is in the sprite
 // Probably because of the gradient
@@ -49,9 +50,14 @@ const SolidityscanReport = ({ hash }: Props) => {
       <PopoverContent w={{ base: '100vw', lg: '328px' }}>
         <PopoverBody textStyle="sm">
           <Box mb={ 5 } lineHeight="25px">
-            Contract analyzed for 240+ vulnerability patterns by
-            <Icon as={ solidityScanIcon } mr={ 1 } ml="6px" w="23px" h="20px" display="inline-block" verticalAlign="middle"/>
-            <Text fontWeight={ 600 } display="inline-block">SolidityScan</Text>
+            <Trans
+              t={ tQuat }
+              i18nKey="contractRemainderUi.scan_analyzed"
+              components={{ scanner: <span>
+                <Icon as={ solidityScanIcon } mr={ 1 } ml="6px" w="23px" h="20px" display="inline-block" verticalAlign="middle"/>
+                <Text fontWeight={ 600 } display="inline-block">SolidityScan</Text>
+              </span> }}
+            />
           </Box>
           <SolidityscanReportScore score={ score } mb={ 5 }/>
           { vulnerabilities && vulnerabilitiesCount > 0 && (

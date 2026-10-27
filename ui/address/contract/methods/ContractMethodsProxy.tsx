@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressImplementation } from 'types/api/addressParams';
 import type { SmartContractConflictingImplementation, SmartContractProxyType } from 'types/api/contract';
@@ -24,6 +26,7 @@ interface Props {
 }
 
 const ContractMethodsProxy = ({ implementations, isLoading: isInitialLoading, proxyType, conflictingImplementations }: Props) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const sourceAddress = getQueryParamString(router.query.source_address);
   const tab = getQueryParamString(router.query.tab);
@@ -51,7 +54,7 @@ const ContractMethodsProxy = ({ implementations, isLoading: isInitialLoading, pr
           selectedItem={ selectedItem }
           onItemSelect={ setSelectedItem }
           isLoading={ isInitialLoading }
-          label={ proxyType === 'eip7702' ? 'Delegate address' : 'Implementation address' }
+          label={ proxyType === 'eip7702' ? t('contracts.delegate_address') : t('contracts.implementation_address') }
           mb={ 3 }
         />
         <ContractMethodsFilters

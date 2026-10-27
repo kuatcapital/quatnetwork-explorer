@@ -1,5 +1,5 @@
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
-import { upperFirst } from 'es-toolkit';
+// Modified by Quat Capital, 2026-10-27: localized tab names retain machine route ids. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import RoutedTabs from 'toolkit/components/RoutedTabs/RoutedTabs';
 import BlocksContent from 'ui/blocks/BlocksContent';
 import BlocksTabSlot from 'ui/blocks/BlocksTabSlot';
 import Flashblocks from 'ui/blocks/Flashblocks';
+import { getFlashblockText } from 'ui/blocks/flashblocks/localization';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 
@@ -86,7 +87,9 @@ const BlocksPageContent = () => {
 
   const tabs: Array<TabItemRegular> = [
     { id: 'blocks', title: tQuat('blockDetails.all'), component: <BlocksContent type="block" query={ blocksQuery }/> },
-    flashblocksFeature.isEnabled && flashblocksTabId && { id: flashblocksTabId, title: upperFirst(flashblocksFeature.name) + 's', component: <Flashblocks/> },
+    flashblocksFeature.isEnabled && flashblocksTabId && {
+      id: flashblocksTabId, title: getFlashblockText(flashblocksFeature.type, tQuat).title, component: <Flashblocks/>,
+    },
     { id: 'reorgs', title: tQuat('blockDetails.forked'), component: <BlocksContent type="reorg" query={ reorgsQuery }/> },
     { id: 'uncles', title: tQuat('blockDetails.uncles'), component: <BlocksContent type="uncle" query={ unclesQuery }/> },
   ].filter(Boolean);

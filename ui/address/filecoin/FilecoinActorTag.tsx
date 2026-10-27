@@ -1,26 +1,28 @@
+// Modified by Quat Capital, 2026-10-27: localize Filecoin actor labels without changing API types. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FilecoinActorType } from 'types/api/addressParams';
 
 import { Badge } from 'toolkit/chakra/badge';
 
 const ACTOR_TYPES: Record<FilecoinActorType, string> = {
-  account: 'Account',
-  cron: 'Scheduled Tasks',
-  datacap: 'Data Cap Management',
-  eam: 'Ethereum Address Manager',
-  ethaccount: 'Ethereum-Compatible Account',
-  evm: 'Ethereum Virtual Machine',
-  init: 'Initialization',
-  market: 'Storage Market',
-  miner: 'Storage Provider',
-  multisig: 'Multi-Signature Wallet',
-  paych: 'Payment Channel',
-  placeholder: 'Placeholder Address',
-  power: 'Power Management',
-  reward: 'Incentives and Rewards',
-  system: 'System Operations',
-  verifreg: 'Verification Registry',
+  account: 'addressTxUi.actor_account',
+  cron: 'addressTxUi.actor_cron',
+  datacap: 'addressTxUi.actor_datacap',
+  eam: 'addressTxUi.actor_eam',
+  ethaccount: 'addressTxUi.actor_ethaccount',
+  evm: 'addressTxUi.actor_evm',
+  init: 'addressTxUi.actor_init',
+  market: 'addressTxUi.actor_market',
+  miner: 'addressTxUi.actor_miner',
+  multisig: 'addressTxUi.actor_multisig',
+  paych: 'addressTxUi.actor_paych',
+  placeholder: 'addressTxUi.actor_placeholder',
+  power: 'addressTxUi.actor_power',
+  reward: 'addressTxUi.actor_reward',
+  system: 'addressTxUi.actor_system',
+  verifreg: 'addressTxUi.actor_verifreg',
 };
 
 type Props = {
@@ -28,13 +30,14 @@ type Props = {
 };
 
 const FilecoinActorTag = ({ actorType }: Props) => {
-  const text = ACTOR_TYPES[actorType];
+  const { t } = useTranslation();
+  const key = ACTOR_TYPES[actorType];
 
-  if (!text) {
+  if (!key) {
     return null;
   }
 
-  return <Badge colorPalette="gray">{ text }</Badge>;
+  return <Badge colorPalette="gray">{ t(key) }</Badge>;
 };
 
 export default FilecoinActorTag;

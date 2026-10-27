@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressImplementation } from 'types/api/addressParams';
 import type { SmartContractProxyType } from 'types/api/contract';
@@ -14,9 +16,14 @@ interface Props {
 }
 
 const ContractDetailsInfoImplementations = ({ implementations, proxyType }: Props) => {
+  const { t } = useTranslation();
+  const label = (() => {
+    if (proxyType === 'eip7702') return t('contracts.delegated_to');
+    return implementations.length > 1 ? t('contracts.implementations') : t('contracts.implementation');
+  })();
   return (
     <ContractDetailsInfoItem
-      label={ `${ proxyType === 'eip7702' ? 'Delegated to' : `Implementation${ implementations.length > 1 ? 's' : '' }` }` }
+      label={ label }
       contentProps={{ gridColumn: { lg: '2 / span 3' }, position: 'relative' }}
     >
       <ContainerWithScrollY gradientHeight={ 48 } maxH="200px" w="100%">

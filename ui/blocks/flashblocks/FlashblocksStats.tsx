@@ -1,6 +1,6 @@
 // Modified by Quat Capital, 2026-10-26: runtime locale for block and statistics UI. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: translated feature-specific labels. GPL-3.0.
 import { Box } from '@chakra-ui/react';
-import { upperFirst } from 'es-toolkit';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,8 @@ import { formatNumber, NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
 import { SECOND } from 'toolkit/utils/consts';
 import StatsWidget from 'ui/shared/stats/StatsWidget';
+
+import { getFlashblockText } from './localization';
 
 const flashblocksFeature = config.features.flashblocks;
 
@@ -27,6 +29,7 @@ const FlashblocksStats = ({ itemsNum, txsNum, initialTs }: Props) => {
   if (!flashblocksFeature.isEnabled) {
     return null;
   }
+  const labels = getFlashblockText(flashblocksFeature.type, t);
 
   return (
     <Box
@@ -36,7 +39,7 @@ const FlashblocksStats = ({ itemsNum, txsNum, initialTs }: Props) => {
       mb={ 6 }
     >
       <StatsWidget
-        label={ t('flashblocks.rate', { name: upperFirst(flashblocksFeature.name) }) }
+        label={ labels.rate }
         value={ timeElapsed ? Number(itemsNum / (timeElapsed / SECOND)).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 0 }) : '-' }
       />
       <StatsWidget
@@ -44,7 +47,7 @@ const FlashblocksStats = ({ itemsNum, txsNum, initialTs }: Props) => {
         value={ timeElapsed && txsNum > 0 ? Number(txsNum / (timeElapsed / SECOND)).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 0 }) : '-' }
       />
       <StatsWidget
-        label={ t('flashblocks.time', { name: upperFirst(flashblocksFeature.name) }) }
+        label={ labels.time }
         value={
           timeElapsed && itemsNum > 0 ?
             t('flashblocks.milliseconds', { value: formatNumber(timeElapsed / itemsNum, locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) }) :

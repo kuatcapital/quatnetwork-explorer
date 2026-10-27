@@ -1,4 +1,5 @@
 // Modified by Quat Capital, 2026-10-26: complete localized socket messages and quantity forms. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: runtime names for flashblock and mini-block notices. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -10,6 +11,7 @@ import { Alert } from 'toolkit/chakra/alert';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
+import { getFlashblockText } from 'ui/blocks/flashblocks/localization';
 
 const flashblocksFeature = config.features.flashblocks;
 
@@ -50,7 +52,7 @@ const SocketNewItemsNotice = chakra(({ children, className, url, num, showErrorA
     }
 
     const keys = MESSAGE_KEYS[type];
-    const name = flashblocksFeature.isEnabled ? flashblocksFeature.name : t('sharedUi.flashblock');
+    const name = getFlashblockText(flashblocksFeature.isEnabled ? flashblocksFeature.type : undefined, t).name;
 
     if (!num) {
       return t(keys.scan, { name });

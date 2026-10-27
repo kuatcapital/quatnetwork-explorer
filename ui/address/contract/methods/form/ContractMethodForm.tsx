@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
@@ -26,9 +27,6 @@ import ContractMethodResultPublicClient from './ContractMethodResultPublicClient
 import ContractMethodResultWalletClient from './ContractMethodResultWalletClient';
 import { getFieldLabel, matchArray, transformFormDataToMethodArgs } from './utils';
 import type { ContractMethodFormFields } from './utils';
-
-// eslint-disable-next-line max-len
-const NO_WALLET_CLIENT_TEXT = 'Blockchain interaction is not available at the moment since a wallet connector is not configured for this application. Please contact the service maintainer to make necessary changes in the service configuration.';
 
 interface Props {
   data: SmartContractMethod;
@@ -141,21 +139,21 @@ const ContractMethodForm = ({ data, attempt, onSubmit, onReset, isOpen }: Props)
     return [
       ...('inputs' in data && data.inputs ? data.inputs : []),
       ...('stateMutability' in data && data.stateMutability === 'payable' ? [ {
-        name: `Send native ${ config.chain.currency.symbol || 'coin' }`,
+        name: tQuat('contractRemainderUi.send_native', { currency: config.chain.currency.symbol || tQuat('contractRemainderUi.coin') }),
         type: 'uint256' as const,
         internalType: 'uint256' as const,
         fieldType: 'native_coin' as const,
       } ] : []),
     ];
-  }, [ data ]);
+  }, [ data, tQuat ]);
 
   const primaryButton = (() => {
     const isDisabled = !config.features.blockchainInteraction.isEnabled && methodType === 'write';
-    const text = methodType === 'write' ? 'Write' : 'Read';
+    const text = methodType === 'write' ? tQuat('contracts.write') : tQuat('contracts.read');
     const buttonCallStrategy = methodType === 'write' ? 'write' : 'read';
 
     return (
-      <Tooltip content={ NO_WALLET_CLIENT_TEXT } disabled={ !isDisabled }>
+      <Tooltip content={ tQuat('contracts.no_wallet_connector') } disabled={ !isDisabled }>
         <Button
           loading={ callStrategy === buttonCallStrategy && isLoading }
           disabled={ isLoading || isDisabled }
@@ -180,7 +178,7 @@ const ContractMethodForm = ({ data, attempt, onSubmit, onReset, isOpen }: Props)
       return null;
     }
 
-    const text = 'Simulate';
+    const text = tQuat('contracts.simulate');
     const buttonCallStrategy = 'simulate';
 
     return (
@@ -214,14 +212,14 @@ const ContractMethodForm = ({ data, attempt, onSubmit, onReset, isOpen }: Props)
       }
     }
 
-    const text = 'Copy calldata';
+    const text = tQuat('contracts.copy_calldata');
     const buttonCallStrategy = 'copy_calldata';
     const isDisabled = isLoading || !formApi.formState.isValid;
 
     return (
       <Tooltip
         disabled={ isDisabled }
-        content="Copied"
+        content={ tQuat('common.copied') }
         closeDelay={ SECOND }
         open={ calldataButtonTooltip.open }
       >
@@ -278,7 +276,7 @@ const ContractMethodForm = ({ data, attempt, onSubmit, onReset, isOpen }: Props)
                     <ContractMethodFieldAccordion
                       key={ index }
                       level={ 0 }
-                      label={ getFieldLabel(input) }
+                      label={ getFieldLabel(input, false, tQuat) }
                       isInvalid={ isInvalid }
                     >
                       <ContractMethodFieldInputArray { ...props }/>

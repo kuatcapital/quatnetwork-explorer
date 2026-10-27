@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: localize the validator fallback without mutating Noves responses. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { NovesNft, NovesResponseData, NovesSentReceived, NovesToken } from 'types/api/noves';
 
 export interface NovesAction {
@@ -17,18 +20,18 @@ export interface NovesFlowViewItem {
   accountAddress: string;
 }
 
-export function generateFlowViewData(data: NovesResponseData): Array<NovesFlowViewItem> {
+export function generateFlowViewData(data: NovesResponseData, t?: TFunction): Array<NovesFlowViewItem> {
   const perspectiveAddress = data.accountAddress.toLowerCase();
 
   const sent = data.classificationData.sent || [];
   const received = data.classificationData.received || [];
 
-  const txItems = [ ...sent, ...received ];
+  const txItems = [ ...sent, ...received ].map(item => ({ ...item, from: { ...item.from }, to: { ...item.to } }));
 
   const paidGasIndex = txItems.findIndex((item) => item.action === 'paidGas');
   if (paidGasIndex >= 0) {
     const element = txItems.splice(paidGasIndex, 1)[0];
-    element.to.name = 'Validators';
+    element.to.name = t ? t('common.validators') : 'Validators';
     txItems.splice(txItems.length, 0, element);
   }
 

@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import { range } from 'es-toolkit';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { SmartContractMethod } from './types';
 
@@ -10,7 +11,6 @@ import { route } from 'nextjs-routes';
 
 import { AccordionRoot } from 'toolkit/chakra/accordion';
 import { Link } from 'toolkit/chakra/link';
-import { apos } from 'toolkit/utils/htmlEntities';
 
 import ContractAbiItem from './ContractAbiItem';
 import useFormSubmit from './useFormSubmit';
@@ -62,7 +62,7 @@ const ContractAbi = ({ abi, addressHash, sourceAddress, tab, visibleItems }: Pro
         <Box fontWeight={ 500 } mr="auto">{ tQuat('contracts.information') }</Box>
         { abi.length > 1 && (
           <Link onClick={ handleExpandAll } variant="secondary">
-            { expandedSections.length === abi.length ? 'Collapse' : 'Expand' } all
+            { expandedSections.length === abi.length ? tQuat('contracts.collapse_all') : tQuat('contracts.expand_all') }
           </Link>
         ) }
         <Link onClick={ handleReset } ml={ 3 } variant="secondary">{ tQuat('common.reset') }</Link>
@@ -85,16 +85,18 @@ const ContractAbi = ({ abi, addressHash, sourceAddress, tab, visibleItems }: Pro
       </AccordionRoot>
       { !hasVisibleItems && (
         <div>
-          <div>Couldn{ apos }t find any method that matches your query.</div>
+          <div>{ tQuat('contracts.no_matching_method') }</div>
           <div>
-            You can use custom ABI for this contract without verifying the contract in the{ ' ' }
-            <Link
-              href={ route({ pathname: '/address/[hash]', query: { hash: addressHash, tab: 'read_write_custom_methods' } }) }
-              scroll={ false }
-            >
-              Custom ABI
-            </Link>
-            { ' ' }tab.
+            <Trans
+              t={ tQuat }
+              i18nKey="contracts.use_custom_abi"
+              components={{
+                custom: <Link
+                  href={ route({ pathname: '/address/[hash]', query: { hash: addressHash, tab: 'read_write_custom_methods' } }) }
+                  scroll={ false }
+                />,
+              }}
+            />
           </div>
         </div>
       ) }

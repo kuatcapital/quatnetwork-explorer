@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { ContractAbiItemInput } from '../types';
 
@@ -32,6 +34,7 @@ const ContractMethodFieldInputArray = ({
   isDisabled,
   isArrayElement,
 }: Props) => {
+  const { t } = useTranslation();
   const { formState: { errors } } = useFormContext();
   const fieldsWithErrors = Object.keys(errors);
   const isInvalid = fieldsWithErrors.some((field) => field.startsWith(basePath));
@@ -67,7 +70,7 @@ const ContractMethodFieldInputArray = ({
               <ContractMethodFieldAccordion
                 key={ registeredIndex }
                 level={ level + 1 }
-                label={ getFieldLabel(itemData) }
+                label={ getFieldLabel(itemData, false, t) }
                 isInvalid={ itemIsInvalid }
                 onAddClick={ !hasFixedSize && index === registeredIndices.length - 1 ? handleAddButtonClick : undefined }
                 onRemoveClick={ !hasFixedSize && registeredIndices.length > 1 ? handleRemoveButtonClick : undefined }
@@ -121,7 +124,7 @@ const ContractMethodFieldInputArray = ({
     return (
       <ContractMethodFieldAccordion
         level={ level }
-        label={ getFieldLabel(data) }
+        label={ getFieldLabel(data, false, t) }
         onAddClick={ onAddClick }
         onRemoveClick={ onRemoveClick }
         index={ parentIndex }

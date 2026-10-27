@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import { Flex, Box, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppContext } from 'lib/contexts/app';
 import * as cookies from 'lib/cookies';
@@ -17,6 +19,7 @@ import NavLinkGroup from './NavLinkGroup';
 import NavLinkRewards from './NavLinkRewards';
 
 const NavigationDesktop = () => {
+  const { t: tShell } = useTranslation();
   const appProps = useAppContext();
   const cookiesString = appProps.cookies;
 
@@ -126,7 +129,7 @@ const NavigationDesktop = () => {
         left={{ lg: isExpanded ? '216px' : '80px', xl: isCollapsed ? '80px' : '216px' }}
         cursor="pointer"
         onClick={ handleTogglerClick }
-        aria-label="Expand/Collapse menu"
+        aria-label={ tShell('shellUi.toggle_menu') }
         display="none"
         _groupHover={{ display: 'block' }}
         transitionProperty="transform, left"

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +28,7 @@ const ContractVerificationMultiPartFile = ({ config }: { config: SmartContractVe
         fullFilePath
         required
         title={ tQuat('verification.source_files') }
-        hint="Upload all Solidity or Yul contract source files."
+        hint={ tQuat('contractRemainderUi.solidity_yul_sources') }
       />
       <ContractVerificationFieldLibraries/>
     </ContractVerificationMethod>

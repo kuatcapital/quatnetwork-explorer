@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { MethodType } from './types';
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const ContractMethodsContainer = ({ isLoading, isError, isEmpty, type, children }: Props) => {
+  const { t } = useTranslation();
 
   if (isLoading) {
     return <ContentLoader w="fit-content"/>;
@@ -24,8 +27,12 @@ const ContractMethodsContainer = ({ isLoading, isError, isEmpty, type, children 
   }
 
   if (isEmpty) {
-    const typeText = type === 'all' ? '' : type;
-    return <span>No public { typeText } functions were found for this contract.</span>;
+    const text = (() => {
+      if (type === 'read') return t('contracts.no_public_read');
+      if (type === 'write') return t('contracts.no_public_write');
+      return t('contracts.no_public_all');
+    })();
+    return <span>{ text }</span>;
   }
 
   return children;

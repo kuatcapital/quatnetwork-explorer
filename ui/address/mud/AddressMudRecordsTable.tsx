@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete MUD column tooltip localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -135,7 +135,7 @@ const AddressMudRecordsTable = ({
 
   const cutButton = (
     <TableColumnHeader width={ `${ CUT_COL_WIDTH }px ` } verticalAlign="baseline">
-      <Tooltip content={ isOpened ? 'Hide columns' : 'Show all columns' }>
+      <Tooltip content={ tQuat(isOpened ? 'addressTxUi.hide_columns' : 'addressTxUi.show_columns') }>
         <Link onClick={ toggleIsOpen } aria-label={ tQuat('addresses.show_hide_columns') }>{ middot }{ middot }{ middot }</Link>
       </Tooltip>
     </TableColumnHeader>

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
@@ -79,30 +80,22 @@ const ContractAbiItem = ({ data, index, id, addressHash, sourceAddress, tab, onS
             { index + 1 }. { data.type === 'fallback' || data.type === 'receive' ? data.type : data.name }
             { data.type === 'fallback' && (
               <Hint
-                label={
-                  `The fallback function is executed on a call to the contract if none of the other functions match
-                    the given function signature, or if no data was supplied at all and there is no receive Ether function.
-                    The fallback function always receives data, but in order to also receive Ether it must be marked payable.`
-                }
+                label={ tQuat('contracts.fallback_hint') }
                 ml={ 1 }
                 as="div"
               />
             ) }
             { data.type === 'receive' && (
               <Hint
-                label={
-                  `The receive function is executed on a call to the contract with empty calldata.
-                    This is the function that is executed on plain Ether transfers (e.g. via .send() or .transfer()).
-                    If no such function exists, but a payable fallback function exists, the fallback function will be called on a plain Ether transfer.
-                    If neither a receive Ether nor a payable fallback function is present,
-                    the contract cannot receive Ether through regular transactions and throws an exception.`
-                }
+                label={ tQuat('contracts.receive_hint') }
                 ml={ 1 }
                 as="div"
               />
             ) }
           </Box>
-          <Badge colorPalette={ isRead ? 'purple_alt' : 'blue_alt' } flexShrink={ 0 }>{ isRead ? 'read' : 'write' }</Badge>
+          <Badge colorPalette={ isRead ? 'purple_alt' : 'blue_alt' } flexShrink={ 0 }>
+            { isRead ? tQuat('contracts.read_badge') : tQuat('contracts.write_badge') }
+          </Badge>
           { 'method_id' in data && (
             <Badge
               flexShrink={ 0 }

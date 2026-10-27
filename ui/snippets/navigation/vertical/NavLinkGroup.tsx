@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import { Text, HStack, Box, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NavGroupItem } from 'types/client/navigation';
 
@@ -18,6 +20,7 @@ type Props = {
 };
 
 const NavLinkGroup = ({ item, isCollapsed }: Props) => {
+  const { t: tShell } = useTranslation();
   const isExpanded = isCollapsed === false;
 
   const styleProps = useNavLinkStyleProps({ isCollapsed, isExpanded, isActive: item.isActive });
@@ -66,7 +69,7 @@ const NavLinkGroup = ({ item, isCollapsed }: Props) => {
           w={{ lg: isExpanded ? '180px' : '60px', xl: isCollapsed ? '60px' : '180px' }}
           pl={{ lg: isExpanded ? 2 : '15px', xl: isCollapsed ? '15px' : 2 }}
           pr={{ lg: isExpanded ? 0 : '15px', xl: isCollapsed ? '15px' : 0 }}
-          aria-label={ `${ item.text } link group` }
+          aria-label={ tShell('shellUi.navigation_link_group', { text: item.text }) }
           position="relative"
           color={ item.isActive ? 'link.navigation.fg.selected' : 'link.navigation.fg' }
           bgColor={ item.isActive ? 'link.navigation.bg.selected' : 'link.navigation.bg' }

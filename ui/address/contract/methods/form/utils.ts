@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import { set } from 'es-toolkit/compat';
+import type { TFunction } from 'i18next';
 
 import type { ContractAbiItemInput } from '../types';
 
@@ -125,7 +127,7 @@ function mapEmptyNestedArrays(array: Array<unknown>): Array<unknown> {
   return array.map((item) => Array.isArray(item) && isEmptyNestedArray(item) ? [] : item);
 }
 
-export function getFieldLabel(input: ContractAbiItemInput, isRequired?: boolean) {
-  const name = input.name || input.internalType || '<unnamed argument>';
+export function getFieldLabel(input: ContractAbiItemInput, isRequired?: boolean, t?: TFunction) {
+  const name = input.name || input.internalType || (t ? t('contracts.unnamed_argument') : '<unnamed argument>');
   return `${ name } (${ input.type })${ isRequired ? '*' : '' }`;
 }

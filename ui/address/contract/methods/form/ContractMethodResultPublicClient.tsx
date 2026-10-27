@@ -1,7 +1,12 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Alert } from 'toolkit/chakra/alert';
 
+import { localizeContractInteractionError } from '../../localization';
 export interface Props {
   data: unknown;
   onSettle: () => void;
@@ -9,6 +14,8 @@ export interface Props {
 }
 
 const ContractMethodResultPublicClient = ({ data, estimatedGas, onSettle }: Props) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
 
   React.useEffect(() => {
     onSettle();
@@ -17,7 +24,7 @@ const ContractMethodResultPublicClient = ({ data, estimatedGas, onSettle }: Prop
   if (data instanceof Error) {
     return (
       <Alert status="error" textStyle="sm" wordBreak="break-word" whiteSpace="pre-wrap">
-        { 'shortMessage' in data && typeof data.shortMessage === 'string' ? data.shortMessage : data.message }
+        { localizeContractInteractionError(data, t) }
       </Alert>
     );
   }
@@ -25,7 +32,7 @@ const ContractMethodResultPublicClient = ({ data, estimatedGas, onSettle }: Prop
   if (estimatedGas) {
     return (
       <Alert status="info" textStyle="sm" wordBreak="break-word" whiteSpace="pre-wrap">
-        Success. Estimated gas: { estimatedGas.toLocaleString() }
+        { t('contracts.estimated_gas', { gas: formatNumber(estimatedGas, locale) }) }
       </Alert>
     );
   }

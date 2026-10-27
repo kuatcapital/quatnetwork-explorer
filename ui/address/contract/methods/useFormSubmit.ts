@@ -1,9 +1,11 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
 
 import type { FormSubmitHandler } from './types';
 
 import config from 'configs/app';
 
+import { ContractInteractionError } from '../localization';
 import useCallMethodPublicClient from './useCallMethodPublicClient';
 import useCallMethodWalletClient from './useCallMethodWalletClient';
 
@@ -26,7 +28,7 @@ function useFormSubmit({ addressHash }: Params): FormSubmitHandler {
       }
 
       default: {
-        throw new Error(`Unknown call strategy "${ strategy }"`);
+        throw new ContractInteractionError('unknown_strategy', { strategy: String(strategy) });
       }
     }
   }, [ addressHash, callMethodWalletClient, callMethodPublicClient ]);
@@ -43,7 +45,7 @@ function useFormSubmitFallback({ addressHash }: Params): FormSubmitHandler {
       }
 
       default: {
-        throw new Error(`Unknown call strategy "${ strategy }"`);
+        throw new ContractInteractionError('unknown_strategy', { strategy: String(strategy) });
       }
     }
 

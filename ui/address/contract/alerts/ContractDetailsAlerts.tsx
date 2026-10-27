@@ -1,8 +1,9 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Box, Flex } from '@chakra-ui/react';
 import type { Channel } from 'phoenix';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { Address } from 'types/api/address';
@@ -44,10 +45,11 @@ const ContractDetailsAlerts = ({ data, isLoading, addressData, channel }: Props)
     <Flex flexDir="column" rowGap={ 1 } mb={ 6 } _empty={{ display: 'none' }}>
       { data?.is_blueprint && (
         <Box>
-          <span>This is an </span>
-          <Link external href="https://eips.ethereum.org/EIPS/eip-5202">
-            ERC-5202 Blueprint contract
-          </Link>
+          <Trans
+            t={ tQuat }
+            i18nKey="contracts.blueprint"
+            components={{ standard: <Link external href="https://eips.ethereum.org/EIPS/eip-5202"/> }}
+          />
         </Box>
       ) }
       <ContractDetailsAlertVerificationStatus data={ data } isLoading={ isLoading } addressData={ addressData }/>
@@ -63,18 +65,25 @@ const ContractDetailsAlerts = ({ data, isLoading, addressData, channel }: Props)
       ) }
       { !data?.is_verified && data?.verified_twin_address_hash && (!addressData.proxy_type || addressData.proxy_type === 'unknown') && (
         <Alert status="warning" whiteSpace="pre-wrap">
-          <span>Contract is not verified. However, we found a verified contract with the same bytecode in Blockscout DB </span>
-          <AddressEntity
-            address={{ hash: data.verified_twin_address_hash, filecoin: { robust: data.verified_twin_filecoin_robust_address }, is_contract: true }}
-            truncation="constant"
-            fontSize="sm"
-            fontWeight="500"
+          <Trans
+            t={ tQuat }
+            i18nKey="contracts.unverified_twin"
+            components={{
+              address: <AddressEntity
+                address={{ hash: data.verified_twin_address_hash, filecoin: { robust: data.verified_twin_filecoin_robust_address }, is_contract: true }}
+                truncation="constant"
+                fontSize="sm"
+                fontWeight="500"
+              />,
+            }}
           />
-          <chakra.span mt={ 1 }>All functions displayed below are from ABI of that contract. In order to verify current contract, proceed with </chakra.span>
-          <Link href={ route({ pathname: '/address/[hash]/contract-verification', query: { hash: addressData.hash } }) }>
-            Verify & Publish
-          </Link>
-          <span> page</span>
+          <chakra.span mt={ 1 }>
+            <Trans
+              t={ tQuat }
+              i18nKey="contracts.unverified_twin_abi"
+              components={{ verify: <Link href={ route({ pathname: '/address/[hash]/contract-verification', query: { hash: addressData.hash } }) }/> }}
+            />
+          </chakra.span>
         </Alert>
       ) }
     </Flex>

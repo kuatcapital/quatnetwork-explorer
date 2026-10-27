@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localize exact token quantities and exchange rates. GPL-3.0.
 import { chakra, Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -6,6 +7,8 @@ import { route } from 'nextjs/routes';
 
 import config from 'configs/app';
 import multichainConfig from 'configs/multichain';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { isConfidentialTokenType, isFungibleTokenType } from 'lib/token/tokenTypes';
 import { Link } from 'toolkit/chakra/link';
 import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
@@ -13,6 +16,7 @@ import NativeTokenTag from 'ui/shared/celo/NativeTokenTag';
 import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import calculateUsdValue from 'ui/shared/value/calculateUsdValue';
 
+import { formatAddressUsd } from '../localization';
 import type { TokenEnhancedData } from '../utils/tokenUtils';
 
 interface Props {
@@ -20,6 +24,7 @@ interface Props {
 }
 
 const TokenSelectItem = ({ data }: Props) => {
+  const { locale } = useLocale();
 
   const isNativeToken = config.UI.views.address.nativeTokenAddress &&
     data.token.address_hash.toLowerCase() === config.UI.views.address.nativeTokenAddress.toLowerCase();
@@ -41,7 +46,7 @@ const TokenSelectItem = ({ data }: Props) => {
       return (
         <>
           <TruncatedText text={ text }/>
-          { data.token.exchange_rate && <chakra.span ml={ 2 }>@{ Number(data.token.exchange_rate).toLocaleString() }</chakra.span> }
+          { data.token.exchange_rate && <chakra.span ml={ 2 }>@{ formatBigNumber(BigNumber(data.token.exchange_rate), locale) }</chakra.span> }
         </>
       );
     }
@@ -50,19 +55,19 @@ const TokenSelectItem = ({ data }: Props) => {
 
     if (isFungibleToken) {
       const tokenDecimals = Number(data.token.decimals ?? 18);
-      const text = `${ BigNumber(data.value).dividedBy(10 ** tokenDecimals).toFormat() } ${ data.token.symbol || '' }`;
+      const text = `${ formatBigNumber(BigNumber(data.value).dividedBy(BigNumber(10).pow(tokenDecimals)), locale) } ${ data.token.symbol || '' }`;
 
       return (
         <>
           <TruncatedText text={ text }/>
-          { data.token.exchange_rate && <chakra.span ml={ 2 }>@{ Number(data.token.exchange_rate).toLocaleString() }</chakra.span> }
+          { data.token.exchange_rate && <chakra.span ml={ 2 }>@{ formatBigNumber(BigNumber(data.token.exchange_rate), locale) }</chakra.span> }
         </>
       );
     }
 
     switch (data.token.type) {
       case 'ERC-721': {
-        const text = `${ BigNumber(data.value).toFormat() } ${ data.token.symbol || '' }`;
+        const text = `${ formatBigNumber(BigNumber(data.value), locale) } ${ data.token.symbol || '' }`;
         return <TruncatedText text={ text }/>;
       }
       case 'ERC-1155': {
@@ -72,7 +77,7 @@ const TokenSelectItem = ({ data }: Props) => {
               #{ data.token_id || 0 }
             </chakra.span>
             <span>
-              { BigNumber(data.value).toFormat() }
+              { formatBigNumber(BigNumber(data.value), locale) }
             </span>
           </>
         );
@@ -88,8 +93,8 @@ const TokenSelectItem = ({ data }: Props) => {
             { data.value !== null && (
               <span>
                 { data.token.decimals ?
-                  calculateUsdValue({ amount: data.value, decimals: data.token.decimals }).valueStr :
-                  BigNumber(data.value).toFormat()
+                  calculateUsdValue({ amount: data.value, decimals: data.token.decimals, locale }).valueStr :
+                  formatBigNumber(BigNumber(data.value), locale)
                 }
               </span>
             ) }
@@ -131,7 +136,7 @@ const TokenSelectItem = ({ data }: Props) => {
         { isNativeToken && <NativeTokenTag mr={ 2 }/> }
         { data.usd && (
           <TruncatedText
-            text={ `$${ data.usd.toFormat(2) }` }
+            text={ `$${ formatAddressUsd(data.usd, locale) }` }
             fontWeight={ 700 }
             minW="120px"
             ml="auto"

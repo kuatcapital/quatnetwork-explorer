@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete reward value label localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +28,7 @@ const AddressEpochRewardsTable = ({ items, isLoading, top }: Props) => {
             </TableColumnHeader>
             <TableColumnHeader>{ tQuat('addresses.reward_type') }</TableColumnHeader>
             <TableColumnHeader>{ tQuat('addresses.associated_address') }</TableColumnHeader>
-            <TableColumnHeader isNumeric>Value</TableColumnHeader>
+            <TableColumnHeader isNumeric>{ tQuat('addresses.reward_value') }</TableColumnHeader>
           </TableRow>
         </TableHeaderSticky>
         <TableBody>

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
@@ -14,6 +15,7 @@ import { InputGroup } from 'toolkit/chakra/input-group';
 import { ClearButton } from 'toolkit/components/buttons/ClearButton';
 import { HOUR, SECOND } from 'toolkit/utils/consts';
 
+import { localizeContractValidationError } from '../../localization';
 import ContractMethodAddressButton from './ContractMethodAddressButton';
 import ContractMethodFieldLabel from './ContractMethodFieldLabel';
 import ContractMethodMultiplyButton from './ContractMethodMultiplyButton';
@@ -196,7 +198,7 @@ const ContractMethodFieldInput = ({ data, hideLabel, path: name, className, isDi
       py={ isNativeCoin ? 1 : 0 }
     >
       { !hideLabel && <ContractMethodFieldLabel data={ data } isOptional={ isOptional } level={ level }/> }
-      <Field invalid={ Boolean(error) } errorText={ error?.message } disabled={ isDisabled }>
+      <Field invalid={ Boolean(error) } errorText={ localizeContractValidationError(error, tQuat) } disabled={ isDisabled }>
         <InputGroup
           endElement={ inputEndElement }
           endElementProps={{ pl: 0, pr: 1 }}

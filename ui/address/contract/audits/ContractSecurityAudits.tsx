@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
@@ -7,6 +8,7 @@ import type { SmartContractSecurityAuditSubmission } from 'types/api/contract';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { Link } from 'toolkit/chakra/link';
 import { useDisclosure } from 'toolkit/hooks/useDisclosure';
@@ -21,6 +23,7 @@ type Props = {
 
 const ContractSecurityAudits = ({ addressHash }: Props) => {
   const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const { data, isPlaceholderData } = useApiQuery('general:contract_security_audits', {
     pathParams: { hash: addressHash },
@@ -31,7 +34,7 @@ const ContractSecurityAudits = ({ addressHash }: Props) => {
     },
   });
 
-  const formTitle = 'Submit audit';
+  const formTitle = tQuat('contracts.submit_audit');
 
   const modalProps = useDisclosure();
 
@@ -52,7 +55,7 @@ const ContractSecurityAudits = ({ addressHash }: Props) => {
           >
             { data.items.map(item => (
               <Link external href={ item.audit_report_url } key={ item.audit_company_name + item.audit_publish_date } loading={ isPlaceholderData }>
-                { `${ item.audit_company_name }, ${ dayjs(item.audit_publish_date).format('MMM DD, YYYY') }` }
+                { `${ item.audit_company_name }, ${ dayjs(item.audit_publish_date).locale(locale).format('MMM DD, YYYY') }` }
               </Link>
             )) }
           </ContainerWithScrollY>

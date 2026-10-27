@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: runtime shell labels and locale formatting. GPL-3.0.
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SocketMessage } from 'lib/socket/types';
 import type { IndexingStatus } from 'types/api/indexingStatus';
@@ -8,13 +10,17 @@ import config from 'configs/app';
 import useApiQuery, { getResourceKey } from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
 import * as cookies from 'lib/cookies';
+import { useLocale } from 'lib/i18n/provider';
 import useSocketChannel from 'lib/socket/useSocketChannel';
 import useSocketMessage from 'lib/socket/useSocketMessage';
 import { Alert } from 'toolkit/chakra/alert';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-import { nbsp, ndash } from 'toolkit/utils/htmlEntities';
+
+import { getIndexingBlocksText } from '../../localization';
 
 const IndexingBlocksAlert = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const appProps = useAppContext();
   const cookiesString = appProps.cookies;
   const [ hasAlertCookie ] = React.useState(cookies.get(cookies.NAMES.INDEXING_ALERT, cookiesString) === 'true');
@@ -73,8 +79,7 @@ const IndexingBlocksAlert = () => {
 
   return (
     <Alert status="info" py={ 3 } borderRadius="md" showIcon>
-      { `${ data.indexed_blocks_ratio && `${ Math.floor(Number(data.indexed_blocks_ratio) * 100) }% Blocks Indexed${ nbsp }${ ndash } ` }
-          We're indexing this chain right now. Some of the counts may be inaccurate.` }
+      { getIndexingBlocksText(data.indexed_blocks_ratio, locale, t) }
     </Alert>
   );
 };

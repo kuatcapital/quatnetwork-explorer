@@ -1,13 +1,14 @@
-// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localize transaction statistics without rounding API integers. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import { useMultichainContext } from 'lib/contexts/multichain';
-import { formatNumber } from 'lib/format/localeNumbers';
+import { formatBigNumber } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
 import getStatsLabelFromTitle from 'lib/stats/getStatsLabelFromTitle';
 import { HOMEPAGE_STATS } from 'stubs/stats';
@@ -62,9 +63,14 @@ const TxsStats = (props: Props) => {
   const pendingTxns = isStatsFeatureEnabled ? txsStatsQuery.data?.pending_transactions_30m?.value : txsStatsApiQuery.data?.pending_transactions_count;
 
   // in microservice data, fee values are already divided by 10^decimals
-  const txFeeSum24h = isStatsFeatureEnabled ?
-    Number(txsStatsQuery.data?.transactions_fee_24h?.value) :
-    Number(txsStatsApiQuery.data?.transaction_fees_sum_24h) / (10 ** chainConfig.chain.currency.decimals);
+  const txFeeSumRaw = isStatsFeatureEnabled ? txsStatsQuery.data?.transactions_fee_24h?.value : txsStatsApiQuery.data?.transaction_fees_sum_24h;
+  const txFeeSum24h = (() => {
+    if (txFeeSumRaw === null || txFeeSumRaw === undefined) {
+      return null;
+    }
+    const sum = BigNumber(txFeeSumRaw);
+    return isStatsFeatureEnabled ? sum : sum.div(BigNumber(10).pow(chainConfig.chain.currency.decimals));
+  })();
 
   const avgFee = isStatsFeatureEnabled ? txsStatsQuery.data?.average_transactions_fee_24h?.value : txsStatsApiQuery.data?.transaction_fees_avg_24h;
 
@@ -73,6 +79,7 @@ const TxsStats = (props: Props) => {
     exchangeRate: statsQuery.data?.coin_price,
     // in microservice data, fee values are already divided by 10^decimals
     decimals: isStatsFeatureEnabled ? '0' : String(chainConfig.chain.currency.decimals),
+    locale,
   }) : null;
 
   const itemsCount = [
@@ -98,7 +105,7 @@ const TxsStats = (props: Props) => {
           label={ txsStatsQuery.data?.transactions_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.transactions_24h?.title) :
             tTx('common.transactions') }
-          value={ formatNumber(Number(txCount24h), locale) }
+          value={ formatBigNumber(BigNumber(txCount24h), locale) }
           period="24h"
           isLoading={ isLoading }
           href={
@@ -113,7 +120,7 @@ const TxsStats = (props: Props) => {
           label={ txsStatsQuery.data?.operational_transactions_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.operational_transactions_24h?.title) :
             tTx('home.daily_operational_transactions') }
-          value={ formatNumber(Number(operationalTxns24hArbitrum), locale) }
+          value={ formatBigNumber(BigNumber(operationalTxns24hArbitrum), locale) }
           period="24h"
           isLoading={ isLoading }
         />
@@ -123,7 +130,7 @@ const TxsStats = (props: Props) => {
           label={ txsStatsQuery.data?.op_stack_operational_transactions_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.op_stack_operational_transactions_24h?.title) :
             tTx('home.daily_operational_transactions') }
-          value={ formatNumber(Number(operationalTxns24hOptimistic), locale) }
+          value={ formatBigNumber(BigNumber(operationalTxns24hOptimistic), locale) }
           period="24h"
           isLoading={ isLoading }
         />
@@ -133,7 +140,7 @@ const TxsStats = (props: Props) => {
           label={ txsStatsQuery.data?.pending_transactions_30m?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.pending_transactions_30m?.title) :
             tTx('transactions.pending_transactions') }
-          value={ formatNumber(Number(pendingTxns), locale) }
+          value={ formatBigNumber(BigNumber(pendingTxns), locale) }
           period={ isStatsFeatureEnabled ? '30min' : '1h' }
           isLoading={ isLoading }
         />
@@ -143,7 +150,7 @@ const TxsStats = (props: Props) => {
           label={ txsStatsQuery.data?.transactions_fee_24h?.title ?
             getStatsLabelFromTitle(txsStatsQuery.data?.transactions_fee_24h?.title) :
             tTx('transactions.transaction_fees') }
-          value={ formatNumber(txFeeSum24h, locale, { maximumFractionDigits: 2 }) }
+          value={ formatBigNumber(txFeeSum24h, locale, 2) }
           valuePostfix={ thinsp + chainConfig.chain.currency.symbol }
           period="24h"
           isLoading={ isLoading }

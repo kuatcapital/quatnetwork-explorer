@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
@@ -75,7 +76,7 @@ export const ContractSourceCode = ({ data, isLoading, sourceAddress }: Props) =>
     null;
 
   const diagramLink = data?.can_be_visualized_via_sol2uml ? (
-    <Tooltip content="Visualize contract code using Sol2Uml JS library">
+    <Tooltip content={ tQuat('contracts.uml_hint') }>
       <Link
         href={ route({ pathname: '/visualize/sol2uml', query: { address: sourceAddress } }, multichainContext) }
         ml={{ base: '0', lg: 'auto' }}

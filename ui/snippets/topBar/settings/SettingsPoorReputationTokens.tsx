@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import { useAppContext } from 'lib/contexts/app';
@@ -6,6 +8,7 @@ import * as cookies from 'lib/cookies';
 import { Switch } from 'toolkit/chakra/switch';
 
 const SettingsPoorReputationTokens = () => {
+  const { t: tShell } = useTranslation();
   const { cookies: appCookies } = useAppContext();
 
   const initialValue = cookies.get(cookies.NAMES.SHOW_POOR_REPUTATION_TOKENS, appCookies);
@@ -33,7 +36,7 @@ const SettingsPoorReputationTokens = () => {
       w="100%"
       minH="34px"
     >
-      Hide poor reputation tokens
+      { tShell('shellUi.hide_poor_reputation_tokens') }
     </Switch>
   );
 };

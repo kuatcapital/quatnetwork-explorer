@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-27",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "flashblockUi": {
+      "flash_name": "flashblock",
+      "flash_title": "Flashblocks",
+      "flash_hint": "Real-time flashblocks show the latest flashblocks with real-time updates in the chronological order. ",
+      "flash_rate": "Flashblocks (sec)",
+      "flash_time": "Flashblock time",
+      "mini_name": "mini-block",
+      "mini_title": "Mini-blocks",
+      "mini_hint": "Real-time mini-blocks show the latest mini-blocks with real-time updates in the chronological order. ",
+      "mini_rate": "Mini-blocks (sec)",
+      "mini_time": "Mini-block time"
+    }
+  },
+  "ru": {
+    "flashblockUi": {
+      "flash_name": "флеш-блок",
+      "flash_title": "Флеш-блоки",
+      "flash_hint": "Лента флеш-блоков показывает последние записи в хронологическом порядке с обновлением в реальном времени.",
+      "flash_rate": "Флеш-блоков в секунду",
+      "flash_time": "Время флеш-блока",
+      "mini_name": "мини-блок",
+      "mini_title": "Мини-блоки",
+      "mini_hint": "Лента мини-блоков показывает последние записи в хронологическом порядке с обновлением в реальном времени.",
+      "mini_rate": "Мини-блоков в секунду",
+      "mini_time": "Время мини-блока"
+    }
+  },
+  "kk": {
+    "flashblockUi": {
+      "flash_name": "флеш-блок",
+      "flash_title": "Флеш-блоктар",
+      "flash_hint": "Флеш-блоктар таспасы соңғы жазбаларды хронологиялық ретпен нақты уақытта жаңартып көрсетеді.",
+      "flash_rate": "Секундына флеш-блоктар",
+      "flash_time": "Флеш-блок уақыты",
+      "mini_name": "мини-блок",
+      "mini_title": "Мини-блоктар",
+      "mini_hint": "Мини-блоктар таспасы соңғы жазбаларды хронологиялық ретпен нақты уақытта жаңартып көрсетеді.",
+      "mini_rate": "Секундына мини-блоктар",
+      "mini_time": "Мини-блок уақыты"
+    }
+  }
+}

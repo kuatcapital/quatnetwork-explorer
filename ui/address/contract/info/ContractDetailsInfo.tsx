@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Grid } from '@chakra-ui/react';
 import React from 'react';
@@ -127,7 +128,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       { licenseLink && (
         <ContractDetailsInfoItem
           label={ tQuat('contracts.license_title') }
-          hint="License type is entered manually during verification. The initial source code may contain a different license type than the one displayed."
+          hint={ tQuat('contracts.license_hint') }
           isLoading={ isLoading }
         >
           { licenseLink }
@@ -143,7 +144,7 @@ const ContractDetailsInfo = ({ data, isLoading, addressData }: Props) => {
       ) }
       { data.optimization_runs !== null && !isStylusContract && (
         <ContractDetailsInfoItem
-          label={ rollupFeature.isEnabled && rollupFeature.type === 'zkSync' ? 'Optimization mode' : 'Optimization runs' }
+          label={ rollupFeature.isEnabled && rollupFeature.type === 'zkSync' ? tQuat('contracts.optimization_mode') : tQuat('contracts.optimization_runs') }
           isLoading={ isLoading }
         >
           { String(data.optimization_runs) }

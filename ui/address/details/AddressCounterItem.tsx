@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: format exact address counters using the active locale. GPL-3.0.
 import type { UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -7,6 +8,8 @@ import type { AddressCounters } from 'types/api/address';
 import { route } from 'nextjs/routes';
 
 import type { ResourceError } from 'lib/api/resources';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 
@@ -25,6 +28,7 @@ const PROP_TO_TAB = {
 };
 
 const AddressCounterItem = ({ prop, query, address, isAddressQueryLoading, isDegradedData }: Props) => {
+  const { locale } = useLocale();
   const handleClick = React.useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -41,7 +45,7 @@ const AddressCounterItem = ({ prop, query, address, isAddressQueryLoading, isDeg
 
   switch (prop) {
     case 'gas_usage_count':
-      return <span>{ BigNumber(data).toFormat() }</span>;
+      return <span>{ formatBigNumber(BigNumber(data), locale) }</span>;
     case 'transactions_count':
     case 'token_transfers_count':
     case 'validations_count': {
@@ -50,7 +54,7 @@ const AddressCounterItem = ({ prop, query, address, isAddressQueryLoading, isDeg
       }
 
       if (isDegradedData) {
-        return <span>{ Number(data).toLocaleString() }</span>;
+        return <span>{ formatBigNumber(BigNumber(data), locale) }</span>;
       }
 
       return (
@@ -59,7 +63,7 @@ const AddressCounterItem = ({ prop, query, address, isAddressQueryLoading, isDeg
           scroll={ false }
           onClick={ handleClick }
         >
-          { Number(data).toLocaleString() }
+          { formatBigNumber(BigNumber(data), locale) }
         </Link>
       );
     }

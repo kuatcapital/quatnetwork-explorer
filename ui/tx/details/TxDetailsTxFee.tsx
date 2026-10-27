@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localize the transaction fee hint for blob transactions. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -98,7 +98,7 @@ const TxDetailsTxFee = ({ isLoading, data }: Props) => {
   return (
     <>
       <DetailedInfo.ItemLabel
-        hint={ data.blob_gas_used ? 'Transaction fee without blob fee' : tTx('transactions.total_fee_hint') }
+        hint={ tTx(data.blob_gas_used ? 'addressTxUi.fee_without_blobs_hint' : 'transactions.total_fee_hint') }
         isLoading={ isLoading }
       >
         { tTx('common.transaction_fee') }</DetailedInfo.ItemLabel>

@@ -1,9 +1,13 @@
+// Modified by Quat Capital, 2026-10-27: runtime sprite-browser text and locale-specific file sizes. GPL-3.0.
 import type { HTMLChakraProps } from '@chakra-ui/react';
 import { Flex, Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from 'lib/format/localeNumbers';
 import useFetch from 'lib/hooks/useFetch';
+import { useLocale } from 'lib/i18n/provider';
 import { EmptyState } from 'toolkit/chakra/empty-state';
 import { Tooltip } from 'toolkit/chakra/tooltip';
 import { FilterInput } from 'toolkit/components/filters/FilterInput';
@@ -14,14 +18,14 @@ import type { IconName } from 'ui/shared/IconSvg';
 import IconSvg from 'ui/shared/IconSvg';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
-const formatFileSize = (fileSizeInBytes: number) => `${ (fileSizeInBytes / 1_024).toFixed(2) } Kb`;
-
 interface IconInfo {
   name: string;
   file_size: number;
 }
 
 const Item = ({ name, file_size: fileSize, bgColor }: IconInfo & HTMLChakraProps<'div'>) => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { hasCopied, copy } = useClipboard(name, 1000);
   const [ copied, setCopied ] = React.useState(false);
 
@@ -45,15 +49,19 @@ const Item = ({ name, file_size: fileSize, bgColor }: IconInfo & HTMLChakraProps
       cursor="pointer"
     >
       <IconSvg name={ name.replace('.svg', '') as IconName } boxSize="100px" bgColor={ bgColor } borderRadius="base"/>
-      <Tooltip content={ copied ? 'Copied' : 'Copy to clipboard' } open={ copied }>
+      <Tooltip content={ t(copied ? 'developerUi.copied' : 'developerUi.copy') } open={ copied }>
         <Box fontWeight={ 500 } mt={ 2 }>{ name }</Box>
       </Tooltip>
-      <Box color="text.secondary">{ formatFileSize(fileSize) }</Box>
+      <Box color="text.secondary">
+        { t('developerUi.file_size', { value: formatNumber(fileSize / 1_024, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }) }
+      </Box>
     </Flex>
   );
 };
 
 const Sprite = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const [ searchTerm, setSearchTerm ] = React.useState('');
 
   const fetch = useFetch();
@@ -78,7 +86,7 @@ const Sprite = () => {
       .sort((a, b) => a.name.localeCompare(b.name));
 
     if (items.length === 0) {
-      return <EmptyState description="No icons found"/>;
+      return <EmptyState description={ t('developerUi.no_icons') }/>;
     }
 
     return (
@@ -99,8 +107,17 @@ const Sprite = () => {
     }, { num: 0, fileSize: 0 });
   }, [ data ]);
 
-  const searchInput = <FilterInput placeholder="Search by name..." onChange={ setSearchTerm } loading={ isFetching } minW={{ base: '100%', lg: '300px' }}/>;
-  const totalEl = total ? <Box ml="auto">Items: { total.num } / Size: { formatFileSize(total.fileSize) }</Box> : null;
+  const searchInput = (
+    <FilterInput placeholder={ t('developerUi.search_name') } onChange={ setSearchTerm } loading={ isFetching } minW={{ base: '100%', lg: '300px' }}/>
+  );
+  const totalEl = total ? (
+    <Box ml="auto">
+      { t('developerUi.items_size', {
+        count: total.num, value: formatNumber(total.num, locale),
+        size: formatNumber(total.fileSize / 1_024, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+      }) }
+    </Box>
+  ) : null;
 
   const contentAfter = (
     <>
@@ -111,7 +128,7 @@ const Sprite = () => {
 
   return (
     <div>
-      <PageTitle title="SVG sprite 🥤" contentAfter={ contentAfter }/>
+      <PageTitle title={ t('developerUi.sprite_title') } contentAfter={ contentAfter }/>
       { content }
     </div>
   );

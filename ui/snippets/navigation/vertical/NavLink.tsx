@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import { HStack, Box, useBreakpointValue, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { NavItem } from 'types/client/navigation';
 
@@ -23,6 +25,7 @@ type Props = {
 };
 
 const NavLink = ({ item, onClick, isCollapsed, isDisabled }: Props) => {
+  const { t: tShell } = useTranslation();
   const isMobile = useIsMobile();
 
   const isInternalLink = isInternalItem(item);
@@ -44,7 +47,7 @@ const NavLink = ({ item, onClick, isCollapsed, isDisabled }: Props) => {
         display="flex"
         position="relative"
         px={{ base: 2, lg: isExpanded ? 2 : '15px', xl: isCollapsed ? '15px' : 2 }}
-        aria-label={ `${ item.text } link` }
+        aria-label={ tShell('shellUi.navigation_link', { text: item.text }) }
         whiteSpace="nowrap"
         onClick={ onClick }
         _hover={{

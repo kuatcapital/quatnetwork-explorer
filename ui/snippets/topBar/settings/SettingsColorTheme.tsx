@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: runtime shell labels and locale formatting. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ColorThemeId } from 'types/settings';
 
@@ -8,6 +10,7 @@ import { COLOR_THEMES, getDefaultColorTheme, getThemeHexWithOverrides } from 'li
 import type { ColorMode } from 'toolkit/chakra/color-mode';
 import { useColorMode } from 'toolkit/chakra/color-mode';
 
+import { localizeThemeLabel } from '../../localization';
 import SettingsSample from './SettingsSample';
 
 interface Props {
@@ -15,6 +18,10 @@ interface Props {
 }
 
 const SettingsColorTheme = ({ onSelect }: Props) => {
+  const { t } = useTranslation();
+  const themes = React.useMemo(() => COLOR_THEMES.map(theme => ({
+    ...theme, label: localizeThemeLabel(theme.id, theme.label, t),
+  })), [ t ]);
   const { setColorMode } = useColorMode();
 
   const [ activeThemeId, setActiveThemeId ] = React.useState<ColorThemeId>();
@@ -73,17 +80,17 @@ const SettingsColorTheme = ({ onSelect }: Props) => {
     onSelect?.();
   }, [ setTheme, onSelect ]);
 
-  const activeTheme = COLOR_THEMES.find((theme) => theme.id === activeThemeId);
+  const activeTheme = themes.find((theme) => theme.id === activeThemeId);
 
   return (
     <div>
-      <Box fontWeight={ 600 }>Color theme</Box>
+      <Box fontWeight={ 600 }>{ t('shellUi.color_theme') }</Box>
       <Box color="text.secondary" mt={ 1 } mb={ 2 }>{ activeTheme?.label }</Box>
       <Flex>
-        { COLOR_THEMES.map((theme) => {
+        { themes.map((theme) => {
           return (
             <SettingsSample
-              key={ theme.label }
+              key={ theme.id }
               label={ theme.label }
               value={ theme.id }
               bg={ theme.sampleBg }

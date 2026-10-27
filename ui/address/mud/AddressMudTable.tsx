@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: localize complete MUD empty-state phrases. GPL-3.0.
 import { Box, HStack, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { AddressMudRecordsFilter, AddressMudRecordsSorting } from 'types/api/address';
 
@@ -30,6 +32,7 @@ type Props = {
 type FilterKeys = keyof AddressMudRecordsFilter;
 
 const AddressMudTable = ({ tableId, isQueryEnabled = true }: Props) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const [ sorting, setSorting ] =
     React.useState<AddressMudRecordsSorting | undefined>(getSortParamsFromQuery<AddressMudRecordsSorting>(router.query, SORT_SEQUENCE));
@@ -132,12 +135,13 @@ const AddressMudTable = ({ tableId, isQueryEnabled = true }: Props) => {
     />
   ) : null;
 
-  const emptyText = (
-    <>
-      <chakra.span>There are no records for </chakra.span>
-      { data?.table.table_full_name ? <chakra.span fontWeight={ 600 }>{ data?.table.table_full_name }</chakra.span> : 'this table' }
-    </>
-  );
+  const emptyText = data?.table.table_full_name ? (
+    <Trans
+      t={ t }
+      i18nKey="addressTxUi.no_table_records"
+      components={{ table: <chakra.span fontWeight={ 600 }>{ data.table.table_full_name }</chakra.span> }}
+    />
+  ) : t('addressTxUi.no_records');
 
   return (
     <>

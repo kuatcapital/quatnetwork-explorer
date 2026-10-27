@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import { Box, Text, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FeaturedNetwork } from 'types/networks';
 
@@ -13,11 +15,12 @@ interface Props extends FeaturedNetwork {
 }
 
 const NetworkMenuLink = ({ title, icon, isActive: isActiveProp, isMobile, url, invertIconInDarkMode }: Props) => {
+  const { t: tShell } = useTranslation();
   const darkModeFilter = { filter: 'brightness(0) invert(1)' };
   const style = useColorModeValue({}, invertIconInDarkMode ? darkModeFilter : {});
 
   const iconEl = icon ? (
-    <Image w="20px" h="20px" src={ icon } alt={ `${ title } network icon` } style={ style }/>
+    <Image w="20px" h="20px" src={ icon } alt={ tShell('shellUi.network_icon', { name: title }) } style={ style }/>
   ) : (
     <IconSvg
       name="networks/icon-placeholder"

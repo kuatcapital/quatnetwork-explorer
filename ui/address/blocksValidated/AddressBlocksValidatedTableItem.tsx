@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: localize validated-block transaction and gas counts. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -6,6 +7,8 @@ import type { Block } from 'types/api/block';
 
 import config from 'configs/app';
 import getBlockTotalReward from 'lib/block/getBlockTotalReward';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import BlockGasUsed from 'ui/shared/block/BlockGasUsed';
@@ -19,6 +22,7 @@ type Props = Block & {
 };
 
 const AddressBlocksValidatedTableItem = (props: Props) => {
+  const { locale } = useLocale();
   const totalReward = getBlockTotalReward(props);
 
   return (
@@ -43,13 +47,13 @@ const AddressBlocksValidatedTableItem = (props: Props) => {
       </TableCell>
       <TableCell>
         <Skeleton loading={ props.isLoading } display="inline-block" fontWeight="500">
-          <span>{ props.transactions_count }</span>
+          <span>{ formatNumber(props.transactions_count, locale) }</span>
         </Skeleton>
       </TableCell>
       <TableCell>
         <Flex alignItems="center" columnGap={ 2 }>
           <Skeleton loading={ props.isLoading } flexBasis="80px">
-            { BigNumber(props.gas_used || 0).toFormat() }
+            { formatBigNumber(BigNumber(props.gas_used || 0), locale) }
           </Skeleton>
           <BlockGasUsed
             gasUsed={ props.gas_used || undefined }

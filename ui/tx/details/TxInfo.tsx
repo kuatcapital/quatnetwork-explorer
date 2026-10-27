@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete transaction execution tooltip localization. GPL-3.0.
 import {
   Box,
   GridItem,
@@ -149,14 +149,14 @@ const TxInfo = ({ data, tacOperations, isLoading, socketStatus, noTxActions }: P
   ].map((tag) => <Badge key={ tag.label }>{ tag.display_name }</Badge>);
 
   const executionSuccessBadge = toAddress?.is_contract && data.result === 'success' ? (
-    <Tooltip content="Contract execution completed">
+    <Tooltip content={ tTx('addressTxUi.execution_completed') }>
       <chakra.span display="inline-flex" ml={ 2 } mr={ 1 }>
         <IconSvg name="status/success" boxSize={ 4 } color={{ _light: 'blackAlpha.800', _dark: 'whiteAlpha.800' }} cursor="pointer"/>
       </chakra.span>
     </Tooltip>
   ) : null;
   const executionFailedBadge = toAddress?.is_contract && Boolean(data.status) && data.result !== 'success' ? (
-    <Tooltip content="Error occurred during contract execution">
+    <Tooltip content={ tTx('addressTxUi.execution_failed') }>
       <chakra.span display="inline-flex" ml={ 2 } mr={ 1 }>
         <IconSvg name="status/error" boxSize={ 4 } color="text.error" cursor="pointer"/>
       </chakra.span>

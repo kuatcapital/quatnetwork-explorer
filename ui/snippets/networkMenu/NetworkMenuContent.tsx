@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import { VStack, Flex, Box, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FeaturedNetwork, NetworkGroup } from 'types/networks';
 
@@ -9,6 +11,7 @@ import { PopoverBody, PopoverContent } from 'toolkit/chakra/popover';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from 'toolkit/chakra/tabs';
 
+import { localizeNetworkGroup } from '../localization';
 import NetworkMenuLink from './NetworkMenuLink';
 
 interface Props {
@@ -17,6 +20,7 @@ interface Props {
 }
 
 const NetworkMenuContent = ({ items, tabs }: Props) => {
+  const { t: tShell } = useTranslation();
   const selectedNetwork = items?.find(({ isActive }) => isActive);
   const defaultTab = tabs.find((tab) => selectedNetwork?.group === tab);
 
@@ -65,7 +69,7 @@ const NetworkMenuContent = ({ items, tabs }: Props) => {
         px={ 2 }
         fontSize="xs"
       >
-        View all chains
+        { tShell('multiUi.all_chains') }
       </Link>
     );
 
@@ -91,7 +95,7 @@ const NetworkMenuContent = ({ items, tabs }: Props) => {
           { tabs.map((tab, index) => {
             return (
               <Box key={ tab }>
-                <Text fontSize="sm" fontWeight={ 600 } mb={ 2 }>{ tab }</Text>
+                <Text fontSize="sm" fontWeight={ 600 } mb={ 2 }>{ localizeNetworkGroup(tab, tShell) }</Text>
                 <VStack key={ tab } as="ul" gap={ 1 } alignItems="stretch">
                   { items
                     .filter((network) => network.group === tab)
@@ -128,7 +132,7 @@ const NetworkMenuContent = ({ items, tabs }: Props) => {
                 textTransform="capitalize"
                 value={ tab }
               >
-                { tab }
+                { localizeNetworkGroup(tab, tShell) }
               </TabsTrigger>
             )) }
           </TabsList>

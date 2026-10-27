@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete token value label localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -26,7 +26,7 @@ const ERC20TokensTable = ({ data, top, isLoading, hasAdditionalTokenTypes }: Pro
           <TableColumnHeader width="30%">{ tQuat('addresses.contract_address') }</TableColumnHeader>
           <TableColumnHeader width="10%" isNumeric>{ tQuat('common.price') }</TableColumnHeader>
           <TableColumnHeader width="15%" isNumeric>{ tQuat('addresses.quantity') }</TableColumnHeader>
-          <TableColumnHeader width="15%" isNumeric>Value</TableColumnHeader>
+          <TableColumnHeader width="15%" isNumeric>{ tQuat('addresses.asset_value') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>
       <TableBody>

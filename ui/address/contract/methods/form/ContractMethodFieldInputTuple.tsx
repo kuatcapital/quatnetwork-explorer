@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { ContractAbiItemInput } from '../types';
 
@@ -18,6 +20,7 @@ interface Props extends Pick<AccordionProps, 'onAddClick' | 'onRemoveClick' | 'i
 }
 
 const ContractMethodFieldInputTuple = ({ data, basePath, level, isDisabled, isOptional, ...accordionProps }: Props) => {
+  const { t } = useTranslation();
   const { formState: { errors } } = useFormContext();
   const fieldsWithErrors = Object.keys(errors);
   const isInvalid = fieldsWithErrors.some((field) => field.startsWith(basePath));
@@ -30,7 +33,7 @@ const ContractMethodFieldInputTuple = ({ data, basePath, level, isDisabled, isOp
     <ContractMethodFieldAccordion
       { ...accordionProps }
       level={ level }
-      label={ getFieldLabel(data) }
+      label={ getFieldLabel(data, false, t) }
       isInvalid={ isInvalid }
     >
       { data.components?.map((component, index) => {

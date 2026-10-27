@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localize validated-block transaction and gas counts. GPL-3.0.
 import { Text, Flex } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -8,6 +8,8 @@ import type { Block } from 'types/api/block';
 
 import config from 'configs/app';
 import getBlockTotalReward from 'lib/block/getBlockTotalReward';
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { currencyUnits } from 'lib/units';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import BlockGasUsed from 'ui/shared/block/BlockGasUsed';
@@ -23,6 +25,7 @@ type Props = Block & {
 
 const AddressBlocksValidatedListItem = (props: Props) => {
   const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const totalReward = getBlockTotalReward(props);
 
@@ -46,13 +49,13 @@ const AddressBlocksValidatedListItem = (props: Props) => {
       <Flex columnGap={ 2 } w="100%">
         <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('home.txn') }</Skeleton>
         <Skeleton loading={ props.isLoading } display="inline-block" color="Skeleton_secondary">
-          <span>{ props.transactions_count }</span>
+          <span>{ formatNumber(props.transactions_count, locale) }</span>
         </Skeleton>
       </Flex>
       <Flex columnGap={ 2 } w="100%">
         <Skeleton loading={ props.isLoading } fontWeight={ 500 } flexShrink={ 0 }>{ tQuat('common.gas_used') }</Skeleton>
         <Skeleton loading={ props.isLoading }>
-          <Text color="text.secondary">{ BigNumber(props.gas_used || 0).toFormat() }</Text>
+          <Text color="text.secondary">{ formatBigNumber(BigNumber(props.gas_used || 0), locale) }</Text>
         </Skeleton>
         <BlockGasUsed
           gasUsed={ props.gas_used || undefined }

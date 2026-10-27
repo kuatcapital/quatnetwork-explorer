@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: runtime transaction interface localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: update asset flow display labels when the locale changes. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import { chunk } from 'es-toolkit';
 import React, { useMemo, useState } from 'react';
@@ -36,7 +36,7 @@ export default function TxAssetFlows(props: FlowViewProps) {
 
   const [ page, setPage ] = useState<number>(1);
 
-  const ViewData = useMemo(() => (queryData ? generateFlowViewData(queryData) : []), [ queryData ]);
+  const ViewData = useMemo(() => (queryData ? generateFlowViewData(queryData, tTx) : []), [ queryData, tTx ]);
   const chunkedViewData = chunk(ViewData, 50);
 
   const paginationProps: PaginationParams = useMemo(() => ({

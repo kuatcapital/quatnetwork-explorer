@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
@@ -28,7 +29,7 @@ const ContractCodeIde = ({ className, hash, isLoading }: Props) => {
       .map((ide) => {
         const url = decodeURIComponent(ide.url.replace('{hash}', hash).replace('{domain}', config.app.host || ''));
         const icon = 'icon_url' in ide ?
-          <Image boxSize={ 5 } mr={ 2 } src={ ide.icon_url } alt={ `${ ide.title } icon` }/> :
+          <Image boxSize={ 5 } mr={ 2 } src={ ide.icon_url } alt={ tQuat('common.icon', { name: ide.title }) }/> :
           <IconSvg name="ABI" boxSize={ 5 } color="icon.primary" mr={ 2 }/>;
 
         return (
@@ -38,7 +39,7 @@ const ContractCodeIde = ({ className, hash, isLoading }: Props) => {
           </Link>
         );
       });
-  }, [ hash ]);
+  }, [ hash, tQuat ]);
 
   if (isLoading) {
     return <Skeleton loading h={ 8 } w="92px" borderRadius="base"/>;

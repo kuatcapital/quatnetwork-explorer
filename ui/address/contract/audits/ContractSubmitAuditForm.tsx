@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { VStack } from '@chakra-ui/react';
 import React from 'react';
@@ -10,6 +11,7 @@ import type { SmartContractSecurityAuditSubmission } from 'types/api/contract';
 import type { ResourceError } from 'lib/api/resources';
 import useApiFetch from 'lib/api/useApiFetch';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { toaster } from 'toolkit/chakra/toaster';
 import { FormFieldCheckbox } from 'toolkit/components/forms/fields/FormFieldCheckbox';
@@ -40,6 +42,7 @@ type AuditSubmissionErrors = {
 
 const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
   const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const containerRef = React.useRef<HTMLFormElement>(null);
 
@@ -101,7 +104,7 @@ const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
           <FormFieldUrl<Inputs> name="audit_report_url" required placeholder={ tQuat('contracts.audit_url') }/>
           <FormFieldText<Inputs>
             name="audit_publish_date"
-            inputProps={{ type: 'date', max: dayjs().format('YYYY-MM-DD') }}
+            inputProps={{ type: 'date', max: dayjs().format('YYYY-MM-DD'), lang: locale }}
             required
             placeholder={ tQuat('contracts.audit_date') }
           />
@@ -117,7 +120,7 @@ const ContractSubmitAuditForm = ({ address, onSuccess }: Props) => {
           type="submit"
           mt={ 8 }
           loading={ formState.isSubmitting }
-          loadingText="Send request"
+          loadingText={ tQuat('contracts.send_request') }
           disabled={ !formState.isDirty }
         >{ tQuat('contracts.send_request') }</Button>
       </form>

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
 import { encodeFunctionData, getAddress } from 'viem';
 import { usePublicClient } from 'wagmi';
@@ -8,6 +9,7 @@ import config from 'configs/app';
 import { useMultichainContext } from 'lib/contexts/multichain';
 import useAccount from 'lib/web3/useAccount';
 
+import { ContractInteractionError } from '../localization';
 import { getNativeCoinValue } from './utils';
 
 interface Params {
@@ -25,7 +27,7 @@ export default function useCallMethodPublicClient(): (params: Params) => Promise
 
   return React.useCallback(async({ args, item, addressHash, strategy }) => {
     if (!publicClient) {
-      throw new Error('Public Client is not defined');
+      throw new ContractInteractionError('public_client_missing');
     }
 
     const address = getAddress(addressHash);

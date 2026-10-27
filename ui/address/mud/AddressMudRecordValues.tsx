@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete MUD field value label localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ const AddressMudRecordValues = ({ data }: Props) => {
       <TableRow backgroundColor={ valuesBgColor } borderBottomStyle="hidden" >
         <TableCell fontWeight={ 600 } w="100px" fontSize="sm">{ tQuat('addresses.field') }</TableCell>
         <TableCell fontWeight={ 600 } w="90px" fontSize="sm">{ tQuat('common.type') }</TableCell>
-        <TableCell fontWeight={ 600 } fontSize="sm">Value</TableCell>
+        <TableCell fontWeight={ 600 } fontSize="sm">{ tQuat('addresses.field_value') }</TableCell>
       </TableRow>
       {
         data?.schema.value_names.map((valName, index) => (

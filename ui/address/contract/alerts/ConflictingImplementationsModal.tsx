@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Grid, GridItem, HStack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
@@ -10,7 +11,7 @@ import { DialogActionTrigger, DialogBody, DialogContent, DialogHeader, DialogRoo
 import { Link } from 'toolkit/chakra/link';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 
-import { PROXY_TYPES } from './utils';
+import { getLocalizedProxyInfo } from '../localization';
 
 interface Props {
   data: Array<SmartContractConflictingImplementation>;
@@ -32,8 +33,8 @@ const ConflictingImplementationsModal = ({ data, children }: Props) => {
           <VStack alignItems="stretch" mt={ 6 } textStyle="sm">
             { data.map((item) => {
               const addressNum = item.implementations.length;
-              const addressText = addressNum === 1 ? 'Implementation:' : 'Implementations:';
-              const proxyType = PROXY_TYPES[item.proxy_type]?.name || PROXY_TYPES.unknown?.name;
+              const addressText = addressNum === 1 ? tQuat('contracts.implementation_label') : tQuat('contracts.implementations_label');
+              const proxyType = getLocalizedProxyInfo(item.proxy_type, tQuat)?.name || tQuat('contracts.proxy_unknown');
 
               return (
                 <Grid

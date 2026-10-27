@@ -1,5 +1,6 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localize exact collection counts and item plurals. GPL-3.0.
 import { Box, Flex, Text, Grid, HStack } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +10,7 @@ import { route } from 'nextjs/routes';
 
 import { useMultichainContext } from 'lib/contexts/multichain';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import ActionBar from 'ui/shared/ActionBar';
@@ -18,6 +20,7 @@ import NftFallback from 'ui/shared/nft/NftFallback';
 import Pagination from 'ui/shared/pagination/Pagination';
 import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
 
+import { getAddressCountOptions } from '../localization';
 import AddressNftTypeFilter from './AddressNftTypeFilter';
 import NFTItem from './NFTItem';
 import NFTItemContainer from './NFTItemContainer';
@@ -31,6 +34,7 @@ type Props = {
 
 const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenTypesChange }: Props) => {
   const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
@@ -56,7 +60,7 @@ const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenType
         scroll_to_tabs: 'true',
       },
     }, { chain: multichainContext?.chain });
-    const hasOverload = Number(item.amount) > item.token_instances.length;
+    const hasOverload = BigNumber(item.amount).gt(item.token_instances.length);
     return (
       <Box key={ item.token.address_hash + index } mb={ 6 }>
         <Flex mb={ 3 } flexWrap="wrap" lineHeight="30px">
@@ -70,7 +74,7 @@ const AddressCollections = ({ collectionsQuery, address, tokenTypes, onTokenType
             chain={ multichainContext?.chain }
           />
           <Skeleton loading={ isPlaceholderData } mr={ 3 }>
-            <Text color="text.secondary" whiteSpace="pre">{ ` - ${ Number(item.amount).toLocaleString() } item${ Number(item.amount) > 1 ? 's' : '' }` }</Text>
+            <Text color="text.secondary" whiteSpace="pre">{ ' - ' }{ tQuat('addressTxUi.collection_items', getAddressCountOptions(item.amount, locale)) }</Text>
           </Skeleton>
           <Link href={ collectionUrl } loading={ isPlaceholderData }>{ tQuat('addresses.view_collection') }</Link>
         </Flex>

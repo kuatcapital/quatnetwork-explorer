@@ -1,4 +1,5 @@
 // Modified by Quat Capital, 2026-10-26: localize block, gas and statistics UI. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete feature-specific realtime feed descriptions. GPL-3.0.
 import { Box, HStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,7 @@ import { Hint } from 'toolkit/components/Hint/Hint';
 import FlashblocksList from './flashblocks/FlashblocksList';
 import FlashblocksStats from './flashblocks/FlashblocksStats';
 import FlashblocksTable from './flashblocks/FlashblocksTable';
+import { getFlashblockText } from './flashblocks/localization';
 import useFlashblocksSocketData from './flashblocks/useFlashblocksSocketData';
 
 const flashblocksFeature = config.features.flashblocks;
@@ -48,7 +50,7 @@ const Flashblocks = () => {
         <Switch size="md" flexDirection="row-reverse" onCheckedChange={ handleFormatChange } checked={ isRealTime }>
           { t('flashblocks.realtime') } </Switch>
         <Hint
-          label={ t('flashblocks.hint', { name: flashblocksFeature.name }) }
+          label={ getFlashblockText(flashblocksFeature.type, t).hint }
         />
       </HStack>
       <Box hideBelow="lg">

@@ -1,0 +1,35 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-27",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "contractRemainderUi": {
+      "scan_analyzed": "Contract analyzed for 240+ vulnerability patterns by <scanner/>",
+      "self_address_hint": "Connect your wallet to enter your address.",
+      "send_native": "Send native {{currency}}",
+      "coin": "coin",
+      "solidity_yul_sources": "Upload all Solidity or Yul contract source files."
+    }
+  },
+  "ru": {
+    "contractRemainderUi": {
+      "scan_analyzed": "Контракт проверен на более чем 240 типов уязвимостей с помощью <scanner/>",
+      "self_address_hint": "Подключите кошелёк, чтобы подставить свой адрес.",
+      "send_native": "Отправить нативный актив {{currency}}",
+      "coin": "монета",
+      "solidity_yul_sources": "Загрузите все исходные файлы контракта на Solidity или Yul."
+    }
+  },
+  "kk": {
+    "contractRemainderUi": {
+      "scan_analyzed": "Келісімшарт <scanner/> арқылы 240-тан астам осалдық түріне тексерілді",
+      "self_address_hint": "Өз мекенжайыңызды енгізу үшін әмиянды қосыңыз.",
+      "send_native": "Желінің {{currency}} төл активін жіберу",
+      "coin": "монета",
+      "solidity_yul_sources": "Solidity немесе Yul келісімшартының барлық бастапқы файлдарын жүктеңіз."
+    }
+  }
+}

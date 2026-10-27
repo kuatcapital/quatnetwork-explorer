@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: localize domain totals and per-instance expiry dates. GPL-3.0.
 import { Box, Flex, Grid, chakra } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { clamp } from 'es-toolkit';
@@ -11,6 +11,7 @@ import { route } from 'nextjs-routes';
 
 import type { ResourceError } from 'lib/api/resources';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Button } from 'toolkit/chakra/button';
 import { Link } from 'toolkit/chakra/link';
 import { PopoverBody, PopoverContent, PopoverRoot, PopoverTrigger } from 'toolkit/chakra/popover';
@@ -19,6 +20,8 @@ import { Tooltip } from 'toolkit/chakra/tooltip';
 import { useDisclosure } from 'toolkit/hooks/useDisclosure';
 import EnsEntity from 'ui/shared/entities/ens/EnsEntity';
 import IconSvg from 'ui/shared/IconSvg';
+
+import { getAddressCountOptions } from '../localization';
 
 interface Props {
   query: UseQueryResult<bens.LookupAddressResponse, ResourceError<unknown>>;
@@ -41,6 +44,7 @@ const DomainsGrid = ({ data }: { data: Array<bens.Domain> }) => {
 
 const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
   const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
   const { data, isPending, isError } = query;
   const popover = useDisclosure();
@@ -85,7 +89,8 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
     domain.name !== mainDomainName,
   );
 
-  const totalRecords = data.items.length > 40 ? '40+' : data.items.length;
+  const countOptions = getAddressCountOptions(Math.min(data.items.length, 40), locale);
+  const totalRecords = countOptions.value + (data.items.length > 40 ? '+' : '');
 
   return (
     <PopoverRoot open={ popover.open } onOpenChange={ popover.onOpenChange }>
@@ -101,7 +106,7 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
               columnGap={ 1 }
             >
               <IconSvg name="ENS" boxSize={ 5 }/>
-              <chakra.span hideBelow="xl">{ totalRecords }{ ' ' }{ tQuat('addresses.domain_one') }{ data.items.length > 1 ? 's' : '' }</chakra.span>
+              <chakra.span hideBelow="xl">{ tQuat('addressTxUi.domain_total', { ...countOptions, value: totalRecords }) }</chakra.span>
               <chakra.span hideFrom="xl">{ totalRecords }</chakra.span>
             </Button>
           </PopoverTrigger>
@@ -114,8 +119,11 @@ const AddressEnsDomains = ({ query, addressHash, mainDomainName }: Props) => {
               <chakra.span color="text.secondary" textStyle="xs">{ tQuat('addresses.primary_domain') }</chakra.span>
               <Flex alignItems="center" textStyle="md" mt={ 2 }>
                 <EnsEntity domain={ mainDomain.name } protocol={ mainDomain.protocol } fontWeight={ 600 } noCopy/>
-                { mainDomain.expiry_date &&
-                    <chakra.span color="text.secondary" whiteSpace="pre"> (expires { dayjs(mainDomain.expiry_date).fromNow() })</chakra.span> }
+                { mainDomain.expiry_date && (
+                  <chakra.span color="text.secondary" whiteSpace="pre">{ ' (' }{ tQuat('addressTxUi.domain_expiry', {
+                    time: dayjs(mainDomain.expiry_date).locale(locale).fromNow(),
+                  }) }{ ')' }</chakra.span>
+                ) }
               </Flex>
             </Box>
           ) }

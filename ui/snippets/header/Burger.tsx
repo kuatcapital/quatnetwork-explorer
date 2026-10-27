@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime shell localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DrawerBody, DrawerContent, DrawerRoot, DrawerTrigger } from 'toolkit/chakra/drawer';
 import { IconButton } from 'toolkit/chakra/icon-button';
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const Burger = ({ isMarketplaceAppPage }: Props) => {
+  const { t: tShell } = useTranslation();
   const { open, onOpen, onClose, onOpenChange } = useDisclosure();
 
   return (
@@ -24,7 +27,7 @@ const Burger = ({ isMarketplaceAppPage }: Props) => {
       lazyMount={ false }
     >
       <DrawerTrigger>
-        <IconButton onClick={ onOpen } p={ 2 } aria-label="Menu button">
+        <IconButton onClick={ onOpen } p={ 2 } aria-label={ tShell('shellUi.menu_button') }>
           <IconSvg
             name="burger"
             boxSize={ 6 }

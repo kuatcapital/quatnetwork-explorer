@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete token value label localization. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
@@ -101,13 +101,13 @@ const ERC20TokensListItem = ({
       </HStack>
       { isConfidentialTokenType(token.type) && (
         <HStack gap={ 3 } alignItems="baseline">
-          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Value</Skeleton>
+          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.asset_value') }</Skeleton>
           <ConfidentialValue loading={ isLoading }/>
         </HStack>
       ) }
       { !isConfidentialTokenType(token.type) && token.exchange_rate && (
         <HStack gap={ 3 } alignItems="baseline">
-          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>Value</Skeleton>
+          <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.asset_value') }</Skeleton>
           <SimpleValue
             value={ tokenValue }
             prefix="$"

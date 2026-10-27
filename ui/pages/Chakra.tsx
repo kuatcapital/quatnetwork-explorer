@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-27: runtime showcase navigation labels; tab ids unchanged. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
 import { useColorMode } from 'toolkit/chakra/color-mode';
@@ -78,20 +80,21 @@ const tabs = [
 ];
 
 const ChakraShowcases = () => {
+  const { t } = useTranslation();
   const colorMode = useColorMode();
   const isMobile = useIsMobile();
 
   return (
     <>
-      <PageTitle title="Chakra UI Showcase"/>
+      <PageTitle title={ t('developerUi.chakra_title') }/>
       <Switch onCheckedChange={ colorMode.toggleColorMode } checked={ colorMode.colorMode === 'dark' } mb={ 10 }>
-        Color mode: { colorMode.colorMode }
+        { t('developerUi.color_mode') } { t(colorMode.colorMode === 'dark' ? 'developerUi.dark' : 'developerUi.light') }
       </Switch>
 
       <TabsRoot defaultValue="accordion" orientation={ isMobile ? 'horizontal' : 'vertical' }>
         <TabsList flexWrap="wrap" w="fit-content" whiteSpace="nowrap">
           { tabs.map((tab) => (
-            <TabsTrigger key={ tab.value } value={ tab.value }>{ tab.label }</TabsTrigger>
+            <TabsTrigger key={ tab.value } value={ tab.value }>{ t(`developerUi.component_${ tab.value }`) }</TabsTrigger>
           )) }
         </TabsList>
         { tabs.map((tab) => <React.Fragment key={ tab.value }>{ tab.component }</React.Fragment>) }

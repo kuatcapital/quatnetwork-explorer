@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: runtime shell labels and locale formatting. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import * as cookies from 'lib/cookies';
@@ -8,6 +10,11 @@ import { IDENTICONS } from 'lib/settings/identIcon';
 import SettingsSample from './SettingsSample';
 
 const SettingsIdentIcon = () => {
+  const { t } = useTranslation();
+  // Identicon algorithm/product names remain unchanged; translate the descriptive avatar label.
+  const identicons = React.useMemo(() => IDENTICONS.map(identicon => ({
+    ...identicon, label: identicon.id === 'gradient_avatar' ? t('shellUi.gradient_avatar') : identicon.label,
+  })), [ t ]);
   const [ activeId, setActiveId ] = React.useState<string>();
 
   React.useEffect(() => {
@@ -28,14 +35,14 @@ const SettingsIdentIcon = () => {
     window.location.reload();
   }, []);
 
-  const activeIdenticon = IDENTICONS.find((identicon) => identicon.id === activeId);
+  const activeIdenticon = identicons.find((identicon) => identicon.id === activeId);
 
   return (
     <div>
-      <Box fontWeight={ 600 }>Address settings</Box>
+      <Box fontWeight={ 600 }>{ t('shellUi.address_settings') }</Box>
       <Box color="text.secondary" mt={ 1 } mb={ 2 }>{ activeIdenticon?.label }</Box>
       <Flex>
-        { IDENTICONS.map((identicon) => (
+        { identicons.map((identicon) => (
           <SettingsSample
             key={ identicon.id }
             label={ identicon.label }

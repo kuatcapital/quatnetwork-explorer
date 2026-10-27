@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 import React from 'react';
 import { getAddress, type Abi } from 'viem';
 import { useAccount, useSwitchChain, useWriteContract, useSendTransaction } from 'wagmi';
@@ -9,6 +10,7 @@ import { useMultichainContext } from 'lib/contexts/multichain';
 import useRewardsActivity from 'lib/hooks/useRewardsActivity';
 import useWallet from 'lib/web3/useWallet';
 
+import { ContractInteractionError } from '../localization';
 import { getNativeCoinValue } from './utils';
 
 const feature = config.features.blockchainInteraction;
@@ -34,7 +36,7 @@ export default function useCallMethodWalletClient(): (params: Params) => Promise
 
   return React.useCallback(async({ args, item, addressHash }) => {
     if (!isConnected) {
-      throw new Error('Wallet is not connected');
+      throw new ContractInteractionError('wallet_not_connected');
     }
 
     if (chainId && targetChainId && chainId !== targetChainId) {
@@ -77,7 +79,7 @@ export default function useCallMethodWalletClient(): (params: Params) => Promise
     const methodName = item.name;
 
     if (!methodName) {
-      throw new Error('Method name is not defined');
+      throw new ContractInteractionError('method_name_missing');
     }
 
     // seems like Dynamic WaaS (assigned when user signed up with email) does not estimate gas for transactions

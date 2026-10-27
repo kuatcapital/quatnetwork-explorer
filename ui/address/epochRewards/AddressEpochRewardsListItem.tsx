@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete epoch and reward value label localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,7 +22,7 @@ const AddressEpochRewardsListItem = ({ item, isLoading }: Props) => {
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="100px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Epoch #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addressTxUi.epoch_label') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <EpochEntity number={ String(item.epoch_number) } noIcon isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
@@ -50,7 +50,7 @@ const AddressEpochRewardsListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Value</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.reward_value') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TokenValue
           amount={ item.amount }

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime contract-interface localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Spinner, Box } from '@chakra-ui/react';
 import React from 'react';
@@ -12,6 +13,7 @@ import { route } from 'nextjs-routes';
 import { Alert } from 'toolkit/chakra/alert';
 import { Link } from 'toolkit/chakra/link';
 
+import { localizeContractInteractionError } from '../../localization';
 interface Props {
   data: FormSubmitResultWalletClient['data'];
   onSettle: () => void;
@@ -57,7 +59,7 @@ export const ContractMethodResultWalletClientDumb = ({ data, onSettle, txInfo }:
     if (isErrorResult) {
       return (
         <Alert status="error" textStyle="sm">
-          { data.message }
+          { localizeContractInteractionError(data, tQuat) }
         </Alert>
       );
     }
