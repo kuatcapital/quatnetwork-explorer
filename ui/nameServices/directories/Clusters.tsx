@@ -1,8 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
-import { useTranslation , Trans } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 import { detectInputType } from 'lib/clusters/detectInputType';
 import {

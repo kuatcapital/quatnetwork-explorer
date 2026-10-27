@@ -1,11 +1,12 @@
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { INTEROP_MESSAGE } from 'stubs/interop';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -16,8 +17,6 @@ import DataListDisplay from 'ui/shared/DataListDisplay';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
-import { useTranslation } from 'react-i18next';
-
 
 const InteropMessages = () => {
   const { locale } = useLocale();

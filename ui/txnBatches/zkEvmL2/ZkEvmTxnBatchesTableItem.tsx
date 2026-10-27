@@ -9,6 +9,8 @@ import type { ZkEvmL2TxnBatchesItem } from 'types/api/zkEvmL2';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import BatchEntityL2 from 'ui/shared/entities/block/BatchEntityL2';
@@ -21,6 +23,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ZkEvmL2TxnBatchesItem; isLoading?: boolean };
 
 const ZkEvmTxnBatchesTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkEvm') {
@@ -56,7 +59,7 @@ const ZkEvmTxnBatchesTableItem = ({ item, isLoading }: Props) => {
           my={ 1 }
           loading={ isLoading }
         >
-          { item.transactions_count }
+          { formatNumber(item.transactions_count, locale) }
         </Link>
       </TableCell>
       <TableCell pr={ 12 } verticalAlign="middle">

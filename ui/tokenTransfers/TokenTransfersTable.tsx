@@ -30,7 +30,7 @@ const TokenTransferTable = ({ items, top, isLoading, chainData }: Props) => {
             </TableColumnHeader>
             <TableColumnHeader>{ tQuat('suppUi.method') }</TableColumnHeader>
             <TableColumnHeader>{ tQuat('suppUi.block') }</TableColumnHeader>
-            <TableColumnHeader>From/To</TableColumnHeader>
+            <TableColumnHeader>{ tQuat('tokenUi.from_to') }</TableColumnHeader>
             <TableColumnHeader>{ tQuat('suppUi.token_id') }</TableColumnHeader>
             <TableColumnHeader isNumeric>{ tQuat('suppUi.amount') }</TableColumnHeader>
           </TableRow>

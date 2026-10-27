@@ -1,6 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CrossChainTx } from '@blockscout/zetachain-cctx-types';
 import { InboundStatus } from '@blockscout/zetachain-cctx-types';
@@ -15,8 +16,6 @@ import IconSvg from 'ui/shared/IconSvg';
 import StatusTag from 'ui/shared/statusTag/StatusTag';
 import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   tx: CrossChainTx;
@@ -48,7 +47,7 @@ const ZetaChainCCTXDetailsLifecycleIn = ({ tx, isLoading }: Props) => {
       />
       <Skeleton loading={ isLoading }>
         <Flex color={ color } maxH="20px" mb={ 2.5 } alignItems="center">
-          { `Sender tx from ${ chainFrom?.name || 'unknown chain' }` }
+          { tQuat('multiUi.sender_from_chain', { chain: chainFrom?.name || tQuat('multiUi.unknown_chain_lower') }) }
         </Flex>
         <Grid
           templateColumns="100px 1fr"

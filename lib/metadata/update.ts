@@ -1,4 +1,6 @@
 // Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { ApiData } from './types';
 import type { RouteParams } from 'nextjs/types';
 
@@ -36,5 +38,3 @@ export default function update<Pathname extends Route['pathname']>(route: RouteP
     }
   }
 }
-// Modified by Quat Capital, 2026-10-27: client metadata retains the selected language. GPL-3.0.
-import type { TFunction } from 'i18next';

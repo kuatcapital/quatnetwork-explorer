@@ -1,18 +1,19 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { chakra, Grid, HStack, Stat } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { ClusterChainConfig } from 'types/multichain';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import ChainIcon from 'ui/shared/externalChains/ChainIcon';
 import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   data: multichain.ChainMetrics;
@@ -21,6 +22,8 @@ interface Props {
 }
 
 const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const activeAddresses = {
@@ -49,7 +52,7 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
             loading={ isLoading }
             maxW="100%"
           >
-            <TruncatedText text={ chainInfo?.name ?? 'Unknown chain' } loading={ isLoading }/>
+            <TruncatedText text={ chainInfo?.name ?? tQuat('multiUi.unknown_chain') } loading={ isLoading }/>
           </Link>
         </HStack>
         <HStack gap={ 0 } flexShrink={ 0 }>
@@ -64,13 +67,13 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
         </Skeleton>
         <HStack gap={ 1 }>
           <Skeleton loading={ isLoading }>
-            <span>{ activeAddresses.value.toLocaleString() }</span>
+            <span>{ formatNumber(activeAddresses.value, locale) }</span>
           </Skeleton>
           { activeAddresses.delta ? (
             <Skeleton loading={ isLoading }>
               <Stat.Root positive={ activeAddresses.delta > 0 }>
                 <Stat.ValueText>
-                  { activeAddresses.delta.toFixed(2) }%
+                  { formatNumber(activeAddresses.delta, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
                 </Stat.ValueText>
                 { activeAddresses.delta > 0 ? <Stat.UpIndicator/> : <Stat.DownIndicator/> }
               </Stat.Root>
@@ -84,13 +87,13 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
         </Skeleton>
         <HStack gap={ 1 }>
           <Skeleton loading={ isLoading }>
-            <span>{ newAddresses.value.toLocaleString() }</span>
+            <span>{ formatNumber(newAddresses.value, locale) }</span>
           </Skeleton>
           { newAddresses.delta ? (
             <Skeleton loading={ isLoading }>
               <Stat.Root positive={ newAddresses.delta > 0 }>
                 <Stat.ValueText>
-                  { newAddresses.delta.toFixed(2) }%
+                  { formatNumber(newAddresses.delta, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
                 </Stat.ValueText>
                 { newAddresses.delta > 0 ? <Stat.UpIndicator/> : <Stat.DownIndicator/> }
               </Stat.Root>
@@ -104,13 +107,13 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
         </Skeleton>
         <HStack gap={ 1 }>
           <Skeleton loading={ isLoading }>
-            <span>{ dailyTransactions.value.toLocaleString() }</span>
+            <span>{ formatNumber(dailyTransactions.value, locale) }</span>
           </Skeleton>
           { dailyTransactions.delta ? (
             <Skeleton loading={ isLoading }>
               <Stat.Root positive={ dailyTransactions.delta > 0 }>
                 <Stat.ValueText>
-                  { dailyTransactions.delta.toFixed(2) }%
+                  { formatNumber(dailyTransactions.delta, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
                 </Stat.ValueText>
                 { dailyTransactions.delta > 0 ? <Stat.UpIndicator/> : <Stat.DownIndicator/> }
               </Stat.Root>
@@ -122,7 +125,7 @@ const MultichainEcosystemsListItem = ({ data, chainInfo, isLoading }: Props) => 
           <span>TPS</span>
         </Skeleton>
         <Skeleton loading={ isLoading }>
-          <span>{ Number(data.tps ?? 0).toLocaleString(undefined, { maximumFractionDigits: 2 }) }</span>
+          <span>{ formatNumber(Number(data.tps ?? 0), locale, { maximumFractionDigits: 2 }) }</span>
         </Skeleton>
       </Grid>
     </ListItemMobile>

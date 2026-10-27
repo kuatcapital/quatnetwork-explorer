@@ -182,7 +182,8 @@
       "layer_fair_gas": "{{layer}} fair gas price",
       "operation_term": "operation",
       "game_in_progress": "In progress",
-      "game_defender_wins": "Defender wins"
+      "game_defender_wins": "Defender wins",
+      "in_out": "In/Out"
     }
   },
   "ru": {
@@ -384,7 +385,8 @@
       "layer_fair_gas": "Расчётная цена газа {{layer}}",
       "operation_term": "операция",
       "game_in_progress": "В процессе",
-      "game_defender_wins": "Защитник победил"
+      "game_defender_wins": "Защитник победил",
+      "in_out": "Вход/Выход"
     }
   },
   "kk": {
@@ -564,7 +566,8 @@
       "layer_fair_gas": "{{layer}} есептік газ бағасы",
       "operation_term": "операция",
       "game_in_progress": "Орындалуда",
-      "game_defender_wins": "Қорғаушы жеңді"
+      "game_defender_wins": "Қорғаушы жеңді",
+      "in_out": "Кіру/Шығу"
     }
   }
 }

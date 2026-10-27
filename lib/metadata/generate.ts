@@ -1,4 +1,6 @@
 // Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { ApiData, Metadata } from './types';
 import type { RouteParams } from 'nextjs/types';
 
@@ -24,7 +26,9 @@ export default function generate<Pathname extends Route['pathname']>(
     ...route.query,
     ...apiData,
     network_name: config.chain.name,
-    network_title: getNetworkTitle(),
+    network_title: t ? t('metaSeo.network_title', {
+      replace: { name: config.chain.name, short_name: config.chain.shortName ? ` (${ config.chain.shortName })` : '' },
+    }) : getNetworkTitle(),
     network_gwei: currencyUnits.gwei,
     id_cap: idCap,
   };
@@ -49,5 +53,3 @@ export default function generate<Pathname extends Route['pathname']>(
     jsonLd,
   };
 }
-// Modified by Quat Capital, 2026-10-27: generate localized metadata with a request-scoped translator. GPL-3.0.
-import type { TFunction } from 'i18next';

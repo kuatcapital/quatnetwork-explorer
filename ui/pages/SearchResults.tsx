@@ -1,14 +1,17 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
 import React from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 import { SEARCH_RESULT_TYPES } from 'types/api/search';
 import type { SearchResultItem } from 'types/client/search';
 
 import config from 'configs/app';
 import { useSettingsContext } from 'lib/contexts/settings';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import removeQueryParam from 'lib/router/removeQueryParam';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -32,12 +35,12 @@ import HeaderDesktop from 'ui/snippets/header/HeaderDesktop';
 import HeaderMobile from 'ui/snippets/header/HeaderMobile';
 import SearchBarSuggestBlockCountdown from 'ui/snippets/searchBar/SearchBarSuggest/SearchBarSuggestBlockCountdown';
 import useSearchQuery from 'ui/snippets/searchBar/useSearchQuery';
-import { useTranslation } from 'react-i18next';
-
 
 const nameServicesFeature = config.features.nameServices;
 
 const SearchResultsPageContent = () => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const router = useRouter();
@@ -204,7 +207,7 @@ const SearchResultsPageContent = () => {
           <TableRoot fontWeight={ 500 }>
             <TableHeaderSticky top={ pagination.isVisible ? ACTION_BAR_HEIGHT_DESKTOP : 0 }>
               <TableRow>
-                <TableColumnHeader width="30%">Search result</TableColumnHeader>
+                <TableColumnHeader width="30%">{ tQuat('multiUi.search_result_title', { count: 1 }) }</TableColumnHeader>
                 <TableColumnHeader width="35%"/>
                 <TableColumnHeader width="35%" pr={ 10 }/>
                 <TableColumnHeader width="150px">{ tQuat('multiUi.category') }</TableColumnHeader>
@@ -246,12 +249,13 @@ const SearchResultsPageContent = () => {
       return (
         <>
           <Box mb={ pagination.isVisible ? 0 : 6 } lineHeight="32px">
-            <span>Found </span>
-            <chakra.span fontWeight={ 700 }>
-              { resultsCount }
-            </chakra.span>
-            <span> matching result{ (((displayedItems.length || 0) + marketplaceApps.displayedApps.length) > 1) || pagination.page > 1 ? 's' : '' } for </span>
-            “<chakra.span fontWeight={ 700 }>{ debouncedSearchTerm }</chakra.span>”
+            <Trans
+              t={ tQuat }
+              i18nKey="multiUi.matching_query"
+              count={ typeof resultsCount === 'number' ? resultsCount : 50 }
+              values={{ value: typeof resultsCount === 'number' ? formatNumber(resultsCount, locale) : formatNumber(50, locale) + '+' }}
+              components={{ value: <chakra.span fontWeight={ 700 }/>, query: <chakra.span fontWeight={ 700 }>{ debouncedSearchTerm }</chakra.span> }}
+            />
           </Box>
           { resultsCount === 0 && regexp.BLOCK_HEIGHT.test(debouncedSearchTerm) &&
             <SearchBarSuggestBlockCountdown blockHeight={ debouncedSearchTerm } mt={ -4 }/> }

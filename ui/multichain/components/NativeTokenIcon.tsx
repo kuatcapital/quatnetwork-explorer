@@ -1,7 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { HomeStats } from 'types/api/stats';
 
@@ -10,8 +11,6 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import TokenLogoPlaceholder from 'ui/shared/TokenLogoPlaceholder';
 
 import useFetchParentChainApi from '../home/useFetchParentChainApi';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   isLoading?: boolean;

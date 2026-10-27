@@ -1,20 +1,21 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex, HStack, Text } from '@chakra-ui/react';
 import { castArray } from 'es-toolkit/compat';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZetaChainCCTXFilterParams } from 'types/client/zetaChain';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import shortenString from 'lib/shortenString';
 import { Link } from 'toolkit/chakra/link';
 import { Tag } from 'toolkit/chakra/tag';
 import { SECOND } from 'toolkit/utils/consts';
+import { getAdvancedFilterAgeLabel } from 'ui/advancedFilter/constants';
 import IconSvg from 'ui/shared/IconSvg';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   filters: ZetaChainCCTXFilterParams;
@@ -23,6 +24,8 @@ type Props = {
 };
 
 const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const { data: chains = [] } = useZetaChainConfig();
@@ -33,23 +36,23 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
   if (filters.age) {
     filterTags.push({
       key: 'age',
-      name: 'Age',
-      value: filters.age,
+      name: tQuat('common.age'),
+      value: getAdvancedFilterAgeLabel(filters.age, tQuat),
     });
   } else {
     if (filters.start_timestamp) {
       filterTags.push({
         key: 'start_timestamp',
-        name: 'Date from',
-        value: dayjs(Number(filters.start_timestamp) * SECOND).format('MMM DD, YYYY'),
+        name: tQuat('multiUi.date_from'),
+        value: dayjs(Number(filters.start_timestamp) * SECOND).locale(locale).format('ll'),
       });
     }
 
     if (filters.end_timestamp) {
       filterTags.push({
         key: 'end_timestamp',
-        name: 'Date to',
-        value: dayjs(Number(filters.end_timestamp) * SECOND).format('MMM DD, YYYY'),
+        name: tQuat('multiUi.date_to'),
+        value: dayjs(Number(filters.end_timestamp) * SECOND).locale(locale).format('ll'),
       });
     }
   }
@@ -59,8 +62,8 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
   if (statusReduced.length > 0) {
     filterTags.push({
       key: 'status_reduced',
-      name: 'Status',
-      value: statusReduced.join(', '),
+      name: tQuat('common.status'),
+      value: statusReduced.map(status => status === 'Success' ? tQuat('common.success') : tQuat('common.failed')).join(', '),
     });
   }
 
@@ -69,7 +72,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
   if (senderAddresses.length > 0) {
     filterTags.push({
       key: 'sender_address',
-      name: 'Sender',
+      name: tQuat('transactions.sender'),
       value: senderAddresses.map(address => shortenString(address, 8)).join(', '),
     });
   }
@@ -83,7 +86,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
     });
     filterTags.push({
       key: 'source_chain_id',
-      name: 'Sender Chain',
+      name: tQuat('multiUi.sender_chain'),
       value: chainNames.join(', '),
     });
   }
@@ -93,7 +96,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
   if (receiverAddresses.length > 0) {
     filterTags.push({
       key: 'receiver_address',
-      name: 'Receiver',
+      name: tQuat('multiUi.receiver'),
       value: receiverAddresses.map(address => shortenString(address, 8)).join(', '),
     });
   }
@@ -107,7 +110,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
     });
     filterTags.push({
       key: 'target_chain_id',
-      name: 'Receiver Chain',
+      name: tQuat('multiUi.receiver_chain'),
       value: chainNames.join(', '),
     });
   }
@@ -126,7 +129,7 @@ const ZetaChainFilterTags = ({ filters, onClearFilter, onClearAll }: Props) => {
     }
     filterTags.push({
       key: 'token_symbol',
-      name: 'Asset',
+      name: tQuat('multiUi.asset'),
       value: value.join(', '),
     });
   }

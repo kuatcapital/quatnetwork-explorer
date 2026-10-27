@@ -1,7 +1,7 @@
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 
@@ -70,7 +70,7 @@ const ZkSyncL2TxnBatch = () => {
       title: tQuat('l2Ui.transactions'),
       component: <TxsWithFrontendSorting query={ batchTxsQuery } top={ hasPagination ? TABS_HEIGHT : 0 }/>,
     },
-  ].filter(Boolean)), [ batchQuery, batchTxsQuery, hasPagination , tQuat ]);
+  ].filter(Boolean)), [ batchQuery, batchTxsQuery, hasPagination, tQuat ]);
 
   return (
     <>

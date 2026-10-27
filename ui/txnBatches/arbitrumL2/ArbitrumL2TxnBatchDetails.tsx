@@ -120,7 +120,7 @@ const ArbitrumL2TxnBatchDetails = ({ query }: Props) => {
         hint={ tQuat('l2Ui.blocks_hint', { current: layerLabels.current }) }
       >{ tQuat('common.blocks') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
-        <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: tQuat('l2Ui.blocks') } }) }>
+        <Link loading={ isPlaceholderData } href={ route({ pathname: '/batches/[number]', query: { number: data.number.toString(), tab: 'blocks' } }) }>
           { tQuat('l2Ui.block_total', { count: blocksCount, value: formatNumber(blocksCount, locale) }) }
         </Link>
       </DetailedInfo.ItemValue>

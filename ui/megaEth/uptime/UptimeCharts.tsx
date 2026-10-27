@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import * as d3 from 'd3';
 import React from 'react';
@@ -9,8 +10,6 @@ import type { UptimeHistoryFull, UptimeHistoryItem } from 'types/api/megaEth';
 import { useSettingsContext } from 'lib/contexts/settings';
 import { timestampDate } from 'lib/date/timestamp';
 import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
-
 import { Heading } from 'toolkit/chakra/heading';
 import { ChartWidget } from 'toolkit/components/charts/ChartWidget';
 import { DAY, HOUR, SECOND } from 'toolkit/utils/consts';

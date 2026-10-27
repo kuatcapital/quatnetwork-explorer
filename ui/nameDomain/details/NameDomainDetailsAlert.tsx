@@ -1,6 +1,6 @@
-// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
-import { useTranslation , Trans } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 

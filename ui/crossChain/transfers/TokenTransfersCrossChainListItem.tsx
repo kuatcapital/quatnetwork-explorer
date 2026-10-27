@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { chakra, Grid, HStack, type JsxStyleProps } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import type { InterchainTransfer } from '@blockscout/interchain-indexer-types';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { mdash } from 'toolkit/utils/htmlEntities';
 import CrossChainBridgeLink from 'ui/shared/crossChain/CrossChainBridgeLink';
@@ -27,6 +28,8 @@ interface Props extends JsxStyleProps {
 }
 
 const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAddress, ...rest }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const timestamp = data.send_timestamp || data.receive_timestamp;
@@ -46,7 +49,7 @@ const TokenTransfersCrossChainListItem = ({ data, isLoading, rowGap = 3, current
       </HStack>
       { timestamp && (
         <Skeleton loading={ isLoading } display="flex" alignItems="center" color="text.secondary">
-          <div>{ dayjs(timestamp).fromNow() }</div>
+          <div>{ dayjs(timestamp).locale(locale).fromNow() }</div>
           <TextSeparator/>
           <Time timestamp={ timestamp } format="lll_s"/>
         </Skeleton>

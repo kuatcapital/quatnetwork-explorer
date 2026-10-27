@@ -2,6 +2,7 @@
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex, HStack, Text, Grid } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InteropMessage } from 'types/api/interop';
 
@@ -15,8 +16,6 @@ import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
 import InteropMessageAdditionalInfo from './InteropMessageAdditionalInfo';
 import InteropMessageDestinationTx from './InteropMessageDestinationTx';
 import InteropMessageSourceTx from './InteropMessageSourceTx';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   item: InteropMessage;

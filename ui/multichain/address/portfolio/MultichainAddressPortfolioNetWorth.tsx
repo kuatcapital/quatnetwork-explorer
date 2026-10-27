@@ -1,10 +1,12 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Text, Flex, HStack, VStack, Separator, Box, chakra } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import * as mixpanel from 'lib/mixpanel';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressMultichainButton from 'ui/address/details/AddressMultichainButton';
@@ -14,8 +16,6 @@ import SimpleValue from 'ui/shared/value/SimpleValue';
 import { DEFAULT_ACCURACY_USD } from 'ui/shared/value/utils';
 
 import { formatPercentage } from './utils';
-import { useTranslation } from 'react-i18next';
-
 
 const multichainBalanceFeature = config.features.multichainButton;
 
@@ -39,6 +39,8 @@ interface Props {
 }
 
 const MultichainAddressPortfolioNetWorth = ({ addressHash, netWorth, isLoading, topTokens }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const isMobile = useIsMobile();
@@ -56,7 +58,15 @@ const MultichainAddressPortfolioNetWorth = ({ addressHash, netWorth, isLoading, 
 
     return (
       <>
-        <Skeleton loading={ isLoading } w={{ base: '100%', lg: '225px' }} h={ 3 } display="flex" alignItems="center" borderRadius="full" overflow="hidden">
+        <Skeleton
+          loading={ isLoading }
+          w={{ base: '100%', lg: '225px' }}
+          h={ 3 }
+          display="flex"
+          alignItems="center"
+          borderRadius="full"
+          overflow="hidden"
+        >
           { topTokens.map((token, index) => (
             <Box
               key={ token.symbol }
@@ -77,8 +87,8 @@ const MultichainAddressPortfolioNetWorth = ({ addressHash, netWorth, isLoading, 
                 bgColor={ !isLoading ? getBgColor(token.symbol === 'Others' ? 2 : index) : undefined }
               />
               <Skeleton loading={ isLoading } fontWeight={ 600 } whiteSpace="pre">
-                <span>{ token.symbol }</span>
-                <chakra.span color="text.secondary"> { formatPercentage(token.share) }</chakra.span>
+                <span>{ token.symbol === 'Others' ? tQuat('multiUi.others') : token.symbol }</span>
+                <chakra.span color="text.secondary"> { formatPercentage(token.share, locale) }</chakra.span>
               </Skeleton>
             </HStack>
           )) }

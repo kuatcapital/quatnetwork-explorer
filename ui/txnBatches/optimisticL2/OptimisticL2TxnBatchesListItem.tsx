@@ -8,6 +8,8 @@ import type { OptimisticL2TxnBatchesItem } from 'types/api/optimisticL2';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -21,6 +23,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: OptimisticL2TxnBatchesItem; isLoading?: boolean };
 
 const OptimisticL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'optimistic') {
@@ -56,18 +59,18 @@ const OptimisticL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_txn_count', { layer: layerLabels.parent }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading } minW="40px">
-          { item.l1_transaction_hashes.length }
+          { formatNumber(item.l1_transaction_hashes.length, locale) }
         </Skeleton>
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.layer_blocks', { layer: layerLabels.current }) }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Link
-          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: tQuat('l2Ui.blocks') } }) }
+          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'blocks' } }) }
           loading={ isLoading }
           minW="40px"
         >
-          { item.l2_end_block_number - item.l2_start_block_number + 1 }
+          { formatNumber(item.l2_end_block_number - item.l2_start_block_number + 1, locale) }
         </Link>
       </ListItemMobileGrid.Value>
 
@@ -78,7 +81,7 @@ const OptimisticL2TxnBatchesListItem = ({ item, isLoading }: Props) => {
           loading={ isLoading }
           minW="40px"
         >
-          { item.transactions_count }
+          { formatNumber(item.transactions_count, locale) }
         </Link>
       </ListItemMobileGrid.Value>
 

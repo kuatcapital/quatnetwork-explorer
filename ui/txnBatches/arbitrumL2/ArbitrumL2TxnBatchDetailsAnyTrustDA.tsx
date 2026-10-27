@@ -1,5 +1,3 @@
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Grid, Text, Flex, Box, VStack } from '@chakra-ui/react';
@@ -9,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import type { ArbitrumL2TxnBatchDAAnytrust } from 'types/api/arbitrumL2';
 
 import dayjs from 'lib/date/dayjs';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
 import DetailsTimestamp from 'ui/shared/DetailedInfo/DetailedInfoTimestamp';

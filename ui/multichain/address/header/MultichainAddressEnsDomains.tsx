@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, chakra, Flex, Grid, Text } from '@chakra-ui/react';
 import { clamp } from 'es-toolkit';
 import React from 'react';

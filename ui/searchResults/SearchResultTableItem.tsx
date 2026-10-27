@@ -1,8 +1,8 @@
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { chakra, Text, Flex, Box } from '@chakra-ui/react';
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import xss from 'xss';
 
 import type { SearchResultItem } from 'types/client/search';
@@ -12,7 +12,9 @@ import { route } from 'nextjs-routes';
 
 import { toBech32Address } from 'lib/address/bech32';
 import dayjs from 'lib/date/dayjs';
+import { formatBigNumber } from 'lib/format/localeNumbers';
 import highlightText from 'lib/highlightText';
+import { useLocale } from 'lib/i18n/provider';
 import * as mixpanel from 'lib/mixpanel/index';
 import { saveToRecentKeywords } from 'lib/recentSearchKeywords';
 import { useColorMode } from 'toolkit/chakra/color-mode';
@@ -41,8 +43,6 @@ import TacOperationStatus from 'ui/shared/statusTag/TacOperationStatus';
 import Time from 'ui/shared/time/Time';
 
 import SearchResultEntityTag from './SearchResultEntityTag';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   data: SearchResultItem | SearchResultAppItem;
@@ -110,8 +110,10 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
             <TableCell verticalAlign="middle" isNumeric>
               <Skeleton loading={ isLoading } whiteSpace="nowrap" overflow="hidden">
                 <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight={ 700 }>
-                  { data.token_type === 'ERC-20' && data.exchange_rate && `$${ formatNumber(Number(data.exchange_rate), locale) }` }
-                  { data.token_type !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', { value: formatNumber(Number(data.total_supply), locale) }) }
+                  { data.token_type === 'ERC-20' && data.exchange_rate && `$${ formatBigNumber(BigNumber(data.exchange_rate), locale) }` }
+                  { data.token_type !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', {
+                    value: formatBigNumber(BigNumber(data.total_supply), locale),
+                  }) }
                 </Text>
               </Skeleton>
             </TableCell>
@@ -135,7 +137,8 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
           implementations: null,
           ens_domain_name: null,
         };
-        const expiresText = data.ens_info?.expiry_date ? tQuat('multiUi.expires_at', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
+        const expiresText = data.ens_info?.expiry_date ?
+          tQuat('multiUi.expires_at', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
         const hash = addressFormat === 'bech32' ? toBech32Address(data.address_hash) : data.address_hash;
 
         return (
@@ -445,7 +448,8 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
       }
 
       case 'ens_domain': {
-        const expiresText = data.ens_info?.expiry_date ? tQuat('multiUi.expires_inline', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
+        const expiresText = data.ens_info?.expiry_date ?
+          tQuat('multiUi.expires_inline', { time: dayjs(data.ens_info.expiry_date).locale(locale).fromNow() }) : '';
         const hash = data.filecoin_robust_address || (addressFormat === 'bech32' && data.address_hash ? toBech32Address(data.address_hash) : data.address_hash);
 
         return (
@@ -510,4 +514,3 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
 };
 
 export default React.memo(SearchResultTableItem);
-// Modified by Quat Capital, 2026-10-27: reactive search category labels. GPL-3.0.

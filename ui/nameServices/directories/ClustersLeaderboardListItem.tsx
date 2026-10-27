@@ -1,9 +1,12 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { ClustersLeaderboardObject } from 'types/api/clusters';
 
+import { formatNumber, formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import ClustersEntity from 'ui/shared/entities/clusters/ClustersEntity';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
@@ -14,6 +17,8 @@ interface Props {
 }
 
 const ClustersLeaderboardListItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   return (
@@ -21,7 +26,7 @@ const ClustersLeaderboardListItem = ({ item, isLoading }: Props) => {
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('addresses.rank') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
-          #{ item.rank }
+          #{ formatNumber(item.rank, locale) }
         </Skeleton>
       </ListItemMobileGrid.Value>
 
@@ -33,21 +38,21 @@ const ClustersLeaderboardListItem = ({ item, isLoading }: Props) => {
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('search.categories.names') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
-          { item.nameCount }
+          { formatBigNumber(BigNumber(item.nameCount), locale) }
         </Skeleton>
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.backing') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
-          { (parseFloat(item.totalWeiAmount) / 1e18).toFixed(2) } ETH
+          { formatBigNumber(BigNumber(item.totalWeiAmount).shiftedBy(-18), locale, 2) } ETH
         </Skeleton>
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.network_presence') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
-          { item.chainIds.length } { item.chainIds.length === 1 ? 'chain' : 'chains' }
+          { tQuat('multiUi.chains_count', { count: item.chainIds.length, value: formatNumber(item.chainIds.length, locale) }) }
         </Skeleton>
       </ListItemMobileGrid.Value>
     </ListItemMobileGrid.Container>

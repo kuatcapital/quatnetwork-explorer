@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,11 +45,11 @@ const Transactions = () => {
       },
       {
         id: 'txs_cross_chain',
-        title: 'Cross-chain txns',
+        title: tQuat('multiUi.cross_chain'),
         component: <TransactionsCrossChain/>,
       },
     ];
-  }, [  tQuat ]);
+  }, [ tQuat ]);
 
   return (
     <>

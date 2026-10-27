@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +23,7 @@ const TxCrossChainDetailsLifecycle = ({ data, isLoading }: Props) => {
 
   const firstStepContent = (() => {
     if (!data.source_transaction_hash) {
-      return <Trigger status="unfinalized" text="Initiated" isFirst isLast isLoading={ isLoading } isDisabled/>;
+      return <Trigger status="unfinalized" text={ tQuat('multiUi.initiated') } isFirst isLast isLoading={ isLoading } isDisabled/>;
     }
 
     const isLast = isError && !data.destination_transaction_hash;
@@ -31,7 +32,7 @@ const TxCrossChainDetailsLifecycle = ({ data, isLoading }: Props) => {
       <>
         <Trigger
           status={ isLast && isError ? 'error' : 'success' }
-          text="Initiated"
+          text={ tQuat('multiUi.initiated') }
           isFirst
           isLast={ isLast }
           isLoading={ isLoading }
@@ -51,7 +52,12 @@ const TxCrossChainDetailsLifecycle = ({ data, isLoading }: Props) => {
               />
             </ItemRow>
             <ItemRow label={ tQuat('common.timestamp') }>
-              <DetailedInfoTimestamp timestamp={ data.send_timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }} py="6px"/>
+              <DetailedInfoTimestamp
+                timestamp={ data.send_timestamp }
+                isLoading={ isLoading }
+                flexWrap={{ base: 'wrap', lg: 'nowrap' }}
+                py="6px"
+              />
             </ItemRow>
           </ItemBody>
         </ItemContent>
@@ -64,14 +70,14 @@ const TxCrossChainDetailsLifecycle = ({ data, isLoading }: Props) => {
       if (isError) {
         return null;
       }
-      return <Trigger status="unfinalized" text="Completed" isFirst={ false } isLast isLoading={ isLoading } isDisabled/>;
+      return <Trigger status="unfinalized" text={ tQuat('multiUi.completed') } isFirst={ false } isLast isLoading={ isLoading } isDisabled/>;
     }
 
     return (
       <>
         <Trigger
           status={ isError ? 'error' : 'success' }
-          text="Completed"
+          text={ tQuat('multiUi.completed') }
           isFirst={ false }
           isLast
           isLoading={ isLoading }
@@ -92,7 +98,12 @@ const TxCrossChainDetailsLifecycle = ({ data, isLoading }: Props) => {
             </ItemRow>
             { data.receive_timestamp && (
               <ItemRow label={ tQuat('common.timestamp') }>
-                <DetailedInfoTimestamp timestamp={ data.receive_timestamp } isLoading={ isLoading } flexWrap={{ base: 'wrap', lg: 'nowrap' }} py="6px"/>
+                <DetailedInfoTimestamp
+                  timestamp={ data.receive_timestamp }
+                  isLoading={ isLoading }
+                  flexWrap={{ base: 'wrap', lg: 'nowrap' }}
+                  py="6px"
+                />
               </ItemRow>
             ) }
           </ItemBody>

@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, createListCollection } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -19,8 +19,6 @@ import Sort from 'ui/shared/sort/Sort';
 import MultichainEcosystemsListItem from './MultichainEcosystemsListItem';
 import MultichainEcosystemsTable from './MultichainEcosystemsTable';
 import { SORT_OPTIONS, getEcosystemSortOptions } from './utils';
-
-
 
 const MultichainEcosystems = () => {
   const { t: tQuat } = useTranslation();

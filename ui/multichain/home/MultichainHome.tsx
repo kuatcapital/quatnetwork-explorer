@@ -1,6 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { route } from 'nextjs-routes';
 
@@ -13,8 +14,6 @@ import HeroBanner from 'ui/home/HeroBanner';
 import ChainWidget from './ChainWidget';
 import LatestTxs from './LatestTxs';
 import Stats from './Stats';
-import { useTranslation } from 'react-i18next';
-
 
 const MultichainHome = () => {
   const { t: tQuat } = useTranslation();

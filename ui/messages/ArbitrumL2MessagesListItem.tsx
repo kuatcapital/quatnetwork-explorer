@@ -2,6 +2,7 @@
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2MessagesItem } from 'types/api/arbitrumL2';
 
@@ -20,8 +21,6 @@ import ArbitrumL2MessageStatus from 'ui/shared/statusTag/ArbitrumL2MessageStatus
 import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
 
 import type { MessagesDirection } from './ArbitrumL2Messages';
-import { useTranslation } from 'react-i18next';
-
 
 const rollupFeature = config.features.rollup;
 
@@ -104,7 +103,7 @@ const ArbitrumL2MessagesListItem = ({ item, isLoading, direction }: Props) => {
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('l2Ui.status') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        { item.status === "confirmed" && direction === 'from-rollup' ?
+        { item.status === 'confirmed' && direction === 'from-rollup' ?
           <Link href={ route({ pathname: '/txn-withdrawals', query: { q: item.origination_transaction_hash } }) }>{ tQuat('l2Ui.ready_relay') }</Link> :
           <ArbitrumL2MessageStatus status={ item.status } isLoading={ isLoading }/> }
       </ListItemMobileGrid.Value>

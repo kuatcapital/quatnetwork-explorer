@@ -1,6 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 
@@ -15,8 +16,6 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 
 import TxCrossChainDetails from './TxCrossChainDetails';
 import TxCrossChainTransfers from './TxCrossChainTransfers';
-import { useTranslation } from 'react-i18next';
-
 
 const TxCrossChain = () => {
   const { t: tQuat } = useTranslation();

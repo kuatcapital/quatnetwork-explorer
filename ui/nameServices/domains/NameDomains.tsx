@@ -1,7 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { EnsDomainLookupFiltersOptions, EnsLookupSorting } from 'types/api/ens';
 
@@ -22,8 +23,6 @@ import NameDomainsListItem from './NameDomainsListItem';
 import NameDomainsTable from './NameDomainsTable';
 import type { Sort, SortField } from './utils';
 import { SORT_OPTIONS, getNextSortValue } from './utils';
-import { useTranslation } from 'react-i18next';
-
 
 const feature = config.features.nameServices;
 const availableProtocols = feature.isEnabled && feature.ens.isEnabled ? feature.ens.protocols : [];

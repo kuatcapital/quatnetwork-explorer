@@ -1,10 +1,12 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Grid, VStack, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CctxListItem } from '@blockscout/zetachain-cctx-types';
 
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { SECOND } from 'toolkit/utils/consts';
 import AddressEntityZetaChain from 'ui/shared/entities/address/AddressEntityZetaChain';
@@ -13,8 +15,6 @@ import TextSeparator from 'ui/shared/TextSeparator';
 import Time from 'ui/shared/time/Time';
 import ZetaChainCCTXReducedStatus from 'ui/shared/zetaChain/ZetaChainCCTXReducedStatus';
 import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   tx: CctxListItem;
@@ -23,6 +23,8 @@ type Props = {
 };
 
 const LatestZetaChainCCTXItem = ({ tx, isLoading, animation }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   return (
@@ -39,7 +41,7 @@ const LatestZetaChainCCTXItem = ({ tx, isLoading, animation }: Props) => {
       <ZetaChainCCTXReducedStatus status={ tx.status_reduced } isLoading={ isLoading } type="full"/>
       <TxEntityZetaChainCC hash={ tx.index } isLoading={ isLoading } truncation="constant_long" fontWeight={ 600 }/>
       <Skeleton loading={ isLoading } display="flex" color="text.secondary" gap={ 2 } justifyContent="start">
-        { dayjs(Number(tx.last_update_timestamp) * SECOND).fromNow() }
+        { dayjs(Number(tx.last_update_timestamp) * SECOND).locale(locale).fromNow() }
         <TextSeparator mx={ 0 }/>
         <Time timestamp={ Number(tx.last_update_timestamp) * SECOND } format="lll_s"/>
       </Skeleton>
@@ -58,7 +60,7 @@ const LatestZetaChainCCTXItem = ({ tx, isLoading, animation }: Props) => {
           isLoading={ isLoading }
           truncation="constant"
         />
-        <Text>Asset</Text>
+        <Text>{ tQuat('multiUi.asset') }</Text>
         <ZetaChainCCTXValue
           coinType={ tx.coin_type }
           tokenSymbol={ tx.token_symbol }

@@ -1,7 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CctxStatusReduced, type CctxListItem, type ListCctxsResponse } from '@blockscout/zetachain-cctx-types';
 import type { SocketMessage } from 'lib/socket/types';
@@ -20,8 +21,6 @@ import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
 
 import ZetaChainCCTxsListItem from './ZetaChainCCTXListItem';
 import ZetaChainCCTxsTable from './ZetaChainCCTxsTable';
-import { useTranslation } from 'react-i18next';
-
 
 const OVERLOAD_COUNT = 75;
 

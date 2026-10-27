@@ -1,7 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
@@ -25,8 +26,6 @@ import TxsWithAPISorting from 'ui/txs/TxsWithAPISorting';
 
 import ListCounterText from '../components/ListCounterText';
 import getAvailableChainIds from './getAvailableChainIds';
-import { useTranslation } from 'react-i18next';
-
 
 export const ADDRESS_MULTICHAIN_TXS_TAB_IDS = [ 'txs_cross_chain' as const, 'txs_local' as const ];
 const TAB_LIST_PROPS = {

@@ -1,13 +1,13 @@
-// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
-import { useTranslation , Trans } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, chakra, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 import type { EntityTag as TEntityTag, EntityTagType } from 'ui/shared/EntityTags/types';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { TOP_ADDRESS } from 'stubs/address';
 import { generateListStub } from 'stubs/utils';

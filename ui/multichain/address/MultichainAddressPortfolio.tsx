@@ -1,8 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
@@ -122,7 +122,12 @@ const MultichainAddressPortfolio = ({ addressData, isLoading }: Props) => {
         </MultichainProvider>
       ) : (
         <MultichainProvider chainId={ collectionsQuery.chainValue?.[0] }>
-          <AddressCollections collectionsQuery={ collectionsQuery } address={ hash } tokenTypes={ nftTokenTypes } onTokenTypesChange={ onTokenTypesChange }/>
+          <AddressCollections
+            collectionsQuery={ collectionsQuery }
+            address={ hash }
+            tokenTypes={ nftTokenTypes }
+            onTokenTypesChange={ onTokenTypesChange }
+          />
         </MultichainProvider>
       ),
     },

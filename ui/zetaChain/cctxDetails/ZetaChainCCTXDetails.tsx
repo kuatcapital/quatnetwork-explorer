@@ -1,11 +1,15 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, Flex, Grid, VStack, Text } from '@chakra-ui/react';
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CrossChainTx } from '@blockscout/zetachain-cctx-types';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import base64ToHex from 'lib/base64ToHex';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 import { CollapsibleDetails } from 'toolkit/chakra/collapsible';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -25,8 +29,6 @@ import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
 import ZetaChainCCTXDetailsLifecycleIn from './ZetaChainCCTXDetailsLifecycleIn';
 import ZetaChainCCTXDetailsLifecycleOut from './ZetaChainCCTXDetailsLifecycleOut';
 import ZetaChainCCTXDetailsRelatedTx from './ZetaChainCCTXDetailsRelatedTx';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   data?: CrossChainTx;
@@ -44,6 +46,8 @@ const getTransactionsBeforeAndAfter = (data: CrossChainTx) => {
 };
 
 const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const statsQuery = useApiQuery('general:stats', {
@@ -301,7 +305,7 @@ const ZetaChainCCTXDetails = ({ data, isLoading }: Props) => {
                 </>
               ) }
               <Text fontWeight="medium" color="text.secondary">{ tQuat('common.gas_limit') }</Text>
-              <Skeleton loading={ isLoading }>{ Number(data.revert_options.revert_gas_limit).toLocaleString() }</Skeleton>
+              <Skeleton loading={ isLoading }>{ formatBigNumber(BigNumber(data.revert_options.revert_gas_limit), locale) }</Skeleton>
             </Grid>
           </DetailedInfo.ItemValue>
         </>

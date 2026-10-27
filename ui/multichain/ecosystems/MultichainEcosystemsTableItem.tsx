@@ -1,11 +1,13 @@
-// Modified by Quat Capital, 2026-10-27: localized multichain messages. GPL-3.0.
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, HStack, Stat } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { ClusterChainConfig } from 'types/multichain';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import useAddChainClick from 'lib/web3/useAddChainClick';
 import useProvider from 'lib/web3/useProvider';
 import { WALLETS_INFO } from 'lib/web3/wallets';
@@ -26,6 +28,8 @@ interface Props {
 }
 
 const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const { data: { wallet } = {} } = useProvider();
@@ -61,7 +65,7 @@ const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) =>
               loading={ isLoading }
               maxW="calc(100% - 28px)"
             >
-              <TruncatedText text={ chainInfo?.name ?? 'Unknown chain' } loading={ isLoading }/>
+              <TruncatedText text={ chainInfo?.name ?? tQuat('multiUi.unknown_chain') } loading={ isLoading }/>
             </Link>
           </HStack>
           <HStack gap={ 0 } flexShrink={ 0 }>
@@ -73,13 +77,13 @@ const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) =>
       <TableCell verticalAlign="middle">
         <HStack>
           <Skeleton loading={ isLoading }>
-            <span>{ activeAddresses.value.toLocaleString() }</span>
+            <span>{ formatNumber(activeAddresses.value, locale) }</span>
           </Skeleton>
           { activeAddresses.delta ? (
             <Skeleton loading={ isLoading }>
               <Stat.Root positive={ activeAddresses.delta > 0 }>
                 <Stat.ValueText>
-                  { activeAddresses.delta.toFixed(2) }%
+                  { formatNumber(activeAddresses.delta, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
                 </Stat.ValueText>
                 { activeAddresses.delta > 0 ? <Stat.UpIndicator/> : <Stat.DownIndicator/> }
               </Stat.Root>
@@ -90,13 +94,13 @@ const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) =>
       <TableCell verticalAlign="middle">
         <HStack>
           <Skeleton loading={ isLoading }>
-            <span>{ newAddresses.value.toLocaleString() }</span>
+            <span>{ formatNumber(newAddresses.value, locale) }</span>
           </Skeleton>
           { newAddresses.delta ? (
             <Skeleton loading={ isLoading }>
               <Stat.Root positive={ newAddresses.delta > 0 }>
                 <Stat.ValueText>
-                  { newAddresses.delta.toFixed(2) }%
+                  { formatNumber(newAddresses.delta, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
                 </Stat.ValueText>
                 { newAddresses.delta > 0 ? <Stat.UpIndicator/> : <Stat.DownIndicator/> }
               </Stat.Root>
@@ -107,13 +111,13 @@ const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) =>
       <TableCell verticalAlign="middle">
         <HStack>
           <Skeleton loading={ isLoading }>
-            <span>{ dailyTransactions.value.toLocaleString() }</span>
+            <span>{ formatNumber(dailyTransactions.value, locale) }</span>
           </Skeleton>
           { dailyTransactions.delta ? (
             <Skeleton loading={ isLoading }>
               <Stat.Root positive={ dailyTransactions.delta > 0 }>
                 <Stat.ValueText>
-                  { dailyTransactions.delta.toFixed(2) }%
+                  { formatNumber(dailyTransactions.delta, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }%
                 </Stat.ValueText>
                 { dailyTransactions.delta > 0 ? <Stat.UpIndicator/> : <Stat.DownIndicator/> }
               </Stat.Root>
@@ -124,7 +128,7 @@ const MultichainEcosystemsTableItem = ({ data, isLoading, chainInfo }: Props) =>
       <TableCell verticalAlign="middle">
         <HStack justifyContent="space-between">
           <Skeleton loading={ isLoading }>
-            <span>{ Number(data.tps ?? 0).toLocaleString(undefined, { maximumFractionDigits: 2 }) }</span>
+            <span>{ formatNumber(Number(data.tps ?? 0), locale, { maximumFractionDigits: 2 }) }</span>
           </Skeleton>
           { walletIcon ? (
             <Tooltip content={ tQuat('multiUi.add_wallet') }>

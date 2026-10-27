@@ -1,6 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TokenType } from 'types/api/token';
 
@@ -14,8 +15,6 @@ import Pagination from 'ui/shared/pagination/Pagination';
 import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
 import TokenTransfersListItem from 'ui/tokenTransfers/TokenTransfersListItem';
 import TokenTransfersTable from 'ui/tokenTransfers/TokenTransfersTable';
-import { useTranslation } from 'react-i18next';
-
 
 const ACTION_BAR_HEIGHT = 24 * 2 + 40;
 
@@ -27,7 +26,6 @@ interface Props {
 
 const MultichainTokenTransfersLocal = ({ query, typeFilter, onTokenTypesChange }: Props) => {
   const { t: tQuat } = useTranslation();
-
 
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();

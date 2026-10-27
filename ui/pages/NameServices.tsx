@@ -1,6 +1,6 @@
-// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 

@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -5,8 +6,6 @@ import type { Pool } from 'types/api/pools';
 
 import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
-
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
 import DetailedInfoSponsoredItem from 'ui/shared/DetailedInfo/DetailedInfoSponsoredItem';
@@ -66,7 +65,9 @@ const PoolInfo = ({ data, isPlaceholderData }: Props) => {
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.base_token_fully_diluted_valuation_usd ?
-            `$${ Number(data.base_token_fully_diluted_valuation_usd).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }` :
+            `$${ Number(data.base_token_fully_diluted_valuation_usd).toLocaleString(NUMBER_LOCALES[locale], {
+              maximumFractionDigits: 2, notation: 'compact',
+            }) }` :
             tQuat('suppUi.not_available')
           }
         </Skeleton>
@@ -92,7 +93,9 @@ const PoolInfo = ({ data, isPlaceholderData }: Props) => {
       <DetailedInfo.ItemValue>
         <Skeleton loading={ isPlaceholderData }>
           { data.quote_token_fully_diluted_valuation_usd ?
-            `$${ Number(data.quote_token_fully_diluted_valuation_usd).toLocaleString(NUMBER_LOCALES[locale], { maximumFractionDigits: 2, notation: 'compact' }) }` :
+            `$${ Number(data.quote_token_fully_diluted_valuation_usd).toLocaleString(NUMBER_LOCALES[locale], {
+              maximumFractionDigits: 2, notation: 'compact',
+            }) }` :
             tQuat('suppUi.not_available')
           }
         </Skeleton>

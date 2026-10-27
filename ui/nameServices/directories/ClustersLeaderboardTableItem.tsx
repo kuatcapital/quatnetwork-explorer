@@ -1,7 +1,12 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ClustersLeaderboardObject } from 'types/api/clusters';
 
+import { formatBigNumber, formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import ClustersEntity from 'ui/shared/entities/clusters/ClustersEntity';
@@ -12,11 +17,15 @@ interface Props {
 }
 
 const ClustersLeaderboardTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
+
+  const { t: tQuat } = useTranslation();
+
   return (
     <TableRow>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          #{ item.rank }
+          #{ formatNumber(item.rank, locale) }
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle">
@@ -24,17 +33,17 @@ const ClustersLeaderboardTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          { item.nameCount }
+          { formatBigNumber(BigNumber(item.nameCount), locale) }
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          { (parseFloat(item.totalWeiAmount) / 1e18).toFixed(2) } ETH
+          { formatBigNumber(BigNumber(item.totalWeiAmount).shiftedBy(-18), locale, 2) } ETH
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle">
         <Skeleton loading={ isLoading }>
-          { item.chainIds.length } { item.chainIds.length === 1 ? 'chain' : 'chains' }
+          { tQuat('multiUi.chains_count', { count: item.chainIds.length, value: formatNumber(item.chainIds.length, locale) }) }
         </Skeleton>
       </TableCell>
     </TableRow>

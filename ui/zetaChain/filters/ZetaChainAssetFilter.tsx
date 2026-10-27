@@ -1,7 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex, Text, Spinner } from '@chakra-ui/react';
 import { isEqual } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Token } from '@blockscout/zetachain-cctx-types';
 import type { TokenInfo } from 'types/api/token';
@@ -17,8 +18,6 @@ import { FilterInput } from 'toolkit/components/filters/FilterInput';
 import * as TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import TableColumnFilter from 'ui/shared/filters/TableColumnFilter';
 import NativeTokenIcon from 'ui/shared/NativeTokenIcon';
-import { useTranslation } from 'react-i18next';
-
 
 const FILTER_PARAM_SYMBOL = 'token_symbol';
 const FILTER_PARAM_COIN_TYPE = 'coin_type';
@@ -127,7 +126,7 @@ const ZetaChainAssetFilter = ({ value = null, handleFilterChange }: Props) => {
 
   return (
     <TableColumnFilter
-      title="Asset"
+      title={ tQuat('multiUi.asset') }
       isFilled={ Boolean(currentValue) }
       isTouched={ !isEqual(currentValue, value) }
       onFilter={ onFilter }

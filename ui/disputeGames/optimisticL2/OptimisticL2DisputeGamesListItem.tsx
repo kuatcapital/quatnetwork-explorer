@@ -1,7 +1,7 @@
-import { localizeDisputeGameStatus } from './localizeDisputeGameStatus';
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2DisputeGamesItem } from 'types/api/optimisticL2';
 
@@ -13,8 +13,8 @@ import BlockEntityL2 from 'ui/shared/entities/block/BlockEntityL2';
 import HashStringShorten from 'ui/shared/HashStringShorten';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
 import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
-import { useTranslation } from 'react-i18next';
 
+import { localizeDisputeGameStatus } from './localizeDisputeGameStatus';
 
 const rollupFeature = config.features.rollup;
 

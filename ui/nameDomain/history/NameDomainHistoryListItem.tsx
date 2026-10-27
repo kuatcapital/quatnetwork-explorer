@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,7 +37,14 @@ const NameDomainHistoryListItem = ({ isLoading, domain, event }: Props) => {
     <ListItemMobileGrid.Container>
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.txn_hash') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <TxEntity { ...txEntityProps } hash={ event.transaction_hash } isLoading={ isLoading } fontWeight={ 500 } truncation="constant_long" noCopy/>
+        <TxEntity
+          { ...txEntityProps }
+          hash={ event.transaction_hash }
+          isLoading={ isLoading }
+          fontWeight={ 500 }
+          truncation="constant_long"
+          noCopy
+        />
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.age') }</ListItemMobileGrid.Label>
@@ -51,7 +59,7 @@ const NameDomainHistoryListItem = ({ isLoading, domain, event }: Props) => {
 
       { event.from_address && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>From</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('common.from') }</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <AddressEntity address={ event.from_address } isLoading={ isLoading } truncation="constant"/>
           </ListItemMobileGrid.Value>

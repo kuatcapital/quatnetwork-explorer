@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, Fieldset, Flex, HStack, Text, chakra, createListCollection } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,6 @@ import Sort from 'ui/shared/sort/Sort';
 
 import type { Sort as TSort } from './utils';
 import { getNameDomainsSortOptions } from './utils';
-
-
 
 interface Props {
   pagination: PaginationParams;
@@ -86,7 +84,11 @@ const NameDomainsActionBar = ({
   const appliedFiltersNum = filterValue.length + (protocolsData && protocolsData.length > 1 ? protocolsFilterValue.length : 0);
 
   const filter = (
-    <PopoverFilter appliedFiltersNum={ appliedFiltersNum } contentProps={{ minW: '220px', w: 'fit-content' }} isLoading={ isInitialLoading }>
+    <PopoverFilter
+      appliedFiltersNum={ appliedFiltersNum }
+      contentProps={{ minW: '220px', w: 'fit-content' }}
+      isLoading={ isInitialLoading }
+    >
       <div>
         { protocolsData && protocolsData.length > 1 && (
           <>
@@ -99,7 +101,12 @@ const NameDomainsActionBar = ({
                 textStyle="sm"
               >{ tQuat('common.reset') }</Button>
             </Flex>
-            <CheckboxGroup defaultValue={ protocolsFilterValue } onValueChange={ onProtocolsFilterChange } value={ protocolsFilterValue } name="token_type">
+            <CheckboxGroup
+              defaultValue={ protocolsFilterValue }
+              onValueChange={ onProtocolsFilterChange }
+              value={ protocolsFilterValue }
+              name="token_type"
+            >
               { protocolsData.map((protocol) => {
                 const topLevelDomains = protocol.tld_list.map((domain) => `.${ domain }`).join(' ');
                 return (
@@ -110,7 +117,7 @@ const NameDomainsActionBar = ({
                         boxSize={ 5 }
                         borderRadius="sm"
                         mr={ 2 }
-                        alt={ `${ protocol.title } protocol icon` }
+                        alt={ tQuat('multiUi.protocol_icon', { protocol: protocol.title }) }
                         fallback={ <IconSvg name="ENS"/> }
                       />
                       <span>{ protocol.short_name }</span>

@@ -1,5 +1,3 @@
-import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
@@ -10,6 +8,8 @@ import type { ArbitrumL2TxnBatchesItem } from 'types/api/arbitrumL2';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';

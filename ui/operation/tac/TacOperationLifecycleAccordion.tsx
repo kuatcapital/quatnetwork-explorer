@@ -1,6 +1,6 @@
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as tac from '@blockscout/tac-operation-lifecycle-types';
 

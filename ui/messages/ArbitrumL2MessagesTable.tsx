@@ -1,6 +1,7 @@
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2MessagesItem } from 'types/api/arbitrumL2';
 
@@ -10,8 +11,6 @@ import TimeFormatToggle from 'ui/shared/time/TimeFormatToggle';
 
 import type { MessagesDirection } from './ArbitrumL2Messages';
 import ArbitrumL2MessagesTableItem from './ArbitrumL2MessagesTableItem';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   items: Array<ArbitrumL2MessagesItem>;

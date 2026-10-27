@@ -1,5 +1,4 @@
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 import type { OptimisticL2TxnBatchesItem } from 'types/api/optimisticL2';
@@ -7,6 +6,8 @@ import type { OptimisticL2TxnBatchesItem } from 'types/api/optimisticL2';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
@@ -19,7 +20,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: OptimisticL2TxnBatchesItem; isLoading?: boolean };
 
 const OptimisticL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
-  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'optimistic') {
     return null;
   }
@@ -43,17 +44,17 @@ const OptimisticL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
         <Skeleton loading={ isLoading } minW="40px" display="inline-block">
-          { item.l1_transaction_hashes.length }
+          { formatNumber(item.l1_transaction_hashes.length, locale) }
         </Skeleton>
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
         <Link
-          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: tQuat('l2Ui.blocks') } }) }
+          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'blocks' } }) }
           loading={ isLoading }
           justifyContent="flex-end"
           minW="40px"
         >
-          { item.l2_end_block_number - item.l2_start_block_number + 1 }
+          { formatNumber(item.l2_end_block_number - item.l2_start_block_number + 1, locale) }
         </Link>
       </TableCell>
       <TableCell verticalAlign="middle" isNumeric>
@@ -63,7 +64,7 @@ const OptimisticL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
           justifyContent="flex-end"
           minW="40px"
         >
-          { item.transactions_count }
+          { formatNumber(item.transactions_count, locale) }
         </Link>
       </TableCell>
     </TableRow>

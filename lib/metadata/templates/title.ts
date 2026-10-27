@@ -1,4 +1,6 @@
 // Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import { getFeaturePayload } from 'configs/app/features/types';
 
 import type { Route } from 'nextjs-routes';
@@ -106,6 +108,7 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/api/csrf': '%network_name% node API CSRF token',
   '/api/healthz': '%network_name% node API health check',
   '/api/config': '%network_name% node API app config',
+  '/api/i18n/[locale]': '%network_name% interface translations',
 };
 
 const TEMPLATE_MAP_ENHANCED: Partial<Record<Route['pathname'], string>> = {
@@ -135,5 +138,3 @@ export function make(pathname: Route['pathname'], isEnriched = false, t?: TFunct
     apps_entity_plural: entityPlural,
   }) + postfix).trim();
 }
-// Modified by Quat Capital, 2026-10-27: localized runtime title templates. GPL-3.0.
-import type { TFunction } from 'i18next';

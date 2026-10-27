@@ -1,8 +1,7 @@
-import { localizeDisputeGameStatus } from './localizeDisputeGameStatus';
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { useTranslation } from 'react-i18next';
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2DisputeGamesItem } from 'types/api/optimisticL2';
 
@@ -13,6 +12,8 @@ import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import BlockEntityL2 from 'ui/shared/entities/block/BlockEntityL2';
 import HashStringShorten from 'ui/shared/HashStringShorten';
 import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
+
+import { localizeDisputeGameStatus } from './localizeDisputeGameStatus';
 
 const faultProofSystemFeature = config.features.faultProofSystem;
 

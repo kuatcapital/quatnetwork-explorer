@@ -1,15 +1,15 @@
-import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { useTranslation } from 'react-i18next';
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ArbitrumL2TxnBatchesItem } from 'types/api/arbitrumL2';
 
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
@@ -54,7 +54,9 @@ const ArbitrumL2TxnBatchesTableItem = ({ item, isLoading }: Props) => {
         />
       </TableCell>
       <TableCell verticalAlign="middle">
-        <Skeleton loading={ isLoading } display="inline-block">{ item.blocks_count ? item.blocks_count.toLocaleString(NUMBER_LOCALES[locale]) : tQuat('l2Ui.not_available') }</Skeleton>
+        <Skeleton loading={ isLoading } display="inline-block">
+          { item.blocks_count ? item.blocks_count.toLocaleString(NUMBER_LOCALES[locale]) : tQuat('l2Ui.not_available') }
+        </Skeleton>
       </TableCell>
       <TableCell pr={ 12 } verticalAlign="middle">
         <TxEntityL1

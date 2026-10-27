@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import type { JsxStyleProps } from '@chakra-ui/react';
 import { chakra, Grid, HStack } from '@chakra-ui/react';
 import React from 'react';
@@ -10,6 +10,7 @@ import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { mdash } from 'toolkit/utils/htmlEntities';
@@ -31,6 +32,8 @@ interface Props extends JsxStyleProps {
 }
 
 const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAddress, ...rest }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const timestamp = data.send_timestamp || data.receive_timestamp;
@@ -62,10 +65,17 @@ const TransactionsCrossChainListItem = ({ data, isLoading, rowGap = 3, currentAd
           />
         ) }
       </HStack>
-      <CrossChainMessageEntity id={ data.message_id } isLoading={ isLoading } fontWeight={ 600 } noIcon={ false } truncation="dynamic" w="100%"/>
+      <CrossChainMessageEntity
+        id={ data.message_id }
+        isLoading={ isLoading }
+        fontWeight={ 600 }
+        noIcon={ false }
+        truncation="dynamic"
+        w="100%"
+      />
       { timestamp && (
         <Skeleton loading={ isLoading } display="flex" alignItems="center" color="text.secondary">
-          <div>{ dayjs(timestamp).fromNow() }</div>
+          <div>{ dayjs(timestamp).locale(locale).fromNow() }</div>
           <TextSeparator/>
           <Time timestamp={ timestamp } format="lll_s"/>
         </Skeleton>

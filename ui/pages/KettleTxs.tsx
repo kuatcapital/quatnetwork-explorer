@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { TX } from 'stubs/tx';
@@ -10,6 +11,7 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import TxsWithFrontendSorting from 'ui/txs/TxsWithFrontendSorting';
 
 const KettleTxs = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -29,7 +31,7 @@ const KettleTxs = () => {
 
   return (
     <>
-      <PageTitle title="Computor transactions" withTextAd/>
+      <PageTitle title={ t('pageRemainderUi.computor_transactions') } withTextAd/>
       <AddressEntity address={{ hash }} mb={ 6 }/>
       <TxsWithFrontendSorting query={ query }/>
     </>
@@ -37,3 +39,4 @@ const KettleTxs = () => {
 };
 
 export default KettleTxs;
+// Modified by Quat Capital, 2026-10-27: localized computor transactions page title. GPL-3.0.

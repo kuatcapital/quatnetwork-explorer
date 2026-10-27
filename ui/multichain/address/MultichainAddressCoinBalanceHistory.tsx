@@ -1,5 +1,6 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 
@@ -12,8 +13,6 @@ import AddressCoinBalance from 'ui/address/AddressCoinBalance';
 import ChainSelect from 'ui/multichain/components/ChainSelect';
 
 import getAvailableChainIds from './getAvailableChainIds';
-import { useTranslation } from 'react-i18next';
-
 
 const QUERY_PRESERVED_PARAMS = [ 'tab', 'hash' ];
 

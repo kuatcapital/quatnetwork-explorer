@@ -29,7 +29,7 @@ const Sol2Uml = () => {
           components={{
             address: <AddressEntity address={{ hash: addressHash, is_contract: true }} noCopy/>,
             chain: <Flex display="inline-flex" alignItems="center"/>,
-            icon: <>{ multichainContext?.chain && <ChainIcon data={ multichainContext.chain } ml={ 1 } mr={ 2 }/> }</>,
+            icon: multichainContext?.chain ? <ChainIcon data={ multichainContext.chain } ml={ 1 } mr={ 2 }/> : <span/>,
           }}
         />
       </Flex>

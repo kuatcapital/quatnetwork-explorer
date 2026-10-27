@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { VStack } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTokensErc20Item } from 'ui/address/tokens/types';
 
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const MultichainAddressTokensTableItem = ({ data, isLoading }: Props) => {
+  const { t: tQuat } = useTranslation();
 
   const {
     valueBn: tokenQuantity,
@@ -52,9 +55,9 @@ const MultichainAddressTokensTableItem = ({ data, isLoading }: Props) => {
             jointSymbol
             fontWeight="700"
             width="auto"
-            noLink={ data.token.type === 'NATIVE' }
+            noLink={ data.token.type === tQuat('multiUi.native') }
           />
-          { data.token.type !== 'NATIVE' && (
+          { data.token.type !== tQuat('multiUi.native') && (
             <AddressEntity
               address={{ hash: data.token.address_hash }}
               isLoading={ isLoading }

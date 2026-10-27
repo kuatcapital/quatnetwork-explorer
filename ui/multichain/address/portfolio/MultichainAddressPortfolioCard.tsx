@@ -1,10 +1,13 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { HStack, VStack } from '@chakra-ui/react';
 import type BigNumber from 'bignumber.js';
 import { clamp } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ClusterChainConfig } from 'types/multichain';
 
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TruncatedText } from 'toolkit/components/truncation/TruncatedText';
 import ChainIcon from 'ui/shared/externalChains/ChainIcon';
@@ -25,6 +28,9 @@ interface Props {
 }
 
 const MultichainAddressPortfolioCard = ({ chain, value, share, isLoading, isSelected: isSelectedProp, noneIsSelected, totalNum, onClick }: Props) => {
+  const { locale } = useLocale();
+
+  const { t: tQuat } = useTranslation();
 
   const isSelected = isSelectedProp || totalNum === 1;
 
@@ -56,7 +62,7 @@ const MultichainAddressPortfolioCard = ({ chain, value, share, isLoading, isSele
       } : undefined }
       cursor={ onClick ? 'pointer' : 'default' }
       onClick={ handleClick }
-      aria-label={ `${ chain.name } portfolio selector` }
+      aria-label={ tQuat('multiUi.portfolio_selector', { token: chain.name }) }
     >
       <ChainIcon data={ chain } boxSize="30px" flexShrink={ 0 } isLoading={ isLoading } noTooltip/>
       <VStack alignItems="flex-start" gap={ 1 } overflow="hidden">
@@ -65,7 +71,7 @@ const MultichainAddressPortfolioCard = ({ chain, value, share, isLoading, isSele
           <SimpleValue value={ value } prefix="$" loading={ isLoading } noTooltip accuracy={ DEFAULT_ACCURACY_USD }/>
           { share !== undefined && share > 0 && (
             <Skeleton loading={ isLoading } color="text.secondary" flexShrink={ 0 }>
-              <span>{ formatPercentage(share) }</span>
+              <span>{ formatPercentage(share, locale) }</span>
             </Skeleton>
           ) }
         </HStack>

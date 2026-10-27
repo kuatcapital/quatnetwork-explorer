@@ -1,11 +1,14 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { type OutboundParams, type CrossChainTx, CctxStatus } from '@blockscout/zetachain-cctx-types';
 
 import config from 'configs/app';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntityZetaChain from 'ui/shared/entities/address/AddressEntityZetaChain';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
@@ -15,8 +18,6 @@ import IconSvg from 'ui/shared/IconSvg';
 import StatusTag from 'ui/shared/statusTag/StatusTag';
 import ZetaChainCCTXValue from 'ui/shared/zetaChain/ZetaChainCCTXValue';
 import useZetaChainConfig from 'ui/zetaChain/useZetaChainConfig';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   outboundParam: OutboundParams;
@@ -27,6 +28,8 @@ type Props = {
 };
 
 const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast, hasTxAfter }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const { data: chainsConfig } = useZetaChainConfig();
@@ -77,7 +80,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
       <>
         { transactionOrCCTX }
         <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
-        <StatusTag type="ok" text="Success"/>
+        <StatusTag type="ok" text={ tQuat('common.success') }/>
         <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.receiver') }</Text>
         <AddressEntityZetaChain
           address={{ hash: outboundParam.receiver }}
@@ -95,11 +98,11 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
         />
         <Text color="text.secondary" fontWeight="medium">{ tQuat('common.gas_used') }</Text>
         <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
-          { BigNumber(outboundParam.gas_used || 0).div(10 ** gasDecimals).toFormat() }
+          { formatBigNumber(BigNumber(outboundParam.gas_used || 0).div(10 ** gasDecimals), locale) }
         </Text>
       </>
     );
-    text = `Sent tx to ${ chainTo?.name || 'Unknown chain' }`;
+    text = tQuat('multiUi.sent_to_chain', { chain: chainTo?.name || tQuat('multiUi.unknown_chain') });
     color = 'text.success';
   } else if (tx.cctx_status?.status === CctxStatus.PENDING_REVERT) {
     if (!isLast) {
@@ -107,10 +110,10 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
         <>
           { transactionOrCCTX }
           <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
-          <StatusTag type="error" text="Failed"/>
+          <StatusTag type="error" text={ tQuat('common.failed') }/>
         </>
       );
-      text = `Destination tx failed`;
+      text = tQuat('multiUi.destination_failed');
       color = 'text.error';
     } else {
       content = (
@@ -124,7 +127,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
           />
         </>
       );
-      text = `Waiting for revert to ${ chainTo?.name || 'Unknown chain' }`;
+      text = tQuat('multiUi.waiting_revert', { chain: chainTo?.name || tQuat('multiUi.unknown_chain') });
       color = 'text.secondary';
     }
   } else if (tx.cctx_status?.status === CctxStatus.PENDING_OUTBOUND) {
@@ -137,11 +140,11 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
           isLoading={ isLoading }
           truncation="constant"
         />
-        <Text color="text.secondary" fontWeight="medium">Nonce</Text>
+        <Text color="text.secondary" fontWeight="medium">{ tQuat('transactions.nonce') }</Text>
         <Text>{ outboundParam.tss_nonce }</Text>
       </>
     );
-    text = `Waiting for outbound tx to ${ chainTo?.name || 'Unknown chain' }`;
+    text = tQuat('multiUi.waiting_outbound', { chain: chainTo?.name || tQuat('multiUi.unknown_chain') });
     color = 'text.secondary';
   } else if (tx.cctx_status?.status === CctxStatus.REVERTED) {
     if (!isLast) {
@@ -149,10 +152,10 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
         <>
           { transactionOrCCTX }
           <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
-          <StatusTag type="error" text="Failed"/>
+          <StatusTag type="error" text={ tQuat('common.failed') }/>
         </>
       );
-      text = `Destination tx failed`;
+      text = tQuat('multiUi.destination_failed');
       color = 'text.error';
     } else {
       content = (
@@ -166,7 +169,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
           />
           { transactionOrCCTX }
           <Text color="text.secondary" fontWeight="medium">{ tQuat('common.status') }</Text>
-          <StatusTag type="ok" text="Success"/>
+          <StatusTag type="ok" text={ tQuat('common.success') }/>
           <Text color="text.secondary" fontWeight="medium">{ tQuat('multiUi.transferred') }</Text>
           <ZetaChainCCTXValue
             coinType={ outboundParam.coin_type }
@@ -177,11 +180,11 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
           />
           <Text color="text.secondary" fontWeight="medium">{ tQuat('common.gas_used') }</Text>
           <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
-            { BigNumber(outboundParam.gas_used || 0).div(10 ** gasDecimals).toFormat() }&nbsp;
+            { formatBigNumber(BigNumber(outboundParam.gas_used || 0).div(10 ** gasDecimals), locale) }&nbsp;
           </Text>
         </>
       );
-      text = `Reverted to ${ chainTo?.name || 'Unknown chain' }`;
+      text = tQuat('multiUi.reverted_chain', { chain: chainTo?.name || tQuat('multiUi.unknown_chain') });
       color = 'text.success';
     }
   } else if (tx.cctx_status?.status === CctxStatus.ABORTED) {
@@ -197,7 +200,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
           />
         </>
       );
-      text = `Destination tx failed`;
+      text = tQuat('multiUi.destination_failed');
       color = 'text.error';
     } else {
       content = (
@@ -212,7 +215,7 @@ const ZetaChainCCTXDetailsLifecycleOut = ({ outboundParam, tx, isLoading, isLast
         </>
       );
       const isFailed = tx.cctx_status?.is_abort_refunded === false;
-      text = isFailed ? `Abort failed` : `Abort executed`;
+      text = isFailed ? tQuat('multiUi.abort_failed') : tQuat('multiUi.abort_executed');
       color = isFailed ? 'text.error' : 'text.success';
     }
   }

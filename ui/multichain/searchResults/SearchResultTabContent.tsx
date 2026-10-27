@@ -1,5 +1,6 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from 'toolkit/chakra/empty-state';
 import { ContentLoader } from 'toolkit/components/loaders/ContentLoader';
@@ -7,17 +8,10 @@ import { ContentLoader } from 'toolkit/components/loaders/ContentLoader';
 import SearchResultsList from './SearchResultsList';
 import SearchResultsTabAll from './SearchResultsTabAll';
 import type { QueryType, SearchQueries } from './utils';
-import { useTranslation } from 'react-i18next';
 
-
-const EMPTY_SEARCH_NAME_MAP: Record<QueryType, string> = {
-  addresses: 'addresses',
-  tokens: 'tokens',
-  blockNumbers: 'block numbers',
-  blocks: 'blocks',
-  transactions: 'transactions',
-  nfts: 'NFTs',
-  domains: 'names',
+const EMPTY_SEARCH_KEYS: Record<QueryType, string> = {
+  addresses: 'multiUi.empty_addresses', tokens: 'multiUi.empty_tokens', blockNumbers: 'multiUi.empty_block_numbers',
+  blocks: 'multiUi.empty_blocks', transactions: 'multiUi.empty_transactions', nfts: 'multiUi.empty_nfts', domains: 'multiUi.empty_names',
 };
 
 interface Props {
@@ -52,7 +46,7 @@ const SearchResultTabContent = ({ isLoading, searchTerm, queries, queryType, bef
     if (!hasResults) {
       return (
         <EmptyState
-          title={ queryType ? `No ${ EMPTY_SEARCH_NAME_MAP[queryType] } found` : tQuat('multiUi.no_results') }
+          title={ queryType ? tQuat(EMPTY_SEARCH_KEYS[queryType]) : tQuat('multiUi.no_results') }
           description={ tQuat('multiUi.no_results_hint') }
         />
       );

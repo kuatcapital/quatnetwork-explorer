@@ -1,12 +1,15 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, HStack, VStack } from '@chakra-ui/react';
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { ClusterChainConfig } from 'types/multichain';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import useAddChainClick from 'lib/web3/useAddChainClick';
 import useProvider from 'lib/web3/useProvider';
 import { WALLETS_INFO } from 'lib/web3/wallets';
@@ -27,6 +30,8 @@ interface Props {
 }
 
 const ChainWidget = ({ data, isLoading, metrics }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   const isMobile = useIsMobile();
@@ -48,7 +53,7 @@ const ChainWidget = ({ data, isLoading, metrics }: Props) => {
           <Skeleton loading={ isLoading } color="text.secondary">
             <span>{ tQuat('statsMetadata.metrics.activeAccounts.title') }</span>
           </Skeleton>
-          <Skeleton loading={ isLoading }>{ Number(metrics.active_accounts.current_full_week).toLocaleString() }</Skeleton>
+          <Skeleton loading={ isLoading }>{ formatBigNumber(BigNumber(metrics.active_accounts.current_full_week), locale) }</Skeleton>
         </HStack>
       ) }
       { metrics?.tps && (

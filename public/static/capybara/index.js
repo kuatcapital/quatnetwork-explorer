@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 // extract from chromium source code by @liuwayong
+// Modified by Quat Capital, 2026-10-27: runtime RU/KK game-over and high-score text; EN sprites retained. GPL-3.0.
 (function () {
   'use strict';
   /**
@@ -74,6 +75,19 @@
       }
   }
   window['Runner'] = Runner;
+
+  // Called after React updates runtime dictionary text. Do not restart the game.
+  Runner.updateLocale = function (outerContainerEl) {
+      var instance = Runner.instance_;
+      if (instance && instance.outerContainerEl === outerContainerEl && instance.crashed) {
+          if (instance.gameOverPanel) {
+              instance.gameOverPanel.draw();
+          }
+          if (instance.distanceMeter) {
+              instance.distanceMeter.drawHighScore();
+          }
+      }
+  };
 
 
   /**
@@ -1058,10 +1072,43 @@
           textSourceX += this.textImgPos.x;
           textSourceY += this.textImgPos.y;
 
-          // Game over text from sprite.
-          this.canvasCtx.drawImage(Runner.imageSprite,
-              textSourceX, textSourceY, textSourceWidth, textSourceHeight,
-              textTargetX, textTargetY, textTargetWidth, textTargetHeight);
+          // Remove the previous text before changing languages on a crashed game.
+          if (this.textBounds) {
+              this.canvasCtx.clearRect(this.textBounds.x, this.textBounds.y,
+                  this.textBounds.width, this.textBounds.height);
+          }
+          var outer = Runner.instance_ && Runner.instance_.outerContainerEl;
+          var locale = outer && outer.getAttribute('data-locale');
+          var text = outer && outer.getAttribute('data-game-over');
+          if ((locale === 'ru' || locale === 'kk') && text) {
+              this.canvasCtx.save();
+              var fontSize = 18;
+              var availableWidth = Math.max(1, this.canvasDimensions.WIDTH - 24);
+              var fontFamily = 'Arial, sans-serif';
+              this.canvasCtx.font = 'bold ' + fontSize + 'px ' + fontFamily;
+              while (this.canvasCtx.measureText(text).width > availableWidth && fontSize > 12) {
+                  fontSize--;
+                  this.canvasCtx.font = 'bold ' + fontSize + 'px ' + fontFamily;
+              }
+              this.canvasCtx.textAlign = 'center';
+              this.canvasCtx.textBaseline = 'middle';
+              this.canvasCtx.direction = 'ltr';
+              this.canvasCtx.fillStyle = '#535353';
+              var textY = textTargetY + textTargetHeight / 2;
+              this.canvasCtx.fillText(text, centerX, textY, availableWidth);
+              this.textBounds = {
+                  x: 0, y: textY - fontSize, width: this.canvasDimensions.WIDTH, height: fontSize * 2
+              };
+              this.canvasCtx.restore();
+          } else {
+              // Preserve the original English artwork and fallback.
+              this.canvasCtx.drawImage(Runner.imageSprite,
+                  textSourceX, textSourceY, textSourceWidth, textSourceHeight,
+                  textTargetX, textTargetY, textTargetWidth, textTargetHeight);
+              this.textBounds = {
+                  x: textTargetX, y: textTargetY, width: textTargetWidth, height: textTargetHeight
+              };
+          }
 
           // Restart button.
           this.canvasCtx.drawImage(Runner.imageSprite,
@@ -2014,7 +2061,48 @@
       drawHighScore: function () {
           this.canvasCtx.save();
           this.canvasCtx.globalAlpha = .8;
+          if (this.prefixBounds) {
+              this.canvasCtx.clearRect(this.prefixBounds.x, this.prefixBounds.y,
+                  this.prefixBounds.width, this.prefixBounds.height);
+          }
+          if (!this.highScore.length) {
+              this.prefixBounds = null;
+              this.canvasCtx.restore();
+              return;
+          }
+          var outer = Runner.instance_ && Runner.instance_.outerContainerEl;
+          var locale = outer && outer.getAttribute('data-locale');
+          var text = outer && outer.getAttribute('data-high-score');
+          var localized = (locale === 'ru' || locale === 'kk') && text && this.highScore.length;
+          var highScoreX = this.x - (this.maxScoreUnits * 2) * DistanceMeter.dimensions.WIDTH;
+          if (localized) {
+              // Keep the numeric slots and current score unchanged; fit the label to their left.
+              var labelRight = highScoreX + 3 * DistanceMeter.dimensions.DEST_WIDTH - 8;
+              var availableWidth = Math.max(1, labelRight - 2);
+              var fontSize = 12;
+              this.canvasCtx.font = 'bold ' + fontSize + 'px Arial, sans-serif';
+              while (this.canvasCtx.measureText(text).width > availableWidth && fontSize > 10) {
+                  fontSize--;
+                  this.canvasCtx.font = 'bold ' + fontSize + 'px Arial, sans-serif';
+              }
+              this.canvasCtx.textAlign = 'right';
+              this.canvasCtx.textBaseline = 'middle';
+              this.canvasCtx.direction = 'ltr';
+              this.canvasCtx.fillStyle = '#535353';
+              this.canvasCtx.fillText(text, labelRight, this.y * 2 + DistanceMeter.dimensions.HEIGHT / 2, availableWidth);
+              var labelWidth = Math.min(this.canvasCtx.measureText(text).width, availableWidth);
+              this.prefixBounds = {
+                  x: labelRight - labelWidth - 1, y: this.y * 2 - 2, width: labelWidth + 2, height: fontSize + 4
+              };
+          } else {
+              this.prefixBounds = {
+                  x: highScoreX, y: this.y * 2, width: 3 * DistanceMeter.dimensions.DEST_WIDTH, height: DistanceMeter.dimensions.HEIGHT
+              };
+          }
           for (var i = this.highScore.length - 1; i >= 0; i--) {
+              if (localized && i < 3) {
+                  continue;
+              }
               this.draw(i, parseInt(this.highScore[i], 10), true);
           }
           this.canvasCtx.restore();

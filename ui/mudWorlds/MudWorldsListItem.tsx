@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,8 +7,6 @@ import type { MudWorldItem } from 'types/api/mudWorlds';
 
 import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
-
 import { currencyUnits } from 'lib/units';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -36,7 +35,9 @@ const MudWorldsListItem = ({
         truncation="constant_long"
       />
       <HStack gap={ 3 } maxW="100%" alignItems="flex-start" textStyle="sm">
-        <Skeleton loading={ isLoading } fontWeight={ 500 } flexShrink={ 0 }><span>{ tQuat('suppUi.balance_currency', { currency: currencyUnits.ether }) }</span></Skeleton>
+        <Skeleton loading={ isLoading } fontWeight={ 500 } flexShrink={ 0 }>
+          <span>{ tQuat('suppUi.balance_currency', { currency: currencyUnits.ether }) }</span>
+        </Skeleton>
         <NativeCoinValue
           amount={ item.coin_balance }
           noSymbol

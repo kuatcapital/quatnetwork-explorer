@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Grid } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
@@ -57,9 +57,9 @@ const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
         fontWeight="600"
         width="auto"
         maxW="100%"
-        noLink={ data.token.type === 'NATIVE' }
+        noLink={ data.token.type === tQuat('multiUi.native') }
       />
-      { data.token.type !== 'NATIVE' && (
+      { data.token.type !== tQuat('multiUi.native') && (
         <AddressEntity
           address={{ hash: data.token.address_hash }}
           isLoading={ isLoading }
@@ -96,7 +96,7 @@ const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
         { data.token.exchange_rate && (
           <>
             <Skeleton loading={ isLoading } fontWeight="500">
-              <span>Value</span>
+              <span>{ tQuat('multiUi.value') }</span>
             </Skeleton>
             <SimpleValue
               value={ tokenValue }

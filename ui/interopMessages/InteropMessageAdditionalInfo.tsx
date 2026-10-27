@@ -2,14 +2,13 @@
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { chakra, Text, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { InteropMessage } from 'types/api/interop';
 
 import { PopoverBody, PopoverCloseTriggerWrapper, PopoverContent, PopoverRoot, PopoverTrigger } from 'toolkit/chakra/popover';
 import AdditionalInfoButton from 'ui/shared/AdditionalInfoButton';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   payload: InteropMessage['payload'];

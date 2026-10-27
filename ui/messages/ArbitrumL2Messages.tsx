@@ -1,16 +1,15 @@
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
-import { useTranslation } from 'react-i18next';
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { layerLabels } from 'lib/rollups/utils';
 import { ARBITRUM_MESSAGES_ITEM } from 'stubs/arbitrumL2';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
-
 import ArbitrumL2MessagesListItem from 'ui/messages/ArbitrumL2MessagesListItem';
 import ArbitrumL2MessagesTable from 'ui/messages/ArbitrumL2MessagesTable';
 import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
@@ -81,7 +80,9 @@ const ArbitrumL2Messages = ({ direction }: Props) => {
         loading={ countersQuery.isPlaceholderData }
         display="inline-block"
       >
-        { type === 'withdrawals' ? tQuat('l2Ui.withdrawals_found', { count: countersQuery.data ?? 0, value: formatNumber(countersQuery.data ?? 0, locale) }) : tQuat('l2Ui.deposits_found', { count: countersQuery.data ?? 0, value: formatNumber(countersQuery.data ?? 0, locale) }) }
+        { type === 'withdrawals' ?
+          tQuat('l2Ui.withdrawals_found', { count: countersQuery.data ?? 0, value: formatNumber(countersQuery.data ?? 0, locale) }) :
+          tQuat('l2Ui.deposits_found', { count: countersQuery.data ?? 0, value: formatNumber(countersQuery.data ?? 0, locale) }) }
       </Skeleton>
     );
   })();

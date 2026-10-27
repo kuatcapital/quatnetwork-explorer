@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -7,8 +8,6 @@ import type { HotContract } from 'types/api/contracts';
 
 import { formatBigNumber, NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
-
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import { Reputation } from 'ui/shared/entities/token/TokenEntity';

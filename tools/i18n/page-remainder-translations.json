@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-27",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "pageRemainderUi": {
+      "contract_verification": "New smart contract verification",
+      "computor_transactions": "Computor transactions"
+    },
+    "csvExportUi": {
+      "title": "Export data to CSV file",
+      "transactions_description": "Export transactions for address <entity/><filter/><chain/> to CSV file.",
+      "internal_transactions_description": "Export internal transactions for address <entity/><filter/><chain/> to CSV file.",
+      "token_transfers_description": "Export token transfers for address <entity/><filter/><chain/> to CSV file.",
+      "logs_description": "Export logs for address <entity/><filter/><chain/> to CSV file.",
+      "holders_address_description": "Export holders for address <entity/><filter/><chain/> to CSV file.",
+      "epoch_rewards_description": "Export epoch rewards for address <entity/><filter/><chain/> to CSV file.",
+      "holders_description": "Export holders for token <entity/><chain/> to CSV file.",
+      "records_limit": " Exports are limited to the last {{limit}} records.",
+      "holders_limit": " Exports are limited to the top {{limit}} holders by amount held.",
+      "on_chain": " on <icon/> {{chain}}",
+      "address_filter": " with applied filter by address ({{value}})",
+      "topic_filter": " with applied filter by topic ({{value}})",
+      "invalid_date": "Incorrect date",
+      "captcha_unconfigured": "CSV export is not available at the moment since reCaptcha is not configured for this application. Please contact the service maintainer to make necessary changes in the service configuration.",
+      "captcha_disabled": "ReCaptcha is disabled in private mode",
+      "captcha_execute": "Unable to execute ReCaptcha",
+      "captcha_unsolved": "ReCaptcha is not solved",
+      "invalid_request": "Unable to export CSV. Check the selected dates and filters.",
+      "access_denied": "You do not have permission to export this data.",
+      "not_found": "The requested data for CSV export was not found.",
+      "rate_limited": "Too many export requests. Please try again later.",
+      "request_error": "Something went wrong. Try again later."
+    }
+  },
+  "ru": {
+    "pageRemainderUi": {
+      "contract_verification": "Новая верификация смарт-контракта",
+      "computor_transactions": "Транзакции вычислителя"
+    },
+    "csvExportUi": {
+      "title": "Экспорт данных в CSV",
+      "transactions_description": "Экспорт транзакций адреса <entity/><filter/><chain/> в файл CSV.",
+      "internal_transactions_description": "Экспорт внутренних транзакций адреса <entity/><filter/><chain/> в файл CSV.",
+      "token_transfers_description": "Экспорт переводов токенов адреса <entity/><filter/><chain/> в файл CSV.",
+      "logs_description": "Экспорт журналов адреса <entity/><filter/><chain/> в файл CSV.",
+      "holders_address_description": "Экспорт держателей для адреса <entity/><filter/><chain/> в файл CSV.",
+      "epoch_rewards_description": "Экспорт наград за эпохи для адреса <entity/><filter/><chain/> в файл CSV.",
+      "holders_description": "Экспорт держателей токена <entity/><chain/> в файл CSV.",
+      "records_limit": " Лимит последних записей в выгрузке: {{limit}}.",
+      "holders_limit": " Лимит записей в выгрузке: {{limit}}. Сначала выгружаются держатели с наибольшими балансами.",
+      "on_chain": " в сети <icon/> {{chain}}",
+      "address_filter": " с фильтром по адресу ({{value}})",
+      "topic_filter": " с фильтром по теме ({{value}})",
+      "invalid_date": "Неверная дата",
+      "captcha_unconfigured": "Экспорт в CSV сейчас недоступен, поскольку для приложения не настроена reCaptcha. Обратитесь к администратору сервиса, чтобы он изменил настройки.",
+      "captcha_disabled": "reCaptcha отключена в приватном режиме",
+      "captcha_execute": "Не удалось запустить reCaptcha",
+      "captcha_unsolved": "Проверка reCaptcha не пройдена",
+      "invalid_request": "Не удалось экспортировать CSV. Проверьте выбранные даты и фильтры.",
+      "access_denied": "У вас нет разрешения на экспорт этих данных.",
+      "not_found": "Запрошенные данные для экспорта в CSV не найдены.",
+      "rate_limited": "Слишком много запросов на экспорт. Повторите попытку позже.",
+      "request_error": "Что-то пошло не так. Повторите попытку позже."
+    }
+  },
+  "kk": {
+    "pageRemainderUi": {
+      "contract_verification": "Смарт-келісімшартты жаңа тексеру",
+      "computor_transactions": "Есептеу түйінінің транзакциялары"
+    },
+    "csvExportUi": {
+      "title": "Деректерді CSV файлына экспорттау",
+      "transactions_description": "<entity/> мекенжайының транзакцияларын<filter/><chain/> CSV файлына экспорттау.",
+      "internal_transactions_description": "<entity/> мекенжайының ішкі транзакцияларын<filter/><chain/> CSV файлына экспорттау.",
+      "token_transfers_description": "<entity/> мекенжайының токен аударымдарын<filter/><chain/> CSV файлына экспорттау.",
+      "logs_description": "<entity/> мекенжайының журналдарын<filter/><chain/> CSV файлына экспорттау.",
+      "holders_address_description": "<entity/> мекенжайының иелерін<filter/><chain/> CSV файлына экспорттау.",
+      "epoch_rewards_description": "<entity/> мекенжайының дәуір сыйақыларын<filter/><chain/> CSV файлына экспорттау.",
+      "holders_description": "<entity/> токенінің иелерін<chain/> CSV файлына экспорттау.",
+      "records_limit": " Экспорттағы соңғы жазбалар шегі: {{limit}}.",
+      "holders_limit": " Экспорттағы жазбалар шегі: {{limit}}. Алдымен балансы ең көп иелер экспортталады.",
+      "on_chain": " <icon/> {{chain}} желісінде",
+      "address_filter": " мекенжай сүзгісімен ({{value}})",
+      "topic_filter": " тақырып сүзгісімен ({{value}})",
+      "invalid_date": "Күн қате",
+      "captcha_unconfigured": "Қолданбада reCaptcha бапталмағандықтан, CSV экспорты қазір қолжетімсіз. Баптауларды өзгерту үшін сервис әкімшісіне хабарласыңыз.",
+      "captcha_disabled": "Жеке режимде reCaptcha өшірілген",
+      "captcha_execute": "reCaptcha іске қосылмады",
+      "captcha_unsolved": "reCaptcha тексеруі аяқталмады",
+      "invalid_request": "CSV экспортталмады. Таңдалған күндер мен сүзгілерді тексеріңіз.",
+      "access_denied": "Бұл деректерді экспорттауға рұқсатыңыз жоқ.",
+      "not_found": "CSV экспорты үшін сұралған деректер табылмады.",
+      "rate_limited": "Экспорт сұраулары тым көп. Кейінірек қайталап көріңіз.",
+      "request_error": "Бірдеңе дұрыс болмады. Кейінірек қайталап көріңіз."
+    }
+  }
+}

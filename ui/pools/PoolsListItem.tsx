@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -5,8 +6,6 @@ import type { Pool } from 'types/api/pools';
 
 import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
-
 import getPoolLinks from 'lib/pools/getPoolLinks';
 import { Image } from 'toolkit/chakra/image';
 import { Link } from 'toolkit/chakra/link';

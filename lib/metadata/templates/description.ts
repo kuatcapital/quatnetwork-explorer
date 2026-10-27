@@ -1,6 +1,7 @@
 // Modified by Quat Capital, 2026-10-27: localized runtime description templates. GPL-3.0.
 /* eslint-disable max-len */
 import type { TFunction } from 'i18next';
+
 import type { Route } from 'nextjs-routes';
 
 import type { MetadataTemplateParams } from './localize';
@@ -105,6 +106,7 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/api/csrf': DEFAULT_TEMPLATE,
   '/api/healthz': DEFAULT_TEMPLATE,
   '/api/config': DEFAULT_TEMPLATE,
+  '/api/i18n/[locale]': DEFAULT_TEMPLATE,
 };
 
 const TEMPLATE_MAP_ENHANCED: Partial<Record<Route['pathname'], string>> = {

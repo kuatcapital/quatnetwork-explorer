@@ -1,9 +1,9 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
+import { useTranslation } from 'react-i18next';
+
 import type { ZetaChainCCTXFilterParams } from 'types/client/zetaChain';
 
 import ZetaChainAddressFilter from './ZetaChainAddressFilter';
-import { useTranslation } from 'react-i18next';
-
 
 const FILTER_PARAM_SENDER = 'sender_address';
 const FILTER_PARAM_SENDER_CHAIN = 'source_chain_id';

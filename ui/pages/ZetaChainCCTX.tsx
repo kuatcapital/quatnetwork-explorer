@@ -1,6 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
@@ -10,8 +11,6 @@ import TextAd from 'ui/shared/ad/TextAd';
 import TxEntityZetaChainCC from 'ui/shared/entities/tx/TxEntityZetaChainCC';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import ZetaChainCCTXDetails from 'ui/zetaChain/cctxDetails/ZetaChainCCTXDetails';
-import { useTranslation } from 'react-i18next';
-
 
 const ZetaChainCCTX = () => {
   const { t: tQuat } = useTranslation();

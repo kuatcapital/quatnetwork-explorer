@@ -1,6 +1,7 @@
 // Modified by Quat Capital, 2026-10-27: localized L2 and interop interface. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as tac from '@blockscout/tac-operation-lifecycle-types';
 
@@ -11,8 +12,6 @@ import AddressEntityTacTon from 'ui/shared/entities/address/AddressEntityTacTon'
 import TacOperationStatus from 'ui/shared/statusTag/TacOperationStatus';
 
 import TacOperationLifecycleAccordion from './TacOperationLifecycleAccordion';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   isLoading?: boolean;
@@ -21,7 +20,6 @@ interface Props {
 
 const TacOperationDetails = ({ isLoading, data }: Props) => {
   const { t: tQuat } = useTranslation();
-
 
   const statusHistory = data.status_history.filter((item) => item.is_exist).sort(sortStatusHistory);
 

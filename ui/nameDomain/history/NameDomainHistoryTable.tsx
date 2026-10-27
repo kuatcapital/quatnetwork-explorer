@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +36,7 @@ const NameDomainHistoryTable = ({ history, domain, isLoading, sort, onSortToggle
             onSortToggle={ onSortToggle }
             contentAfter={ <TimeFormatToggle/> }
           >{ tQuat('common.timestamp') }</TableColumnHeaderSortable>
-          <TableColumnHeader width="25%">From</TableColumnHeader>
+          <TableColumnHeader width="25%">{ tQuat('common.from') }</TableColumnHeader>
           <TableColumnHeader width="25%">{ tQuat('common.method') }</TableColumnHeader>
         </TableRow>
       </TableHeaderSticky>

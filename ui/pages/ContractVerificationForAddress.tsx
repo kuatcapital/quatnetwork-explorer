@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-27: localized contract verification page title. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { SmartContractVerificationMethodApi } from 'types/api/contract';
 import type { SmartContractVerificationMethod } from 'types/client/contract';
@@ -15,6 +17,7 @@ import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
 const ContractVerificationForAddress = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -68,7 +71,7 @@ const ContractVerificationForAddress = () => {
   return (
     <>
       <PageTitle
-        title="New smart contract verification"
+        title={ t('pageRemainderUi.contract_verification') }
       />
       <AddressEntity
         address={{ hash, is_contract: true }}

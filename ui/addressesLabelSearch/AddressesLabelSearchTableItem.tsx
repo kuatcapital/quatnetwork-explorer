@@ -1,7 +1,11 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
 
 import type { AddressesItem } from 'types/api/addresses';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -16,6 +20,7 @@ const AddressesLabelSearchTableItem = ({
   item,
   isLoading,
 }: Props) => {
+  const { locale } = useLocale();
 
   return (
     <TableRow>
@@ -37,7 +42,7 @@ const AddressesLabelSearchTableItem = ({
       </TableCell>
       <TableCell isNumeric>
         <Skeleton loading={ isLoading } display="inline-block" lineHeight="24px">
-          { Number(item.transactions_count).toLocaleString() }
+          { formatBigNumber(BigNumber(item.transactions_count), locale) }
         </Skeleton>
       </TableCell>
     </TableRow>

@@ -1,5 +1,6 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ClusterByNameResponse } from 'types/api/clusters';
 
@@ -11,8 +12,6 @@ import DetailedInfoTimestamp from 'ui/shared/DetailedInfo/DetailedInfoTimestamp'
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import ClustersEntity from 'ui/shared/entities/clusters/ClustersEntity';
 import NativeCoinValue from 'ui/shared/value/NativeCoinValue';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   clusterData?: ClusterByNameResponse['result']['data'];
@@ -24,7 +23,7 @@ const ClusterDetails = ({ clusterData, clusterName, isLoading }: Props) => {
   const { t: tQuat } = useTranslation();
 
   if (!clusterData && !isLoading) {
-    throw new Error('Cluster not found', { cause: { status: 404 } });
+    throw new Error(tQuat('multiUi.cluster_not_found'), { cause: { status: 404 } });
   }
 
   const ownerIsEvm = clusterData?.owner ? isEvmAddress(clusterData.owner) : false;
@@ -69,7 +68,7 @@ const ClusterDetails = ({ clusterData, clusterName, isLoading }: Props) => {
       </DetailedInfo.ItemValue>
 
       <DetailedInfo.ItemLabel
-        hint={ `The amount of ${ currencyUnits.ether } backing this cluster name` }
+        hint={ tQuat('multiUi.cluster_backing_hint', { currency: currencyUnits.ether }) }
         isLoading={ isLoading }
       >{ tQuat('multiUi.backing') }</DetailedInfo.ItemLabel>
       <DetailedInfo.ItemValue>
@@ -90,7 +89,7 @@ const ClusterDetails = ({ clusterData, clusterName, isLoading }: Props) => {
             isLoading={ isLoading }
           />
         ) : (
-          <Skeleton loading={ isLoading }>N/A</Skeleton>
+          <Skeleton loading={ isLoading }>{ tQuat('multiUi.not_available') }</Skeleton>
         ) }
       </DetailedInfo.ItemValue>
     </DetailedInfo.Container>

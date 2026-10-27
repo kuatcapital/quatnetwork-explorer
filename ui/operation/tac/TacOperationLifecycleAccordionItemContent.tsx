@@ -2,6 +2,7 @@
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as tac from '@blockscout/tac-operation-lifecycle-types';
 
@@ -10,8 +11,6 @@ import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityTon from 'ui/shared/entities/tx/TxEntityTon';
 import { ItemContent, ItemBody, ItemRow } from 'ui/shared/lifecycle/LifecycleAccordion';
 import StatusTag from 'ui/shared/statusTag/StatusTag';
-import { useTranslation } from 'react-i18next';
-
 
 interface Props {
   isLast: boolean;

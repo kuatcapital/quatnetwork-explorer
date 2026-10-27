@@ -1,13 +1,12 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { ZetaChainCCTXFilterParams, StatusReducedFilters } from 'types/client/zetaChain';
 
 import { Radio, RadioGroup } from 'toolkit/chakra/radio';
 import TableColumnFilter from 'ui/shared/filters/TableColumnFilter';
-import { useTranslation } from 'react-i18next';
-
 
 const FILTER_PARAM_STATUS = 'status_reduced';
 
@@ -29,6 +28,17 @@ type Props = {
 
 const ZetaChainStatusFilter = ({ value = [], handleFilterChange, onClose }: Props) => {
   const { t: tQuat } = useTranslation();
+
+  const statusOptions = STATUS_OPTIONS.map(option => ({
+    ...option,
+    label: (() => {
+      switch (option.value) {
+        case 'all': return tQuat('multiUi.all');
+        case 'Success': return tQuat('common.success');
+        case 'Failed': return tQuat('common.failed');
+      }
+    })(),
+  }));
 
   // Convert API values to internal format and determine initial state
   const getInitialValue = React.useCallback((): FilterValue => {
@@ -82,7 +92,7 @@ const ZetaChainStatusFilter = ({ value = [], handleFilterChange, onClose }: Prop
     >
       <Flex direction="column" gap={ 2 }>
         <RadioGroup value={ currentValue } onValueChange={ handleRadioChange }>
-          { STATUS_OPTIONS.map(option => (
+          { statusOptions.map(option => (
             <Radio key={ option.value } value={ option.value }>
               { option.label }
             </Radio>

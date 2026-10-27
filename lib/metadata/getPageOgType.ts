@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: include the generated runtime dictionary API route. GPL-3.0.
 import type { Route } from 'nextjs-routes';
 
 type OGPageType = 'Homepage' | 'Root page' | 'Regular page';
@@ -97,6 +98,7 @@ const OG_TYPE_DICT: Record<Route['pathname'], OGPageType> = {
   '/api/csrf': 'Regular page',
   '/api/healthz': 'Regular page',
   '/api/config': 'Regular page',
+  '/api/i18n/[locale]': 'Regular page',
 };
 
 export default function getPageOgType(pathname: Route['pathname']) {

@@ -1,10 +1,11 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type * as bens from '@blockscout/bens-types';
 
 import dayjs from 'lib/date/dayjs';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import NameDomainExpiryStatus from 'ui/nameDomain/NameDomainExpiryStatus';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -24,6 +25,8 @@ const NameDomainsListItem = ({
   expiry_date: expiryDate,
   protocol,
 }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   return (
@@ -48,7 +51,7 @@ const NameDomainsListItem = ({
           <ListItemMobileGrid.Value>
             <Skeleton loading={ isLoading }>
               <Time timestamp={ registrationDate }/>
-              <div> { dayjs(registrationDate).fromNow() }</div>
+              <div> { dayjs(registrationDate).locale(locale).fromNow() }</div>
             </Skeleton>
           </ListItemMobileGrid.Value>
         </>

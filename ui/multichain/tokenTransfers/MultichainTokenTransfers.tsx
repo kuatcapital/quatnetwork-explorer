@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -82,7 +82,7 @@ const MultichainTokenTransfers = () => {
         ),
       },
     ];
-  }, [ queryLocal.query, queryLocal.typeFilter, queryLocal.onTokenTypesChange, chainId , tQuat ]);
+  }, [ queryLocal.query, queryLocal.typeFilter, queryLocal.onTokenTypesChange, chainId, tQuat ]);
 
   const filter = isLocalTab && (
     <PopoverFilter contentProps={{ w: '200px' }} appliedFiltersNum={ queryLocal.typeFilter.length }>

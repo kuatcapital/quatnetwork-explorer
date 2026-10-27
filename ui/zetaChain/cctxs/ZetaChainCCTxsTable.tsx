@@ -1,6 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { CctxListItem } from '@blockscout/zetachain-cctx-types';
 import type { ZetaChainCCTXFilterParams } from 'types/client/zetaChain';
@@ -13,8 +14,6 @@ import TimeFormatToggle from 'ui/shared/time/TimeFormatToggle';
 
 import ZetaChainFilterByColumn from '../filters/ZetaChainFilterByColumn';
 import ZetaChainCCTxsTableItem from './ZetaChainCCTxsTableItem';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   txs: Array<CctxListItem>;
@@ -102,9 +101,7 @@ const ZetaChainCCTxsTable = ({
               />
             </TableColumnHeader>
             <TableColumnHeader width="100%" isNumeric>
-              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">
-                Value
-              </chakra.span>
+              <chakra.span mr={ 2 } lineHeight="24px" verticalAlign="middle">{ tQuat('multiUi.value') }</chakra.span>
               <ZetaChainFilterByColumn
                 column="asset"
                 columnName="Asset"

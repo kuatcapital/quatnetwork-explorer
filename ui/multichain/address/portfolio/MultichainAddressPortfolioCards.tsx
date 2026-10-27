@@ -1,8 +1,9 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { type LinkProps } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import { clamp } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { ClusterChainConfig } from 'types/multichain';
@@ -13,8 +14,6 @@ import { CollapsibleList } from 'toolkit/chakra/collapsible';
 import IconSvg from 'ui/shared/IconSvg';
 
 import MultichainAddressPortfolioCard from './MultichainAddressPortfolioCard';
-import { useTranslation } from 'react-i18next';
-
 
 const TRIGGER_PROPS: LinkProps = {
   variant: 'secondary',
@@ -32,7 +31,6 @@ interface Props {
 
 const MultichainAddressPortfolioCards = ({ isLoading, selectedChainId, onChange, chainValues, totalValue }: Props) => {
   const { t: tQuat } = useTranslation();
-
 
   const [ initialActiveIndex, setInitialActiveIndex ] = React.useState<number | undefined>(undefined);
 

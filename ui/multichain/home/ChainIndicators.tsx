@@ -1,12 +1,14 @@
-// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { HomeStats } from 'types/api/stats';
 import type { TChainIndicator } from 'ui/home/indicators/types';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { HOMEPAGE_STATS } from 'stubs/multichain';
 import ChainIndicatorsChart from 'ui/home/indicators/ChainIndicatorsChart';
 import ChainIndicatorsContainer from 'ui/home/indicators/ChainIndicatorsContainer';
@@ -19,6 +21,8 @@ import useChartDataQuery from './useChartDataQuery';
 import useFetchParentChainApi from './useFetchParentChainApi';
 
 const ChainIndicators = () => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
   const statsQuery = useApiQuery('multichainStats:pages_main', {
     queryOptions: {
@@ -38,10 +42,10 @@ const ChainIndicators = () => {
   const indicators: Array<TChainIndicator> = React.useMemo(() => ([
     statsQuery.data && {
       id: 'daily_txs' as const,
-      title: statsQuery.data.new_txns_multichain_window?.info?.title || 'Daily transactions',
+      title: tQuat('multiUi.daily_transactions'),
       value: (() => {
         if (statsQuery.data.yesterday_txns_multichain?.value) {
-          return Number(statsQuery.data.yesterday_txns_multichain.value).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' });
+          return formatNumber(Number(statsQuery.data.yesterday_txns_multichain.value), locale, { maximumFractionDigits: 2, notation: 'compact' });
         }
         return 'N/A';
       })(),
@@ -57,19 +61,14 @@ const ChainIndicators = () => {
       })(),
       // FIXME use non-navigation icon
       icon: <IconSvg name="navigation/transactions" boxSize={ 6 } bgColor="#56ACD1" borderRadius="base" color="white"/>,
-      hint: (() => {
-        if (statsQuery.data.new_txns_multichain_window?.info) {
-          return statsQuery.data.new_txns_multichain_window.info.description;
-        }
-        return `Number of transactions yesterday (0:00 - 23:59 UTC). The chart displays daily transactions for the past 30 days.`;
-      })(),
+      hint: tQuat('multiUi.daily_transactions_hint'),
     },
     parentChainStatsQuery.data && {
       id: 'coin_price' as const,
       title: tQuat('multiUi.eth_price'),
       value: (() => {
         if (parentChainStatsQuery.data.coin_price) {
-          return '$' + Number(parentChainStatsQuery.data.coin_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 });
+          return '$' + formatNumber(Number(parentChainStatsQuery.data.coin_price), locale, { minimumFractionDigits: 2, maximumFractionDigits: 6 });
         }
         return '$N/A';
       })(),
@@ -82,19 +81,19 @@ const ChainIndicators = () => {
       title: tQuat('common.market_cap'),
       value: (() => {
         if (parentChainStatsQuery.data.market_cap) {
-          return '$' + Number(parentChainStatsQuery.data.market_cap).toLocaleString(undefined, { maximumFractionDigits: 2, notation: 'compact' });
+          return '$' + formatNumber(Number(parentChainStatsQuery.data.market_cap), locale, { maximumFractionDigits: 2, notation: 'compact' });
         }
         return '$N/A';
       })(),
       icon: <IconSvg name="globe" boxSize={ 6 } bgColor="#6A5DCC" borderRadius="base" color="white"/>,
-      // eslint-disable-next-line max-len
+
       hint: tQuat('multiUi.market_hint'),
     },
   ]
     .filter(Boolean)
     .filter(isIndicatorEnabled)
     .sort(sortIndicators)
-  ), [ parentChainStatsQuery.data, statsQuery.data , tQuat ]);
+  ), [ parentChainStatsQuery.data, statsQuery.data, tQuat, locale ]);
 
   const [ selectedIndicatorId, selectIndicatorId ] = React.useState(indicators[0]?.id);
   const selectedIndicator = indicators.find(({ id }) => id === selectedIndicatorId);

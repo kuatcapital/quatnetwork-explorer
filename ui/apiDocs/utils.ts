@@ -1,4 +1,6 @@
 // Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { SwaggerRequest } from './types';
 
 import config from 'configs/app';
@@ -111,9 +113,6 @@ export const REST_API_SECTIONS = [
     },
   },
 ].filter(Boolean);
-// Modified by Quat Capital, 2026-10-27: translate section names without changing API wiring. GPL-3.0.
-import type { TFunction } from 'i18next';
-
 
 export function getRestApiSections(t: TFunction): typeof REST_API_SECTIONS {
   return REST_API_SECTIONS.map((section) => {

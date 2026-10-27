@@ -1,5 +1,6 @@
-// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import type { TFunction } from 'i18next';
+
 import type { ReturnType } from 'lib/api/useApiInfiniteQuery';
 
 export interface SearchQueries {

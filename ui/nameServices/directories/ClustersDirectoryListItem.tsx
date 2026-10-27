@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,6 +6,8 @@ import type { ClustersDirectoryObject } from 'types/api/clusters';
 
 import { isEvmAddress } from 'lib/address/isEvmAddress';
 import dayjs from 'lib/date/dayjs';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import ClustersEntity from 'ui/shared/entities/clusters/ClustersEntity';
@@ -19,6 +21,8 @@ interface Props {
 }
 
 const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }: Props) => {
+  const { locale } = useLocale();
+
   const { t: tQuat } = useTranslation();
 
   return (
@@ -45,14 +49,17 @@ const ClustersDirectoryListItem = ({ item, isLoading, isClusterDetailsLoading }:
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading }>
           <Time timestamp={ item.createdAt } display="block"/>
-          <div> { dayjs(item.createdAt).fromNow() }</div>
+          <div> { dayjs(item.createdAt).locale(locale).fromNow() }</div>
         </Skeleton>
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>{ tQuat('multiUi.active_chains') }</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton loading={ isLoading || isClusterDetailsLoading }>
-          { (item.chainIds?.length || 1) } { (item.chainIds?.length || 1) === 1 ? 'chain' : 'chains' }
+          { tQuat(
+            'multiUi.chains_count',
+            { count: item.chainIds?.length || 1, value: formatNumber(item.chainIds?.length || 1, locale) },
+          ) }
         </Skeleton>
       </ListItemMobileGrid.Value>
     </ListItemMobileGrid.Container>

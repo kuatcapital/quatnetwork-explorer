@@ -9,6 +9,8 @@ import type { ZkSyncBatchesItem } from 'types/api/zkSyncL2';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import BatchEntityL2 from 'ui/shared/entities/block/BatchEntityL2';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
@@ -21,6 +23,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ZkSyncBatchesItem; isLoading?: boolean };
 
 const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkSync') {
@@ -63,7 +66,7 @@ const ZkSyncTxnBatchesListItem = ({ item, isLoading }: Props) => {
           fontWeight={ 600 }
           minW="40px"
         >
-          { item.transactions_count }
+          { formatNumber(item.transactions_count, locale) }
         </Link>
       </ListItemMobileGrid.Value>
 

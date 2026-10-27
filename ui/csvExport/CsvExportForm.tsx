@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-27: localized CSV download controls and errors. GPL-3.0.
 import { chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { FormFields } from './types';
 import type { CsvExportParams } from 'types/client/address';
@@ -20,6 +22,7 @@ import ReCaptcha from 'ui/shared/reCaptcha/ReCaptcha';
 import useReCaptcha from 'ui/shared/reCaptcha/useReCaptcha';
 
 import CsvExportFormField from './CsvExportFormField';
+import { getCsvExportErrorText } from './localization';
 
 interface Props {
   hash: string;
@@ -31,6 +34,7 @@ interface Props {
 }
 
 const CsvExportForm = ({ hash, resource, filterType, filterValue, fileNameTemplate, exportType }: Props) => {
+  const { t } = useTranslation();
   const formApi = useForm<FormFields>({
     mode: 'onBlur',
     defaultValues: {
@@ -87,18 +91,17 @@ const CsvExportForm = ({ hash, resource, filterType, filterValue, fileNameTempla
 
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: (error as Error)?.message || 'Something went wrong. Try again later.',
+        title: t('common.error'),
+        description: getCsvExportErrorText(error, t),
       });
     }
 
-  }, [ recaptcha, apiFetchFactory, multichainContext?.chain, exportType, fileNameTemplate, hash, filterType, filterValue ]);
+  }, [ recaptcha, apiFetchFactory, multichainContext?.chain, exportType, fileNameTemplate, hash, filterType, filterValue, t ]);
 
   if (!chainConfig.services.reCaptchaV2.siteKey) {
     return (
       <Alert status="error">
-        CSV export is not available at the moment since reCaptcha is not configured for this application.
-        Please contact the service maintainer to make necessary changes in the service configuration.
+        { t('csvExportUi.captcha_unconfigured') }
       </Alert>
     );
   }
@@ -119,10 +122,10 @@ const CsvExportForm = ({ hash, resource, filterType, filterValue, fileNameTempla
           type="submit"
           mt={ 8 }
           loading={ formState.isSubmitting }
-          loadingText="Download"
+          loadingText={ t('common.download') }
           disabled={ Boolean(formState.errors.from || formState.errors.to || recaptcha.isInitError) }
         >
-          Download
+          { t('common.download') }
         </Button>
       </chakra.form>
     </FormProvider>

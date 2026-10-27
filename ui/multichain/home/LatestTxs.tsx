@@ -1,7 +1,7 @@
-// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { MultichainProvider } from 'lib/contexts/multichain';
 import useRoutedChainSelect from 'lib/multichain/useRoutedChainSelect';
@@ -23,7 +23,7 @@ const LatestTxs = () => {
   const tabs = [
     {
       id: 'cross_chain_txs',
-      title: 'Cross-chain txns',
+      title: tQuat('multiUi.cross_chain'),
       component: <EmptyState type="coming_soon" my={ 6 }/>,
     },
     {

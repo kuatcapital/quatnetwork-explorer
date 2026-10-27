@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
@@ -54,7 +54,7 @@ const NameDomainDetails = ({ query }: Props) => {
         { query.data?.expiry_date && (
           <>
             <DetailedInfo.ItemLabel
-            // eslint-disable-next-line max-len
+
               hint={ tQuat('multiUi.expiry_hint') }
               isLoading={ isLoading }
             >{ tQuat('multiUi.expiry_date') }</DetailedInfo.ItemLabel>

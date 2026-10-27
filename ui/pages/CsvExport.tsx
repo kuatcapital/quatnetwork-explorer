@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime CSV export descriptions and locale formatting. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { AddressFromToFilterValues } from 'types/api/address';
 import type { CsvExportParams } from 'types/client/address';
@@ -10,17 +12,18 @@ import useApiQuery from 'lib/api/useApiQuery';
 import { useMultichainContext } from 'lib/contexts/multichain';
 import throwOnAbsentParamError from 'lib/errors/throwOnAbsentParamError';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
+import { formatNumber } from 'lib/format/localeNumbers';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import { useLocale } from 'lib/i18n/provider';
 import { ContentLoader } from 'toolkit/components/loaders/ContentLoader';
-import { nbsp } from 'toolkit/utils/htmlEntities';
 import CsvExportForm from 'ui/csvExport/CsvExportForm';
+import { getCsvExportDescriptionKey } from 'ui/csvExport/localization';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 import ChainIcon from 'ui/shared/externalChains/ChainIcon';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
 interface ExportTypeEntity {
-  text: string;
   resource: ResourceName;
   fileNameTemplate: string;
   filterType?: CsvExportParams['filterType'];
@@ -29,39 +32,33 @@ interface ExportTypeEntity {
 
 const EXPORT_TYPES: Record<CsvExportParams['type'], ExportTypeEntity> = {
   transactions: {
-    text: 'transactions',
     resource: 'general:address_csv_export_txs',
     fileNameTemplate: 'transactions',
     filterType: 'address',
     filterValues: AddressFromToFilterValues,
   },
   'internal-transactions': {
-    text: 'internal transactions',
     resource: 'general:address_csv_export_internal_txs',
     fileNameTemplate: 'internal_transactions',
     filterType: 'address',
     filterValues: AddressFromToFilterValues,
   },
   'token-transfers': {
-    text: 'token transfers',
     resource: 'general:address_csv_export_token_transfers',
     fileNameTemplate: 'token_transfers',
     filterType: 'address',
     filterValues: AddressFromToFilterValues,
   },
   logs: {
-    text: 'logs',
     resource: 'general:address_csv_export_logs',
     fileNameTemplate: 'logs',
     filterType: 'topic',
   },
   holders: {
-    text: 'holders',
     resource: 'general:token_csv_export_holders',
     fileNameTemplate: 'holders',
   },
   'epoch-rewards': {
-    text: 'epoch rewards',
     resource: 'general:address_csv_export_celo_election_rewards',
     fileNameTemplate: 'epoch_rewards',
   },
@@ -70,6 +67,8 @@ const EXPORT_TYPES: Record<CsvExportParams['type'], ExportTypeEntity> = {
 const isCorrectExportType = (type: string): type is CsvExportParams['type'] => Object.keys(EXPORT_TYPES).includes(type);
 
 const CsvExport = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const router = useRouter();
   const isMobile = useIsMobile();
   const multichainContext = useMultichainContext();
@@ -105,7 +104,7 @@ const CsvExport = () => {
   throwOnAbsentParamError(addressHash);
   throwOnAbsentParamError(exportType);
 
-  if (!exportType) {
+  if (!exportType || !isCorrectExportType(exportTypeParam)) {
     return null;
   }
 
@@ -148,29 +147,36 @@ const CsvExport = () => {
 
     const chainInfo = multichainContext?.chain ? (
       <Flex display="inline-flex" alignItems="center" columnGap={ 2 }>
-        <span>on</span>
-        <ChainIcon data={ multichainContext.chain }/>
-        <span>{ multichainContext.chain.app_config.chain.name }</span>
+        <Trans
+          t={ t }
+          i18nKey="csvExportUi.on_chain"
+          values={{ chain: multichainContext.chain.app_config.chain.name }}
+          components={{ icon: <ChainIcon data={ multichainContext.chain }/> }}
+        />
       </Flex>
     ) : null;
 
-    const limit = (configQuery.data?.limit || 10_000).toLocaleString(undefined, { maximumFractionDigits: 3, notation: 'compact' });
+    const limit = formatNumber(configQuery.data?.limit || 10_000, locale, { maximumFractionDigits: 3, notation: 'compact' });
 
     if (exportTypeParam === 'holders' && tokenQuery.data) {
       return (
         <Flex mb={ 10 } whiteSpace="pre-wrap" flexWrap="wrap">
-          <span>Export { exportType.text } for token </span>
-          <TokenEntity
-            token={ tokenQuery.data }
-            truncation={ isMobile ? 'constant' : 'dynamic' }
-            w="fit-content"
-            maxW={{ base: '100%', lg: '400px' }}
-            noCopy
-            noSymbol
+          <Trans
+            t={ t }
+            i18nKey="csvExportUi.holders_description"
+            components={{
+              entity: <TokenEntity
+                token={ tokenQuery.data }
+                truncation={ isMobile ? 'constant' : 'dynamic' }
+                w="fit-content"
+                maxW={{ base: '100%', lg: '400px' }}
+                noCopy
+                noSymbol
+              />,
+              chain: <span>{ chainInfo }</span>,
+            }}
           />
-          { chainInfo }
-          <span> to CSV file. </span>
-          <span>Exports are limited to the top { limit } holders by amount held.</span>
+          <span>{ t('csvExportUi.holders_limit', { limit }) }</span>
         </Flex>
       );
     }
@@ -179,26 +185,40 @@ const CsvExport = () => {
       return null;
     }
 
+    const filterDisplayValue = (() => {
+      if (filterType !== 'address') return filterValue;
+      return filterValue === 'from' ? t('common.from') : t('common.to');
+    })();
+    const filterText = (() => {
+      if (!filterType || !filterValue) return '';
+      return filterType === 'address' ?
+        t('csvExportUi.address_filter', { value: filterDisplayValue }) :
+        t('csvExportUi.topic_filter', { value: filterDisplayValue });
+    })();
+
     return (
       <Flex mb={ 10 } whiteSpace="pre-wrap" flexWrap="wrap">
-        <span>Export { exportType.text } for address </span>
-        <AddressEntity
-          address={ addressQuery.data }
-          truncation={ isMobile ? 'constant' : 'dynamic' }
-          noCopy
+        <Trans
+          t={ t }
+          i18nKey={ getCsvExportDescriptionKey(exportTypeParam) }
+          components={{
+            entity: <AddressEntity
+              address={ addressQuery.data }
+              truncation={ isMobile ? 'constant' : 'dynamic' }
+              noCopy
+            />,
+            filter: <span>{ filterText }</span>,
+            chain: <span>{ chainInfo }</span>,
+          }}
         />
-        <span>{ nbsp }</span>
-        { filterType && filterValue && <span>with applied filter by { filterType } ({ filterValue })</span> }
-        { chainInfo }
-        <span> to CSV file. </span>
-        <span>Exports are limited to the last { limit } { exportType.text }.</span>
+        <span>{ t('csvExportUi.records_limit', { limit }) }</span>
       </Flex>
     );
   })();
 
   return (
     <>
-      <PageTitle title="Export data to CSV file"/>
+      <PageTitle title={ t('csvExportUi.title') }/>
       { description }
       { content }
     </>

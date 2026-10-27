@@ -1,14 +1,13 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { chakra, Flex, GridItem } from '@chakra-ui/react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 import type { InterchainTransfer } from '@blockscout/interchain-indexer-types';
 
 import { route } from 'nextjs-routes';
 
 import { Link } from 'toolkit/chakra/link';
-import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressFromToIcon from 'ui/shared/address/AddressFromToIcon';
 import * as DetailedInfo from 'ui/shared/DetailedInfo/DetailedInfo';
 import AddressEntityInterchain from 'ui/shared/entities/address/AddressEntityInterchain';
@@ -43,51 +42,48 @@ const TxCrossChainDetailsTransfers = ({ data, id, isLoading }: Props) => {
           { data.slice(0, MAX_NUM).map((item, index) => {
             return (
               <Flex key={ index } alignItems="center" columnGap={ 2 } rowGap={ 0 } flexWrap="wrap">
-                { item.sender ? (
-                  <AddressEntityInterchain
-                    address={ item.sender }
-                    isLoading={ isLoading }
-                    chain={ item.source_chain }
-                    noIcon
-                    truncation="constant"
-                  />
-                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
-                <AddressFromToIcon
-                  isLoading={ isLoading }
-                  type="unspecified"
+                <Trans
+                  t={ tQuat }
+                  i18nKey="multiUi.transfer_summary"
+                  components={{
+                    sender: item.sender ? (
+                      <AddressEntityInterchain
+                        address={ item.sender }
+                        isLoading={ isLoading }
+                        chain={ item.source_chain }
+                        noIcon
+                        truncation="constant"
+                      />
+                    ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span>,
+                    direction: <AddressFromToIcon isLoading={ isLoading } type="unspecified"/>,
+                    recipient: item.recipient ? (
+                      <AddressEntityInterchain
+                        address={ item.recipient }
+                        isLoading={ isLoading }
+                        chain={ item.destination_chain }
+                        noIcon
+                        truncation="constant"
+                      />
+                    ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span>,
+                    source: item.source_token ? (
+                      <TokenValueInterchain
+                        token={ item.source_token }
+                        amount={ item.source_amount }
+                        chain={ item.source_chain }
+                        loading={ isLoading }
+                      />
+                    ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span>,
+                    conversion: <AddressFromToIcon isLoading={ isLoading } type="unspecified"/>,
+                    target: item.destination_token ? (
+                      <TokenValueInterchain
+                        token={ item.destination_token }
+                        amount={ item.destination_amount }
+                        chain={ item.destination_chain }
+                        loading={ isLoading }
+                      />
+                    ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span>,
+                  }}
                 />
-                { item.recipient ? (
-                  <AddressEntityInterchain
-                    address={ item.recipient }
-                    isLoading={ isLoading }
-                    chain={ item.destination_chain }
-                    noIcon
-                    truncation="constant"
-                  />
-                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
-                <Skeleton loading={ isLoading } color="text.secondary">
-                  <span>for</span>
-                </Skeleton>
-                { item.source_token ? (
-                  <TokenValueInterchain
-                    token={ item.source_token }
-                    amount={ item.source_amount }
-                    chain={ item.source_chain }
-                    loading={ isLoading }
-                  />
-                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
-                <AddressFromToIcon
-                  isLoading={ isLoading }
-                  type="unspecified"
-                />
-                { item.destination_token ? (
-                  <TokenValueInterchain
-                    token={ item.destination_token }
-                    amount={ item.destination_amount }
-                    chain={ item.destination_chain }
-                    loading={ isLoading }
-                  />
-                ) : <chakra.span color="text.secondary">{ tQuat('multiUi.unknown') }</chakra.span> }
               </Flex>
             );
           }) }

@@ -1,16 +1,18 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressesItem } from 'types/api/addresses';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { currencyUnits } from 'lib/units';
 import { Skeleton } from 'toolkit/chakra/skeleton';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
 import NativeCoinValue from 'ui/shared/value/NativeCoinValue';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   item: AddressesItem;
@@ -21,8 +23,9 @@ const AddressesLabelSearchListItem = ({
   item,
   isLoading,
 }: Props) => {
-  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
 
+  const { t: tQuat } = useTranslation();
 
   return (
     <ListItemMobile rowGap={ 3 }>
@@ -33,7 +36,9 @@ const AddressesLabelSearchListItem = ({
         w="100%"
       />
       <HStack gap={ 3 } maxW="100%" alignItems="flex-start">
-        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 } flexShrink={ 0 }>{ `Balance ${ currencyUnits.ether }` }</Skeleton>
+        <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 } flexShrink={ 0 }>
+          { tQuat('multiUi.balance_currency', { currency: currencyUnits.ether }) }
+        </Skeleton>
         <NativeCoinValue
           amount={ item.coin_balance }
           noSymbol
@@ -45,7 +50,7 @@ const AddressesLabelSearchListItem = ({
       <HStack gap={ 3 }>
         <Skeleton loading={ isLoading } fontSize="sm" fontWeight={ 500 }>{ tQuat('addresses.transaction_count') }</Skeleton>
         <Skeleton loading={ isLoading } fontSize="sm" color="text.secondary">
-          <span>{ Number(item.transactions_count).toLocaleString() }</span>
+          <span>{ formatBigNumber(BigNumber(item.transactions_count), locale) }</span>
         </Skeleton>
       </HStack>
     </ListItemMobile>

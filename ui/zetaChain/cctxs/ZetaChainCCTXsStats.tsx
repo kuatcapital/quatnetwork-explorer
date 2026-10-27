@@ -1,9 +1,14 @@
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import type { BoxProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import getStatsLabelFromTitle from 'lib/stats/getStatsLabelFromTitle';
 import { TXS_STATS_MICROSERVICE } from 'stubs/tx';
 import StatsWidget from 'ui/shared/stats/StatsWidget';
@@ -11,6 +16,9 @@ import StatsWidget from 'ui/shared/stats/StatsWidget';
 interface Props extends BoxProps {}
 
 const ZetaChainCCTXsStats = (props: Props) => {
+  const { t: tQuat } = useTranslation();
+  const { locale } = useLocale();
+
   const isStatsFeatureEnabled = config.features.stats.isEnabled;
 
   const txsStatsQuery = useApiQuery('stats:pages_transactions', {
@@ -47,22 +55,22 @@ const ZetaChainCCTXsStats = (props: Props) => {
     >
       { cctxCountTotal && (
         <StatsWidget
-          label={ getStatsLabelFromTitle(cctxCountTotal.title) }
-          value={ Number(cctxCountTotal.value).toLocaleString() }
+          label={ locale === 'en' ? getStatsLabelFromTitle(cctxCountTotal.title) : tQuat('multiUi.total_cctx') }
+          value={ formatBigNumber(BigNumber(cctxCountTotal.value), locale) }
           isLoading={ isLoading }
         />
       ) }
       { cctxPendingCountTotal && (
         <StatsWidget
-          label={ getStatsLabelFromTitle(cctxPendingCountTotal.title) }
-          value={ Number(cctxPendingCountTotal.value).toLocaleString() }
+          label={ locale === 'en' ? getStatsLabelFromTitle(cctxPendingCountTotal.title) : tQuat('multiUi.pending_cctx') }
+          value={ formatBigNumber(BigNumber(cctxPendingCountTotal.value), locale) }
           isLoading={ isLoading }
         />
       ) }
       { cctxCount24h && (
         <StatsWidget
-          label={ getStatsLabelFromTitle(cctxCount24h.title) }
-          value={ Number(cctxCount24h.value).toLocaleString() }
+          label={ locale === 'en' ? getStatsLabelFromTitle(cctxCount24h.title) : tQuat('multiUi.new_cctx') }
+          value={ formatBigNumber(BigNumber(cctxCount24h.value), locale) }
           period="24h"
           isLoading={ isLoading }
         />

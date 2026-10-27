@@ -2,6 +2,7 @@
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
@@ -12,8 +13,6 @@ import TextAd from 'ui/shared/ad/TextAd';
 import OperationEntity from 'ui/shared/entities/operation/OperationEntity';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import TacOperationTag from 'ui/shared/TacOperationTag';
-import { useTranslation } from 'react-i18next';
-
 
 const TacOperation = () => {
   const { t: tQuat } = useTranslation();

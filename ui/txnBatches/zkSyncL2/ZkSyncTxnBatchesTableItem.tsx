@@ -9,6 +9,8 @@ import type { ZkSyncBatchesItem } from 'types/api/zkSyncL2';
 import { route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { Link } from 'toolkit/chakra/link';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
 import BatchEntityL2 from 'ui/shared/entities/block/BatchEntityL2';
@@ -21,6 +23,7 @@ const rollupFeature = config.features.rollup;
 type Props = { item: ZkSyncBatchesItem; isLoading?: boolean };
 
 const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
+  const { locale } = useLocale();
   const { t: tQuat } = useTranslation();
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkSync') {
@@ -56,7 +59,7 @@ const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
           minW="40px"
           my={ 1 }
         >
-          { item.transactions_count }
+          { formatNumber(item.transactions_count, locale) }
         </Link>
       </TableCell>
       <TableCell verticalAlign="middle">

@@ -103,7 +103,9 @@
       "amount": "Amount",
       "no_token_transfers": "There are no token transfers.",
       "token_transfer_term": "token transfer",
-      "mgas_second": "MGas/s"
+      "mgas_second": "MGas/s",
+      "game_over": "GAME OVER",
+      "high_score": "HI"
     }
   },
   "ru": {
@@ -204,7 +206,9 @@
       "amount": "Сумма",
       "no_token_transfers": "Переводов токенов нет.",
       "token_transfer_term": "перевод токена",
-      "mgas_second": "МГаз/с"
+      "mgas_second": "МГаз/с",
+      "game_over": "ИГРА ОКОНЧЕНА",
+      "high_score": "Рекорд"
     }
   },
   "kk": {
@@ -305,7 +309,9 @@
       "amount": "Сома",
       "no_token_transfers": "Токен аударымдары жоқ.",
       "token_transfer_term": "токен аударымы",
-      "mgas_second": "МГаз/с"
+      "mgas_second": "МГаз/с",
+      "game_over": "ОЙЫН АЯҚТАЛДЫ",
+      "high_score": "Рекорд"
     }
   }
 }

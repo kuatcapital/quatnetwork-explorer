@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,8 +7,6 @@ import type { UptimeRealTimeData } from 'types/api/megaEth';
 
 import { NUMBER_LOCALES } from 'lib/format/localeNumbers';
 import { useLocale } from 'lib/i18n/provider';
-// Modified by Quat Capital, 2026-10-27: T18 supplemental interface localization. GPL-3.0.
-
 import StatsWidget from 'ui/shared/stats/StatsWidget';
 
 interface Props {

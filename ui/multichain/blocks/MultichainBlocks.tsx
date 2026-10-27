@@ -1,4 +1,4 @@
-// Modified by Quat Capital, 2026-10-27: T18 reviewed literal localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -81,9 +81,21 @@ const MultichainBlocks = () => {
   });
 
   const tabs: Array<TabItemRegular> = [
-    { id: 'blocks', title: tQuat('multiUi.all'), component: <MultichainBlocksContent type="block" query={ blocksQuery } chainId={ blocksQuery.chainValue?.[0] }/> },
-    { id: 'reorgs', title: tQuat('multiUi.forked'), component: <MultichainBlocksContent type="reorg" query={ reorgsQuery } chainId={ reorgsQuery.chainValue?.[0] }/> },
-    { id: 'uncles', title: tQuat('multiUi.uncles'), component: <MultichainBlocksContent type="uncle" query={ unclesQuery } chainId={ unclesQuery.chainValue?.[0] }/> },
+    {
+      id: 'blocks',
+      title: tQuat('multiUi.all'),
+      component: <MultichainBlocksContent type="block" query={ blocksQuery } chainId={ blocksQuery.chainValue?.[0] }/>,
+    },
+    {
+      id: 'reorgs',
+      title: tQuat('multiUi.forked'),
+      component: <MultichainBlocksContent type="reorg" query={ reorgsQuery } chainId={ reorgsQuery.chainValue?.[0] }/>,
+    },
+    {
+      id: 'uncles',
+      title: tQuat('multiUi.uncles'),
+      component: <MultichainBlocksContent type="uncle" query={ unclesQuery } chainId={ unclesQuery.chainValue?.[0] }/>,
+    },
   ];
 
   const currentQuery = (() => {

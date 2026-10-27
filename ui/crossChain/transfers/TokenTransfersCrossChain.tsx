@@ -1,10 +1,11 @@
-// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
+import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { INTERCHAIN_STATS_COMMON, INTERCHAIN_TRANSFER } from 'stubs/interchainIndexer';
 import { generateListStub } from 'stubs/utils';
 import { Skeleton } from 'toolkit/chakra/skeleton';
@@ -28,9 +29,13 @@ const TokenTransfersCrossChain = () => {
     },
   });
 
+  const totalTransfers = statsQuery.data?.total_transfers;
   const actionBarText = (
     <Skeleton loading={ statsQuery.isPlaceholderData || isPlaceholderData }>
-      { tQuat('multiUi.cross_transfers_found', { count: Number(statsQuery.data?.total_transfers), value: formatNumber(Number(statsQuery.data?.total_transfers), locale) }) }
+      { totalTransfers !== undefined && tQuat(
+        'multiUi.cross_transfers_found',
+        { count: totalTransfers, value: formatBigNumber(BigNumber(totalTransfers), locale) },
+      ) }
     </Skeleton>
   );
 

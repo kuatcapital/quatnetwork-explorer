@@ -1,5 +1,6 @@
 // Modified by Quat Capital, 2026-10-27: optional localized TAC labels with stable protocol values. GPL-3.0.
 import type { TFunction } from 'i18next';
+
 import * as tac from '@blockscout/tac-operation-lifecycle-types';
 
 import { rightLineArrow } from 'toolkit/utils/htmlEntities';

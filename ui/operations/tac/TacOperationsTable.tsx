@@ -1,6 +1,7 @@
 // Modified by Quat Capital, 2026-10-27: continue runtime RU/KK/EN localization. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as tac from '@blockscout/tac-operation-lifecycle-types';
 
@@ -9,8 +10,6 @@ import { TableBody, TableColumnHeader, TableHeaderSticky, TableRoot, TableRow } 
 import TimeFormatToggle from 'ui/shared/time/TimeFormatToggle';
 
 import TacOperationsTableItem from './TacOperationsTableItem';
-import { useTranslation } from 'react-i18next';
-
 
 type Props = {
   items: Array<tac.OperationBriefDetails>;

@@ -2,6 +2,7 @@
 // Modified by Quat Capital, 2026-10-26: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { OptimisticL2OutputRootsItem } from 'types/api/optimisticL2';
 
@@ -14,8 +15,6 @@ import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
 import HashStringShorten from 'ui/shared/HashStringShorten';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
 import TimeWithTooltip from 'ui/shared/time/TimeWithTooltip';
-import { useTranslation } from 'react-i18next';
-
 
 const rollupFeature = config.features.rollup;
 

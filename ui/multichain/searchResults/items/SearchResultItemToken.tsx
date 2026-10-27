@@ -1,10 +1,9 @@
-// Modified by Quat Capital, 2026-10-27: runtime multichain localization. GPL-3.0.
-import { formatNumber } from 'lib/format/localeNumbers';
-import { useLocale } from 'lib/i18n/provider';
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, Flex, Text } from '@chakra-ui/react';
+import { BigNumber } from 'bignumber.js';
 import { mapValues } from 'es-toolkit';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type * as multichain from '@blockscout/multichain-aggregator-types';
 import type { TokenType } from 'types/api/token';
@@ -12,6 +11,8 @@ import type { ClusterChainConfig } from 'types/multichain';
 
 import { route } from 'nextjs/routes';
 
+import { formatBigNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import * as contract from 'lib/multichain/contract';
 import shortenString from 'lib/shortenString';
 import TokenEntity from 'ui/shared/entities/token/TokenEntity';
@@ -75,8 +76,10 @@ const SearchResultItemToken = ({ data, chain, isMobile }: Props) => {
           ml="auto"
           maxW={{ base: '60%', lg: 'unset' }}
         >
-          { (data.type as string) === 'ERC-20' && data.exchange_rate && `$${ formatNumber(Number(data.exchange_rate), locale) }` }
-          { (data.type as string) !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', { value: formatNumber(Number(data.total_supply), locale) }) }
+          { (data.type as string) === 'ERC-20' && data.exchange_rate && `$${ formatBigNumber(BigNumber(data.exchange_rate), locale) }` }
+          { (data.type as string) !== 'ERC-20' && data.total_supply && tQuat('multiUi.items', {
+            value: formatBigNumber(BigNumber(data.total_supply), locale),
+          }) }
         </Text>
       </Flex>
     </SearchResultListItem>

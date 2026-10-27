@@ -1,8 +1,8 @@
-// Modified by Quat Capital, 2026-10-27: reactive multichain labels. GPL-3.0.
-import { useTranslation } from 'react-i18next';
+// Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 
@@ -101,7 +101,7 @@ const MultichainAddress = () => {
         component: <MultichainAddressLogs addressData={ addressQuery.data } isLoading={ isLoading }/>,
       },
     ].filter(Boolean);
-  }, [ addressQuery.data, isLoading, isContractSomewhere, checkSummedHash , tQuat ]);
+  }, [ addressQuery.data, isLoading, isContractSomewhere, checkSummedHash, tQuat ]);
 
   const titleSecondRow = (
     <Flex alignItems="center" w="100%" columnGap={ 2 } rowGap={ 2 } flexWrap={{ base: 'wrap', lg: 'nowrap' }}>

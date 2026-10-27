@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-27: classify runtime dictionary API without translating analytics ids. GPL-3.0.
 import type { Route } from 'nextjs-routes';
 
 export const PAGE_TYPE_DICT: Record<Route['pathname'], string> = {
@@ -95,6 +96,7 @@ export const PAGE_TYPE_DICT: Record<Route['pathname'], string> = {
   '/api/csrf': 'Node API: CSRF token',
   '/api/healthz': 'Node API: Health check',
   '/api/config': 'Node API: App config',
+  '/api/i18n/[locale]': 'Node API: Interface translations',
 };
 
 export default function getPageType(pathname: Route['pathname']) {
