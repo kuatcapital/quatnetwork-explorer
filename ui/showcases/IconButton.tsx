@@ -1,4 +1,6 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Checkbox } from 'toolkit/chakra/checkbox';
 import { IconButton } from 'toolkit/chakra/icon-button';
@@ -8,10 +10,11 @@ import IconSvg from 'ui/shared/IconSvg';
 import { Section, Container, SectionHeader, SamplesStack, Sample } from './parts';
 
 const IconButtonShowcase = () => {
+  const { t } = useTranslation();
   return (
     <Container value="icon-button">
       <Section>
-        <SectionHeader>Variant</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.variant') }</SectionHeader>
         <SamplesStack>
           <Sample label="variant: icon_secondary">
             <IconButton size="md" variant="icon_secondary">
@@ -64,7 +67,7 @@ const IconButtonShowcase = () => {
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverBody>
-                  Popover content
+                  { t('showcaseDisplay.popover') }
                 </PopoverBody>
               </PopoverContent>
             </PopoverRoot>
@@ -76,7 +79,7 @@ const IconButtonShowcase = () => {
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverBody>
-                  Popover content
+                  { t('showcaseDisplay.popover') }
                 </PopoverBody>
               </PopoverContent>
             </PopoverRoot>
@@ -88,8 +91,8 @@ const IconButtonShowcase = () => {
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverBody display="flex" flexDirection="column" gap={ 2 }>
-                  <Checkbox defaultChecked>First option</Checkbox>
-                  <Checkbox>Second option</Checkbox>
+                  <Checkbox defaultChecked>{ t('showcaseDisplay.first_option') }</Checkbox>
+                  <Checkbox>{ t('showcaseDisplay.second_option') }</Checkbox>
                 </PopoverBody>
               </PopoverContent>
             </PopoverRoot>
@@ -107,7 +110,7 @@ const IconButtonShowcase = () => {
       </Section>
 
       <Section>
-        <SectionHeader>Size</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.size') }</SectionHeader>
         <SamplesStack>
           <Sample label="size: 2xs">
             <IconButton size="2xs" variant="icon_secondary" outline="1px dashed lightpink">

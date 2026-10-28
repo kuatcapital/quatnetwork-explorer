@@ -42,19 +42,19 @@
       "excludedDirectories": 92,
       "symbolicLinks": 0
     },
-    "candidateCount": 3605,
-    "candidateFiles": 744,
-    "uniqueCandidateTexts": 2165,
+    "candidateCount": 3079,
+    "candidateFiles": 743,
+    "uniqueCandidateTexts": 1983,
     "candidatesByKind": {
       "named-text-variable": 119,
-      "object-property": 679,
-      "text-candidate": 571,
+      "object-property": 663,
+      "text-candidate": 570,
       "template-expression": 55,
       "message-candidate": 7,
       "validation-message": 18,
-      "jsx-attribute": 807,
+      "jsx-attribute": 685,
       "jsx-expression": 929,
-      "jsx-text": 420
+      "jsx-text": 33
     },
     "candidatesByRoot": {
       "configs": 68,
@@ -62,7 +62,7 @@
       "nextjs": 6,
       "pages": 28,
       "toolkit": 232,
-      "ui": 2793
+      "ui": 2267
     },
     "parseErrors": 0
   },
@@ -18984,70 +18984,61 @@
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 8,
+      "line": 10,
       "column": 33,
-      "source": "First Item",
+      "source": "showcaseRemainder.first_item",
       "kind": "object-property",
       "context": "title",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 8,
-      "column": 53,
-      "source": "Some value 1...",
+      "line": 10,
+      "column": 71,
+      "source": "showcaseRemainder.value_1",
       "kind": "object-property",
       "context": "text",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 9,
+      "line": 11,
       "column": 34,
-      "source": "Second Item",
+      "source": "showcaseRemainder.second_item",
       "kind": "object-property",
       "context": "title",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 9,
-      "column": 55,
-      "source": "Some value 2...",
+      "line": 11,
+      "column": 73,
+      "source": "showcaseRemainder.value_2",
       "kind": "object-property",
       "context": "text",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 10,
+      "line": 12,
       "column": 33,
-      "source": "Third Item",
+      "source": "showcaseRemainder.third_item",
       "kind": "object-property",
       "context": "title",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 10,
-      "column": 53,
-      "source": "Some value 3...",
+      "line": 12,
+      "column": 71,
+      "source": "showcaseRemainder.value_3",
       "kind": "object-property",
       "context": "text",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 20,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Accordion.tsx",
-      "line": 22,
+      "line": 25,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -19056,7 +19047,7 @@
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 32,
+      "line": 35,
       "column": 25,
       "source": "variant: faq",
       "kind": "jsx-attribute",
@@ -19065,16 +19056,7 @@
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 44,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Accordion.tsx",
-      "line": 46,
+      "line": 49,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -19083,7 +19065,7 @@
     },
     {
       "file": "ui/showcases/Accordion.tsx",
-      "line": 56,
+      "line": 59,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -19092,16 +19074,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 16,
-      "column": 24,
-      "source": "Status",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 18,
+      "line": 21,
       "column": 25,
       "source": "status: info",
       "kind": "jsx-attribute",
@@ -19110,25 +19083,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 19,
-      "column": 40,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 19,
-      "column": 48,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 21,
+      "line": 24,
       "column": 25,
       "source": "status: warning",
       "kind": "jsx-attribute",
@@ -19137,25 +19092,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 22,
-      "column": 43,
-      "source": "Warning",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 22,
-      "column": 54,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 24,
+      "line": 27,
       "column": 25,
       "source": "status: success",
       "kind": "jsx-attribute",
@@ -19164,25 +19101,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 25,
-      "column": 43,
-      "source": "Success",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 25,
-      "column": 54,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 27,
+      "line": 30,
       "column": 25,
       "source": "status: error",
       "kind": "jsx-attribute",
@@ -19191,34 +19110,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 28,
-      "column": 41,
-      "source": "Error",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 28,
-      "column": 50,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 33,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 35,
+      "line": 38,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -19227,34 +19119,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 36,
-      "column": 40,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 36,
-      "column": 57,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 41,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 43,
+      "line": 46,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -19263,25 +19128,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 44,
-      "column": 40,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 44,
-      "column": 76,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 46,
+      "line": 49,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -19290,34 +19137,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 47,
-      "column": 40,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 47,
-      "column": 67,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 52,
-      "column": 24,
-      "source": "Closable",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 54,
+      "line": 57,
       "column": 25,
       "source": "closable",
       "kind": "jsx-attribute",
@@ -19326,34 +19146,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 55,
-      "column": 40,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 55,
-      "column": 66,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 60,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 62,
+      "line": 65,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -19362,70 +19155,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 63,
-      "column": 40,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 63,
-      "column": 56,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 68,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 69,
-      "column": 27,
-      "source": "As Link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 73,
-      "column": 42,
-      "source": "Info",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 73,
-      "column": 50,
-      "source": "Alert content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 77,
-      "column": 27,
-      "source": "Inside table (SocketNewItemsNotice)",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 79,
+      "line": 82,
       "column": 25,
       "source": "loading",
       "kind": "jsx-attribute",
@@ -19434,34 +19164,7 @@
     },
     {
       "file": "ui/showcases/Alert.tsx",
-      "line": 83,
-      "column": 48,
-      "source": "Block",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 84,
-      "column": 48,
-      "source": "Age",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 85,
-      "column": 48,
-      "source": "Gas used",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 97,
+      "line": 100,
       "column": 25,
       "source": "success",
       "kind": "jsx-attribute",
@@ -19469,107 +19172,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 101,
-      "column": 48,
-      "source": "Block",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 102,
-      "column": 48,
-      "source": "Age",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 103,
-      "column": 48,
-      "source": "Gas used",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 117,
-      "column": 27,
-      "source": "Multiple lines",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 119,
-      "column": 25,
-      "source": "multiple lines, with title, inline=false",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 120,
-      "column": 43,
-      "source": "Warning",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 122,
-      "column": 17,
-      "source": "Participated in our recent Blockscout activities? Check your eligibility and claim your NFT Scout badges. More exciting things are coming soon!",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 126,
-      "column": 25,
-      "source": "multiple lines, no title",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 129,
-      "column": 17,
-      "source": "Participated in our recent Blockscout activities? Check your eligibility and claim your NFT Scout badges. More exciting things are coming soon!",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Alert.tsx",
-      "line": 133,
-      "column": 25,
-      "source": "with spinner",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Badge.tsx",
-      "line": 14,
-      "column": 24,
-      "source": "Color palette",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 16,
+      "line": 19,
       "column": 25,
       "source": "colorPalette: gray",
       "kind": "jsx-attribute",
@@ -19578,16 +19182,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 17,
-      "column": 40,
-      "source": "Pending",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 19,
+      "line": 22,
       "column": 25,
       "source": "colorPalette: green",
       "kind": "jsx-attribute",
@@ -19596,16 +19191,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 20,
-      "column": 41,
-      "source": "Success",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 22,
+      "line": 25,
       "column": 25,
       "source": "colorPalette: red",
       "kind": "jsx-attribute",
@@ -19614,16 +19200,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 23,
-      "column": 39,
-      "source": "Failed",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 25,
+      "line": 28,
       "column": 25,
       "source": "colorPalette: purple",
       "kind": "jsx-attribute",
@@ -19632,16 +19209,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 26,
-      "column": 42,
-      "source": "Transaction",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 28,
+      "line": 31,
       "column": 25,
       "source": "colorPalette: orange",
       "kind": "jsx-attribute",
@@ -19650,16 +19218,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 29,
-      "column": 42,
-      "source": "Token transfer",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 31,
+      "line": 34,
       "column": 25,
       "source": "colorPalette: blue",
       "kind": "jsx-attribute",
@@ -19668,16 +19227,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 32,
-      "column": 40,
-      "source": "Contract call",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 34,
+      "line": 37,
       "column": 25,
       "source": "colorPalette: yellow",
       "kind": "jsx-attribute",
@@ -19686,16 +19236,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 35,
-      "column": 42,
-      "source": "Blob txn",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 37,
+      "line": 40,
       "column": 25,
       "source": "colorPalette: teal",
       "kind": "jsx-attribute",
@@ -19704,16 +19245,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 38,
-      "column": 40,
-      "source": "Multicall",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 40,
+      "line": 43,
       "column": 25,
       "source": "colorPalette: cyan",
       "kind": "jsx-attribute",
@@ -19722,16 +19254,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 41,
-      "column": 40,
-      "source": "Internal txn",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 43,
+      "line": 46,
       "column": 25,
       "source": "colorPalette: pink",
       "kind": "jsx-attribute",
@@ -19740,16 +19263,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 44,
-      "column": 40,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 46,
+      "line": 49,
       "column": 25,
       "source": "colorPalette: purple_alt",
       "kind": "jsx-attribute",
@@ -19758,16 +19272,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 47,
-      "column": 46,
-      "source": "read",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 49,
+      "line": 52,
       "column": 25,
       "source": "colorPalette: blue_alt",
       "kind": "jsx-attribute",
@@ -19776,16 +19281,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 50,
-      "column": 44,
-      "source": "write",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 52,
+      "line": 55,
       "column": 25,
       "source": "colorPalette: bright_gray",
       "kind": "jsx-attribute",
@@ -19794,16 +19290,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 53,
-      "column": 47,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 55,
+      "line": 58,
       "column": 25,
       "source": "colorPalette: bright_green",
       "kind": "jsx-attribute",
@@ -19812,16 +19299,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 56,
-      "column": 48,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 58,
+      "line": 61,
       "column": 25,
       "source": "colorPalette: bright_red",
       "kind": "jsx-attribute",
@@ -19830,16 +19308,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 59,
-      "column": 46,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 61,
+      "line": 64,
       "column": 25,
       "source": "colorPalette: bright_blue",
       "kind": "jsx-attribute",
@@ -19848,16 +19317,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 62,
-      "column": 47,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 64,
+      "line": 67,
       "column": 25,
       "source": "colorPalette: bright_yellow",
       "kind": "jsx-attribute",
@@ -19866,16 +19326,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 65,
-      "column": 49,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 67,
+      "line": 70,
       "column": 25,
       "source": "colorPalette: bright_teal",
       "kind": "jsx-attribute",
@@ -19884,16 +19335,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 68,
-      "column": 47,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 70,
+      "line": 73,
       "column": 25,
       "source": "colorPalette: bright_cyan",
       "kind": "jsx-attribute",
@@ -19902,16 +19344,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 71,
-      "column": 47,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 73,
+      "line": 76,
       "column": 25,
       "source": "colorPalette: bright_orange",
       "kind": "jsx-attribute",
@@ -19920,16 +19353,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 74,
-      "column": 49,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 76,
+      "line": 79,
       "column": 25,
       "source": "colorPalette: bright_purple",
       "kind": "jsx-attribute",
@@ -19938,16 +19362,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 77,
-      "column": 49,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 79,
+      "line": 82,
       "column": 25,
       "source": "colorPalette: bright_pink",
       "kind": "jsx-attribute",
@@ -19956,25 +19371,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 80,
-      "column": 47,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 85,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 87,
+      "line": 90,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -19983,25 +19380,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 88,
-      "column": 50,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 93,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 95,
+      "line": 98,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -20010,16 +19389,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 96,
-      "column": 30,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 98,
+      "line": 101,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -20028,16 +19398,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 99,
-      "column": 30,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 101,
+      "line": 104,
       "column": 25,
       "source": "size: lg",
       "kind": "jsx-attribute",
@@ -20046,25 +19407,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 102,
-      "column": 30,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 107,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 109,
+      "line": 112,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -20073,25 +19416,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 110,
-      "column": 37,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 115,
-      "column": 24,
-      "source": "Truncate",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 117,
+      "line": 120,
       "column": 25,
       "source": "truncated: true",
       "kind": "jsx-attribute",
@@ -20100,25 +19425,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 120,
-      "column": 17,
-      "source": "Very long content that should be truncated",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 127,
-      "column": 24,
-      "source": "Icon",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 129,
+      "line": 132,
       "column": 25,
       "source": "iconStart: status/success",
       "kind": "jsx-attribute",
@@ -20127,34 +19434,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 131,
-      "column": 15,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 137,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 138,
-      "column": 27,
-      "source": "Status tag (StatusTag)",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 140,
+      "line": 143,
       "column": 25,
       "source": "status: ok",
       "kind": "jsx-attribute",
@@ -20163,16 +19443,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 141,
-      "column": 39,
-      "source": "Text",
-      "kind": "jsx-attribute",
-      "context": "text",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 143,
+      "line": 146,
       "column": 25,
       "source": "status: error",
       "kind": "jsx-attribute",
@@ -20181,16 +19452,7 @@
     },
     {
       "file": "ui/showcases/Badge.tsx",
-      "line": 144,
-      "column": 42,
-      "source": "Text",
-      "kind": "jsx-attribute",
-      "context": "text",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 146,
+      "line": 149,
       "column": 25,
       "source": "status: pending",
       "kind": "jsx-attribute",
@@ -20198,26 +19460,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Badge.tsx",
-      "line": 147,
-      "column": 44,
-      "source": "Text",
-      "kind": "jsx-attribute",
-      "context": "text",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Button.tsx",
-      "line": 17,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 19,
+      "line": 22,
       "column": 25,
       "source": "size: 2xs",
       "kind": "jsx-attribute",
@@ -20226,16 +19470,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 20,
-      "column": 32,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 22,
+      "line": 25,
       "column": 25,
       "source": "size: xs",
       "kind": "jsx-attribute",
@@ -20244,16 +19479,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 23,
-      "column": 31,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 25,
+      "line": 28,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -20262,16 +19488,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 26,
-      "column": 31,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 28,
+      "line": 31,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -20280,25 +19497,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 29,
-      "column": 31,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 35,
-      "column": 24,
-      "source": "Variants",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 38,
+      "line": 41,
       "column": 25,
       "source": "variant: solid",
       "kind": "jsx-attribute",
@@ -20307,52 +19506,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 39,
-      "column": 37,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 40,
-      "column": 48,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 41,
-      "column": 46,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 42,
-      "column": 45,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 43,
-      "column": 53,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 46,
+      "line": 49,
       "column": 25,
       "source": "variant: solid_danger",
       "kind": "jsx-attribute",
@@ -20361,52 +19515,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 47,
-      "column": 44,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 48,
-      "column": 55,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 49,
-      "column": 53,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 50,
-      "column": 52,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 51,
-      "column": 60,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 54,
+      "line": 57,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -20415,52 +19524,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 55,
-      "column": 39,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 56,
-      "column": 50,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 57,
-      "column": 48,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 58,
-      "column": 47,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 59,
-      "column": 55,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 62,
+      "line": 65,
       "column": 25,
       "source": "variant: outline_danger",
       "kind": "jsx-attribute",
@@ -20469,52 +19533,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 63,
-      "column": 46,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 64,
-      "column": 57,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 65,
-      "column": 55,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 66,
-      "column": 54,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 67,
-      "column": 62,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 70,
+      "line": 73,
       "column": 25,
       "source": "variant: link",
       "kind": "jsx-attribute",
@@ -20523,43 +19542,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 71,
-      "column": 36,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 72,
-      "column": 47,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 73,
-      "column": 45,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 74,
-      "column": 52,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 77,
+      "line": 80,
       "column": 25,
       "source": "variant: dropdown",
       "kind": "jsx-attribute",
@@ -20568,142 +19551,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 80,
-      "column": 44,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 84,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 90,
-      "column": 55,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 94,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 100,
-      "column": 53,
-      "source": "Expended",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 104,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 110,
-      "column": 53,
-      "source": "Selected",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 114,
-      "column": 44,
-      "source": "First option",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 115,
-      "column": 29,
-      "source": "Second option",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 119,
-      "column": 49,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 120,
-      "column": 48,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 121,
-      "column": 56,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 124,
-      "column": 32,
-      "source": "Tooltip content",
-      "kind": "jsx-attribute",
-      "context": "content",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 129,
-      "column": 23,
-      "source": "With tooltip",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 136,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 142,
+      "line": 145,
       "column": 25,
       "source": "variant: header",
       "kind": "jsx-attribute",
@@ -20712,97 +19560,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 143,
-      "column": 38,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 144,
-      "column": 49,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 145,
-      "column": 58,
-      "source": "Loading",
-      "kind": "jsx-attribute",
-      "context": "loadingText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 145,
-      "column": 68,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 148,
-      "column": 51,
-      "source": "Selected",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 152,
-      "column": 19,
-      "source": "User profile menu content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 158,
-      "column": 60,
-      "source": "Selected & expended",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 162,
-      "column": 19,
-      "source": "User profile menu content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 168,
-      "column": 63,
-      "source": "Selected & highlighted",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 172,
-      "column": 19,
-      "source": "User profile menu content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 178,
+      "line": 181,
       "column": 25,
       "source": "variant: hero",
       "kind": "jsx-attribute",
@@ -20811,79 +19569,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 179,
-      "column": 36,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 180,
-      "column": 47,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 181,
-      "column": 56,
-      "source": "Loading",
-      "kind": "jsx-attribute",
-      "context": "loadingText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 181,
-      "column": 66,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 184,
-      "column": 49,
-      "source": "Selected",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 188,
-      "column": 19,
-      "source": "User profile menu content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 194,
-      "column": 58,
-      "source": "Selected & expended",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 198,
-      "column": 19,
-      "source": "User profile menu content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 204,
+      "line": 207,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -20892,43 +19578,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 205,
-      "column": 48,
-      "source": "Default: Now+1h",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 206,
-      "column": 59,
-      "source": "Hovered: Now+1h",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 207,
-      "column": 57,
-      "source": "Disabled: Now+1h",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 208,
-      "column": 64,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 211,
+      "line": 214,
       "column": 25,
       "source": "variant: plain",
       "kind": "jsx-attribute",
@@ -20937,52 +19587,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 212,
-      "column": 37,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 213,
-      "column": 48,
-      "source": "Hovered",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 214,
-      "column": 46,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 215,
-      "column": 53,
-      "source": "Loading Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 221,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 223,
+      "line": 226,
       "column": 25,
       "source": "loading: true, loadingText: 'Loading'",
       "kind": "jsx-attribute",
@@ -20991,79 +19596,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 224,
-      "column": 41,
-      "source": "Loading",
-      "kind": "jsx-attribute",
-      "context": "loadingText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 224,
-      "column": 51,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 225,
-      "column": 41,
-      "source": "Loading",
-      "kind": "jsx-attribute",
-      "context": "loadingText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 225,
-      "column": 61,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 226,
-      "column": 41,
-      "source": "Loading",
-      "kind": "jsx-attribute",
-      "context": "loadingText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 226,
-      "column": 61,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 227,
-      "column": 41,
-      "source": "Loading",
-      "kind": "jsx-attribute",
-      "context": "loadingText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 227,
-      "column": 62,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 229,
+      "line": 232,
       "column": 25,
       "source": "loading: true, loadingText: undefined",
       "kind": "jsx-attribute",
@@ -21072,16 +19605,7 @@
     },
     {
       "file": "ui/showcases/Button.tsx",
-      "line": 230,
-      "column": 29,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 232,
+      "line": 235,
       "column": 25,
       "source": "loadingSkeleton: true",
       "kind": "jsx-attribute",
@@ -21089,143 +19613,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Button.tsx",
-      "line": 233,
-      "column": 37,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 234,
-      "column": 55,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 235,
-      "column": 56,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 236,
-      "column": 54,
-      "source": "Content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 242,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 243,
-      "column": 27,
-      "source": "As Link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 247,
-      "column": 23,
-      "source": "I am link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 252,
-      "column": 27,
-      "source": "Button Group Radio",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 256,
-      "column": 40,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 257,
-      "column": 40,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 258,
-      "column": 40,
-      "source": "Option 3",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 261,
-      "column": 40,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 262,
-      "column": 40,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Button.tsx",
-      "line": 263,
-      "column": 40,
-      "source": "Option 3",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Checkbox.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -21234,34 +19623,7 @@
     },
     {
       "file": "ui/showcases/Checkbox.tsx",
-      "line": 15,
-      "column": 23,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 16,
-      "column": 31,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 22,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 24,
+      "line": 27,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -21270,34 +19632,7 @@
     },
     {
       "file": "ui/showcases/Checkbox.tsx",
-      "line": 25,
-      "column": 33,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 26,
-      "column": 33,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 32,
-      "column": 24,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 34,
+      "line": 37,
       "column": 25,
       "source": "disabled: true",
       "kind": "jsx-attribute",
@@ -21306,34 +19641,7 @@
     },
     {
       "file": "ui/showcases/Checkbox.tsx",
-      "line": 35,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 36,
-      "column": 40,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 42,
-      "column": 24,
-      "source": "Read-only",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 44,
+      "line": 47,
       "column": 25,
       "source": "readOnly: true",
       "kind": "jsx-attribute",
@@ -21342,34 +19650,7 @@
     },
     {
       "file": "ui/showcases/Checkbox.tsx",
-      "line": 45,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 46,
-      "column": 40,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 52,
-      "column": 24,
-      "source": "Orientation",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 54,
+      "line": 57,
       "column": 25,
       "source": "orientation: vertical",
       "kind": "jsx-attribute",
@@ -21378,25 +19659,7 @@
     },
     {
       "file": "ui/showcases/Checkbox.tsx",
-      "line": 56,
-      "column": 35,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 57,
-      "column": 35,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 60,
+      "line": 63,
       "column": 25,
       "source": "orientation: horizontal",
       "kind": "jsx-attribute",
@@ -21404,35 +19667,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 62,
-      "column": 35,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Checkbox.tsx",
-      "line": 63,
-      "column": 35,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Type",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Clipboard.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "type: text",
       "kind": "jsx-attribute",
@@ -21441,7 +19677,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 15,
+      "line": 18,
       "column": 35,
       "source": "Hello, world!",
       "kind": "jsx-attribute",
@@ -21450,7 +19686,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 17,
+      "line": 20,
       "column": 25,
       "source": "type: link",
       "kind": "jsx-attribute",
@@ -21459,7 +19695,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 18,
+      "line": 21,
       "column": 35,
       "source": "Hello, world!",
       "kind": "jsx-attribute",
@@ -21468,7 +19704,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 20,
+      "line": 23,
       "column": 25,
       "source": "type: share",
       "kind": "jsx-attribute",
@@ -21477,7 +19713,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 21,
+      "line": 24,
       "column": 35,
       "source": "Hello, world!",
       "kind": "jsx-attribute",
@@ -21486,16 +19722,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 27,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Clipboard.tsx",
-      "line": 29,
+      "line": 32,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -21504,7 +19731,7 @@
     },
     {
       "file": "ui/showcases/Clipboard.tsx",
-      "line": 30,
+      "line": 33,
       "column": 35,
       "source": "Hello, world!",
       "kind": "jsx-attribute",
@@ -21513,16 +19740,7 @@
     },
     {
       "file": "ui/showcases/CloseButton.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variants",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/CloseButton.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "variant: default",
       "kind": "jsx-attribute",
@@ -21531,16 +19749,7 @@
     },
     {
       "file": "ui/showcases/CloseButton.tsx",
-      "line": 23,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/CloseButton.tsx",
-      "line": 25,
+      "line": 28,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -21549,16 +19758,7 @@
     },
     {
       "file": "ui/showcases/Collapsible.tsx",
-      "line": 14,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Collapsible.tsx",
-      "line": 16,
+      "line": 19,
       "column": 25,
       "source": "variant: default",
       "kind": "jsx-attribute",
@@ -21567,16 +19767,7 @@
     },
     {
       "file": "ui/showcases/Collapsible.tsx",
-      "line": 25,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Collapsible.tsx",
-      "line": 27,
+      "line": 30,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -21584,53 +19775,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Collapsible.tsx",
-      "line": 36,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Collapsible.tsx",
-      "line": 38,
-      "column": 27,
-      "source": "Cut link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Collapsible.tsx",
-      "line": 40,
-      "column": 25,
-      "source": "Show details",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Collapsible.tsx",
-      "line": 45,
-      "column": 25,
-      "source": "Expand all list",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/ContentLoader.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variants",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/ContentLoader.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "default",
       "kind": "jsx-attribute",
@@ -21639,16 +19785,7 @@
     },
     {
       "file": "ui/showcases/Dialog.tsx",
-      "line": 15,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 17,
+      "line": 20,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -21657,43 +19794,7 @@
     },
     {
       "file": "ui/showcases/Dialog.tsx",
-      "line": 21,
-      "column": 19,
-      "source": "Open Dialog",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 26,
-      "column": 32,
-      "source": "Dialog Title",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 32,
-      "column": 27,
-      "source": "Save",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 34,
-      "column": 44,
-      "source": "I'll do it later",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 41,
+      "line": 44,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -21702,43 +19803,7 @@
     },
     {
       "file": "ui/showcases/Dialog.tsx",
-      "line": 45,
-      "column": 19,
-      "source": "Open Dialog",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 50,
-      "column": 32,
-      "source": "Dialog Title",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 57,
-      "column": 47,
-      "source": "Cancel",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 59,
-      "column": 27,
-      "source": "Save",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 65,
+      "line": 68,
       "column": 25,
       "source": "size: full",
       "kind": "jsx-attribute",
@@ -21746,53 +19811,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 69,
-      "column": 19,
-      "source": "Open Dialog",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 74,
-      "column": 32,
-      "source": "Dialog Title",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 81,
-      "column": 47,
-      "source": "Cancel",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Dialog.tsx",
-      "line": 83,
-      "column": 27,
-      "source": "Save",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/EmptyState.tsx",
-      "line": 11,
-      "column": 24,
-      "source": "Type",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/EmptyState.tsx",
-      "line": 13,
+      "line": 16,
       "column": 25,
       "source": "type: query",
       "kind": "jsx-attribute",
@@ -21801,7 +19821,7 @@
     },
     {
       "file": "ui/showcases/EmptyState.tsx",
-      "line": 16,
+      "line": 19,
       "column": 25,
       "source": "type: stats",
       "kind": "jsx-attribute",
@@ -21810,7 +19830,7 @@
     },
     {
       "file": "ui/showcases/EmptyState.tsx",
-      "line": 19,
+      "line": 22,
       "column": 25,
       "source": "type: coming_soon",
       "kind": "jsx-attribute",
@@ -21819,25 +19839,7 @@
     },
     {
       "file": "ui/showcases/Field.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 13,
-      "column": 27,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 15,
+      "line": 18,
       "column": 16,
       "source": "sm",
       "kind": "jsx-expression",
@@ -21846,7 +19848,7 @@
     },
     {
       "file": "ui/showcases/Field.tsx",
-      "line": 15,
+      "line": 18,
       "column": 22,
       "source": "md",
       "kind": "jsx-expression",
@@ -21855,7 +19857,7 @@
     },
     {
       "file": "ui/showcases/Field.tsx",
-      "line": 15,
+      "line": 18,
       "column": 28,
       "source": "lg",
       "kind": "jsx-expression",
@@ -21864,7 +19866,7 @@
     },
     {
       "file": "ui/showcases/Field.tsx",
-      "line": 16,
+      "line": 19,
       "column": 29,
       "source": "size: {{expression0}}",
       "kind": "template-expression",
@@ -21877,61 +19879,7 @@
     },
     {
       "file": "ui/showcases/Field.tsx",
-      "line": 17,
-      "column": 28,
-      "source": "Email",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 17,
-      "column": 70,
-      "source": "Helper text",
-      "kind": "jsx-attribute",
-      "context": "helperText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 20,
-      "column": 28,
-      "source": "Email (disabled)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 23,
-      "column": 28,
-      "source": "Email (readOnly)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 26,
-      "column": 28,
-      "source": "Email (invalid)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 26,
-      "column": 79,
-      "source": "Something went wrong",
-      "kind": "jsx-attribute",
-      "context": "errorText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 32,
+      "line": 35,
       "column": 25,
       "source": "size: xl",
       "kind": "jsx-attribute",
@@ -21939,206 +19887,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Field.tsx",
-      "line": 33,
-      "column": 26,
-      "source": "Email",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 33,
-      "column": 73,
-      "source": "Helper text",
-      "kind": "jsx-attribute",
-      "context": "helperText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 36,
-      "column": 26,
-      "source": "Email (disabled)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 39,
-      "column": 26,
-      "source": "Email (readOnly)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 42,
-      "column": 26,
-      "source": "Email (invalid)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 42,
-      "column": 82,
-      "source": "Something went wrong",
-      "kind": "jsx-attribute",
-      "context": "errorText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 48,
-      "column": 27,
-      "source": "On custom background",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 50,
-      "column": 25,
-      "source": "no floating label",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 51,
-      "column": 26,
-      "source": "Email",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 51,
-      "column": 54,
-      "source": "Helper text",
-      "kind": "jsx-attribute",
-      "context": "helperText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 54,
-      "column": 26,
-      "source": "Email (disabled)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 57,
-      "column": 26,
-      "source": "Email (readOnly)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 60,
-      "column": 26,
-      "source": "Email (invalid)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 60,
-      "column": 63,
-      "source": "Something went wrong",
-      "kind": "jsx-attribute",
-      "context": "errorText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 64,
-      "column": 25,
-      "source": "floating label",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 65,
-      "column": 26,
-      "source": "Email",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 65,
-      "column": 73,
-      "source": "Helper text",
-      "kind": "jsx-attribute",
-      "context": "helperText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 68,
-      "column": 26,
-      "source": "Email (disabled)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 71,
-      "column": 26,
-      "source": "Email (readOnly)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 74,
-      "column": 26,
-      "source": "Email (invalid)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Field.tsx",
-      "line": 74,
-      "column": 82,
-      "source": "Something went wrong",
-      "kind": "jsx-attribute",
-      "context": "errorText",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/IconButton.tsx",
-      "line": 14,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/IconButton.tsx",
-      "line": 16,
+      "line": 19,
       "column": 25,
       "source": "variant: icon_secondary",
       "kind": "jsx-attribute",
@@ -22147,7 +19897,7 @@
     },
     {
       "file": "ui/showcases/IconButton.tsx",
-      "line": 37,
+      "line": 40,
       "column": 25,
       "source": "variant: icon_background",
       "kind": "jsx-attribute",
@@ -22156,7 +19906,7 @@
     },
     {
       "file": "ui/showcases/IconButton.tsx",
-      "line": 58,
+      "line": 61,
       "column": 25,
       "source": "variant: dropdown",
       "kind": "jsx-attribute",
@@ -22165,52 +19915,7 @@
     },
     {
       "file": "ui/showcases/IconButton.tsx",
-      "line": 67,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/IconButton.tsx",
-      "line": 79,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/IconButton.tsx",
-      "line": 91,
-      "column": 44,
-      "source": "First option",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/IconButton.tsx",
-      "line": 92,
-      "column": 29,
-      "source": "Second option",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/IconButton.tsx",
-      "line": 110,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/IconButton.tsx",
-      "line": 112,
+      "line": 115,
       "column": 25,
       "source": "size: 2xs",
       "kind": "jsx-attribute",
@@ -22219,7 +19924,7 @@
     },
     {
       "file": "ui/showcases/IconButton.tsx",
-      "line": 117,
+      "line": 120,
       "column": 25,
       "source": "size: 2xs_alt",
       "kind": "jsx-attribute",
@@ -22228,7 +19933,7 @@
     },
     {
       "file": "ui/showcases/IconButton.tsx",
-      "line": 122,
+      "line": 125,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -22237,16 +19942,7 @@
     },
     {
       "file": "ui/showcases/Input.tsx",
-      "line": 15,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 17,
+      "line": 20,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -22255,16 +19951,7 @@
     },
     {
       "file": "ui/showcases/Input.tsx",
-      "line": 18,
-      "column": 44,
-      "source": "Name",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 20,
+      "line": 23,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -22273,16 +19960,7 @@
     },
     {
       "file": "ui/showcases/Input.tsx",
-      "line": 21,
-      "column": 44,
-      "source": "Name",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 23,
+      "line": 26,
       "column": 25,
       "source": "size: lg",
       "kind": "jsx-attribute",
@@ -22291,25 +19969,7 @@
     },
     {
       "file": "ui/showcases/Input.tsx",
-      "line": 24,
-      "column": 44,
-      "source": "Name",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 30,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 32,
+      "line": 35,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -22317,152 +19977,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Input.tsx",
-      "line": 33,
-      "column": 44,
-      "source": "Name",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 34,
-      "column": 44,
-      "source": "Name (disabled)",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 35,
-      "column": 44,
-      "source": "Name (readOnly)",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 36,
-      "column": 44,
-      "source": "Name (invalid)",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 37,
-      "column": 44,
-      "source": "Name (invalid)",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 43,
-      "column": 24,
-      "source": "Input group",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 45,
-      "column": 25,
-      "source": "with end element",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 46,
-      "column": 26,
-      "source": "Referral code",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 52,
-      "column": 25,
-      "source": "with start element",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 54,
-      "column": 34,
-      "source": "Type in something",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 61,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 62,
-      "column": 27,
-      "source": "Filter input",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 65,
-      "column": 38,
-      "source": "Search by method name",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Input.tsx",
-      "line": 66,
-      "column": 38,
-      "source": "Search by method name",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Link.tsx",
-      "line": 44,
-      "column": 22,
-      "source": "variants",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 45,
-      "column": 24,
-      "source": "Variants",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 47,
+      "line": 50,
       "column": 25,
       "source": "variant: primary",
       "kind": "jsx-attribute",
@@ -22471,25 +19987,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 48,
-      "column": 52,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 49,
-      "column": 57,
-      "source": "Hover",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 51,
+      "line": 54,
       "column": 25,
       "source": "variant: secondary",
       "kind": "jsx-attribute",
@@ -22498,25 +19996,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 52,
-      "column": 48,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 53,
-      "column": 59,
-      "source": "Hover",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 55,
+      "line": 58,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -22525,25 +20005,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 56,
-      "column": 45,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 57,
-      "column": 56,
-      "source": "Hover",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 59,
+      "line": 62,
       "column": 25,
       "source": "variant: navigation",
       "kind": "jsx-attribute",
@@ -22552,43 +20014,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 60,
-      "column": 77,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 61,
-      "column": 88,
-      "source": "Hover",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 62,
-      "column": 91,
-      "source": "Selected",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 63,
-      "column": 89,
-      "source": "Active",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 65,
+      "line": 68,
       "column": 25,
       "source": "variant: underlaid",
       "kind": "jsx-attribute",
@@ -22597,25 +20023,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 66,
-      "column": 57,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 67,
-      "column": 68,
-      "source": "Hover",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 69,
+      "line": 72,
       "column": 25,
       "source": "variant: menu",
       "kind": "jsx-attribute",
@@ -22624,43 +20032,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 70,
-      "column": 43,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 71,
-      "column": 54,
-      "source": "Hover",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 76,
-      "column": 22,
-      "source": "loading",
-      "kind": "jsx-attribute",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 77,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 79,
+      "line": 82,
       "column": 25,
       "source": "loading: true, variant: primary",
       "kind": "jsx-attribute",
@@ -22669,43 +20041,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 80,
-      "column": 36,
-      "source": "hello hello hello",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 81,
-      "column": 19,
-      "source": "Within",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 81,
-      "column": 40,
-      "source": "hello",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 81,
-      "column": 53,
-      "source": "text",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 83,
+      "line": 86,
       "column": 25,
       "source": "loading: true, variant: underlaid",
       "kind": "jsx-attribute",
@@ -22714,70 +20050,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 84,
-      "column": 56,
-      "source": "hello hello hello",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 85,
-      "column": 19,
-      "source": "Within",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 85,
-      "column": 60,
-      "source": "hello hello",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 85,
-      "column": 79,
-      "source": "text",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 91,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 93,
-      "column": 27,
-      "source": "Address link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 95,
-      "column": 25,
-      "source": "Without name",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 104,
+      "line": 107,
       "column": 25,
       "source": "Variant: content, subheading",
       "kind": "jsx-attribute",
@@ -22786,52 +20059,7 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 108,
-      "column": 25,
-      "source": "With name",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 116,
-      "column": 25,
-      "source": "Contract",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 124,
-      "column": 27,
-      "source": "Token link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 126,
-      "column": 25,
-      "source": "With info",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 138,
-      "column": 25,
-      "source": "With partial info",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 142,
+      "line": 145,
       "column": 25,
       "source": "Variant: content, subheading",
       "kind": "jsx-attribute",
@@ -22840,196 +20068,16 @@
     },
     {
       "file": "ui/showcases/Link.tsx",
-      "line": 148,
-      "column": 27,
-      "source": "Transaction link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 150,
-      "column": 25,
-      "source": "Default",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 160,
-      "column": 27,
-      "source": "Block link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 162,
-      "column": 25,
-      "source": "Default",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 172,
-      "column": 27,
-      "source": "NFT link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 174,
-      "column": 25,
-      "source": "Default",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 183,
-      "column": 27,
-      "source": "ENS link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 185,
-      "column": 25,
-      "source": "Default",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 192,
+      "line": 195,
       "column": 25,
       "source": "Variant: content, subheading",
       "kind": "jsx-attribute",
       "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 198,
-      "column": 27,
-      "source": "Blob link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 200,
-      "column": 25,
-      "source": "Default",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 209,
-      "column": 27,
-      "source": "Pool link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 211,
-      "column": 25,
-      "source": "Default",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 224,
-      "column": 27,
-      "source": "Link overlay",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 226,
-      "column": 25,
-      "source": "Internal link",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 228,
-      "column": 43,
-      "source": "Main link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 229,
-      "column": 33,
-      "source": "Inner link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 232,
-      "column": 25,
-      "source": "External link",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 234,
-      "column": 67,
-      "source": "Main link",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Link.tsx",
-      "line": 235,
-      "column": 64,
-      "source": "Inner link",
-      "kind": "jsx-text",
-      "context": "children",
       "reviewRequired": true
     },
     {
       "file": "ui/showcases/Menu.tsx",
-      "line": 14,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 16,
+      "line": 19,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -23037,134 +20085,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 24,
-      "column": 52,
-      "source": "Refresh metadata",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 25,
-      "column": 50,
-      "source": "Add token info",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 26,
-      "column": 51,
-      "source": "Add private tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 27,
-      "column": 50,
-      "source": "Add public tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 38,
-      "column": 52,
-      "source": "Refresh metadata",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 39,
-      "column": 50,
-      "source": "Add token info",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 40,
-      "column": 51,
-      "source": "Add private tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Menu.tsx",
-      "line": 41,
-      "column": 50,
-      "source": "Add public tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Pagination.tsx",
-      "line": 33,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Pagination.tsx",
-      "line": 35,
-      "column": 27,
-      "source": "List pagination",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Pagination.tsx",
-      "line": 37,
-      "column": 25,
-      "source": "Loaded state",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Pagination.tsx",
-      "line": 40,
-      "column": 25,
-      "source": "Initial loading state",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Pagination.tsx",
-      "line": 43,
-      "column": 25,
-      "source": "Next page loading state",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/PinInput.tsx",
-      "line": 13,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/PinInput.tsx",
-      "line": 15,
+      "line": 18,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -23173,16 +20095,7 @@
     },
     {
       "file": "ui/showcases/PinInput.tsx",
-      "line": 25,
-      "column": 24,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/PinInput.tsx",
-      "line": 27,
+      "line": 30,
       "column": 25,
       "source": "disabled: true",
       "kind": "jsx-attribute",
@@ -23191,16 +20104,7 @@
     },
     {
       "file": "ui/showcases/Popover.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Popover.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -23208,35 +20112,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Popover.tsx",
+      "file": "ui/showcases/Progress.tsx",
       "line": 17,
-      "column": 44,
-      "source": "Trigger",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Popover.tsx",
-      "line": 21,
-      "column": 19,
-      "source": "Popover content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Progress.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Progress.tsx",
-      "line": 14,
       "column": 16,
       "source": "sm",
       "kind": "jsx-expression",
@@ -23245,7 +20122,7 @@
     },
     {
       "file": "ui/showcases/Progress.tsx",
-      "line": 14,
+      "line": 17,
       "column": 22,
       "source": "md",
       "kind": "jsx-expression",
@@ -23254,7 +20131,7 @@
     },
     {
       "file": "ui/showcases/Progress.tsx",
-      "line": 14,
+      "line": 17,
       "column": 28,
       "source": "lg",
       "kind": "jsx-expression",
@@ -23263,7 +20140,7 @@
     },
     {
       "file": "ui/showcases/Progress.tsx",
-      "line": 14,
+      "line": 17,
       "column": 34,
       "source": "xl",
       "kind": "jsx-expression",
@@ -23272,7 +20149,7 @@
     },
     {
       "file": "ui/showcases/Progress.tsx",
-      "line": 15,
+      "line": 18,
       "column": 42,
       "source": "size: {{expression0}}",
       "kind": "template-expression",
@@ -23285,16 +20162,7 @@
     },
     {
       "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "colorPalette: blue",
       "kind": "jsx-attribute",
@@ -23303,16 +20171,7 @@
     },
     {
       "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 26,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 28,
+      "line": 31,
       "column": 16,
       "source": "sm",
       "kind": "jsx-expression",
@@ -23321,7 +20180,7 @@
     },
     {
       "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 28,
+      "line": 31,
       "column": 22,
       "source": "md",
       "kind": "jsx-expression",
@@ -23330,7 +20189,7 @@
     },
     {
       "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 28,
+      "line": 31,
       "column": 28,
       "source": "lg",
       "kind": "jsx-expression",
@@ -23339,7 +20198,7 @@
     },
     {
       "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 29,
+      "line": 32,
       "column": 42,
       "source": "size: {{expression0}}",
       "kind": "template-expression",
@@ -23352,7 +20211,7 @@
     },
     {
       "file": "ui/showcases/ProgressCircle.tsx",
-      "line": 36,
+      "line": 39,
       "column": 28,
       "source": "lg",
       "kind": "jsx-expression",
@@ -23361,16 +20220,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -23379,34 +20229,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 16,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 17,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 24,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 26,
+      "line": 29,
       "column": 25,
       "source": "size: xs",
       "kind": "jsx-attribute",
@@ -23415,25 +20238,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 28,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 29,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 32,
+      "line": 35,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -23442,25 +20247,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 34,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 35,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 38,
+      "line": 41,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -23469,34 +20256,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 40,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 41,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 48,
-      "column": 24,
-      "source": "Orientation",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 50,
+      "line": 53,
       "column": 25,
       "source": "orientation: horizontal",
       "kind": "jsx-attribute",
@@ -23505,25 +20265,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 52,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 53,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 56,
+      "line": 59,
       "column": 25,
       "source": "orientation: vertical",
       "kind": "jsx-attribute",
@@ -23532,34 +20274,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 58,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 59,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 66,
-      "column": 24,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 68,
+      "line": 71,
       "column": 25,
       "source": "disabled: true",
       "kind": "jsx-attribute",
@@ -23568,34 +20283,7 @@
     },
     {
       "file": "ui/showcases/Radio.tsx",
-      "line": 70,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 71,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 78,
-      "column": 24,
-      "source": "Read-only",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 80,
+      "line": 83,
       "column": 25,
       "source": "readOnly: true",
       "kind": "jsx-attribute",
@@ -23603,35 +20291,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 82,
-      "column": 32,
-      "source": "Option 1",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Radio.tsx",
-      "line": 83,
-      "column": 32,
-      "source": "Option 2",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Rating.tsx",
-      "line": 11,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 13,
+      "line": 23,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -23640,61 +20301,7 @@
     },
     {
       "file": "ui/showcases/Rating.tsx",
-      "line": 14,
-      "column": 50,
-      "source": "Very bad",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 14,
-      "column": 62,
-      "source": "Bad",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 14,
-      "column": 69,
-      "source": "Average",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 14,
-      "column": 80,
-      "source": "Good",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 14,
-      "column": 88,
-      "source": "Excellent",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 19,
-      "column": 24,
-      "source": "Read-only",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 21,
+      "line": 31,
       "column": 25,
       "source": "readOnly: true",
       "kind": "jsx-attribute",
@@ -23702,72 +20309,9 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 22,
-      "column": 50,
-      "source": "Very bad",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 22,
-      "column": 62,
-      "source": "Bad",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 22,
-      "column": 69,
-      "source": "Average",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 22,
-      "column": 80,
-      "source": "Good",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Rating.tsx",
-      "line": 22,
-      "column": 88,
-      "source": "Excellent",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Select.tsx",
-      "line": 18,
-      "column": 14,
-      "source": "React.js is the most popular framework",
-      "kind": "object-property",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 19,
-      "column": 14,
-      "source": "Vue.js is the second most popular framework",
-      "kind": "object-property",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 20,
-      "column": 32,
+      "line": 30,
+      "column": 16,
       "source": "Angular",
       "kind": "object-property",
       "context": "label",
@@ -23775,26 +20319,8 @@
     },
     {
       "file": "ui/showcases/Select.tsx",
-      "line": 20,
-      "column": 67,
-      "source": "Angular is",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 20,
-      "column": 122,
-      "source": "not awesome",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 21,
-      "column": 14,
+      "line": 41,
+      "column": 16,
       "source": "Svelte",
       "kind": "object-property",
       "context": "label",
@@ -23802,16 +20328,7 @@
     },
     {
       "file": "ui/showcases/Select.tsx",
-      "line": 38,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 40,
+      "line": 57,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -23820,25 +20337,7 @@
     },
     {
       "file": "ui/showcases/Select.tsx",
-      "line": 43,
-      "column": 27,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 52,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 54,
+      "line": 71,
       "column": 15,
       "source": "sm",
       "kind": "jsx-expression",
@@ -23847,7 +20346,7 @@
     },
     {
       "file": "ui/showcases/Select.tsx",
-      "line": 54,
+      "line": 71,
       "column": 30,
       "source": "lg",
       "kind": "jsx-expression",
@@ -23856,7 +20355,7 @@
     },
     {
       "file": "ui/showcases/Select.tsx",
-      "line": 57,
+      "line": 74,
       "column": 31,
       "source": "size: {{expression0}}",
       "kind": "template-expression",
@@ -23869,88 +20368,7 @@
     },
     {
       "file": "ui/showcases/Select.tsx",
-      "line": 60,
-      "column": 31,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 66,
-      "column": 31,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 73,
-      "column": 31,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 81,
-      "column": 31,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 89,
-      "column": 31,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 94,
-      "column": 29,
-      "source": "Error message",
-      "kind": "jsx-attribute",
-      "context": "errorText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 98,
-      "column": 31,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 104,
-      "column": 29,
-      "source": "Error message",
-      "kind": "jsx-attribute",
-      "context": "errorText",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 113,
-      "column": 24,
-      "source": "With search (async)",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 115,
+      "line": 132,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -23958,71 +20376,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Select.tsx",
-      "line": 117,
-      "column": 27,
-      "source": "Select framework",
-      "kind": "jsx-attribute",
-      "context": "placeholder",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 124,
-      "column": 60,
-      "source": "Include nightly builds",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 131,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 133,
-      "column": 27,
-      "source": "Sort",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 152,
-      "column": 27,
-      "source": "Token transfers filter",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Select.tsx",
-      "line": 161,
-      "column": 27,
-      "source": "Radio filter",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Skeleton.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variants",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Skeleton.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "default",
       "kind": "jsx-attribute",
@@ -24030,35 +20385,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Skeleton.tsx",
-      "line": 16,
-      "column": 21,
-      "source": "Skeleton",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Spinner.tsx",
-      "line": 11,
-      "column": 24,
-      "source": "Spinner",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Spinner.tsx",
-      "line": 12,
-      "column": 27,
-      "source": "Sizes",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Spinner.tsx",
-      "line": 14,
+      "line": 17,
       "column": 16,
       "source": "xs",
       "kind": "jsx-expression",
@@ -24067,7 +20395,7 @@
     },
     {
       "file": "ui/showcases/Spinner.tsx",
-      "line": 14,
+      "line": 17,
       "column": 22,
       "source": "sm",
       "kind": "jsx-expression",
@@ -24076,7 +20404,7 @@
     },
     {
       "file": "ui/showcases/Spinner.tsx",
-      "line": 14,
+      "line": 17,
       "column": 28,
       "source": "md",
       "kind": "jsx-expression",
@@ -24085,7 +20413,7 @@
     },
     {
       "file": "ui/showcases/Spinner.tsx",
-      "line": 14,
+      "line": 17,
       "column": 34,
       "source": "lg",
       "kind": "jsx-expression",
@@ -24094,7 +20422,7 @@
     },
     {
       "file": "ui/showcases/Spinner.tsx",
-      "line": 14,
+      "line": 17,
       "column": 40,
       "source": "xl",
       "kind": "jsx-expression",
@@ -24103,7 +20431,7 @@
     },
     {
       "file": "ui/showcases/Spinner.tsx",
-      "line": 15,
+      "line": 18,
       "column": 42,
       "source": "size: {{expression0}}",
       "kind": "template-expression",
@@ -24116,16 +20444,7 @@
     },
     {
       "file": "ui/showcases/Switch.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "size: sm",
       "kind": "jsx-attribute",
@@ -24134,16 +20453,7 @@
     },
     {
       "file": "ui/showcases/Switch.tsx",
-      "line": 16,
-      "column": 15,
-      "source": "Show duck",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 19,
+      "line": 22,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -24152,16 +20462,7 @@
     },
     {
       "file": "ui/showcases/Switch.tsx",
-      "line": 21,
-      "column": 15,
-      "source": "Show duck",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 24,
+      "line": 27,
       "column": 25,
       "source": "size: lg",
       "kind": "jsx-attribute",
@@ -24170,25 +20471,7 @@
     },
     {
       "file": "ui/showcases/Switch.tsx",
-      "line": 26,
-      "column": 15,
-      "source": "Show duck",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 32,
-      "column": 24,
-      "source": "Disabled",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 34,
+      "line": 37,
       "column": 25,
       "source": "disabled: true",
       "kind": "jsx-attribute",
@@ -24197,25 +20480,7 @@
     },
     {
       "file": "ui/showcases/Switch.tsx",
-      "line": 36,
-      "column": 15,
-      "source": "Show duck",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 42,
-      "column": 24,
-      "source": "Direction",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 44,
+      "line": 47,
       "column": 25,
       "source": "direction: rtl",
       "kind": "jsx-attribute",
@@ -24224,16 +20489,7 @@
     },
     {
       "file": "ui/showcases/Switch.tsx",
-      "line": 46,
-      "column": 15,
-      "source": "Show duck",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 49,
+      "line": 52,
       "column": 25,
       "source": "direction: ltr",
       "kind": "jsx-attribute",
@@ -24241,35 +20497,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Switch.tsx",
-      "line": 51,
-      "column": 15,
-      "source": "Show duck",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Table.tsx",
-      "line": 11,
-      "column": 44,
-      "source": "Home Appliances",
-      "kind": "text-candidate",
-      "context": "manual-review",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Table.tsx",
-      "line": 54,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Table.tsx",
-      "line": 56,
+      "line": 62,
       "column": 25,
       "source": "variant: line",
       "kind": "jsx-attribute",
@@ -24277,134 +20506,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Table.tsx",
-      "line": 60,
-      "column": 38,
-      "source": "Product",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Table.tsx",
-      "line": 66,
-      "column": 21,
-      "source": "Category",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Table.tsx",
-      "line": 74,
-      "column": 21,
-      "source": "Price",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Tabs.tsx",
-      "line": 11,
-      "column": 26,
-      "source": "Swaps",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 11,
-      "column": 51,
-      "source": "Swaps content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 12,
-      "column": 26,
-      "source": "Bridges",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 12,
-      "column": 53,
-      "source": "Bridges content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 13,
-      "column": 26,
-      "source": "Liquidity staking",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 13,
-      "column": 63,
-      "source": "Liquidity staking content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 14,
-      "column": 26,
-      "source": "Lending",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 14,
-      "column": 53,
-      "source": "Lending content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 15,
-      "column": 26,
-      "source": "Yield farming",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 15,
-      "column": 59,
-      "source": "Yield farming content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 21,
-      "column": 24,
-      "source": "Variants",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 23,
+      "line": 31,
       "column": 25,
       "source": "variant: solid",
       "kind": "jsx-attribute",
@@ -24413,43 +20516,7 @@
     },
     {
       "file": "ui/showcases/Tabs.tsx",
-      "line": 26,
-      "column": 43,
-      "source": "First tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 27,
-      "column": 43,
-      "source": "Second tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 29,
-      "column": 41,
-      "source": "First tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 30,
-      "column": 41,
-      "source": "Second tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 33,
+      "line": 41,
       "column": 25,
       "source": "variant: secondary",
       "kind": "jsx-attribute",
@@ -24458,43 +20525,7 @@
     },
     {
       "file": "ui/showcases/Tabs.tsx",
-      "line": 36,
-      "column": 43,
-      "source": "First tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 37,
-      "column": 43,
-      "source": "Second tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 39,
-      "column": 41,
-      "source": "First tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 40,
-      "column": 41,
-      "source": "Second tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 43,
+      "line": 51,
       "column": 25,
       "source": "variant: segmented",
       "kind": "jsx-attribute",
@@ -24502,125 +20533,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 46,
-      "column": 43,
-      "source": "First tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 47,
-      "column": 43,
-      "source": "Second tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 48,
-      "column": 43,
-      "source": "Third tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 49,
-      "column": 43,
-      "source": "Fourth tab",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 51,
-      "column": 41,
-      "source": "First tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 52,
-      "column": 41,
-      "source": "Second tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 53,
-      "column": 41,
-      "source": "Third tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 54,
-      "column": 41,
-      "source": "Fourth tab content",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 61,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 63,
-      "column": 27,
-      "source": "Adaptive tabs",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 71,
-      "column": 71,
-      "source": "Left element",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tabs.tsx",
-      "line": 73,
-      "column": 108,
-      "source": "Right element",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Tag.tsx",
-      "line": 13,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 15,
+      "line": 18,
       "column": 25,
       "source": "variant: subtle",
       "kind": "jsx-attribute",
@@ -24629,16 +20543,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 16,
-      "column": 18,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 18,
+      "line": 21,
       "column": 25,
       "source": "variant: clickable",
       "kind": "jsx-attribute",
@@ -24647,16 +20552,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 19,
-      "column": 38,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 21,
+      "line": 24,
       "column": 25,
       "source": "variant: filter",
       "kind": "jsx-attribute",
@@ -24665,16 +20561,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 22,
-      "column": 35,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 24,
+      "line": 27,
       "column": 25,
       "source": "variant: select",
       "kind": "jsx-attribute",
@@ -24683,34 +20570,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 25,
-      "column": 35,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 26,
-      "column": 44,
-      "source": "Selected",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 32,
-      "column": 24,
-      "source": "Size",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 34,
+      "line": 37,
       "column": 25,
       "source": "size: md",
       "kind": "jsx-attribute",
@@ -24719,16 +20579,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 35,
-      "column": 28,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 37,
+      "line": 40,
       "column": 25,
       "source": "size: lg",
       "kind": "jsx-attribute",
@@ -24737,25 +20588,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 38,
-      "column": 28,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 44,
-      "column": 24,
-      "source": "Truncated",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 46,
+      "line": 49,
       "column": 25,
       "source": "truncated: true",
       "kind": "jsx-attribute",
@@ -24764,25 +20597,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 47,
-      "column": 41,
-      "source": "Very very very very very very very long text",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 53,
-      "column": 24,
-      "source": "Closable",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 55,
+      "line": 58,
       "column": 25,
       "source": "closable: true",
       "kind": "jsx-attribute",
@@ -24791,25 +20606,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 56,
-      "column": 27,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 62,
-      "column": 24,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 64,
+      "line": 67,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -24818,25 +20615,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 65,
-      "column": 26,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 66,
-      "column": 49,
-      "source": "Very very very very very very very long text",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 68,
+      "line": 71,
       "column": 25,
       "source": "loading: true, variant: select",
       "kind": "jsx-attribute",
@@ -24845,25 +20624,7 @@
     },
     {
       "file": "ui/showcases/Tag.tsx",
-      "line": 69,
-      "column": 43,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 70,
-      "column": 52,
-      "source": "Selected",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 72,
+      "line": 75,
       "column": 25,
       "source": "loading: false",
       "kind": "jsx-attribute",
@@ -24871,107 +20632,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 73,
-      "column": 18,
-      "source": "My tag",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 74,
-      "column": 41,
-      "source": "Very very very very very very very long text",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 80,
-      "column": 24,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 81,
-      "column": 27,
-      "source": "Public tags",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 95,
-      "column": 27,
-      "source": "Filter tags",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 98,
-      "column": 41,
-      "source": "Type",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 98,
-      "column": 48,
-      "source": "All",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 99,
-      "column": 41,
-      "source": "Address",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 100,
-      "column": 41,
-      "source": "Type",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tag.tsx",
-      "line": 100,
-      "column": 56,
-      "source": "All",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Textarea.tsx",
-      "line": 15,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 17,
+      "line": 20,
       "column": 25,
       "source": "variant: outline",
       "kind": "jsx-attribute",
@@ -24979,71 +20641,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 18,
-      "column": 26,
-      "source": "Description",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 21,
-      "column": 26,
-      "source": "Description",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 24,
-      "column": 26,
-      "source": "Description (invalid)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 27,
-      "column": 26,
-      "source": "Description (readOnly)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 30,
-      "column": 26,
-      "source": "Description (disabled)",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Textarea.tsx",
-      "line": 34,
-      "column": 28,
-      "source": "Description",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Toast.tsx",
-      "line": 14,
-      "column": 24,
-      "source": "Type",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 16,
+      "line": 19,
       "column": 25,
       "source": "type: info",
       "kind": "jsx-attribute",
@@ -25052,25 +20651,7 @@
     },
     {
       "file": "ui/showcases/Toast.tsx",
-      "line": 17,
-      "column": 61,
-      "source": "Info",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 18,
-      "column": 15,
-      "source": "Info",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 21,
+      "line": 24,
       "column": 25,
       "source": "type: success",
       "kind": "jsx-attribute",
@@ -25079,34 +20660,7 @@
     },
     {
       "file": "ui/showcases/Toast.tsx",
-      "line": 22,
-      "column": 62,
-      "source": "Success",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 22,
-      "column": 86,
-      "source": "Toast content",
-      "kind": "object-property",
-      "context": "description",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 23,
-      "column": 15,
-      "source": "Success",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 26,
+      "line": 29,
       "column": 25,
       "source": "type: warning",
       "kind": "jsx-attribute",
@@ -25115,34 +20669,7 @@
     },
     {
       "file": "ui/showcases/Toast.tsx",
-      "line": 27,
-      "column": 61,
-      "source": "Warning",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 27,
-      "column": 85,
-      "source": "Toast content",
-      "kind": "object-property",
-      "context": "description",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 28,
-      "column": 15,
-      "source": "Warning",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 31,
+      "line": 36,
       "column": 25,
       "source": "type: error",
       "kind": "jsx-attribute",
@@ -25151,34 +20678,7 @@
     },
     {
       "file": "ui/showcases/Toast.tsx",
-      "line": 32,
-      "column": 60,
-      "source": "Error",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 32,
-      "column": 82,
-      "source": "Toast content",
-      "kind": "object-property",
-      "context": "description",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 33,
-      "column": 15,
-      "source": "Error",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 36,
+      "line": 41,
       "column": 25,
       "source": "type: loading",
       "kind": "jsx-attribute",
@@ -25186,44 +20686,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 37,
-      "column": 62,
-      "source": "Loading",
-      "kind": "object-property",
-      "context": "title",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 37,
-      "column": 86,
-      "source": "Please wait for...",
-      "kind": "object-property",
-      "context": "description",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Toast.tsx",
-      "line": 38,
-      "column": 15,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Tooltip.tsx",
-      "line": 12,
-      "column": 24,
-      "source": "Variant",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tooltip.tsx",
-      "line": 14,
+      "line": 17,
       "column": 25,
       "source": "variant: regular",
       "kind": "jsx-attribute",
@@ -25232,34 +20696,7 @@
     },
     {
       "file": "ui/showcases/Tooltip.tsx",
-      "line": 15,
-      "column": 30,
-      "source": "Tooltip content",
-      "kind": "jsx-attribute",
-      "context": "content",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tooltip.tsx",
-      "line": 16,
-      "column": 21,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tooltip.tsx",
-      "line": 18,
-      "column": 30,
-      "source": "Tooltip content",
-      "kind": "jsx-attribute",
-      "context": "content",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tooltip.tsx",
-      "line": 22,
+      "line": 25,
       "column": 25,
       "source": "variant: popover",
       "kind": "jsx-attribute",
@@ -25267,26 +20704,8 @@
       "reviewRequired": true
     },
     {
-      "file": "ui/showcases/Tooltip.tsx",
-      "line": 23,
-      "column": 30,
-      "source": "Tooltip content",
-      "kind": "jsx-attribute",
-      "context": "content",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Tooltip.tsx",
-      "line": 24,
-      "column": 21,
-      "source": "Default",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
       "file": "ui/showcases/Values.tsx",
-      "line": 17,
+      "line": 22,
       "column": 24,
       "source": "SimpleValue",
       "kind": "jsx-text",
@@ -25295,79 +20714,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 18,
-      "column": 27,
-      "source": "Basic examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 20,
-      "column": 25,
-      "source": "Big value",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 28,
-      "column": 25,
-      "source": "Small value",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 35,
-      "column": 25,
-      "source": "No accuracy",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 46,
-      "column": 27,
-      "source": "Overflowed",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 48,
-      "column": 25,
-      "source": "Big value",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 56,
-      "column": 25,
-      "source": "Small value",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 66,
-      "column": 27,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 68,
+      "line": 73,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -25376,7 +20723,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 82,
+      "line": 87,
       "column": 24,
       "source": "NativeCoinValue",
       "kind": "jsx-text",
@@ -25385,16 +20732,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 83,
-      "column": 27,
-      "source": "Units",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 85,
+      "line": 90,
       "column": 25,
       "source": "wei",
       "kind": "jsx-attribute",
@@ -25403,7 +20741,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 94,
+      "line": 99,
       "column": 25,
       "source": "gwei",
       "kind": "jsx-attribute",
@@ -25412,7 +20750,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 103,
+      "line": 108,
       "column": 25,
       "source": "ether",
       "kind": "jsx-attribute",
@@ -25421,16 +20759,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 112,
-      "column": 27,
-      "source": "Gwei threshold",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 114,
+      "line": 119,
       "column": 25,
       "source": "gweiThreshold: undefined",
       "kind": "jsx-attribute",
@@ -25439,7 +20768,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 121,
+      "line": 126,
       "column": 25,
       "source": "gweiThreshold: 5",
       "kind": "jsx-attribute",
@@ -25448,16 +20777,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 131,
-      "column": 27,
-      "source": "Different units in tooltip",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 133,
+      "line": 138,
       "column": 25,
       "source": "unitsTooltip: 'gwei'",
       "kind": "jsx-attribute",
@@ -25466,7 +20786,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 137,
+      "line": 142,
       "column": 28,
       "source": "gwei",
       "kind": "jsx-attribute",
@@ -25475,16 +20795,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 143,
-      "column": 27,
-      "source": "Layout",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 145,
+      "line": 150,
       "column": 25,
       "source": "horizontal",
       "kind": "jsx-attribute",
@@ -25493,7 +20804,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 153,
+      "line": 158,
       "column": 25,
       "source": "vertical",
       "kind": "jsx-attribute",
@@ -25502,7 +20813,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 165,
+      "line": 170,
       "column": 24,
       "source": "TokenValue",
       "kind": "jsx-text",
@@ -25511,25 +20822,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 166,
-      "column": 27,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 168,
-      "column": 25,
-      "source": "convertible token",
-      "kind": "jsx-attribute",
-      "context": "label",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 175,
+      "line": 180,
       "column": 24,
       "source": "AssetValue",
       "kind": "jsx-text",
@@ -25538,16 +20831,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 176,
-      "column": 27,
-      "source": "Layout",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 178,
+      "line": 183,
       "column": 25,
       "source": "horizontal",
       "kind": "jsx-attribute",
@@ -25556,7 +20840,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 187,
+      "line": 192,
       "column": 25,
       "source": "vertical",
       "kind": "jsx-attribute",
@@ -25565,16 +20849,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 199,
-      "column": 27,
-      "source": "Loading",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 201,
+      "line": 206,
       "column": 25,
       "source": "loading: true",
       "kind": "jsx-attribute",
@@ -25583,7 +20858,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 224,
+      "line": 229,
       "column": 24,
       "source": "GasPriceValue",
       "kind": "jsx-text",
@@ -25592,16 +20867,7 @@
     },
     {
       "file": "ui/showcases/Values.tsx",
-      "line": 225,
-      "column": 27,
-      "source": "Examples",
-      "kind": "jsx-text",
-      "context": "children",
-      "reviewRequired": true
-    },
-    {
-      "file": "ui/showcases/Values.tsx",
-      "line": 227,
+      "line": 232,
       "column": 25,
       "source": "default",
       "kind": "jsx-attribute",

@@ -1,17 +1,21 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 import { TableColumnHeader, TableHeaderSticky, TableRoot, TableRow, TableCell, TableBody, TableColumnHeaderSortable } from 'toolkit/chakra/table';
 import getNextSortValue from 'ui/shared/sort/getNextSortValue';
 
 import { Section, Container, SectionHeader, SamplesStack, Sample } from './parts';
 
 const ITEMS = [
-  { id: 1, name: 'Laptop', category: 'Electronics', price: 999.99 },
-  { id: 2, name: 'Coffee Maker', category: 'Home Appliances', price: 49.99 },
-  { id: 3, name: 'Desk Chair', category: 'Furniture', price: 150.0 },
-  { id: 4, name: 'Smartphone', category: 'Electronics', price: 799.99 },
-  { id: 5, name: 'Headphones', category: 'Accessories', price: 199.99 },
+  { id: 1, nameKey: 'showcaseDisplay.product_1', categoryKey: 'showcaseDisplay.electronics', price: 999.99 },
+  { id: 2, nameKey: 'showcaseDisplay.product_2', categoryKey: 'showcaseDisplay.appliances', price: 49.99 },
+  { id: 3, nameKey: 'showcaseDisplay.product_3', categoryKey: 'showcaseDisplay.furniture', price: 150.0 },
+  { id: 4, nameKey: 'showcaseDisplay.product_4', categoryKey: 'showcaseDisplay.electronics', price: 799.99 },
+  { id: 5, nameKey: 'showcaseDisplay.product_5', categoryKey: 'showcaseDisplay.accessories', price: 199.99 },
 ];
 
 type Item = typeof ITEMS[number];
@@ -25,6 +29,8 @@ const SORT_SEQUENCE: Record<SortField, Array<SortValue>> = {
 };
 
 const TableShowcase = () => {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const [ sort, setSort ] = React.useState<SortValue>('default');
 
   const handleSortToggle = React.useCallback((sortField: string) => {
@@ -34,10 +40,10 @@ const TableShowcase = () => {
 
   const sortFn = (a: Item, b: Item) => {
     if (sort === 'category-asc') {
-      return a.category.localeCompare(b.category);
+      return t(a.categoryKey).localeCompare(t(b.categoryKey), locale);
     }
     if (sort === 'category-desc') {
-      return b.category.localeCompare(a.category);
+      return t(b.categoryKey).localeCompare(t(a.categoryKey), locale);
     }
     if (sort === 'price-asc') {
       return a.price - b.price;
@@ -51,19 +57,19 @@ const TableShowcase = () => {
   return (
     <Container value="table">
       <Section>
-        <SectionHeader>Variant</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.variant') }</SectionHeader>
         <SamplesStack >
           <Sample label="variant: line">
             <TableRoot>
               <TableHeaderSticky>
                 <TableRow>
-                  <TableColumnHeader>Product</TableColumnHeader>
+                  <TableColumnHeader>{ t('showcaseDisplay.product') }</TableColumnHeader>
                   <TableColumnHeaderSortable
                     sortField="category"
                     sortValue={ sort }
                     onSortToggle={ handleSortToggle }
                   >
-                    Category
+                    { t('showcaseDisplay.category') }
                   </TableColumnHeaderSortable>
                   <TableColumnHeaderSortable
                     sortField="price"
@@ -71,16 +77,16 @@ const TableShowcase = () => {
                     onSortToggle={ handleSortToggle }
                     isNumeric
                   >
-                    Price
+                    { t('showcaseDisplay.price') }
                   </TableColumnHeaderSortable>
                 </TableRow>
               </TableHeaderSticky>
               <TableBody>
                 { ITEMS.slice().sort(sortFn).map((item) => (
                   <TableRow key={ item.id }>
-                    <TableCell>{ item.name }</TableCell>
-                    <TableCell>{ item.category }</TableCell>
-                    <TableCell isNumeric>{ item.price }</TableCell>
+                    <TableCell>{ t(item.nameKey) }</TableCell>
+                    <TableCell>{ t(item.categoryKey) }</TableCell>
+                    <TableCell isNumeric>{ formatNumber(item.price, locale) }</TableCell>
                   </TableRow>
                 )) }
               </TableBody>

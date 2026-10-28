@@ -1,14 +1,17 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from 'toolkit/chakra/empty-state';
 
 import { Section, Container, SectionHeader, SamplesStack, Sample } from './parts';
 
 const EmptyStateShowcase = () => {
+  const { t } = useTranslation();
   return (
     <Container value="empty-state">
       <Section>
-        <SectionHeader>Type</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.type') }</SectionHeader>
         <SamplesStack>
           <Sample label="type: query">
             <EmptyState term="transaction" outline="1px dashed deepskyblue"/>

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import AssetValue from 'ui/shared/value/AssetValue';
 import GasPriceValue from 'ui/shared/value/GasPriceValue';
@@ -11,41 +13,44 @@ import { TOKEN } from './Link';
 import { Section, Container, SectionHeader, SamplesStack, Sample, SectionSubHeader } from './parts';
 
 const ValuesShowcase = () => {
+  const { t } = useTranslation();
+  // Keep one complete phrase so each language can place the value naturally.
+  const [ beforeValue, afterValue ] = t('showcaseDisplay.get_duck', { value: '\uFFFC' }).split('\uFFFC');
   return (
     <Container value="values">
       <Section>
         <SectionHeader>SimpleValue</SectionHeader>
-        <SectionSubHeader>Basic examples</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.basic_examples') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Big value">
+          <Sample label={ t('showcaseDisplay.big_value') }>
             <SimpleValue
               value={ BigNumber('1000000000000000000000000') }
-              startElement="Get your "
-              endElement=" DUCK now!"
+              startElement={ beforeValue }
+              endElement={ afterValue }
               maxW="400px"
             />
           </Sample>
-          <Sample label="Small value">
+          <Sample label={ t('showcaseDisplay.small_value') }>
             <SimpleValue
               value={ BigNumber(1).div('1000000000000000000') }
               prefix="$"
               maxW="400px"
             />
           </Sample>
-          <Sample label="No accuracy">
+          <Sample label={ t('showcaseDisplay.no_accuracy') }>
             <SimpleValue
               value={ BigNumber(1).div('1000000000000000000') }
               accuracy={ 0 }
-              startElement="Get your "
-              endElement=" DUCK now!"
+              startElement={ beforeValue }
+              endElement={ afterValue }
               maxW="400px"
             />
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Overflowed</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.overflowed') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Big value">
+          <Sample label={ t('showcaseDisplay.big_value') }>
             <SimpleValue
               value={ BigNumber('1000000000000000000000000') }
               endElement="ETH"
@@ -53,7 +58,7 @@ const ValuesShowcase = () => {
               maxW="200px"
             />
           </Sample>
-          <Sample label="Small value">
+          <Sample label={ t('showcaseDisplay.small_value') }>
             <SimpleValue
               value={ BigNumber(1).div('1000000000000000000') }
               prefix="$"
@@ -63,14 +68,14 @@ const ValuesShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Loading</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.loading') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="loading: true">
             <SimpleValue
               loading
               value={ BigNumber('1000000000000000000000000') }
-              startElement="Get your "
-              endElement=" DUCK now!"
+              startElement={ beforeValue }
+              endElement={ afterValue }
               maxW="400px"
             />
           </Sample>
@@ -80,7 +85,7 @@ const ValuesShowcase = () => {
 
       <Section>
         <SectionHeader>NativeCoinValue</SectionHeader>
-        <SectionSubHeader>Units</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.units') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="wei">
             <NativeCoinValue
@@ -109,7 +114,7 @@ const ValuesShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Gwei threshold</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.gwei_threshold') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="gweiThreshold: undefined">
             <NativeCoinValue
@@ -128,7 +133,7 @@ const ValuesShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Different units in tooltip</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.tooltip_units') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="unitsTooltip: 'gwei'">
             <NativeCoinValue
@@ -140,7 +145,7 @@ const ValuesShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Layout</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.layout') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="horizontal">
             <NativeCoinValue
@@ -163,9 +168,9 @@ const ValuesShowcase = () => {
 
       <Section>
         <SectionHeader>TokenValue</SectionHeader>
-        <SectionSubHeader>Examples</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.examples') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="convertible token">
+          <Sample label={ t('showcaseDisplay.convertible_token') }>
             <TokenValue amount="1000000000000000000000000" token={ TOKEN } maxW="400px"/>
           </Sample>
         </SamplesStack>
@@ -173,7 +178,7 @@ const ValuesShowcase = () => {
 
       <Section>
         <SectionHeader>AssetValue</SectionHeader>
-        <SectionSubHeader>Layout</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.layout') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="horizontal">
             <AssetValue
@@ -196,7 +201,7 @@ const ValuesShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Loading</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.loading') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="loading: true">
             <AssetValue
@@ -222,7 +227,7 @@ const ValuesShowcase = () => {
 
       <Section>
         <SectionHeader>GasPriceValue</SectionHeader>
-        <SectionSubHeader>Examples</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.examples') }</SectionSubHeader>
         <SamplesStack>
           <Sample label="default">
             <GasPriceValue

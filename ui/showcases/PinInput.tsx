@@ -1,16 +1,19 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { PinInput } from 'toolkit/chakra/pin-input';
 
 import { Section, Container, SectionHeader, SamplesStack, Sample } from './parts';
 
 const PinInputShowcase = () => {
+  const { t } = useTranslation();
 
   return (
     <Container value="pin-input">
       <Section>
-        <SectionHeader>Variant</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.variant') }</SectionHeader>
         <SamplesStack >
           <Sample label="variant: outline">
             <PinInput otp count={ 3 }/>
@@ -22,7 +25,7 @@ const PinInputShowcase = () => {
       </Section>
 
       <Section>
-        <SectionHeader>Disabled</SectionHeader>
+        <SectionHeader>{ t('showcaseRemainder.disabled') }</SectionHeader>
         <SamplesStack >
           <Sample label="disabled: true">
             <PinInput otp count={ 3 } disabled value={ [ '1', '2', '3' ] }/>

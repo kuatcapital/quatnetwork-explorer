@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import type { TokenInfo } from 'types/api/token';
 
@@ -37,62 +39,63 @@ export const TOKEN = {
 } satisfies TokenInfo;
 
 const LinkShowcase = () => {
+  const { t } = useTranslation();
 
   return (
     <Container value="link">
 
-      <Section title="variants">
-        <SectionHeader>Variants</SectionHeader>
+      <Section title={ t('showcaseDisplay.variants') }>
+        <SectionHeader>{ t('showcaseDisplay.variants') }</SectionHeader>
         <SamplesStack>
           <Sample label="variant: primary">
-            <Link href="/blocks" variant="primary">Default</Link>
-            <Link href="/" variant="primary" data-hover>Hover</Link>
+            <Link href="/blocks" variant="primary">{ t('showcaseDisplay.default') }</Link>
+            <Link href="/" variant="primary" data-hover>{ t('showcaseDisplay.hover') }</Link>
           </Sample>
           <Sample label="variant: secondary">
-            <Link href="/" variant="secondary">Default</Link>
-            <Link href="/" variant="secondary" data-hover>Hover</Link>
+            <Link href="/" variant="secondary">{ t('showcaseDisplay.default') }</Link>
+            <Link href="/" variant="secondary" data-hover>{ t('showcaseDisplay.hover') }</Link>
           </Sample>
           <Sample label="variant: subtle">
-            <Link href="/" variant="subtle">Default</Link>
-            <Link href="/" variant="subtle" data-hover>Hover</Link>
+            <Link href="/" variant="subtle">{ t('showcaseDisplay.default') }</Link>
+            <Link href="/" variant="subtle" data-hover>{ t('showcaseDisplay.hover') }</Link>
           </Sample>
           <Sample label="variant: navigation">
-            <Link href="/" variant="navigation" p={ 2 } borderRadius="base">Default</Link>
-            <Link href="/" variant="navigation" p={ 2 } borderRadius="base" data-hover>Hover</Link>
-            <Link href="/" variant="navigation" p={ 2 } borderRadius="base" data-selected>Selected</Link>
-            <Link href="/" variant="navigation" p={ 2 } borderRadius="base" data-active>Active</Link>
+            <Link href="/" variant="navigation" p={ 2 } borderRadius="base">{ t('showcaseDisplay.default') }</Link>
+            <Link href="/" variant="navigation" p={ 2 } borderRadius="base" data-hover>{ t('showcaseDisplay.hover') }</Link>
+            <Link href="/" variant="navigation" p={ 2 } borderRadius="base" data-selected>{ t('showcaseDisplay.selected') }</Link>
+            <Link href="/" variant="navigation" p={ 2 } borderRadius="base" data-active>{ t('showcaseDisplay.active') }</Link>
           </Sample>
           <Sample label="variant: underlaid">
-            <Link href="/" variant="underlaid" external>Default</Link>
-            <Link href="/" variant="underlaid" external data-hover>Hover</Link>
+            <Link href="/" variant="underlaid" external>{ t('showcaseDisplay.default') }</Link>
+            <Link href="/" variant="underlaid" external data-hover>{ t('showcaseDisplay.hover') }</Link>
           </Sample>
           <Sample label="variant: menu">
-            <Link href="/" variant="menu">Default</Link>
-            <Link href="/" variant="menu" data-hover>Hover</Link>
+            <Link href="/" variant="menu">{ t('showcaseDisplay.default') }</Link>
+            <Link href="/" variant="menu" data-hover>{ t('showcaseDisplay.hover') }</Link>
           </Sample>
         </SamplesStack>
       </Section>
 
-      <Section title="loading">
-        <SectionHeader>Loading</SectionHeader>
+      <Section title={ t('showcaseDisplay.loading') }>
+        <SectionHeader>{ t('showcaseDisplay.loading') }</SectionHeader>
         <SamplesStack>
           <Sample label="loading: true, variant: primary">
-            <Link href="/" loading>hello hello hello</Link>
-            <span>Within <Link loading>hello</Link> text</span>
+            <Link href="/" loading>{ t('showcaseDisplay.hello_three') }</Link>
+            <span><Trans i18nKey="showcaseDisplay.within_link" components={{ link: <Link loading/> }}/></span>
           </Sample>
           <Sample label="loading: true, variant: underlaid">
-            <Link href="/" loading variant="underlaid">hello hello hello</Link>
-            <span>Within <Link loading variant="underlaid">hello hello</Link> text</span>
+            <Link href="/" loading variant="underlaid">{ t('showcaseDisplay.hello_three') }</Link>
+            <span><Trans i18nKey="showcaseDisplay.within_link_double" components={{ link: <Link loading variant="underlaid"/> }}/></span>
           </Sample>
         </SamplesStack>
       </Section>
 
       <Section>
-        <SectionHeader>Examples</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.examples') }</SectionHeader>
 
-        <SectionSubHeader>Address link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.address_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Without name" vertical>
+          <Sample label={ t('showcaseDisplay.without_name') } vertical>
             <AddressEntity address={ addressMock.withoutName }/>
             <AddressEntity address={ addressMock.withoutName } link={{ external: true }}/>
             <AddressEntity address={{ ...addressMock.filecoin, name: null }}/>
@@ -105,7 +108,7 @@ const LinkShowcase = () => {
             <AddressEntity address={ addressMock.withoutName } variant="content"/>
             <AddressEntity address={ addressMock.withoutName } variant="subheading"/>
           </Sample>
-          <Sample label="With name" vertical>
+          <Sample label={ t('showcaseDisplay.with_name') } vertical>
             <AddressEntity address={ addressMock.withName }/>
             <AddressEntity address={ addressMock.withNameTag }/>
             <AddressEntity address={ addressMock.withEns }/>
@@ -113,7 +116,7 @@ const LinkShowcase = () => {
               <AddressEntity address={ addressMock.withEns }/>
             </Box>
           </Sample>
-          <Sample label="Contract" vertical>
+          <Sample label={ t('showcaseDisplay.contract') } vertical>
             <AddressEntity address={{ ...addressMock.contract, is_verified: false, name: null, implementations: [] }}/>
             <AddressEntity address={{ ...addressMock.contract, implementations: [] }}/>
             <AddressEntity address={{ ...addressMock.contract, implementations: implementationsMock.multiple }}/>
@@ -121,9 +124,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Token link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.token_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="With info" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.with_info') } vertical w="100%">
             <TokenEntity token={ TOKEN }/>
             <Box maxW="200px">
               <TokenEntity token={{ ...TOKEN, name: 'Token with very very very long name' }} noSymbol/>
@@ -135,7 +138,7 @@ const LinkShowcase = () => {
             <TokenEntity token={ TOKEN } onlySymbol/>
             <TokenEntity token={ TOKEN } isLoading/>
           </Sample>
-          <Sample label="With partial info" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.partial_info') } vertical w="100%">
             <TokenEntity token={{ ...TOKEN, icon_url: null }}/>
             <TokenEntity token={{ ...TOKEN, icon_url: null, name: null, symbol: null }}/>
           </Sample>
@@ -145,9 +148,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Transaction link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.tx_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Default" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.default') } vertical w="100%">
             <TxEntity hash={ txMock.base.hash }/>
             <TxEntity hash={ txMock.base.hash } link={{ external: true }}/>
             <Box maxW="200px">
@@ -157,9 +160,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Block link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.block_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Default" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.default') } vertical w="100%">
             <BlockEntity number={ blockMock.base.height }/>
             <BlockEntity number={ blockMock.base.height } link={{ external: true }} icon={{ name: 'txn_batches' }}/>
             <Box maxW="150px">
@@ -169,9 +172,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>NFT link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.nft_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Default" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.default') } vertical w="100%">
             <NftEntity id="42" hash={ TOKEN.address_hash }/>
             <Box maxW="250px">
               <NftEntity id="32925298983216553915666621415831103694597106215670571463977478984525997408266" hash={ TOKEN.address_hash }/>
@@ -180,9 +183,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>ENS link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.ens_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Default" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.default') } vertical w="100%">
             <EnsEntity domain={ ensMock.ensDomainA.name } protocol={ ensMock.ensDomainA.protocol }/>
             <Box maxW="150px">
               <EnsEntity domain={ ensMock.ensDomainB.name } protocol={ ensMock.ensDomainB.protocol }/>
@@ -195,9 +198,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Blob link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.blob_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Default" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.default') } vertical w="100%">
             <BlobEntity hash={ blobsMock.base1.hash }/>
             <Box maxW="200px">
               <BlobEntity hash={ blobsMock.base1.hash } link={{ external: true }}/>
@@ -206,9 +209,9 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Pool link</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.pool_link') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Default" vertical w="100%">
+          <Sample label={ t('showcaseDisplay.default') } vertical w="100%">
             <PoolEntity pool={{
               ...poolMock.base,
               base_token_icon_url: 'https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683',
@@ -221,18 +224,18 @@ const LinkShowcase = () => {
           </Sample>
         </SamplesStack>
 
-        <SectionSubHeader>Link overlay</SectionSubHeader>
+        <SectionSubHeader>{ t('showcaseDisplay.link_overlay') }</SectionSubHeader>
         <SamplesStack>
-          <Sample label="Internal link">
+          <Sample label={ t('showcaseDisplay.internal_link') }>
             <LinkBox p={ 2 } display="flex" flexDirection="column" columnGap={ 2 } borderWidth="1px" borderColor="border.divider" borderRadius="base">
-              <LinkOverlay href="/blocks">Main link</LinkOverlay>
-              <Link href="/txs">Inner link</Link>
+              <LinkOverlay href="/blocks">{ t('showcaseDisplay.main_link') }</LinkOverlay>
+              <Link href="/txs">{ t('showcaseDisplay.inner_link') }</Link>
             </LinkBox>
           </Sample>
-          <Sample label="External link">
+          <Sample label={ t('showcaseDisplay.external_link') }>
             <LinkBox p={ 2 } display="flex" flexDirection="column" columnGap={ 2 } borderWidth="1px" borderColor="border.divider" borderRadius="base">
-              <LinkOverlay href="https://blockscout.com" external>Main link</LinkOverlay>
-              <Link href="https://blockscout.com/txs" external>Inner link</Link>
+              <LinkOverlay href="https://blockscout.com" external>{ t('showcaseDisplay.main_link') }</LinkOverlay>
+              <Link href="https://blockscout.com/txs" external>{ t('showcaseDisplay.inner_link') }</Link>
             </LinkBox>
           </Sample>
         </SamplesStack>

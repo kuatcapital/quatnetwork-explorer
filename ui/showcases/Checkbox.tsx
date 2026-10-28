@@ -1,66 +1,69 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Checkbox, CheckboxGroup } from 'toolkit/chakra/checkbox';
 
 import { Section, Container, SectionHeader, SamplesStack, Sample } from './parts';
 
 const CheckboxShowcase = () => {
+  const { t } = useTranslation();
 
   return (
     <Container value="checkbox">
       <Section>
-        <SectionHeader>Variant</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.variant') }</SectionHeader>
         <SamplesStack>
           <Sample label="variant: subtle">
-            <Checkbox>Option 1</Checkbox>
-            <Checkbox checked>Option 2</Checkbox>
+            <Checkbox>{ t('showcaseRemainder.option_1') }</Checkbox>
+            <Checkbox checked>{ t('showcaseRemainder.option_2') }</Checkbox>
           </Sample>
         </SamplesStack>
       </Section>
 
       <Section>
-        <SectionHeader>Size</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.size') }</SectionHeader>
         <SamplesStack>
           <Sample label="size: md">
-            <Checkbox size="md">Option 1</Checkbox>
-            <Checkbox size="md">Option 2</Checkbox>
+            <Checkbox size="md">{ t('showcaseRemainder.option_1') }</Checkbox>
+            <Checkbox size="md">{ t('showcaseRemainder.option_2') }</Checkbox>
           </Sample>
         </SamplesStack>
       </Section>
 
       <Section>
-        <SectionHeader>Disabled</SectionHeader>
+        <SectionHeader>{ t('showcaseRemainder.disabled') }</SectionHeader>
         <SamplesStack>
           <Sample label="disabled: true">
-            <Checkbox disabled>Option 1</Checkbox>
-            <Checkbox checked disabled>Option 2</Checkbox>
+            <Checkbox disabled>{ t('showcaseRemainder.option_1') }</Checkbox>
+            <Checkbox checked disabled>{ t('showcaseRemainder.option_2') }</Checkbox>
           </Sample>
         </SamplesStack>
       </Section>
 
       <Section>
-        <SectionHeader>Read-only</SectionHeader>
+        <SectionHeader>{ t('showcaseRemainder.read_only') }</SectionHeader>
         <SamplesStack>
           <Sample label="readOnly: true">
-            <Checkbox readOnly>Option 1</Checkbox>
-            <Checkbox checked readOnly>Option 2</Checkbox>
+            <Checkbox readOnly>{ t('showcaseRemainder.option_1') }</Checkbox>
+            <Checkbox checked readOnly>{ t('showcaseRemainder.option_2') }</Checkbox>
           </Sample>
         </SamplesStack>
       </Section>
 
       <Section>
-        <SectionHeader>Orientation</SectionHeader>
+        <SectionHeader>{ t('showcaseRemainder.orientation') }</SectionHeader>
         <SamplesStack>
           <Sample label="orientation: vertical">
             <CheckboxGroup orientation="vertical">
-              <Checkbox value="1">Option 1</Checkbox>
-              <Checkbox value="2">Option 2</Checkbox>
+              <Checkbox value="1">{ t('showcaseRemainder.option_1') }</Checkbox>
+              <Checkbox value="2">{ t('showcaseRemainder.option_2') }</Checkbox>
             </CheckboxGroup>
           </Sample>
           <Sample label="orientation: horizontal">
             <CheckboxGroup orientation="horizontal">
-              <Checkbox value="1">Option 1</Checkbox>
-              <Checkbox value="2">Option 2</Checkbox>
+              <Checkbox value="1">{ t('showcaseRemainder.option_1') }</Checkbox>
+              <Checkbox value="2">{ t('showcaseRemainder.option_2') }</Checkbox>
             </CheckboxGroup>
           </Sample>
         </SamplesStack>

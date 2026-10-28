@@ -1,15 +1,18 @@
+// Modified by Quat Capital, 2026-10-28: runtime Russian and Kazakh showcase labels. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 
 import { Section, Container, SectionHeader, SamplesStack, Sample } from './parts';
 
 const ClipboardShowcase = () => {
+  const { t } = useTranslation();
 
   return (
     <Container value="clipboard">
       <Section>
-        <SectionHeader>Type</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.type') }</SectionHeader>
         <SamplesStack>
           <Sample label="type: text">
             <CopyToClipboard text="Hello, world!" type="text"/>
@@ -24,7 +27,7 @@ const ClipboardShowcase = () => {
       </Section>
 
       <Section>
-        <SectionHeader>Loading</SectionHeader>
+        <SectionHeader>{ t('showcaseDisplay.loading') }</SectionHeader>
         <SamplesStack>
           <Sample label="loading: true">
             <CopyToClipboard text="Hello, world!" type="text" isLoading/>
