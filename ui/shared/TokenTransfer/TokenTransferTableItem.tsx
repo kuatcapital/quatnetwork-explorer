@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-26: localize shared controls, details and data feedback. GPL-3.0.
 import { Flex, Box } from '@chakra-ui/react';
 import React from 'react';
@@ -76,7 +77,7 @@ const TokenTransferTableItem = ({
               mt={ 1 }
             />
             <Flex columnGap={ 2 } rowGap={ 2 } mt={ 2 } flexWrap="wrap">
-              <Badge loading={ isLoading }>{ getTokenTypeName(token.type, chainData?.app_config) }</Badge>
+              <Badge loading={ isLoading }>{ getTokenTypeName(token.type, chainData?.app_config, t) }</Badge>
               <Badge colorPalette="orange" loading={ isLoading }>{ getTokenTransferTypeText(type, t) }</Badge>
             </Flex>
           </>

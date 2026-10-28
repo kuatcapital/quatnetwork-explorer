@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-29",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "coreLabels8": {
+      "cluster_search": "Search clusters by name or EVM address"
+    }
+  },
+  "ru": {
+    "coreLabels8": {
+      "cluster_search": "Поиск кластеров по имени или EVM-адресу"
+    }
+  },
+  "kk": {
+    "coreLabels8": {
+      "cluster_search": "Кластерлерді атауы немесе EVM мекенжайы бойынша іздеу"
+    }
+  }
+}

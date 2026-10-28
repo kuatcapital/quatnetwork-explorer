@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-27: localize token group counts and sorting labels. GPL-3.0.
 import { Text, Box, Flex } from '@chakra-ui/react';
 import { sumBy } from 'es-toolkit';
@@ -57,15 +58,16 @@ const TokenSelectMenu = ({ getSort, filteredData, onInputChange, onSortClick, se
           );
           const numPrefix = tokenInfo.isOverflow ? `>${ thinsp }` : '';
           const countOptions = getAddressCountOptions(tokenInfo.items.length, locale);
+          const typeName = getTokenTypeName(type, undefined, tQuat);
 
           return (
             <Box key={ type }>
               <Flex justifyContent="space-between">
                 <Text mb={ 3 } color="gray.500" fontWeight={ 600 } fontSize="sm">
-                  { tQuat('addressTxUi.token_group', { ...countOptions, type: getTokenTypeName(type), value: numPrefix + countOptions.value }) }
+                  { tQuat('addressTxUi.token_group', { ...countOptions, type: typeName, value: numPrefix + countOptions.value }) }
                 </Text>
                 { hasSort && (
-                  <Link data-type={ type } onClick={ onSortClick } aria-label={ tQuat('addressTxUi.sort_token_group', { type: getTokenTypeName(type) }) }>
+                  <Link data-type={ type } onClick={ onSortClick } aria-label={ tQuat('addressTxUi.sort_token_group', { type: typeName }) }>
                     <IconSvg name="arrows/east" boxSize={ 5 } transform={ arrowTransform } transitionDuration="faster"/>
                   </Link>
                 ) }

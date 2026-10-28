@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
@@ -33,7 +34,7 @@ const NFTItem = ({ value, isLoading, withTokenLink, chain, ...tokenInstance }: P
   return (
     <NFTItemContainer position="relative">
       <Skeleton loading={ isLoading } className="light">
-        <Tag background="gray.50" zIndex={ 1 } position="absolute" top="18px" right="18px">{ getTokenTypeName(token.type) }</Tag>
+        <Tag background="gray.50" zIndex={ 1 } position="absolute" top="18px" right="18px">{ getTokenTypeName(token.type, undefined, tQuat) }</Tag>
       </Skeleton>
       <Link href={ isLoading ? undefined : tokenInstanceLink } display="inline">
         <NftMedia

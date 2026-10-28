@@ -1563,3 +1563,45 @@ Runtime-перевод собственного UI наград/каталога
 | 2026-10-28 | `ui/showcases/Toast.tsx` | Runtime-перевод RU/KK, основные словари, инвентаризация или передача контекста седьмой группы. |
 | 2026-10-28 | `ui/showcases/Tooltip.tsx` | Runtime-перевод RU/KK, основные словари, инвентаризация или передача контекста седьмой группы. |
 | 2026-10-28 | `ui/showcases/Values.tsx` | Runtime-перевод RU/KK, основные словари, инвентаризация или передача контекста седьмой группы. |
+
+## 2026-10-29: проверенный восьмой шаг T18
+
+Собственные wallet/rewards/Dynamic уведомления, native token и cluster labels, known unfinalized status. Восстановлены четыре сравнения API-типа NATIVE в двух portfolio views. Raw API/SDK errors, SIWE, route/filter/token ids и данные оператора сохранены. TypeScript/ESLint PASS (0 errors, 7 прежних warnings), 116 isolated tests и11 tooling PASS. Встроенные SDK UI и приёмка остаются.
+
+| Дата | Файл | Изменение |
+|---|---|---|
+| 2026-10-29 | `lib/clusters/actionBarUtils.ts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/contexts/rewards.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/i18n/uiMessages.spec.ts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/i18n/uiMessages.ts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/token/tokenTypes.localization.spec.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/token/tokenTypes.ts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/web3/useAddChainClick.spec.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `lib/web3/useAddChainClick.ts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `locales/en.json` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `locales/kk.json` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `locales/ru.json` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/EXTERNAL-UI-NOTES.md` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/PHASE8-HANDOFF.md` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/REMAINING.md` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/core-labels8-translations.json` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/core-toasts8-translations.json` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/inventory.json` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `tools/i18n/inventory.mjs` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/address/tokenSelect/TokenSelectMenu.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/address/tokens/ERC20TokensListItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/address/tokens/ERC20TokensTableItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/address/tokens/NFTItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/multichain/address/portfolio/MultichainAddressTokensListItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/multichain/address/portfolio/MultichainAddressTokensTableItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/nameServices/directories/ClustersActionBar.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/shared/TokenTransfer/TokenTransferListItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/shared/TokenTransfer/TokenTransferTableItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/shared/statusTag/ArbitrumL2TxnBatchStatus.spec.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/shared/statusTag/ArbitrumL2TxnBatchStatus.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/shared/web3/providers/DynamicProvider.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/token/TokenPageTitle.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/tokenInstance/TokenInstancePageTitle.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/tokens/TokensListItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `ui/tokens/TokensTableItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+| 2026-10-29 | `vitest.i18n.config.mts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |

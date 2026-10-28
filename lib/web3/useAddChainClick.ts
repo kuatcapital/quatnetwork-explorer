@@ -1,5 +1,8 @@
+// Modified by Quat Capital, 2026-10-29: runtime network-add notifications; wallet messages unchanged. GPL-3.0.
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { getUiErrorMessage } from 'lib/i18n/uiMessages';
 import * as mixpanel from 'lib/mixpanel/index';
 import { toaster } from 'toolkit/chakra/toaster';
 
@@ -13,6 +16,7 @@ interface Props {
 }
 
 export default function useAddChainClick({ source, onSuccess }: Props) {
+  const { t } = useTranslation();
   const { data: { wallet, provider } = {} } = useProvider();
   const addChain = useAddChain();
   const switchChain = useSwitchChain();
@@ -27,8 +31,8 @@ export default function useAddChainClick({ source, onSuccess }: Props) {
       await switchChain();
 
       toaster.success({
-        title: 'Success',
-        description: 'Successfully added network to your wallet',
+        title: t('common.success'),
+        description: t('coreUi.network_added'),
       });
 
       mixpanel.logEvent(mixpanel.EventTypes.ADD_TO_WALLET, {
@@ -40,9 +44,9 @@ export default function useAddChainClick({ source, onSuccess }: Props) {
       onSuccess?.();
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: (error as Error)?.message || 'Something went wrong',
+        title: t('common.error'),
+        description: getUiErrorMessage(error, t),
       });
     }
-  }, [ addChain, provider, wallet, switchChain, source, onSuccess ]);
+  }, [ addChain, provider, wallet, switchChain, source, onSuccess, t ]);
 }

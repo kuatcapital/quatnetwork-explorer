@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-27: complete token value label localization. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
@@ -63,7 +64,7 @@ const ERC20TokensListItem = ({
           width="auto"
         />
         { isNativeToken && <NativeTokenTag/> }
-        { hasAdditionalTokenTypes && <Tag loading={ isLoading }>{ getTokenTypeName(token.type) }</Tag> }
+        { hasAdditionalTokenTypes && <Tag loading={ isLoading }>{ getTokenTypeName(token.type, undefined, tQuat) }</Tag> }
       </Flex>
       <Flex alignItems="center" pl={ 8 }>
         <AddressEntity

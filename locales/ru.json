@@ -1,7 +1,7 @@
 {
   "_meta": {
     "modifiedBy": "Quat Capital",
-    "modifiedAt": "2026-10-28",
+    "modifiedAt": "2026-10-29",
     "license": "GPL-3.0",
     "status": "in-progress"
   },
@@ -3701,5 +3701,11 @@
     "button_radio": "Группа кнопок с одиночным выбором",
     "expended": "Раскрыто",
     "with_tooltip": "С подсказкой"
+  },
+  "coreUi": {
+    "network_added": "Сеть успешно добавлена в кошелёк"
+  },
+  "coreLabels8": {
+    "cluster_search": "Поиск кластеров по имени или EVM-адресу"
   }
 }

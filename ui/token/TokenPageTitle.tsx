@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, useToken } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
@@ -60,7 +61,7 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, verifiedInfoQuery, hash }: P
     return [
       tokenQuery.data ? {
         slug: tokenQuery.data?.type,
-        name: tokenQuery.data.type === 'NATIVE' ? tQuat('tokenUi.native_token') : getTokenTypeName(tokenQuery.data.type, multichainContext?.chain?.app_config),
+        name: getTokenTypeName(tokenQuery.data.type, multichainContext?.chain?.app_config, tQuat),
         tagType: 'custom' as const,
         ordinal: PREDEFINED_TAG_PRIORITY,
       } : undefined,

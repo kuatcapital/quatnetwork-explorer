@@ -1,4 +1,5 @@
 // Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
+// Modified by Quat Capital, 2026-10-29: use the current runtime locale for cluster search. GPL-3.0.
 import { Flex, VStack, Box } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -42,7 +43,7 @@ const ClustersActionBar = ({
     onViewModeChange(value as ViewMode);
   }, [ onViewModeChange ]);
 
-  const placeholder = getSearchPlaceholder();
+  const placeholder = getSearchPlaceholder(tQuat);
   const showActionBarOnMobile = shouldShowActionBar(pagination.isVisible, false);
   const showActionBarOnDesktop = shouldShowActionBar(pagination.isVisible, true);
 

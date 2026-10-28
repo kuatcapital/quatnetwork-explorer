@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
@@ -44,7 +45,7 @@ const TokenInstancePageTitle = ({ isLoading, token, instance, hash }: Props) => 
     return tQuat('tokenUi.instance_id', { id: instance.id });
   })();
 
-  const tokenTag = token ? <Tag loading={ isLoading }>{ token.type === 'NATIVE' ? tQuat('tokenUi.native_token') : getTokenTypeName(token.type) }</Tag> : null;
+  const tokenTag = token ? <Tag loading={ isLoading }>{ getTokenTypeName(token.type, undefined, tQuat) }</Tag> : null;
 
   const appLink = (() => {
     if (!instance?.external_app_url) {

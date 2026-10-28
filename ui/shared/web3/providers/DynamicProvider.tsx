@@ -1,17 +1,19 @@
+// Modified by Quat Capital, 2026-10-29: own auth notifications follow locale; SDK/API payloads unchanged. GPL-3.0.
 import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
 import type { DynamicContextProps, OnAuthSuccess } from '@dynamic-labs/sdk-react-core';
 import { DynamicContextProvider, getAuthToken } from '@dynamic-labs/sdk-react-core';
 import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { UserInfo } from 'types/api/account';
 
 import config from 'configs/app';
 import useApiFetch from 'lib/api/useApiFetch';
 import { getResourceKey } from 'lib/api/useApiQuery';
-import getErrorMessage from 'lib/errors/getErrorMessage';
 import useGetCsrfToken from 'lib/hooks/useGetCsrfToken';
+import { getUiErrorMessage, OwnUiMessageError } from 'lib/i18n/uiMessages';
 import * as mixpanel from 'lib/mixpanel/index';
 import { chains } from 'lib/web3/chains';
 import { toaster } from 'toolkit/chakra/toaster';
@@ -47,6 +49,7 @@ interface Props {
 }
 
 const DynamicProvider = ({ children }: Props) => {
+  const { t } = useTranslation();
 
   const apiFetch = useApiFetch();
   const queryClient = useQueryClient();
@@ -64,7 +67,7 @@ const DynamicProvider = ({ children }: Props) => {
         },
       });
       if (!('name' in response)) {
-        throw Error('Something went wrong');
+        throw new OwnUiMessageError('contracts.unexpected_error', 'Something went wrong');
       }
       queryClient.setQueryData(getResourceKey('general:user_info'), () => response);
       csrfQuery.refetch();
@@ -74,11 +77,11 @@ const DynamicProvider = ({ children }: Props) => {
       });
     } catch (error) {
       toaster.error({
-        title: 'Error',
-        description: getErrorMessage(error),
+        title: t('common.error'),
+        description: getUiErrorMessage(error, t),
       });
     }
-  }, [ apiFetch, csrfQuery, queryClient ]);
+  }, [ apiFetch, csrfQuery, queryClient, t ]);
 
   const settings: DynamicContextProps['settings'] = React.useMemo(() => {
     const environmentId = feature.isEnabled && feature.connectorType === 'dynamic' ? feature.dynamic.environmentId : undefined;

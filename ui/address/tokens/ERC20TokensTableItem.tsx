@@ -1,6 +1,8 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 import { Flex, HStack } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { AddressTokensErc20Item } from './types';
 
@@ -27,6 +29,7 @@ const ERC20TokensTableItem = ({
   isLoading,
   hasAdditionalTokenTypes,
 }: Props) => {
+  const { t } = useTranslation();
 
   const {
     valueBn: tokenQuantity,
@@ -63,7 +66,7 @@ const ERC20TokensTableItem = ({
           />
           { isNativeToken && <NativeTokenTag/> }
         </HStack>
-        { hasAdditionalTokenTypes && <Tag loading={ isLoading } mt={ 2 }>{ getTokenTypeName(token.type) }</Tag> }
+        { hasAdditionalTokenTypes && <Tag loading={ isLoading } mt={ 2 }>{ getTokenTypeName(token.type, undefined, t) }</Tag> }
       </TableCell>
       <TableCell verticalAlign={ cellVerticalAlign }>
         <Flex alignItems="center" width="150px" justifyContent="space-between">

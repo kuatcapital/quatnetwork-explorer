@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-29",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "coreUi": {
+      "network_added": "Successfully added network to your wallet"
+    }
+  },
+  "ru": {
+    "coreUi": {
+      "network_added": "Сеть успешно добавлена в кошелёк"
+    }
+  },
+  "kk": {
+    "coreUi": {
+      "network_added": "Желі әмиянға сәтті қосылды"
+    }
+  }
+}

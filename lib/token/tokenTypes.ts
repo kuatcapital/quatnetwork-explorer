@@ -1,3 +1,6 @@
+// Modified by Quat Capital, 2026-10-29: localize token display names while preserving protocol ids. GPL-3.0.
+import type { TFunction } from 'i18next';
+
 import type { NFTTokenType, TokenType } from 'types/api/token';
 import type { ClusterChainConfig } from 'types/multichain';
 
@@ -34,12 +37,14 @@ export const getTokenTypes = (nftOnly: boolean, chainConfig: Array<ClusterChainC
 
 export const NFT_TOKEN_TYPE_IDS: Array<NFTTokenType> = Object.keys(NFT_TOKEN_TYPES) as Array<NFTTokenType>;
 
-export function getTokenTypeName(typeId: string, chainConfig?: Array<ClusterChainConfig['app_config']> | ClusterChainConfig['app_config']) {
+export function getTokenTypeName(
+  typeId: string, chainConfig?: Array<ClusterChainConfig['app_config']> | ClusterChainConfig['app_config'], t?: TFunction,
+) {
   if (typeId === 'NATIVE') {
-    return 'Native token';
+    return t ? t('tokenUi.native_token') : 'Native token';
   }
   const tokenTypes = getTokenTypes(false, chainConfig);
-  return tokenTypes[typeId as keyof typeof tokenTypes] || typeId;
+  return Object.hasOwn(tokenTypes, typeId) ? tokenTypes[typeId as keyof typeof tokenTypes] || typeId : typeId;
 }
 
 export function isFungibleTokenType(typeId: TokenType): boolean {

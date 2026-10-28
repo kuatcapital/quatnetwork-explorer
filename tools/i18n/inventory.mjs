@@ -1,4 +1,5 @@
 // Modified by Quat Capital on 2026-10-25: T18 candidate string inventory.
+// Modified by Quat Capital on 2026-10-29: record generator revision and report generation time. GPL-3.0.
 // Licensed under GNU GPL v3.0; see LICENSE.
 /* eslint-disable no-console */
 import fs from 'node:fs/promises';
@@ -255,7 +256,8 @@ async function main() {
 
   const report = {
     _meta: {
-      modifiedBy: 'Quat Capital', modifiedOn: '2026-10-25', license: 'GPL-3.0',
+      modifiedBy: 'Quat Capital', modifiedOn: '2026-10-29', license: 'GPL-3.0',
+      generatedAt: new Date().toISOString(),
       purpose: 'T18 AST candidate inventory; manual review is mandatory.',
       sourceRoots: SOURCE_ROOTS, typescriptVersion: ts.version,
     },

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "modifiedBy": "Quat Capital",
-    "modifiedAt": "2026-10-28",
+    "modifiedAt": "2026-10-29",
     "license": "GPL-3.0",
     "status": "draft-native-review-required"
   },
@@ -3573,5 +3573,11 @@
     "button_radio": "Бір нұсқа таңдалатын батырмалар тобы",
     "expended": "Ашылған",
     "with_tooltip": "Көмек мәтінімен"
+  },
+  "coreUi": {
+    "network_added": "Желі әмиянға сәтті қосылды"
+  },
+  "coreLabels8": {
+    "cluster_search": "Кластерлерді атауы немесе EVM мекенжайы бойынша іздеу"
   }
 }

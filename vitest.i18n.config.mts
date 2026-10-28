@@ -1,6 +1,7 @@
 // Quat Capital, 2026-10-25: isolated i18n tests without reading application ENV fixtures.
 // Modified by Quat Capital, 2026-10-26: include stable-id stats metadata regressions. GPL-3.0.
 // Modified by Quat Capital, 2026-10-27: metadata and L2 runtime localization regressions. GPL-3.0.
+// Modified by Quat Capital, 2026-10-29: network actions, native token links and protocol-status regressions. GPL-3.0.
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -26,6 +27,10 @@ export default defineConfig({
       'ui/address/contract/localization.spec.tsx',
       'ui/address/remainderLocalization.spec.tsx',
       'ui/snippets/localization.spec.tsx',
+      'lib/web3/useAddChainClick.spec.tsx',
+      'lib/token/tokenTypes.localization.spec.tsx',
+      'lib/clusters/actionBarUtils.spec.ts',
+      'ui/shared/statusTag/ArbitrumL2TxnBatchStatus.spec.tsx',
     ],
     exclude: [ '**/node_modules/**', '**/node_modules_linux/**' ],
   },

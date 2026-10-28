@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-25: T18 reviewed literal localization. GPL-3.0.
 import { Flex, HStack, Grid, GridItem } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
@@ -86,7 +87,7 @@ const TokensListItem = ({
             noLink={ type === 'NATIVE' }
           />
           <Flex ml={ 3 } flexShrink={ 0 } columnGap={ 1 }>
-            <Tag loading={ isLoading }>{ type === 'NATIVE' ? tQuat('tokenUi.native_token') : getTokenTypeName(type, chainInfo?.app_config) }</Tag>
+            <Tag loading={ isLoading }>{ getTokenTypeName(type, chainInfo?.app_config, tQuat) }</Tag>
             { bridgedChainTag && <Tag loading={ isLoading }>{ bridgedChainTag }</Tag> }
           </Flex>
           <Skeleton loading={ isLoading } textStyle="sm" ml="auto" color="text.secondary" minW="24px" textAlign="right">

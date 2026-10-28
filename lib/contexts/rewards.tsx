@@ -1,7 +1,9 @@
+// Modified by Quat Capital, 2026-10-29: localized own reward-error labels; signed messages and API errors unchanged. GPL-3.0.
 import { useQueryClient, type UseQueryResult } from '@tanstack/react-query';
 import { useToggle } from '@uidotdev/usehooks';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useMemo, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSignMessage, useSwitchChain } from 'wagmi';
 
 import type * as rewards from '@blockscout/points-types';
@@ -12,8 +14,8 @@ import useApiFetch from 'lib/api/useApiFetch';
 import useApiQuery, { getResourceKey } from 'lib/api/useApiQuery';
 import * as cookies from 'lib/cookies';
 import decodeJWT from 'lib/decodeJWT';
-import getErrorMessage from 'lib/errors/getErrorMessage';
 import getErrorObjPayload from 'lib/errors/getErrorObjPayload';
+import { getUiErrorMessage } from 'lib/i18n/uiMessages';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import removeQueryParam from 'lib/router/removeQueryParam';
 import useAccount from 'lib/web3/useAccount';
@@ -108,6 +110,7 @@ type Props = {
 };
 
 export function RewardsContextProvider({ children }: Props) {
+  const { t } = useTranslation();
   const router = useRouter();
   const apiFetch = useApiFetch();
   const queryClient = useQueryClient();
@@ -155,10 +158,10 @@ export function RewardsContextProvider({ children }: Props) {
   const errorToast = useCallback((error: unknown) => {
     const apiError = getErrorObjPayload<{ message: string }>(error);
     toaster.error({
-      title: 'Error',
-      description: apiError?.message || getErrorMessage(error) || 'Something went wrong. Try again later.',
+      title: t('common.error'),
+      description: apiError?.message || getUiErrorMessage(error, t, 'contracts.try_later'),
     });
-  }, [ ]);
+  }, [ t ]);
 
   const onLoginSuccess = useCallback((token: string) => {
     cookies.set(cookies.NAMES.REWARDS_API_TOKEN, token, { expires: 365 });

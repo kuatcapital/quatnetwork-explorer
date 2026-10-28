@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime native-token labels preserve machine token ids. GPL-3.0.
 // Modified by Quat Capital, 2026-10-27: complete runtime multichain localization. GPL-3.0.
 import { Grid } from '@chakra-ui/react';
 import { BigNumber } from 'bignumber.js';
@@ -47,7 +48,7 @@ const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
     <ListItemMobile py={ 3 } rowGap={ 3 } textStyle="sm">
       { isNativeToken ?
         <NativeTokenTag chainConfig={ chainInfo?.app_config }/> :
-        <Tag loading={ isLoading }>{ getTokenTypeName(data.token.type, chainInfo?.app_config) }</Tag> }
+        <Tag loading={ isLoading }>{ getTokenTypeName(data.token.type, chainInfo?.app_config, tQuat) }</Tag> }
       <TokenEntity
         token={ data.token }
         chain={ chainInfo }
@@ -57,9 +58,9 @@ const MultichainAddressTokensListItem = ({ data, isLoading }: Props) => {
         fontWeight="600"
         width="auto"
         maxW="100%"
-        noLink={ data.token.type === tQuat('multiUi.native') }
+        noLink={ data.token.type === 'NATIVE' }
       />
-      { data.token.type !== tQuat('multiUi.native') && (
+      { data.token.type !== 'NATIVE' && (
         <AddressEntity
           address={{ hash: data.token.address_hash }}
           isLoading={ isLoading }

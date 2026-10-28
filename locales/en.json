@@ -1,7 +1,7 @@
 {
   "_meta": {
     "modifiedBy": "Quat Capital",
-    "modifiedAt": "2026-10-28",
+    "modifiedAt": "2026-10-29",
     "license": "GPL-3.0",
     "status": "in-progress"
   },
@@ -3573,5 +3573,11 @@
     "button_radio": "Button Group Radio",
     "expended": "Expended",
     "with_tooltip": "With tooltip"
+  },
+  "coreUi": {
+    "network_added": "Successfully added network to your wallet"
+  },
+  "coreLabels8": {
+    "cluster_search": "Search clusters by name or EVM address"
   }
 }
