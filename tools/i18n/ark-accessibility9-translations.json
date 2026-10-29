@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-10-29",
+    "license": "GPL-3.0",
+    "kazakhReview": "Native speaker review required before publication."
+  },
+  "en": {
+    "arkUi": {
+      "input_label": "pin code {{position}} of {{total}}",
+      "rating_stars_one": "{{value}} stars",
+      "rating_stars_other": "{{value}} stars",
+      "selected_count": "{{value}} selected",
+      "clear_value": "Clear value",
+      "close_popover": "close",
+      "dismiss_notification": "Dismiss notification",
+      "notifications_region": "{{placement}} Notifications {{hotkey}}",
+      "placement_top": "top",
+      "placement_top_start": "top-start",
+      "placement_top_end": "top-end",
+      "placement_bottom": "bottom",
+      "placement_bottom_start": "bottom-start",
+      "placement_bottom_end": "bottom-end"
+    }
+  },
+  "ru": {
+    "arkUi": {
+      "input_label": "Символ PIN-кода {{position}} из {{total}}",
+      "rating_stars_one": "{{value}} звезда",
+      "rating_stars_few": "{{value}} звезды",
+      "rating_stars_many": "{{value}} звёзд",
+      "rating_stars_other": "{{value}} звезды",
+      "selected_count": "Выбрано: {{value}}",
+      "clear_value": "Очистить значение",
+      "close_popover": "Закрыть",
+      "dismiss_notification": "Закрыть уведомление",
+      "notifications_region": "Уведомления {{placement}}. {{hotkey}}",
+      "placement_top": "сверху",
+      "placement_top_start": "сверху слева",
+      "placement_top_end": "сверху справа",
+      "placement_bottom": "снизу",
+      "placement_bottom_start": "снизу слева",
+      "placement_bottom_end": "снизу справа"
+    }
+  },
+  "kk": {
+    "arkUi": {
+      "input_label": "PIN-код таңбасы {{position}}, барлығы {{total}}",
+      "rating_stars_one": "{{value}} жұлдыз",
+      "rating_stars_other": "{{value}} жұлдыз",
+      "selected_count": "Таңдалды: {{value}}",
+      "clear_value": "Мәнді тазарту",
+      "close_popover": "Жабу",
+      "dismiss_notification": "Хабарландыруды жабу",
+      "notifications_region": "Хабарландырулар {{placement}}. {{hotkey}}",
+      "placement_top": "жоғарыда",
+      "placement_top_start": "жоғарғы сол жақта",
+      "placement_top_end": "жоғарғы оң жақта",
+      "placement_bottom": "төменде",
+      "placement_bottom_start": "төменгі сол жақта",
+      "placement_bottom_end": "төменгі оң жақта"
+    }
+  }
+}

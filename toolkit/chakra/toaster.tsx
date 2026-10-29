@@ -1,3 +1,4 @@
+// Modified by Quat Capital, 2026-10-29: runtime toast-region and dismissal accessibility labels. GPL-3.0.
 'use client';
 
 import {
@@ -8,8 +9,11 @@ import {
   Toast,
   createToaster,
 } from '@chakra-ui/react';
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { SECOND } from '../utils/consts';
+import { getToastRegionLabel } from './accessibilityTranslations';
 import { CloseButton } from './close-button';
 
 export const toaster = createToaster({
@@ -25,9 +29,14 @@ export const toaster = createToaster({
 });
 
 export const Toaster = () => {
+  const { t } = useTranslation();
   return (
     <Portal>
-      <ChakraToaster toaster={ toaster } insetInline={{ mdDown: '4' }}>
+      <ChakraToaster
+        toaster={ toaster }
+        aria-label={ getToastRegionLabel(t, toaster.attrs.placement, toaster.attrs.hotkey) }
+        insetInline={{ mdDown: '4' }}
+      >
         { (toast) => {
           const closable = toast.meta?.closable !== undefined ? toast.meta.closable : true;
 
@@ -48,7 +57,7 @@ export const Toaster = () => {
                 <Toast.ActionTrigger>{ toast.action.label }</Toast.ActionTrigger>
               ) }
               { closable && (
-                <Toast.CloseTrigger asChild>
+                <Toast.CloseTrigger asChild aria-label={ t('arkUi.dismiss_notification') }>
                   <CloseButton/>
                 </Toast.CloseTrigger>
               ) }

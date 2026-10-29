@@ -3579,5 +3579,21 @@
   },
   "coreLabels8": {
     "cluster_search": "Search clusters by name or EVM address"
+  },
+  "arkUi": {
+    "input_label": "pin code {{position}} of {{total}}",
+    "rating_stars_one": "{{value}} stars",
+    "rating_stars_other": "{{value}} stars",
+    "selected_count": "{{value}} selected",
+    "clear_value": "Clear value",
+    "close_popover": "close",
+    "dismiss_notification": "Dismiss notification",
+    "notifications_region": "{{placement}} Notifications {{hotkey}}",
+    "placement_top": "top",
+    "placement_top_start": "top-start",
+    "placement_top_end": "top-end",
+    "placement_bottom": "bottom",
+    "placement_bottom_start": "bottom-start",
+    "placement_bottom_end": "bottom-end"
   }
 }

@@ -3707,5 +3707,23 @@
   },
   "coreLabels8": {
     "cluster_search": "Поиск кластеров по имени или EVM-адресу"
+  },
+  "arkUi": {
+    "input_label": "Символ PIN-кода {{position}} из {{total}}",
+    "rating_stars_one": "{{value}} звезда",
+    "rating_stars_few": "{{value}} звезды",
+    "rating_stars_many": "{{value}} звёзд",
+    "rating_stars_other": "{{value}} звезды",
+    "selected_count": "Выбрано: {{value}}",
+    "clear_value": "Очистить значение",
+    "close_popover": "Закрыть",
+    "dismiss_notification": "Закрыть уведомление",
+    "notifications_region": "Уведомления {{placement}}. {{hotkey}}",
+    "placement_top": "сверху",
+    "placement_top_start": "сверху слева",
+    "placement_top_end": "сверху справа",
+    "placement_bottom": "снизу",
+    "placement_bottom_start": "снизу слева",
+    "placement_bottom_end": "снизу справа"
   }
 }

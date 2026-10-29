@@ -1,19 +1,20 @@
 <!-- Modified by Quat Capital on 2026-10-28: actionable T18 remainder after phase6 validation. GPL-3.0. -->
 <!-- Modified by Quat Capital on 2026-10-29: six own UI gaps closed in checked phase8; accessibility is next. GPL-3.0. -->
+<!-- Modified by Quat Capital on 2026-10-29: step9 accessibility integration and explicit external UI remainder. GPL-3.0. -->
 # T18: что ещё нужно закончить
 
-Дата сверки: 29.10.2026. Это остаток после восьмого шага, не новый объём задачи. Проверки словарей и unit-тесты не заменяют проверку полноты интерфейса. Итоги новых групп — `PHASE7-HANDOFF.md`, `PHASE8-HANDOFF.md`.
+Дата сверки: 29.10.2026. Это остаток после девятого шага, не новый объём задачи. Проверки словарей и unit-тесты не заменяют проверку полноты интерфейса. Итоги последних групп — `PHASE8-HANDOFF.md`, `PHASE9-HANDOFF.md`.
 
 Уточнение владельца от 28.10.2026: оставшаяся локализация и языковая приёмка — только RU/KK. Английский уже исходный язык эксплорера: отдельно его не переводить, не редактировать и не проверять обходом экранов. Существующий EN и переключатель сохраняются; общие проверки кода, структуры словарей и сборки остаются обязательными.
 
 ## 1. Собственные экраны
 
 - Шаг8 закрыл toasts добавления сети/наград/собственной ошибки Dynamic, cluster search placeholder, Native token display и known unfinalized status. Исправлены четыре сравнения API-типа с переводом в двух portfolio-компонентах; machine ids снова стабильны. Эти места заново не извлекать.
-- Следующий небольшой шаг9: supported accessibility translations/aria в PinInput, Rating, Progress, Select, Popover и Toaster. Сохранять caller overrides, controlled values и горячие клавиши; прямую DOM-подмену не использовать.
+- Шаг9 подключил поддержанные accessibility translations/aria в PinInput, Rating, Progress/ProgressCircle, Select, Popover и Toaster. Проверены caller overrides, сохранение отредактированных значений и фокуса при RU ↔ KK, прежние горячие клавиши; подробности в `PHASE9-HANDOFF.md`.
 
 - Оболочки `/chakra`, `/sprite`, `/login` используют `developerUi`; в седьмой группе подключены RU/KK в 34 showcase-компонентах. `/chakra` и `/sprite` используют `base = factory([])` без dev-guard (`nextjs/getServerSideProps/main.ts`); поэтому содержимое не исключалось из перевода. Примеры исходных данных, Lorem ipsum и технические prop/value labels сохраняются. Браузерный обход и встроенные accessibility-строки Chakra/Ark UI ещё проверить.
 - Просмотреть динамические пользовательские подписи, сообщения и aria-label во всех production-разделах по `tools/i18n/inventory.json`. После шестой группы оставшийся простой JSX-текст вне showcases в основном состоит из брендов, EIP и единиц; это не доказательство отсутствия пропусков в выражениях и данных конфигурации.
-- Динамические ссылки `t(...)`: после шага8 check-locales отмечает 93 места для ручной сверки. Части покрыты regression specs; обращения Accordion/Table сверены с ограниченными таблицами ключей, own-error/native labels проверены отдельно. Нельзя трактовать отсутствие literal-missing errors как полное покрытие.
+- Динамические ссылки `t(...)`: после шага9 check-locales отмечает 94 места для ручной сверки. Части покрыты regression specs; обращения Accordion/Table и toast placement сверены с ограниченными таблицами ключей, own-error/native labels проверены отдельно. Нельзя трактовать отсутствие literal-missing errors как полное покрытие.
 
 ## 2. Встроенные интерфейсы
 
@@ -39,4 +40,4 @@
 
 ## 4. Сохранность
 
-29.10 свежий ls-remote подтвердил frontend `56480fb` на GitHub в astra/i18n. Более новые шаги не объявлять отправленными без успешного push/remote SHA. Основной журнал пока требует GitHub-авторизации; точные текущие локальные SHA смотреть через `git log`. Исторические записи о9ec95ed и локальной сохранности не являются текущим состоянием remote.
+29.10 успешно опубликованы frontend `048ea56` и основной журнал `721dd77` в `astra/i18n`. Следующий шаг9 считать опубликованным только после успешного push; его итог — `PHASE9-HANDOFF.md` и актуальный основной handoff. Старые записи об отсутствии авторизации не описывают текущую сохранность шага8.

@@ -1,5 +1,7 @@
+// Modified by Quat Capital, 2026-10-29: override Ark close aria text using runtime translations. GPL-3.0.
 import { Popover as ChakraPopover, Portal } from '@chakra-ui/react';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CloseButton } from './close-button';
 
@@ -37,11 +39,13 @@ export const PopoverCloseTrigger = React.forwardRef<
   HTMLButtonElement,
   ChakraPopover.CloseTriggerProps
 >(function PopoverCloseTrigger(props, ref) {
+  const { t } = useTranslation();
   return (
     <ChakraPopover.CloseTrigger
       position="absolute"
       top="1"
       insetEnd="1"
+      aria-label={ t('arkUi.close_popover') }
       { ...props }
       asChild
       ref={ ref }
@@ -55,6 +59,7 @@ export const PopoverCloseTriggerWrapper = React.forwardRef<
   HTMLButtonElement,
   ChakraPopover.CloseTriggerProps
 >(function PopoverCloseTriggerWrapper(props, ref) {
+  const { t } = useTranslation();
   const { disabled, ...rest } = props;
 
   if (disabled) {
@@ -64,6 +69,7 @@ export const PopoverCloseTriggerWrapper = React.forwardRef<
   return (
     <ChakraPopover.CloseTrigger
       ref={ ref }
+      aria-label={ t('arkUi.close_popover') }
       { ...rest }
       asChild
     />

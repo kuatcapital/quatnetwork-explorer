@@ -2,6 +2,7 @@
 // Modified by Quat Capital, 2026-10-26: include stable-id stats metadata regressions. GPL-3.0.
 // Modified by Quat Capital, 2026-10-27: metadata and L2 runtime localization regressions. GPL-3.0.
 // Modified by Quat Capital, 2026-10-29: network actions, native token links and protocol-status regressions. GPL-3.0.
+// Modified by Quat Capital, 2026-10-29: installed Ark accessibility integration regressions. GPL-3.0.
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -15,6 +16,7 @@ export default defineConfig({
       'ui/shared/Utilization/formatUtilization.spec.ts',
       'toolkit/components/forms/utils/getFormFieldErrorText.spec.ts',
       'toolkit/components/charts/utils/localeFormatting.spec.ts',
+      'toolkit/chakra/accessibilityTranslations.spec.tsx',
       'ui/shared/gas/formatGasValue.spec.ts',
       'ui/epochs/electionRewards/utils.spec.ts',
       'ui/advancedFilter/localization.spec.ts',

@@ -1,4 +1,5 @@
 <!-- Modified by Quat Capital, 2026-10-25: T18 change log and partial implementation checkpoint. GPL-3.0. -->
+<!-- Modified by Quat Capital, 2026-10-29: step9 Ark accessibility translations and validation. GPL-3.0. -->
 # Quat Network Testnet explorer — modified Blockscout frontend
 
 This repository is the Corresponding Source of the explorer frontend served at
@@ -1605,3 +1606,29 @@ Runtime-перевод собственного UI наград/каталога
 | 2026-10-29 | `ui/tokens/TokensListItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
 | 2026-10-29 | `ui/tokens/TokensTableItem.tsx` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
 | 2026-10-29 | `vitest.i18n.config.mts` | T18: runtime RU/KK labels, стабильные machine values, regression checks или checkpoint. |
+
+## T18 · 2026-10-29 · шаг 9: подписи доступности Chakra/Ark
+
+Runtime RU/KK для PIN, рейтинга, прогресса, выбора, всплывающих окон и уведомлений. Сохранены caller overrides, машинные значения, состояние и фокус при переключении языка.
+
+| Дата | Файл | Изменение |
+|---|---|---|
+| 2026-10-29 | `QUAT-CHANGES.md` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `locales/en.json` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `locales/ru.json` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `locales/kk.json` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/accessibilityTranslations.ts` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/accessibilityTranslations.spec.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/pin-input.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/popover.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/progress-circle.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/progress.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/rating.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/select.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `toolkit/chakra/toaster.tsx` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `tools/i18n/ark-accessibility9-translations.json` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `tools/i18n/inventory.json` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `tools/i18n/PHASE9-HANDOFF.md` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `tools/i18n/REMAINING.md` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `tools/i18n/EXTERNAL-UI-NOTES.md` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+| 2026-10-29 | `vitest.i18n.config.mts` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |

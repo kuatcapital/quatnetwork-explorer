@@ -1,4 +1,5 @@
 // Modified by Quat Capital, 2026-10-26: selected-locale toolkit defaults. GPL-3.0.
+// Modified by Quat Capital, 2026-10-29: localized clear-value aria and multi-selection summary. GPL-3.0.
 'use client';
 
 import type { ListCollection } from '@chakra-ui/react';
@@ -9,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 
 import ArrowIcon from 'icons/arrows/east-mini.svg';
 import CheckIcon from 'icons/check.svg';
+import { formatNumber } from 'lib/format/localeNumbers';
+import { useLocale } from 'lib/i18n/provider';
 
 import { FilterInput } from '../components/filters/FilterInput';
 import { CloseButton } from './close-button';
@@ -66,8 +69,9 @@ export const SelectClearTrigger = React.forwardRef<
   HTMLButtonElement,
   ChakraSelect.ClearTriggerProps
 >(function SelectClearTrigger(props, ref) {
+  const { t } = useTranslation();
   return (
-    <ChakraSelect.ClearTrigger asChild { ...props } ref={ ref }>
+    <ChakraSelect.ClearTrigger asChild aria-label={ t('arkUi.clear_value') } { ...props } ref={ ref }>
       <CloseButton
         pointerEvents="auto"
       />
@@ -130,6 +134,8 @@ export const SelectValueText = React.forwardRef<
   HTMLSpanElement,
   SelectValueTextProps
 >(function SelectValueText(props, ref) {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { children, size, required, invalid, errorText, mode, ...rest } = props;
   const context = useSelectContext();
 
@@ -177,7 +183,7 @@ export const SelectValueText = React.forwardRef<
     }
 
     // FIXME: we don't have multiple selection in the select yet
-    return `${ items.length } selected`;
+    return t('arkUi.selected_count', { value: formatNumber(items.length, locale) });
   })();
 
   return (

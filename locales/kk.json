@@ -3579,5 +3579,21 @@
   },
   "coreLabels8": {
     "cluster_search": "Кластерлерді атауы немесе EVM мекенжайы бойынша іздеу"
+  },
+  "arkUi": {
+    "input_label": "PIN-код таңбасы {{position}}, барлығы {{total}}",
+    "rating_stars_one": "{{value}} жұлдыз",
+    "rating_stars_other": "{{value}} жұлдыз",
+    "selected_count": "Таңдалды: {{value}}",
+    "clear_value": "Мәнді тазарту",
+    "close_popover": "Жабу",
+    "dismiss_notification": "Хабарландыруды жабу",
+    "notifications_region": "Хабарландырулар {{placement}}. {{hotkey}}",
+    "placement_top": "жоғарыда",
+    "placement_top_start": "жоғарғы сол жақта",
+    "placement_top_end": "жоғарғы оң жақта",
+    "placement_bottom": "төменде",
+    "placement_bottom_start": "төменгі сол жақта",
+    "placement_bottom_end": "төменгі оң жақта"
   }
 }
