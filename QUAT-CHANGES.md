@@ -2,6 +2,18 @@
 <!-- Modified by Quat Capital, 2026-10-29: step9 Ark accessibility translations and validation. GPL-3.0. -->
 # Quat Network Testnet explorer — modified Blockscout frontend
 <!-- Modified by Quat Capital, 2026-11-01: Dynamic runtime dictionaries, bridge and pinned SDK export guard. GPL-3.0. -->
+<!-- Modified by Quat Capital, 2026-11-02: document owner-approved scope and preserve all completed translations. GPL-3.0. -->
+
+## T18 · 2026-11-02 · завершение обычного пользовательского сценария
+
+По решению владельца от 01.11 сохраняются все десять опубликованных шагов перевода (`0b87bd2`), включая сложные страницы и Dynamic. Оставшиеся шесть сложных инструментов разрешены на EN. Приёмка ограничена обычным просмотром транзакций, адресов, балансов и токенов RU/KK; браузерная проверка, вычитка KK и отложенная сборка/доставка ещё не завершены. Код и словари не менялись, проверки кода заново не запускались.
+
+| Date | File | Change |
+|------|------|--------|
+| 2026-11-02 | `tools/i18n/REMAINING.md` | Точный остаток и чек-лист обычного просмотра без подключения кошелька; исключён новый перевод сложных инструментов. |
+| 2026-11-02 | `tools/i18n/EXTERNAL-UI-NOTES.md` | Старые исследования внешних UI помечены справкой, готовый Dynamic сохранён. |
+| 2026-11-02 | `tools/i18n/PHASE10-HANDOFF.md` | Записан опубликованный шаг10 и новый объём продолжения. |
+| 2026-11-02 | `QUAT-CHANGES.md` | Зафиксировано изменение объёма без изменения программы и словарей. |
 
 This repository is the Corresponding Source of the explorer frontend served at
 https://testnet.quatcapital.kz (Quat Network Testnet, chainId 77477).

@@ -3,6 +3,9 @@
 <!-- Modified by Quat Capital on 2026-10-29: supported Chakra/Ark accessibility translations integrated. GPL-3.0. -->
 # T18: встроенные интерфейсы — факты для продолжения
 <!-- Modified by Quat Capital, 2026-11-01: Dynamic runtime bridge and state-based SDK export guard. GPL-3.0. -->
+<!-- Modified by Quat Capital, 2026-11-02: external UI research retained as reference outside mandatory T18 translation scope. GPL-3.0. -->
+
+**Актуально на 02.11.2026:** по решению владельца сохраняем все готовые переводы; оставшиеся Monaco/Swagger/GraphiQL/Reown/Multisender/swap разрешены на EN. Нижеследующие исследования и старые указания «следующий шаг» — историческая справка, не обязательный остаток T18. Продолжать по обычному read-only сценарию из `REMAINING.md`. Полный обход Dynamic и других кошельков не требуется для языковой приёмки этого сценария; готовые код, патч и регрессионные тесты Dynamic сохраняются.
 
 Проверено 28.10.2026 по локальным исходникам и декларациям установленных зависимостей. Это состояние данного checkout, не утверждение о последних доступных версиях. Файлы зависимостей не менялись.
 
