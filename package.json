@@ -4,7 +4,7 @@
   "private": false,
   "quatModification": {
     "modifiedBy": "Quat Capital",
-    "modifiedAt": "2026-10-25",
+    "modifiedAt": "2026-11-01",
     "description": "Runtime RU/KK/EN localization; distributed under GPL-3.0"
   },
   "homepage": "https://github.com/blockscout/frontend#readme",
@@ -48,7 +48,7 @@
     "sitemap:generate:dev": "./tools/scripts/sitemap-generator.dev.sh",
     "monitoring:prometheus:local": "docker run --name blockscout_prometheus -d -p 127.0.0.1:9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus",
     "monitoring:grafana:local": "docker run -d -p 4000:3000 --name=blockscout_grafana --user $(id -u) --volume $(pwd)/grafana:/var/lib/grafana grafana/grafana-enterprise",
-    "postinstall": "chakra typegen ./toolkit/theme/theme.ts"
+    "postinstall": "node tools/i18n/patch-dynamic.mjs && chakra typegen ./toolkit/theme/theme.ts"
   },
   "dependencies": {
     "@blockscout/bens-types": "1.4.1",
@@ -61,6 +61,7 @@
     "@blockscout/zetachain-cctx-types": "^1.0.0-rc.6",
     "@chakra-ui/react": "3.33.0",
     "@dynamic-labs/ethereum": "4.74.1",
+    "@dynamic-labs/locale": "4.74.1",
     "@dynamic-labs/sdk-react-core": "4.74.1",
     "@dynamic-labs/wagmi-connector": "4.74.1",
     "@emotion/react": "11.14.0",

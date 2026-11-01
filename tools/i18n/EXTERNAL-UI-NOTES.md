@@ -2,6 +2,7 @@
 <!-- Modified by Quat Capital on 2026-10-29: own Dynamic errors localized separately from the SDK UI. GPL-3.0. -->
 <!-- Modified by Quat Capital on 2026-10-29: supported Chakra/Ark accessibility translations integrated. GPL-3.0. -->
 # T18: встроенные интерфейсы — факты для продолжения
+<!-- Modified by Quat Capital, 2026-11-01: Dynamic runtime bridge and state-based SDK export guard. GPL-3.0. -->
 
 Проверено 28.10.2026 по локальным исходникам и декларациям установленных зависимостей. Это состояние данного checkout, не утверждение о последних доступных версиях. Файлы зависимостей не менялись.
 
@@ -23,7 +24,11 @@
 - Регрессии следующего шага: настоящий SDK i18next RU → KK → RU, обновление KK без смены языка, plurals/placeholders/URL, сохранение экземпляра и mounted state, отказ загрузки JSON. React-binding SDK использует отдельную установленную копию `react-i18next`: probe должен подключать именно её. Не считать probe проверкой реального подключения кошелька.
 - При копировании исходного словаря сохранить MIT attribution из `@dynamic-labs/locale/LICENSE`: Dynamic Labs, Inc., 2022. Данные auth/API и пользователя не переводить. Полный словарь не гарантирует отсутствия hardcoded строк внутри SDK.
 
-Код шага 10 и его словари ещё не создавались; эти факты сохранены для следующей сессии.
+### Выполнено 01.11.2026
+
+- Шаг10 реализован: все 1005 исходных строк Dynamic объединены в canonical dynamicUi, RU дополнен двумя plural forms. Provider использует runtime-мост вместо повторной установки locale prop. SDK i18next и отдельный React-binding проверены при переключении и reload без потери состояния; см. `PHASE10-HANDOFF.md`.
+- В EmbeddedRevealView обнаружена зависимость видимости экспорта от `title.includes('Agree')`. Postinstall-патч `patch-dynamic.mjs` заменяет её на состояния hasInjectedCredential / isPromptForExport в js и cjs. Версия и хеши исходников строго проверяются; обновление SDK требует пересмотра патча. Поведение подтверждено отдельными тестами, Docker build пока не запускалась.
+- MIT attribution сохранён. Исторические пункты «следующий шаг» выше описывают подготовку, а не текущий остаток Dynamic. Остаются его реальная браузерная приёмка и вычитка KK; наличие полного словаря не доказывает полноту всех hardcoded/iframe UI.
 
 ## Reown
 

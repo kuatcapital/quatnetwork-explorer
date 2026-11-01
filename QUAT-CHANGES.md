@@ -1,6 +1,7 @@
 <!-- Modified by Quat Capital, 2026-10-25: T18 change log and partial implementation checkpoint. GPL-3.0. -->
 <!-- Modified by Quat Capital, 2026-10-29: step9 Ark accessibility translations and validation. GPL-3.0. -->
 # Quat Network Testnet explorer — modified Blockscout frontend
+<!-- Modified by Quat Capital, 2026-11-01: Dynamic runtime dictionaries, bridge and pinned SDK export guard. GPL-3.0. -->
 
 This repository is the Corresponding Source of the explorer frontend served at
 https://testnet.quatcapital.kz (Quat Network Testnet, chainId 77477).
@@ -1632,3 +1633,30 @@ Runtime RU/KK для PIN, рейтинга, прогресса, выбора, в
 | 2026-10-29 | `tools/i18n/REMAINING.md` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
 | 2026-10-29 | `tools/i18n/EXTERNAL-UI-NOTES.md` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
 | 2026-10-29 | `vitest.i18n.config.mts` | Подписи доступности RU/KK, регрессии либо фиксация шага 9. |
+
+## T18 · 2026-11-01 · шаг 10: Dynamic SDK
+
+Полный SDK-словарь RU/KK, runtime-мост без remount и воспроизводимый патч зависимости видимости экспорта от английского заголовка. Исходная MIT attribution сохранена.
+
+| Дата | Файл | Изменение |
+|---|---|---|
+| 2026-11-01 | `Dockerfile` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `QUAT-CHANGES.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `package.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `locales/en.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `locales/ru.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `locales/kk.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `lib/i18n/dynamicLocale.ts` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `lib/i18n/useDynamicLocale.ts` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `lib/i18n/dynamicLocale.spec.tsx` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `ui/shared/web3/providers/DynamicProvider.tsx` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/dynamic10-a-translations.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/dynamic10-b-translations.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/dynamic10-c-translations.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/patch-dynamic.mjs` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/patch-dynamic.test.mjs` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/DYNAMIC-LICENSE.txt` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/inventory.json` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/PHASE10-HANDOFF.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/REMAINING.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+| 2026-11-01 | `tools/i18n/EXTERNAL-UI-NOTES.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |

@@ -1,0 +1,1586 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-11-01",
+    "license": "GPL-3.0",
+    "sourceLicense": "MIT; Dynamic Labs, Inc., 2022",
+    "kazakhReview": "Native speaker review required"
+  },
+  "en": {
+    "dynamicUi": {
+      "dyn_settings": {
+        "account_permissions_section": {
+          "title": "Account Permissions",
+          "delegated_wallets_button": "Delegated Wallets"
+        },
+        "global_connectivity_section": {
+          "title": "Global Connectivity",
+          "connected_apps_button": "Connected Apps"
+        },
+        "export_section": {
+          "backup_button": "Backup Key Share",
+          "backup_button_v2": "Backup",
+          "export_button": "Export Private key",
+          "export_recovery_button": "Export & Recovery",
+          "private_key_button": "Private key",
+          "srp_button": "Recovery phrase",
+          "title": "Export & Backup"
+        },
+        "identity_section": {
+          "title": "Recovery",
+          "add_email_button": "Add an email"
+        },
+        "tags": {
+          "recommended": "Recommended"
+        },
+        "security_section": {
+          "email_auth_button": "One time code",
+          "passkey_button": "Passkeys",
+          "password_button": "Passcode",
+          "mfa_button": "Authenticator App",
+          "title": "2 factor authentication"
+        },
+        "mfa_section": {
+          "title": "MFA",
+          "passkey_button": "Passkeys",
+          "totp_button": "TOTP",
+          "passcode_button": "Add Passcode"
+        },
+        "wallet_security_section": {
+          "title": "Wallet Security",
+          "passkey_button": "Passkeys"
+        },
+        "title": "Settings",
+        "button_logout": "Log out",
+        "account_security": {
+          "title": "Account & Security",
+          "password": {
+            "title": "Password",
+            "button": "Set Up Password",
+            "set_button": "Set Password",
+            "reset_button": "Reset Password"
+          }
+        },
+        "empty_screen": {
+          "title": "Nothing to see here yet!"
+        },
+        "delete_account": {
+          "title": "Delete My Account",
+          "description": "Deleting your account will permanently remove all data, including wallet details and linked smart contract wallets. This action cannot be undone.",
+          "backup_confirmation_embedded": "I confirm I've backed up my wallet keys. If I proceed, a new wallet will be created. Any wallets or assets not backed up will be lost permanently.",
+          "backup_confirmation_no_embedded": "I confirm that all of my information will be deleted. If I return, a new user profile will be created. These changes cannot be undone.",
+          "type_delete": "Enter DELETE in the box below to confirm this action.",
+          "cancel": "Cancel",
+          "confirm": "Delete Account",
+          "deleting": "Deleting...",
+          "type_delete_label": "Type to confirm"
+        },
+        "session_management": {
+          "title": "Security Settings",
+          "session_management_button": "Session Management"
+        }
+      },
+      "dyn_waas": {
+        "backup_unsuccessful": {
+          "title": "Let's try that again",
+          "description": "It looks like setup didn't finish all the way. Click below and we'll get you back on track.",
+          "try_again": "Try Again",
+          "log_out": "Log Out"
+        },
+        "backup_info": {
+          "title": "About Backup",
+          "subtitle": "Why backup as shares?",
+          "description": "As a security best practice, you can store two independent recovery shares. This lets you restore your wallet from your own backups alone, giving you full control over the recovery process",
+          "warning": "You'll need both parts to recover your wallet, and they should never be stored together"
+        },
+        "backup": {
+          "title": "Backup Key Share",
+          "subtitle": "Secure your wallets as a two-part backup. One part saved to your cloud, the other to your device. You will need both to recover your wallets.",
+          "checkbox_label": "I understand I must keep both parts secure and separate",
+          "continue_button": "Continue to Backup",
+          "cloud_backup_title": "1. Cloud Backup",
+          "cloud_backup_subtitle": "Back up your first key share to a cloud provider",
+          "cloud_backup_header": "Cloud Backup",
+          "backup_to_google_drive": "Backup to Google Drive",
+          "backup_to_icloud": "Backup to iCloud",
+          "icloud_ready_title": "Sign in to backup",
+          "icloud_ready_subtitle": "Sign in with your Apple ID below, then continue to backup your wallet.",
+          "sign_in_with_icloud": "Sign in with iCloud",
+          "continue_backup": "Continue",
+          "progress_title": "Backing up {{current}} of {{total}} wallets...",
+          "progress_initializing": "Preparing backup...",
+          "progress_subtitle": "Securely saving to your cloud. Don't close this window",
+          "progress_complete": "Backup complete!",
+          "google_drive_title": "Backup Key Share",
+          "google_drive_description": "Back up your wallet to help protect your access and recover it if needed.",
+          "google_drive": "Google Drive",
+          "backed_up": "BACKED UP",
+          "google_drive_subtitle": "Secure cloud backup with your Google account.",
+          "back_up": "Back Up",
+          "error": "Failed to back up wallet. Please try again.",
+          "download_title": "2. Download",
+          "download_subtitle": "Download your second key share and store it securely on your local device",
+          "download_key_share": "Download Key Share",
+          "downloading": "Downloading...({{current}}/{{total}})",
+          "download_complete": "Download Complete",
+          "download_error": "Failed to download key share. Please try again.",
+          "success_title": "Backup Successful",
+          "success_description_one": "Your local key shares have been successfully downloaded for {{count}} wallet. Store these files securely and separately from your cloud backup.",
+          "success_description_other": "Your local key shares have been successfully downloaded for {{count}} wallets. Store these files securely and separately from your cloud backup.",
+          "done": "Done",
+          "error_title": "Cloud backup failed. Don't worry, your account is still safe.",
+          "error_try_again": "Try Again"
+        }
+      },
+      "dyn_wallet_delegation": {
+        "title": "Wallet delegation approval",
+        "approval_required": "Approval required",
+        "approval_requested": "Approval requested",
+        "approval_description": "{{appName}} is requesting access to perform automations on your behalf. You can revoke this permission at any time.",
+        "select_wallets": "Select Wallets",
+        "select_all": "Select All",
+        "deselect_all": "Deselect All",
+        "clear": "Clear",
+        "approve_button": "Approve delegation",
+        "deny_button": "Deny",
+        "done_button": "Done",
+        "approving_permissions": "Approving permissions",
+        "permissions_description": "{{appName}} is requesting access to perform automations on your behalf. You can revoke this permission at any time.",
+        "permissions_granted": "Permissions granted",
+        "permissions_description_granted": "{{appName}} has been granted access to perform automations on your behalf. You can revoke this permission at any time.",
+        "revoke_note": "You can always revoke these permissions in your wallet settings.",
+        "wallets_selected": "wallets selected",
+        "edit_selections": "Edit Selections",
+        "save_selections": "Save Selections",
+        "edit_wallets_title": "Edit Wallets",
+        "my_wallet": "My Wallet",
+        "all_wallets": "All Wallets",
+        "agreement_text": "I understand, and agree to accept this permission request",
+        "selected_wallets": "Selected Wallets",
+        "edit_wallets_to_delegate": "Edit Wallets to Delegate",
+        "something_went_wrong": "Something went wrong",
+        "delegation_timeout_message": "The delegation request timed out or was rejected. Please try approving again or come back in another time.",
+        "try_again_button": "Try again",
+        "logout_button": "Log out",
+        "learn_more": "Learn more",
+        "learn_more_description": "Delegating your wallet lets this app act on your behalf, even when you're not here. This is useful for things like trading bots or other automated workflows. You stay in control — you can revoke access anytime in your wallet settings.",
+        "learn_more_okay_button": "Okay"
+      },
+      "dyn_collect_user_data": {
+        "description": "We need a bit of information to get started",
+        "fields": {
+          "alias": {
+            "label": "Alias"
+          },
+          "country": {
+            "label": "Country"
+          },
+          "email": {
+            "label": "E-mail",
+            "validation": "Email is not valid"
+          },
+          "first_name": {
+            "label": "First Name"
+          },
+          "job_title": {
+            "label": "Job Title"
+          },
+          "last_name": {
+            "label": "Last Name"
+          },
+          "phone_number": {
+            "label": "Phone number",
+            "validation": "Phone number is not valid",
+            "too_short": "Phone number is too short"
+          },
+          "policies_consent": {
+            "label": "Policies Consent"
+          },
+          "t_shirt_size": {
+            "label": "T-Shirt Size"
+          },
+          "team": {
+            "label": "Team"
+          },
+          "username": {
+            "label": "Username",
+            "validation": "Username is not valid"
+          }
+        },
+        "greeting": "Welcome to {{appName}}",
+        "log_out_button": "Log out",
+        "not_supported_network": {
+          "description": "Your wallet is not connected to a supported network. Please update before continuing.",
+          "error_message": "This network is not available, please update.",
+          "title": "Update Network"
+        },
+        "update_email_tooltip": "This email is tied to your wallet so cannot be updated",
+        "update_phone_number_tooltip": "This phone number is tied to your wallet so cannot be updated",
+        "lock_editing_multiple_verified_fields": "You can only edit 1 field at a time that requires verification"
+      },
+      "dyn_session_management": {
+        "aria": {
+          "back_button_label": "Back",
+          "info_button_label": "Info",
+          "close_button_label": "Close"
+        },
+        "title": "Session Management",
+        "empty_sessions_view": {
+          "loading": "Loading sessions...",
+          "title": "No active sessions found"
+        },
+        "info_view": {
+          "title": "Connected App Sessions",
+          "description_bold": "Easily manage which apps have access to your wallet. ",
+          "description_2": "Each session represents a connection you've made with a site or app.",
+          "description_3": "You can revoke access anytime to stay in control of where and how your wallet is used.",
+          "continue_button": "Continue"
+        },
+        "revoke_access_view": {
+          "title": "Revoke Access",
+          "description": "You're removing this site's permissions. Confirm to revoke access.",
+          "cancel_button": "Cancel",
+          "revoke_button": "Revoke",
+          "success_message": "Revoked {{sessionName}}",
+          "error_message": "Failed to revoke {{sessionName}}"
+        },
+        "session_component": {
+          "aria": {
+            "collapse_permissions": "Collapse",
+            "expand_permissions": "Expand"
+          },
+          "permission_details": "Permission details",
+          "revoke_button": "Revoke"
+        }
+      },
+      "dyn_manage_passkeys": {
+        "title": "Manage passkeys",
+        "passkey_from": "from",
+        "passkey_providers": {
+          "android": "Android Phone",
+          "brave": "Brave Browser",
+          "chrome": "Google Chrome",
+          "edge": "Microsoft Edge",
+          "firefox": "Firefox",
+          "iPhone": "iPhone",
+          "opera": "Opera Browser",
+          "safari": "Safari Browser",
+          "passkey": "Passkey"
+        },
+        "passkey_rename": "Rename",
+        "passkey_delete": "Delete",
+        "recovery_button": "Set up new passkey"
+      },
+      "dyn_time_since": {
+        "second": "second",
+        "seconds": "seconds",
+        "minute": "minute",
+        "minutes": "minutes",
+        "hour": "hour",
+        "hours": "hours",
+        "day": "day",
+        "days": "days",
+        "month": "month",
+        "months": "months",
+        "year": "year",
+        "years": "years",
+        "ago": "ago",
+        "created": "Created"
+      },
+      "dyn_no_access": {
+        "chainalysis": {
+          "button_text": "Try another method",
+          "description": "This wallet has been correlated to illicit activity and cannot access this site.",
+          "social_media_link_text": "Why am I seeing this message?",
+          "social_media_link_url": "https://docs.dynamic.xyz/docs",
+          "title": "This address seems corrupted."
+        },
+        "default": {
+          "button_text": "Try another method",
+          "description": "You are not currently on the allow list.",
+          "title": "Access denied"
+        },
+        "gate": {
+          "button_text": "Try a different wallet",
+          "description": "A NFT or a token is required to access this site.",
+          "title": "You cannot access the site"
+        },
+        "not_in_the_list_image_alt": "user is not in the list",
+        "title": "You don't have access"
+      },
+      "dyn_error": {
+        "default": "Something went wrong. Please try again.",
+        "user_rejected": "User rejected the request.",
+        "message_signature_denied": "Message signature denied",
+        "wallet_locked": "Please unlock your wallet extension and try again.",
+        "invalid_parameters": "Invalid parameters. Please try again.",
+        "internal_error": "There was an internal error. Please try again.",
+        "account_already_linked_to_different_profile": "This social account is already linked to a different profile.",
+        "connection_rejected": "Connection rejected. Please try again.",
+        "missing_public_address": "Connection cancelled. Please try again",
+        "connection_proposal_expired": "Connection proposal expired. Please try again.",
+        "sei_not_enabled_in_keplr_wallet": "Sei network is not enabled in Keplr. Please enable it and try again.",
+        "rate_limit_error": "Too many requests. Please try again later."
+      },
+      "dyn_wallet_list": {
+        "configuration_mismatch": "Oops, no login methods have been configured.",
+        "helper": "Get your first wallet",
+        "search": {
+          "label": "Search through {{numberOfWallets}} wallets...",
+          "not_found": {
+            "description": "The wallet you’re looking for may not be available, or linking more than one of these wallets might not be possible.",
+            "title": "Wallet not available"
+          }
+        },
+        "title": {
+          "connect": "Connect a new wallet",
+          "link": "Link a new wallet",
+          "select": "Select your wallet"
+        },
+        "view_all": "View all wallets",
+        "wallet_missing": {
+          "description": "Try search instead",
+          "title": "Don't see your wallet?"
+        }
+      },
+      "dyn_wallet_upgrade_flow": {
+        "title": "Upgrade your wallet",
+        "step_wallet_upgrade": "{{walletName}} Upgrade",
+        "new_wallet_title": "Create New Wallet",
+        "new_wallet_coming_soon": "New wallet creation coming soon...",
+        "copy_private_key_subtitle": "Import your wallet key to upgrade your wallet. You will not lose access to any assets. Your wallet will always remain in your control.",
+        "copy_private_key_title": "Copy",
+        "step_2_upgrade_description": "Paste",
+        "upgrade_wallet": "Upgrade Account",
+        "cancel": "Cancel",
+        "export_failed": "Failed to export wallet",
+        "upgrade_failed": "Failed to upgrade wallet"
+      },
+      "dyn_exchange_whitelist_warning": {
+        "title": "Whitelisting Required",
+        "description": "To complete your first transfer with {{exchange}}, please follow these steps:",
+        "step1": {
+          "kraken": "Open Kraken. Click Transfer, then Withdraw"
+        },
+        "step2": "Whitelist your wallet address",
+        "step3": "Complete the first transfer on {{exchange}}",
+        "view_instructions": "View Instructions",
+        "done": "I’m Done",
+        "address": "Your Wallet Address",
+        "open": "Open {{exchange}}"
+      },
+      "dyn_passkey_new_domain_detected": {
+        "title": "New domain detected",
+        "description": "To complete your transaction select a signing method",
+        "actions": {
+          "passkey": {
+            "title": "Add new passkey",
+            "subtitle": "Does not expire. Works across devices & secured with biometric."
+          },
+          "emailAuth": {
+            "title": "Use a one-time code",
+            "subtitle": "Allows you to transact for 30 min"
+          },
+          "badges": {
+            "recommended": "Recommended",
+            "fastest": "Fastest"
+          }
+        }
+      },
+      "dyn_unified_list": {
+        "title": "Funding Source",
+        "exchange": "Exchange",
+        "wallet": "Wallet",
+        "onramp": "Onramp",
+        "search": {
+          "label": "Search Wallets, Exchanges, & Onramps",
+          "not_found": {
+            "description": "The wallet, exchange, or onramp you’re looking for may not be available.",
+            "title": "Wallet, Exchange, or Onramp not available"
+          }
+        },
+        "item": {
+          "connected": "Connected"
+        }
+      },
+      "dyn_unlink_wallet_pop_up": {
+        "disconnect_title": "Disconnect your wallet?",
+        "unlink_title": "Unlink your wallet?",
+        "disconnect_description": "Are you sure you want to disconnect your wallet?",
+        "unlink_description": "Are you sure you want to unlink your wallet?",
+        "disconnect_button": "Yes, disconnect",
+        "unlink_button": "Yes, unlink",
+        "cancel_button": "No"
+      },
+      "dyn_merge_user_accounts_with_same_email": {
+        "cancel_button": "No, I'll use a different email",
+        "confirm_button": "Yes, link to existing account",
+        "errors": {
+          "merge_error": "Something went wrong, please try again."
+        },
+        "existing_account": "An account already exists that uses",
+        "existing_account_trail": "email.",
+        "title": "Would you like to link this wallet to this existing account?"
+      },
+      "dyn_pending_signature": {
+        "click_to_sign": "Click to Sign",
+        "link_wallet_message": "Sign the message in your wallet to approve linking this wallet to your account",
+        "note": "Note: ",
+        "phantom_ledger_sign": "Click sign in your wallet to confirm you own this wallet (this doesn't cost gas).",
+        "phantom_ledger_warning": "Ledger doesn't support message signing. When logging in, a small fee (which should not apply) may appear. See below to learn more.",
+        "regular_sign_description": "Click sign-in in your wallet to confirm you own this wallet."
+      },
+      "dyn_network_not_supported": {
+        "button": "Switch Network",
+        "subtitle": "Your wallet is not connected to a supported network. Please update before continuing.",
+        "title": "Update Network",
+        "warning_message": "This network is not available, please update.",
+        "wallet": "Not Supported"
+      },
+      "dyn_sign_message": {
+        "cancel_button": "Reject",
+        "sign_button": "Sign",
+        "title": "Signature request",
+        "warning": "Only sign this message if you trust this site.",
+        "message_label": "Message:"
+      },
+      "dyn_subdomain_field": {
+        "label": "Subdomain Handle",
+        "available": "Subdomain is available",
+        "not_available": "Subdomain is not available",
+        "error": "Subdomain check failed",
+        "details": "A subdomain handle will create a unique ENS subdomain for your wallet, helping you easily share and identify it."
+      },
+      "dyn_email_update": {
+        "current_email": "Your current email address is",
+        "label": "Email address",
+        "send_verification": "Send Verification Code",
+        "title": "Update email"
+      },
+      "dyn_merge_user_accounts": {
+        "confirm_button": "Merge accounts",
+        "errors": {
+          "merge_error": "Something went wrong, please try again."
+        },
+        "wallet": {
+          "content": "This wallet is associated to another account. Would you like to merge accounts?",
+          "title": "Wallet already in use"
+        }
+      },
+      "dyn_export_and_recovery": {
+        "title": "Export & Recovery",
+        "private_key": "Private Key",
+        "export_shares": "Export Share",
+        "advanced": "ADVANCED"
+      },
+      "dyn_email_confirmation": {
+        "description": "We’ve sent a verification email to",
+        "note": "Note: it might take a few seconds to proceed after clicking the link in your email",
+        "title": "Confirm your email"
+      },
+      "dyn_pending_connection": {
+        "title": "Connect",
+        "mobile": "Click connect in your mobile wallet",
+        "computer": "Click connect in your wallet popup"
+      },
+      "dyn_wallet_transfer": {
+        "sign": {
+          "spinner": {
+            "cancel": "Cancel",
+            "confirm_transfer": "Sign the message to confirm transferring this wallet to this account."
+          },
+          "title": "Sign to confirm transfer"
+        }
+      },
+      "dyn_widget_header": {
+        "buttons": {
+          "deposit_funds": "Deposit",
+          "send_funds": "Send",
+          "more": "More"
+        }
+      },
+      "dyn_captcha": {
+        "verify_user_subtitle": "We need to quickly verify you’re human before we proceed.",
+        "verify_user_title": "Let's verify you're human"
+      },
+      "dyn_common": {
+        "aria": {
+          "collapsed": "Collapsed",
+          "expanded": "Expanded"
+        }
+      },
+      "wallets_delegated": {
+        "title": "Wallets Delegated",
+        "subtitle": "Delegated wallets allow you to interact with your wallet on other platforms."
+      },
+      "dyn_select_chain": {
+        "description": "This wallet supports multiple chains. Select which chain you'd like to connect to",
+        "using_hardware_wallet_toggle_label": "Using Ledger"
+      },
+      "dyn_wallet_information": {
+        "balance": "Balance",
+        "multi_asset": {
+          "empty_state": "No assets in this wallet"
+        }
+      },
+      "dyn_select_wallet": {
+        "description": "Select your preferred {{walletName}} wallet?"
+      },
+      "dyn_search": {
+        "clear": "Clear"
+      }
+    }
+  },
+  "ru": {
+    "dynamicUi": {
+      "dyn_settings": {
+        "account_permissions_section": {
+          "title": "Разрешения аккаунта",
+          "delegated_wallets_button": "Делегированные кошельки"
+        },
+        "global_connectivity_section": {
+          "title": "Подключения к приложениям",
+          "connected_apps_button": "Подключённые приложения"
+        },
+        "export_section": {
+          "backup_button": "Резервная копия доли ключа",
+          "backup_button_v2": "Резервная копия",
+          "export_button": "Экспортировать приватный ключ",
+          "export_recovery_button": "Экспорт и восстановление",
+          "private_key_button": "Приватный ключ",
+          "srp_button": "Фраза восстановления",
+          "title": "Экспорт и резервное копирование"
+        },
+        "identity_section": {
+          "title": "Восстановление",
+          "add_email_button": "Добавить эл. почту"
+        },
+        "tags": {
+          "recommended": "Рекомендуется"
+        },
+        "security_section": {
+          "email_auth_button": "Одноразовый код",
+          "passkey_button": "Ключи доступа",
+          "password_button": "Код-пароль",
+          "mfa_button": "Приложение-аутентификатор",
+          "title": "Двухфакторная аутентификация"
+        },
+        "mfa_section": {
+          "title": "Многофакторная аутентификация",
+          "passkey_button": "Ключи доступа",
+          "totp_button": "TOTP",
+          "passcode_button": "Добавить код-пароль"
+        },
+        "wallet_security_section": {
+          "title": "Безопасность кошелька",
+          "passkey_button": "Ключи доступа"
+        },
+        "title": "Настройки",
+        "button_logout": "Выйти",
+        "account_security": {
+          "title": "Аккаунт и безопасность",
+          "password": {
+            "title": "Пароль",
+            "button": "Настроить пароль",
+            "set_button": "Задать пароль",
+            "reset_button": "Сбросить пароль"
+          }
+        },
+        "empty_screen": {
+          "title": "Здесь пока ничего нет"
+        },
+        "delete_account": {
+          "title": "Удалить мой аккаунт",
+          "description": "Удаление аккаунта навсегда удалит все данные, включая сведения о кошельках и связанные смарт-контрактные кошельки. Это действие нельзя отменить.",
+          "backup_confirmation_embedded": "Я подтверждаю, что сохранил резервные копии ключей кошелька. Если я продолжу, будет создан новый кошелёк. Кошельки и активы без резервной копии будут потеряны навсегда.",
+          "backup_confirmation_no_embedded": "Я подтверждаю, что все мои данные будут удалены. Если я вернусь, будет создан новый профиль. Эти изменения нельзя отменить.",
+          "type_delete": "Введите DELETE в поле ниже, чтобы подтвердить действие.",
+          "cancel": "Отмена",
+          "confirm": "Удалить аккаунт",
+          "deleting": "Удаление...",
+          "type_delete_label": "Введите текст для подтверждения"
+        },
+        "session_management": {
+          "title": "Настройки безопасности",
+          "session_management_button": "Управление сеансами"
+        }
+      },
+      "dyn_waas": {
+        "backup_unsuccessful": {
+          "title": "Попробуем ещё раз",
+          "description": "Похоже, настройка не завершилась. Нажмите кнопку ниже, чтобы продолжить.",
+          "try_again": "Повторить",
+          "log_out": "Выйти"
+        },
+        "backup_info": {
+          "title": "О резервном копировании",
+          "subtitle": "Зачем разделять резервную копию?",
+          "description": "Для большей безопасности можно хранить две независимые доли восстановления. Это позволяет восстановить кошелёк только из ваших резервных копий и полностью контролировать процесс восстановления.",
+          "warning": "Для восстановления кошелька потребуются обе части. Никогда не храните их вместе."
+        },
+        "backup": {
+          "title": "Резервная копия доли ключа",
+          "subtitle": "Защитите кошельки резервной копией из двух частей. Одна хранится в облаке, другая — на устройстве. Для восстановления кошельков потребуются обе части.",
+          "checkbox_label": "Я понимаю, что обе части нужно хранить безопасно и раздельно",
+          "continue_button": "Перейти к резервному копированию",
+          "cloud_backup_title": "1. Копия в облаке",
+          "cloud_backup_subtitle": "Сохраните первую долю ключа в облачном сервисе",
+          "cloud_backup_header": "Копия в облаке",
+          "backup_to_google_drive": "Сохранить в Google Drive",
+          "backup_to_icloud": "Сохранить в iCloud",
+          "icloud_ready_title": "Войдите для резервного копирования",
+          "icloud_ready_subtitle": "Войдите с Apple ID ниже, затем продолжите резервное копирование кошелька.",
+          "sign_in_with_icloud": "Войти через iCloud",
+          "continue_backup": "Продолжить",
+          "progress_title": "Резервное копирование: {{current}} из {{total}} кошельков...",
+          "progress_initializing": "Подготовка резервной копии...",
+          "progress_subtitle": "Безопасно сохраняем в облаке. Не закрывайте это окно.",
+          "progress_complete": "Резервное копирование завершено!",
+          "google_drive_title": "Резервная копия доли ключа",
+          "google_drive_description": "Создайте резервную копию кошелька, чтобы защитить доступ и восстановить его при необходимости.",
+          "google_drive": "Google Drive",
+          "backed_up": "КОПИЯ СОЗДАНА",
+          "google_drive_subtitle": "Безопасная копия в облаке с вашим аккаунтом Google.",
+          "back_up": "Создать резервную копию",
+          "error": "Не удалось создать резервную копию кошелька. Повторите попытку.",
+          "download_title": "2. Скачивание",
+          "download_subtitle": "Скачайте вторую долю ключа и сохраните её в безопасном месте на своём устройстве",
+          "download_key_share": "Скачать долю ключа",
+          "downloading": "Скачивание... ({{current}}/{{total}})",
+          "download_complete": "Скачивание завершено",
+          "download_error": "Не удалось скачать долю ключа. Повторите попытку.",
+          "success_title": "Резервная копия создана",
+          "success_description_one": "Локальные доли ключей для {{count}} кошелька успешно скачаны. Храните эти файлы безопасно и отдельно от копии в облаке.",
+          "success_description_other": "Локальные доли ключей для {{count}} кошелька успешно скачаны. Храните эти файлы безопасно и отдельно от копии в облаке.",
+          "done": "Готово",
+          "error_title": "Не удалось создать копию в облаке. Ваш аккаунт по-прежнему в безопасности.",
+          "error_try_again": "Повторить",
+          "success_description_few": "Локальные доли ключей для {{count}} кошельков успешно скачаны. Храните эти файлы безопасно и отдельно от копии в облаке.",
+          "success_description_many": "Локальные доли ключей для {{count}} кошельков успешно скачаны. Храните эти файлы безопасно и отдельно от копии в облаке."
+        }
+      },
+      "dyn_wallet_delegation": {
+        "title": "Разрешение на делегирование кошелька",
+        "approval_required": "Требуется разрешение",
+        "approval_requested": "Разрешение запрошено",
+        "approval_description": "{{appName}} запрашивает доступ для выполнения автоматических действий от вашего имени. Вы можете отозвать это разрешение в любой момент.",
+        "select_wallets": "Выберите кошельки",
+        "select_all": "Выбрать все",
+        "deselect_all": "Снять все отметки",
+        "clear": "Очистить",
+        "approve_button": "Разрешить делегирование",
+        "deny_button": "Отклонить",
+        "done_button": "Готово",
+        "approving_permissions": "Предоставление разрешений",
+        "permissions_description": "{{appName}} запрашивает доступ для выполнения автоматических действий от вашего имени. Вы можете отозвать это разрешение в любой момент.",
+        "permissions_granted": "Разрешения предоставлены",
+        "permissions_description_granted": "Приложению {{appName}} разрешено выполнять автоматические действия от вашего имени. Вы можете отозвать это разрешение в любой момент.",
+        "revoke_note": "Эти разрешения всегда можно отозвать в настройках кошелька.",
+        "wallets_selected": "выбрано",
+        "edit_selections": "Изменить выбор",
+        "save_selections": "Сохранить выбор",
+        "edit_wallets_title": "Изменить кошельки",
+        "my_wallet": "Мой кошелёк",
+        "all_wallets": "Все кошельки",
+        "agreement_text": "Я понимаю и принимаю этот запрос разрешения",
+        "selected_wallets": "Выбранные кошельки",
+        "edit_wallets_to_delegate": "Изменить кошельки для делегирования",
+        "something_went_wrong": "Что-то пошло не так",
+        "delegation_timeout_message": "Срок запроса на делегирование истёк либо запрос отклонён. Попробуйте разрешить снова или вернитесь позже.",
+        "try_again_button": "Повторить",
+        "logout_button": "Выйти",
+        "learn_more": "Подробнее",
+        "learn_more_description": "Делегирование позволяет приложению действовать от вашего имени, даже когда вы не в сети. Это полезно для торговых ботов и других автоматических процессов. Управление остаётся у вас: доступ можно отозвать в настройках кошелька в любой момент.",
+        "learn_more_okay_button": "Понятно"
+      },
+      "dyn_collect_user_data": {
+        "description": "Для начала нам нужны некоторые сведения",
+        "fields": {
+          "alias": {
+            "label": "Псевдоним"
+          },
+          "country": {
+            "label": "Страна"
+          },
+          "email": {
+            "label": "Эл. почта",
+            "validation": "Неверный адрес эл. почты"
+          },
+          "first_name": {
+            "label": "Имя"
+          },
+          "job_title": {
+            "label": "Должность"
+          },
+          "last_name": {
+            "label": "Фамилия"
+          },
+          "phone_number": {
+            "label": "Номер телефона",
+            "validation": "Неверный номер телефона",
+            "too_short": "Номер телефона слишком короткий"
+          },
+          "policies_consent": {
+            "label": "Согласие с политиками"
+          },
+          "t_shirt_size": {
+            "label": "Размер футболки"
+          },
+          "team": {
+            "label": "Команда"
+          },
+          "username": {
+            "label": "Имя пользователя",
+            "validation": "Недопустимое имя пользователя"
+          }
+        },
+        "greeting": "Добро пожаловать в {{appName}}",
+        "log_out_button": "Выйти",
+        "not_supported_network": {
+          "description": "Кошелёк не подключён к поддерживаемой сети. Смените сеть, чтобы продолжить.",
+          "error_message": "Эта сеть недоступна. Смените сеть.",
+          "title": "Сменить сеть"
+        },
+        "update_email_tooltip": "Этот адрес эл. почты связан с кошельком, поэтому его нельзя изменить",
+        "update_phone_number_tooltip": "Этот номер телефона связан с кошельком, поэтому его нельзя изменить",
+        "lock_editing_multiple_verified_fields": "За раз можно изменить только одно поле, требующее подтверждения"
+      },
+      "dyn_session_management": {
+        "aria": {
+          "back_button_label": "Назад",
+          "info_button_label": "Информация",
+          "close_button_label": "Закрыть"
+        },
+        "title": "Управление сеансами",
+        "empty_sessions_view": {
+          "loading": "Загрузка сеансов...",
+          "title": "Активные сеансы не найдены"
+        },
+        "info_view": {
+          "title": "Сеансы подключённых приложений",
+          "description_bold": "Управляйте доступом приложений к вашему кошельку. ",
+          "description_2": "Каждый сеанс — это установленное вами соединение с сайтом или приложением.",
+          "description_3": "Вы можете отозвать доступ в любой момент, чтобы контролировать, где и как используется ваш кошелёк.",
+          "continue_button": "Продолжить"
+        },
+        "revoke_access_view": {
+          "title": "Отозвать доступ",
+          "description": "Вы удаляете разрешения этого сайта. Подтвердите отзыв доступа.",
+          "cancel_button": "Отмена",
+          "revoke_button": "Отозвать",
+          "success_message": "Доступ для {{sessionName}} отозван",
+          "error_message": "Не удалось отозвать доступ для {{sessionName}}"
+        },
+        "session_component": {
+          "aria": {
+            "collapse_permissions": "Свернуть",
+            "expand_permissions": "Развернуть"
+          },
+          "permission_details": "Сведения о разрешениях",
+          "revoke_button": "Отозвать"
+        }
+      },
+      "dyn_manage_passkeys": {
+        "title": "Управление ключами доступа",
+        "passkey_from": "от",
+        "passkey_providers": {
+          "android": "Телефон Android",
+          "brave": "Браузер Brave",
+          "chrome": "Google Chrome",
+          "edge": "Microsoft Edge",
+          "firefox": "Firefox",
+          "iPhone": "iPhone",
+          "opera": "Браузер Opera",
+          "safari": "Браузер Safari",
+          "passkey": "Ключ доступа"
+        },
+        "passkey_rename": "Переименовать",
+        "passkey_delete": "Удалить",
+        "recovery_button": "Создать новый ключ доступа"
+      },
+      "dyn_time_since": {
+        "second": "сек.",
+        "seconds": "сек.",
+        "minute": "мин.",
+        "minutes": "мин.",
+        "hour": "ч.",
+        "hours": "ч.",
+        "day": "дн.",
+        "days": "дн.",
+        "month": "мес.",
+        "months": "мес.",
+        "year": "г.",
+        "years": "г.",
+        "ago": "назад",
+        "created": "Создано"
+      },
+      "dyn_no_access": {
+        "chainalysis": {
+          "button_text": "Попробовать другой способ",
+          "description": "Этот кошелёк связан с незаконной деятельностью и не может получить доступ к сайту.",
+          "social_media_link_text": "Почему я вижу это сообщение?",
+          "social_media_link_url": "https://docs.dynamic.xyz/docs",
+          "title": "Этот адрес выглядит скомпрометированным."
+        },
+        "default": {
+          "button_text": "Попробовать другой способ",
+          "description": "Сейчас вас нет в списке допущенных пользователей.",
+          "title": "Доступ запрещён"
+        },
+        "gate": {
+          "button_text": "Попробовать другой кошелёк",
+          "description": "Для доступа к сайту необходим NFT или токен.",
+          "title": "У вас нет доступа к сайту"
+        },
+        "not_in_the_list_image_alt": "Пользователя нет в списке",
+        "title": "У вас нет доступа"
+      },
+      "dyn_error": {
+        "default": "Что-то пошло не так. Повторите попытку.",
+        "user_rejected": "Пользователь отклонил запрос.",
+        "message_signature_denied": "Подписание сообщения отклонено",
+        "wallet_locked": "Разблокируйте расширение кошелька и повторите попытку.",
+        "invalid_parameters": "Неверные параметры. Повторите попытку.",
+        "internal_error": "Внутренняя ошибка. Повторите попытку.",
+        "account_already_linked_to_different_profile": "Этот аккаунт социальной сети уже связан с другим профилем.",
+        "connection_rejected": "Подключение отклонено. Повторите попытку.",
+        "missing_public_address": "Подключение отменено. Повторите попытку.",
+        "connection_proposal_expired": "Срок запроса на подключение истёк. Повторите попытку.",
+        "sei_not_enabled_in_keplr_wallet": "Сеть Sei не включена в Keplr. Включите её и повторите попытку.",
+        "rate_limit_error": "Слишком много запросов. Повторите попытку позже."
+      },
+      "dyn_wallet_list": {
+        "configuration_mismatch": "Способы входа не настроены.",
+        "helper": "Создайте свой первый кошелёк",
+        "search": {
+          "label": "Поиск среди {{numberOfWallets}} кошельков...",
+          "not_found": {
+            "description": "Нужный кошелёк может быть недоступен либо привязка нескольких таких кошельков не поддерживается.",
+            "title": "Кошелёк недоступен"
+          }
+        },
+        "title": {
+          "connect": "Подключить новый кошелёк",
+          "link": "Привязать новый кошелёк",
+          "select": "Выберите кошелёк"
+        },
+        "view_all": "Все кошельки",
+        "wallet_missing": {
+          "description": "Воспользуйтесь поиском",
+          "title": "Не видите свой кошелёк?"
+        }
+      },
+      "dyn_wallet_upgrade_flow": {
+        "title": "Обновите кошелёк",
+        "step_wallet_upgrade": "Обновление {{walletName}}",
+        "new_wallet_title": "Создать новый кошелёк",
+        "new_wallet_coming_soon": "Создание нового кошелька скоро станет доступно...",
+        "copy_private_key_subtitle": "Импортируйте ключ для обновления кошелька. Доступ к активам сохранится. Кошелёк всегда останется под вашим управлением.",
+        "copy_private_key_title": "Копировать",
+        "step_2_upgrade_description": "Вставить",
+        "upgrade_wallet": "Обновить аккаунт",
+        "cancel": "Отмена",
+        "export_failed": "Не удалось экспортировать кошелёк",
+        "upgrade_failed": "Не удалось обновить кошелёк"
+      },
+      "dyn_exchange_whitelist_warning": {
+        "title": "Требуется добавить адрес в список разрешённых",
+        "description": "Для первого перевода через {{exchange}} выполните следующие шаги:",
+        "step1": {
+          "kraken": "Откройте Kraken. Нажмите Transfer, затем Withdraw."
+        },
+        "step2": "Добавьте адрес кошелька в список разрешённых",
+        "step3": "Выполните первый перевод через {{exchange}}",
+        "view_instructions": "Посмотреть инструкцию",
+        "done": "Готово",
+        "address": "Адрес вашего кошелька",
+        "open": "Открыть {{exchange}}"
+      },
+      "dyn_passkey_new_domain_detected": {
+        "title": "Обнаружен новый домен",
+        "description": "Выберите способ подписи для завершения транзакции",
+        "actions": {
+          "passkey": {
+            "title": "Добавить новый ключ доступа",
+            "subtitle": "Бессрочный. Работает на разных устройствах и защищён биометрией."
+          },
+          "emailAuth": {
+            "title": "Использовать одноразовый код",
+            "subtitle": "Позволяет проводить транзакции в течение 30 минут"
+          },
+          "badges": {
+            "recommended": "Рекомендуется",
+            "fastest": "Быстрее всего"
+          }
+        }
+      },
+      "dyn_unified_list": {
+        "title": "Источник пополнения",
+        "exchange": "Биржа",
+        "wallet": "Кошелёк",
+        "onramp": "Покупка за фиат",
+        "search": {
+          "label": "Поиск кошельков, бирж и сервисов покупки за фиат",
+          "not_found": {
+            "description": "Нужный кошелёк, биржа или сервис покупки за фиат может быть недоступен.",
+            "title": "Кошелёк, биржа или сервис покупки недоступен"
+          }
+        },
+        "item": {
+          "connected": "Подключено"
+        }
+      },
+      "dyn_unlink_wallet_pop_up": {
+        "disconnect_title": "Отключить кошелёк?",
+        "unlink_title": "Отвязать кошелёк?",
+        "disconnect_description": "Вы уверены, что хотите отключить кошелёк?",
+        "unlink_description": "Вы уверены, что хотите отвязать кошелёк?",
+        "disconnect_button": "Да, отключить",
+        "unlink_button": "Да, отвязать",
+        "cancel_button": "Нет"
+      },
+      "dyn_merge_user_accounts_with_same_email": {
+        "cancel_button": "Нет, я укажу другую почту",
+        "confirm_button": "Да, привязать к существующему аккаунту",
+        "errors": {
+          "merge_error": "Что-то пошло не так. Повторите попытку."
+        },
+        "existing_account": "Уже существует аккаунт с эл. почтой",
+        "existing_account_trail": ".",
+        "title": "Привязать этот кошелёк к существующему аккаунту?"
+      },
+      "dyn_pending_signature": {
+        "click_to_sign": "Нажмите для подписи",
+        "link_wallet_message": "Подпишите сообщение в кошельке, чтобы подтвердить его привязку к вашему аккаунту",
+        "note": "Примечание: ",
+        "phantom_ledger_sign": "Нажмите кнопку подписи в кошельке, чтобы подтвердить владение им (газ не расходуется).",
+        "phantom_ledger_warning": "Ledger не поддерживает подпись сообщений. При входе может отображаться небольшая комиссия, которая не должна взиматься. Подробнее — ниже.",
+        "regular_sign_description": "Нажмите кнопку входа в кошельке, чтобы подтвердить владение им."
+      },
+      "dyn_network_not_supported": {
+        "button": "Сменить сеть",
+        "subtitle": "Кошелёк не подключён к поддерживаемой сети. Смените сеть, чтобы продолжить.",
+        "title": "Сменить сеть",
+        "warning_message": "Эта сеть недоступна. Смените сеть.",
+        "wallet": "Не поддерживается"
+      },
+      "dyn_sign_message": {
+        "cancel_button": "Отклонить",
+        "sign_button": "Подписать",
+        "title": "Запрос подписи",
+        "warning": "Подписывайте сообщение, только если доверяете этому сайту.",
+        "message_label": "Сообщение:"
+      },
+      "dyn_subdomain_field": {
+        "label": "Имя субдомена",
+        "available": "Субдомен доступен",
+        "not_available": "Субдомен недоступен",
+        "error": "Не удалось проверить субдомен",
+        "details": "Это имя создаст уникальный субдомен ENS для вашего кошелька, чтобы его было проще узнавать и передавать другим."
+      },
+      "dyn_email_update": {
+        "current_email": "Ваш текущий адрес эл. почты:",
+        "label": "Адрес эл. почты",
+        "send_verification": "Отправить код подтверждения",
+        "title": "Изменить эл. почту"
+      },
+      "dyn_merge_user_accounts": {
+        "confirm_button": "Объединить аккаунты",
+        "errors": {
+          "merge_error": "Что-то пошло не так. Повторите попытку."
+        },
+        "wallet": {
+          "content": "Этот кошелёк связан с другим аккаунтом. Объединить аккаунты?",
+          "title": "Кошелёк уже используется"
+        }
+      },
+      "dyn_export_and_recovery": {
+        "title": "Экспорт и восстановление",
+        "private_key": "Приватный ключ",
+        "export_shares": "Экспортировать долю ключа",
+        "advanced": "ДОПОЛНИТЕЛЬНО"
+      },
+      "dyn_email_confirmation": {
+        "description": "Мы отправили письмо для подтверждения на",
+        "note": "Примечание: после перехода по ссылке в письме может потребоваться несколько секунд.",
+        "title": "Подтвердите эл. почту"
+      },
+      "dyn_pending_connection": {
+        "title": "Подключиться",
+        "mobile": "Нажмите кнопку подключения в мобильном кошельке",
+        "computer": "Нажмите кнопку подключения во всплывающем окне кошелька"
+      },
+      "dyn_wallet_transfer": {
+        "sign": {
+          "spinner": {
+            "cancel": "Отмена",
+            "confirm_transfer": "Подпишите сообщение, чтобы подтвердить перенос этого кошелька в этот аккаунт."
+          },
+          "title": "Подпишите для подтверждения переноса"
+        }
+      },
+      "dyn_widget_header": {
+        "buttons": {
+          "deposit_funds": "Пополнить",
+          "send_funds": "Отправить",
+          "more": "Ещё"
+        }
+      },
+      "dyn_captcha": {
+        "verify_user_subtitle": "Перед продолжением нужно быстро проверить, что вы человек.",
+        "verify_user_title": "Подтвердите, что вы человек"
+      },
+      "dyn_common": {
+        "aria": {
+          "collapsed": "Свёрнуто",
+          "expanded": "Развёрнуто"
+        }
+      },
+      "wallets_delegated": {
+        "title": "Кошельки делегированы",
+        "subtitle": "Делегирование позволяет взаимодействовать с кошельком на других платформах."
+      },
+      "dyn_select_chain": {
+        "description": "Кошелёк поддерживает несколько сетей. Выберите сеть для подключения.",
+        "using_hardware_wallet_toggle_label": "Использовать Ledger"
+      },
+      "dyn_wallet_information": {
+        "balance": "Баланс",
+        "multi_asset": {
+          "empty_state": "В кошельке нет активов"
+        }
+      },
+      "dyn_select_wallet": {
+        "description": "Выберите предпочитаемый кошелёк {{walletName}}"
+      },
+      "dyn_search": {
+        "clear": "Очистить"
+      }
+    }
+  },
+  "kk": {
+    "dynamicUi": {
+      "dyn_settings": {
+        "account_permissions_section": {
+          "title": "Аккаунт рұқсаттары",
+          "delegated_wallets_button": "Өкілеттік берілген әмияндар"
+        },
+        "global_connectivity_section": {
+          "title": "Қолданбаларға қосылымдар",
+          "connected_apps_button": "Қосылған қолданбалар"
+        },
+        "export_section": {
+          "backup_button": "Кілт үлесінің сақтық көшірмесі",
+          "backup_button_v2": "Сақтық көшірме",
+          "export_button": "Жеке кілтті экспорттау",
+          "export_recovery_button": "Экспорттау және қалпына келтіру",
+          "private_key_button": "Жеке кілт",
+          "srp_button": "Қалпына келтіру тіркесі",
+          "title": "Экспорттау және сақтық көшірме жасау"
+        },
+        "identity_section": {
+          "title": "Қалпына келтіру",
+          "add_email_button": "Эл. поштаны қосу"
+        },
+        "tags": {
+          "recommended": "Ұсынылады"
+        },
+        "security_section": {
+          "email_auth_button": "Бір реттік код",
+          "passkey_button": "Кіру кілттері",
+          "password_button": "Құпия код",
+          "mfa_button": "Аутентификатор қолданбасы",
+          "title": "Екі факторлы аутентификация"
+        },
+        "mfa_section": {
+          "title": "Көп факторлы аутентификация",
+          "passkey_button": "Кіру кілттері",
+          "totp_button": "TOTP",
+          "passcode_button": "Құпия кодты қосу"
+        },
+        "wallet_security_section": {
+          "title": "Әмиян қауіпсіздігі",
+          "passkey_button": "Кіру кілттері"
+        },
+        "title": "Баптаулар",
+        "button_logout": "Шығу",
+        "account_security": {
+          "title": "Аккаунт және қауіпсіздік",
+          "password": {
+            "title": "Құпиясөз",
+            "button": "Құпиясөзді баптау",
+            "set_button": "Құпиясөз орнату",
+            "reset_button": "Құпиясөзді қалпына келтіру"
+          }
+        },
+        "empty_screen": {
+          "title": "Мұнда әзірге ештеңе жоқ"
+        },
+        "delete_account": {
+          "title": "Аккаунтымды жою",
+          "description": "Аккаунтты жойсаңыз, әмиян деректері мен байланыстырылған смарт-келісімшарт әмияндары қоса алғанда, барлық деректер біржола жойылады. Бұл әрекетті болдырмау мүмкін емес.",
+          "backup_confirmation_embedded": "Әмиян кілттерінің сақтық көшірмесін сақтағанымды растаймын. Жалғастырсам, жаңа әмиян жасалады. Сақтық көшірмесі жоқ әмияндар мен активтер біржола жоғалады.",
+          "backup_confirmation_no_embedded": "Барлық деректерімнің жойылатынын растаймын. Қайта кірсем, жаңа профиль жасалады. Бұл өзгерістерді болдырмау мүмкін емес.",
+          "type_delete": "Әрекетті растау үшін төмендегі өріске DELETE енгізіңіз.",
+          "cancel": "Бас тарту",
+          "confirm": "Аккаунтты жою",
+          "deleting": "Жойылуда...",
+          "type_delete_label": "Растау мәтінін енгізіңіз"
+        },
+        "session_management": {
+          "title": "Қауіпсіздік баптаулары",
+          "session_management_button": "Сеанстарды басқару"
+        }
+      },
+      "dyn_waas": {
+        "backup_unsuccessful": {
+          "title": "Қайта көрейік",
+          "description": "Баптау аяқталмаған сияқты. Жалғастыру үшін төмендегі түймені басыңыз.",
+          "try_again": "Қайталау",
+          "log_out": "Шығу"
+        },
+        "backup_info": {
+          "title": "Сақтық көшірме туралы",
+          "subtitle": "Сақтық көшірмені неге бөліктерге бөлу керек?",
+          "description": "Қауіпсіздік үшін қалпына келтірудің екі тәуелсіз үлесін сақтауға болады. Осылайша әмиянды тек өз сақтық көшірмелеріңізден қалпына келтіріп, үдерісті толық бақылай аласыз.",
+          "warning": "Әмиянды қалпына келтіру үшін екі бөлік те қажет. Оларды ешқашан бірге сақтамаңыз."
+        },
+        "backup": {
+          "title": "Кілт үлесінің сақтық көшірмесі",
+          "subtitle": "Әмияндарды екі бөліктен тұратын сақтық көшірмемен қорғаңыз. Бір бөлігі бұлтта, екіншісі құрылғыңызда сақталады. Әмияндарды қалпына келтіру үшін екі бөлік те қажет.",
+          "checkbox_label": "Екі бөлікті де қауіпсіз әрі бөлек сақтау керегін түсінемін",
+          "continue_button": "Сақтық көшірме жасауға өту",
+          "cloud_backup_title": "1. Бұлттағы сақтық көшірме",
+          "cloud_backup_subtitle": "Кілттің бірінші үлесін бұлттық сервиске сақтаңыз",
+          "cloud_backup_header": "Бұлттағы сақтық көшірме",
+          "backup_to_google_drive": "Google Drive ішіне сақтау",
+          "backup_to_icloud": "iCloud ішіне сақтау",
+          "icloud_ready_title": "Сақтық көшірме жасау үшін кіріңіз",
+          "icloud_ready_subtitle": "Төменде Apple ID арқылы кіріп, әмиянның сақтық көшірмесін жасауды жалғастырыңыз.",
+          "sign_in_with_icloud": "iCloud арқылы кіру",
+          "continue_backup": "Жалғастыру",
+          "progress_title": "Әмияндардың сақтық көшірмесі жасалуда: {{current}} / {{total}}...",
+          "progress_initializing": "Сақтық көшірме дайындалуда...",
+          "progress_subtitle": "Бұлтқа қауіпсіз сақталуда. Бұл терезені жаппаңыз.",
+          "progress_complete": "Сақтық көшірме дайын!",
+          "google_drive_title": "Кілт үлесінің сақтық көшірмесі",
+          "google_drive_description": "Қолжетімділікті қорғап, қажет болғанда қалпына келтіру үшін әмиянның сақтық көшірмесін жасаңыз.",
+          "google_drive": "Google Drive",
+          "backed_up": "КӨШІРМЕ ЖАСАЛДЫ",
+          "google_drive_subtitle": "Google аккаунтыңыз арқылы бұлтта қауіпсіз сақтық көшірме жасау.",
+          "back_up": "Сақтық көшірме жасау",
+          "error": "Әмиянның сақтық көшірмесін жасау мүмкін болмады. Қайталап көріңіз.",
+          "download_title": "2. Жүктеп алу",
+          "download_subtitle": "Кілттің екінші үлесін жүктеп алып, өз құрылғыңызда қауіпсіз сақтаңыз",
+          "download_key_share": "Кілт үлесін жүктеп алу",
+          "downloading": "Жүктеп алынуда... ({{current}}/{{total}})",
+          "download_complete": "Жүктеп алу аяқталды",
+          "download_error": "Кілт үлесін жүктеп алу мүмкін болмады. Қайталап көріңіз.",
+          "success_title": "Сақтық көшірме жасалды",
+          "success_description_one": "{{count}} әмиянның жергілікті кілт үлестері сәтті жүктеп алынды. Бұл файлдарды қауіпсіз жерде, бұлттағы сақтық көшірмеден бөлек сақтаңыз.",
+          "success_description_other": "{{count}} әмиянның жергілікті кілт үлестері сәтті жүктеп алынды. Бұл файлдарды қауіпсіз жерде, бұлттағы сақтық көшірмеден бөлек сақтаңыз.",
+          "done": "Дайын",
+          "error_title": "Бұлтта сақтық көшірме жасау мүмкін болмады. Аккаунтыңыз әлі де қауіпсіз.",
+          "error_try_again": "Қайталау"
+        }
+      },
+      "dyn_wallet_delegation": {
+        "title": "Әмиян өкілеттігін беруге рұқсат",
+        "approval_required": "Рұқсат қажет",
+        "approval_requested": "Рұқсат сұралды",
+        "approval_description": "{{appName}} сіздің атыңыздан автоматты әрекеттер орындауға рұқсат сұрайды. Бұл рұқсатты кез келген уақытта қайтарып ала аласыз.",
+        "select_wallets": "Әмияндарды таңдаңыз",
+        "select_all": "Барлығын таңдау",
+        "deselect_all": "Барлық таңдауды алып тастау",
+        "clear": "Тазарту",
+        "approve_button": "Өкілеттік беруге рұқсат ету",
+        "deny_button": "Қабылдамау",
+        "done_button": "Дайын",
+        "approving_permissions": "Рұқсаттар берілуде",
+        "permissions_description": "{{appName}} сіздің атыңыздан автоматты әрекеттер орындауға рұқсат сұрайды. Бұл рұқсатты кез келген уақытта қайтарып ала аласыз.",
+        "permissions_granted": "Рұқсаттар берілді",
+        "permissions_description_granted": "{{appName}} қолданбасына сіздің атыңыздан автоматты әрекеттер орындауға рұқсат берілді. Бұл рұқсатты кез келген уақытта қайтарып ала аласыз.",
+        "revoke_note": "Бұл рұқсаттарды әмиян баптауларында кез келген уақытта қайтарып алуға болады.",
+        "wallets_selected": "әмиян таңдалды",
+        "edit_selections": "Таңдауды өзгерту",
+        "save_selections": "Таңдауды сақтау",
+        "edit_wallets_title": "Әмияндарды өзгерту",
+        "my_wallet": "Менің әмияным",
+        "all_wallets": "Барлық әмиян",
+        "agreement_text": "Бұл рұқсат сұрауын түсінемін және қабылдаймын",
+        "selected_wallets": "Таңдалған әмияндар",
+        "edit_wallets_to_delegate": "Өкілеттік берілетін әмияндарды өзгерту",
+        "something_went_wrong": "Бірдеңе дұрыс болмады",
+        "delegation_timeout_message": "Өкілеттік беру сұрауының мерзімі аяқталды немесе сұрау қабылданбады. Қайта рұқсат беріп көріңіз немесе кейінірек оралыңыз.",
+        "try_again_button": "Қайталау",
+        "logout_button": "Шығу",
+        "learn_more": "Толығырақ",
+        "learn_more_description": "Әмиян өкілеттігін беру қолданбаға сіз желіде болмаған кезде де сіздің атыңыздан әрекет етуге мүмкіндік береді. Бұл сауда боттары мен басқа автоматты үдерістерге пайдалы. Басқару өзіңізде қалады: рұқсатты әмиян баптауларында кез келген уақытта қайтарып ала аласыз.",
+        "learn_more_okay_button": "Түсінікті"
+      },
+      "dyn_collect_user_data": {
+        "description": "Бастау үшін бізге аздаған мәлімет қажет",
+        "fields": {
+          "alias": {
+            "label": "Бүркеншік ат"
+          },
+          "country": {
+            "label": "Ел"
+          },
+          "email": {
+            "label": "Эл. пошта",
+            "validation": "Эл. пошта мекенжайы жарамсыз"
+          },
+          "first_name": {
+            "label": "Аты"
+          },
+          "job_title": {
+            "label": "Лауазымы"
+          },
+          "last_name": {
+            "label": "Тегі"
+          },
+          "phone_number": {
+            "label": "Телефон нөмірі",
+            "validation": "Телефон нөмірі жарамсыз",
+            "too_short": "Телефон нөмірі тым қысқа"
+          },
+          "policies_consent": {
+            "label": "Саясаттармен келісу"
+          },
+          "t_shirt_size": {
+            "label": "Футболка өлшемі"
+          },
+          "team": {
+            "label": "Команда"
+          },
+          "username": {
+            "label": "Пайдаланушы аты",
+            "validation": "Пайдаланушы аты жарамсыз"
+          }
+        },
+        "greeting": "{{appName}} қолданбасына қош келдіңіз",
+        "log_out_button": "Шығу",
+        "not_supported_network": {
+          "description": "Әмияныңыз қолдау көрсетілетін желіге қосылмаған. Жалғастыру үшін желіні ауыстырыңыз.",
+          "error_message": "Бұл желі қолжетімсіз. Желіні ауыстырыңыз.",
+          "title": "Желіні ауыстыру"
+        },
+        "update_email_tooltip": "Бұл эл. пошта мекенжайы әмиянмен байланыстырылған, сондықтан оны өзгерту мүмкін емес",
+        "update_phone_number_tooltip": "Бұл телефон нөмірі әмиянмен байланыстырылған, сондықтан оны өзгерту мүмкін емес",
+        "lock_editing_multiple_verified_fields": "Растауды қажет ететін бір ғана өрісті бір уақытта өзгертуге болады"
+      },
+      "dyn_session_management": {
+        "aria": {
+          "back_button_label": "Артқа",
+          "info_button_label": "Ақпарат",
+          "close_button_label": "Жабу"
+        },
+        "title": "Сеанстарды басқару",
+        "empty_sessions_view": {
+          "loading": "Сеанстар жүктелуде...",
+          "title": "Белсенді сеанстар табылмады"
+        },
+        "info_view": {
+          "title": "Қосылған қолданбалардың сеанстары",
+          "description_bold": "Қолданбалардың әмияныңызға қолжетімділігін басқарыңыз. ",
+          "description_2": "Әр сеанс — сіз сайтпен немесе қолданбамен орнатқан қосылым.",
+          "description_3": "Әмияныңыздың қайда және қалай қолданылатынын бақылау үшін рұқсатты кез келген уақытта қайтарып ала аласыз.",
+          "continue_button": "Жалғастыру"
+        },
+        "revoke_access_view": {
+          "title": "Рұқсатты қайтарып алу",
+          "description": "Осы сайттың рұқсаттарын жойғалы жатырсыз. Рұқсатты қайтарып алуды растаңыз.",
+          "cancel_button": "Бас тарту",
+          "revoke_button": "Қайтарып алу",
+          "success_message": "{{sessionName}} рұқсаты қайтарылды",
+          "error_message": "{{sessionName}} рұқсатын қайтарып алу мүмкін болмады"
+        },
+        "session_component": {
+          "aria": {
+            "collapse_permissions": "Жию",
+            "expand_permissions": "Жаю"
+          },
+          "permission_details": "Рұқсаттар туралы мәліметтер",
+          "revoke_button": "Қайтарып алу"
+        }
+      },
+      "dyn_manage_passkeys": {
+        "title": "Кіру кілттерін басқару",
+        "passkey_from": "дереккөзі:",
+        "passkey_providers": {
+          "android": "Android телефоны",
+          "brave": "Brave браузері",
+          "chrome": "Google Chrome",
+          "edge": "Microsoft Edge",
+          "firefox": "Firefox",
+          "iPhone": "iPhone",
+          "opera": "Opera браузері",
+          "safari": "Safari браузері",
+          "passkey": "Кіру кілті"
+        },
+        "passkey_rename": "Атауын өзгерту",
+        "passkey_delete": "Жою",
+        "recovery_button": "Жаңа кіру кілтін жасау"
+      },
+      "dyn_time_since": {
+        "second": "секунд",
+        "seconds": "секунд",
+        "minute": "минут",
+        "minutes": "минут",
+        "hour": "сағат",
+        "hours": "сағат",
+        "day": "күн",
+        "days": "күн",
+        "month": "ай",
+        "months": "ай",
+        "year": "жыл",
+        "years": "жыл",
+        "ago": "бұрын",
+        "created": "Жасалды"
+      },
+      "dyn_no_access": {
+        "chainalysis": {
+          "button_text": "Басқа тәсілді қолданып көру",
+          "description": "Бұл әмиян заңсыз әрекеттермен байланысты және сайтқа кіре алмайды.",
+          "social_media_link_text": "Неліктен бұл хабарлама көрсетілді?",
+          "social_media_link_url": "https://docs.dynamic.xyz/docs",
+          "title": "Бұл мекенжайдың қауіпсіздігі бұзылған сияқты."
+        },
+        "default": {
+          "button_text": "Басқа тәсілді қолданып көру",
+          "description": "Сіз қазір рұқсат берілген пайдаланушылар тізімінде жоқсыз.",
+          "title": "Кіруге рұқсат жоқ"
+        },
+        "gate": {
+          "button_text": "Басқа әмиянды қолданып көру",
+          "description": "Сайтқа кіру үшін NFT немесе токен қажет.",
+          "title": "Сайтқа кіруге рұқсатыңыз жоқ"
+        },
+        "not_in_the_list_image_alt": "Пайдаланушы тізімде жоқ",
+        "title": "Рұқсатыңыз жоқ"
+      },
+      "dyn_error": {
+        "default": "Бірдеңе дұрыс болмады. Қайталап көріңіз.",
+        "user_rejected": "Пайдаланушы сұрауды қабылдамады.",
+        "message_signature_denied": "Хабарламаға қол қою қабылданбады",
+        "wallet_locked": "Әмиян кеңейтімінің құлпын ашып, қайталап көріңіз.",
+        "invalid_parameters": "Параметрлер жарамсыз. Қайталап көріңіз.",
+        "internal_error": "Ішкі қате пайда болды. Қайталап көріңіз.",
+        "account_already_linked_to_different_profile": "Бұл әлеуметтік желі аккаунты басқа профильмен байланыстырылған.",
+        "connection_rejected": "Қосылу қабылданбады. Қайталап көріңіз.",
+        "missing_public_address": "Қосылудан бас тартылды. Қайталап көріңіз.",
+        "connection_proposal_expired": "Қосылу сұрауының мерзімі аяқталды. Қайталап көріңіз.",
+        "sei_not_enabled_in_keplr_wallet": "Keplr ішінде Sei желісі қосылмаған. Оны қосып, қайталап көріңіз.",
+        "rate_limit_error": "Сұраулар тым көп. Кейінірек қайталап көріңіз."
+      },
+      "dyn_wallet_list": {
+        "configuration_mismatch": "Кіру тәсілдері бапталмаған.",
+        "helper": "Алғашқы әмияныңызды жасаңыз",
+        "search": {
+          "label": "{{numberOfWallets}} әмиян арасынан іздеу...",
+          "not_found": {
+            "description": "Қажетті әмиян қолжетімсіз болуы мүмкін немесе осы түрдегі бірнеше әмиянды байланыстыруға қолдау көрсетілмейді.",
+            "title": "Әмиян қолжетімсіз"
+          }
+        },
+        "title": {
+          "connect": "Жаңа әмиянды қосу",
+          "link": "Жаңа әмиянды байланыстыру",
+          "select": "Әмияныңызды таңдаңыз"
+        },
+        "view_all": "Барлық әмиян",
+        "wallet_missing": {
+          "description": "Іздеуді қолданып көріңіз",
+          "title": "Әмияныңыз көрінбей ме?"
+        }
+      },
+      "dyn_wallet_upgrade_flow": {
+        "title": "Әмияныңызды жаңартыңыз",
+        "step_wallet_upgrade": "{{walletName}} жаңарту",
+        "new_wallet_title": "Жаңа әмиян жасау",
+        "new_wallet_coming_soon": "Жаңа әмиян жасау жақында қолжетімді болады...",
+        "copy_private_key_subtitle": "Әмиянды жаңарту үшін кілтін импорттаңыз. Активтерге қолжетімділік сақталады. Әмиян әрдайым өз басқаруыңызда қалады.",
+        "copy_private_key_title": "Көшіру",
+        "step_2_upgrade_description": "Қою",
+        "upgrade_wallet": "Аккаунтты жаңарту",
+        "cancel": "Бас тарту",
+        "export_failed": "Әмиянды экспорттау мүмкін болмады",
+        "upgrade_failed": "Әмиянды жаңарту мүмкін болмады"
+      },
+      "dyn_exchange_whitelist_warning": {
+        "title": "Мекенжайды рұқсат етілгендер тізіміне қосу қажет",
+        "description": "{{exchange}} арқылы алғашқы аударымды жасау үшін мына қадамдарды орындаңыз:",
+        "step1": {
+          "kraken": "Kraken ашыңыз. Transfer, содан кейін Withdraw түймесін басыңыз."
+        },
+        "step2": "Әмиян мекенжайын рұқсат етілгендер тізіміне қосыңыз",
+        "step3": "{{exchange}} арқылы алғашқы аударымды жасаңыз",
+        "view_instructions": "Нұсқаулықты көру",
+        "done": "Дайын",
+        "address": "Әмияныңыздың мекенжайы",
+        "open": "{{exchange}} ашу"
+      },
+      "dyn_passkey_new_domain_detected": {
+        "title": "Жаңа домен анықталды",
+        "description": "Транзакцияны аяқтау үшін қол қою тәсілін таңдаңыз",
+        "actions": {
+          "passkey": {
+            "title": "Жаңа кіру кілтін қосу",
+            "subtitle": "Мерзімі шектелмеген. Әртүрлі құрылғыларда жұмыс істейді және биометриямен қорғалған."
+          },
+          "emailAuth": {
+            "title": "Бір реттік кодты пайдалану",
+            "subtitle": "30 минут бойы транзакциялар жасауға мүмкіндік береді"
+          },
+          "badges": {
+            "recommended": "Ұсынылады",
+            "fastest": "Ең жылдам"
+          }
+        }
+      },
+      "dyn_unified_list": {
+        "title": "Толықтыру көзі",
+        "exchange": "Биржа",
+        "wallet": "Әмиян",
+        "onramp": "Фиатпен сатып алу",
+        "search": {
+          "label": "Әмияндарды, биржаларды және фиатпен сатып алу сервистерін іздеу",
+          "not_found": {
+            "description": "Қажетті әмиян, биржа немесе фиатпен сатып алу сервисі қолжетімсіз болуы мүмкін.",
+            "title": "Әмиян, биржа немесе сатып алу сервисі қолжетімсіз"
+          }
+        },
+        "item": {
+          "connected": "Қосылды"
+        }
+      },
+      "dyn_unlink_wallet_pop_up": {
+        "disconnect_title": "Әмиянды ажырату керек пе?",
+        "unlink_title": "Әмиян байланысын жою керек пе?",
+        "disconnect_description": "Әмиянды ажыратқыңыз келетініне сенімдісіз бе?",
+        "unlink_description": "Әмиян байланысын жойғыңыз келетініне сенімдісіз бе?",
+        "disconnect_button": "Иә, ажырату",
+        "unlink_button": "Иә, байланысты жою",
+        "cancel_button": "Жоқ"
+      },
+      "dyn_merge_user_accounts_with_same_email": {
+        "cancel_button": "Жоқ, басқа эл. поштаны қолданамын",
+        "confirm_button": "Иә, бар аккаунтпен байланыстыру",
+        "errors": {
+          "merge_error": "Бірдеңе дұрыс болмады. Қайталап көріңіз."
+        },
+        "existing_account": "Мына эл. пошта мекенжайымен аккаунт бар:",
+        "existing_account_trail": ".",
+        "title": "Осы әмиянды бар аккаунтпен байланыстыру керек пе?"
+      },
+      "dyn_pending_signature": {
+        "click_to_sign": "Қол қою үшін басыңыз",
+        "link_wallet_message": "Әмиянды аккаунтыңызбен байланыстыруды растау үшін әмияндағы хабарламаға қол қойыңыз",
+        "note": "Ескертпе: ",
+        "phantom_ledger_sign": "Әмиянның сізге тиесілі екенін растау үшін ондағы қол қою түймесін басыңыз (газ жұмсалмайды).",
+        "phantom_ledger_warning": "Ledger хабарламаларға қол қоюды қолдамайды. Кіру кезінде алынбауы тиіс шағын комиссия көрсетілуі мүмкін. Толығырақ төменде.",
+        "regular_sign_description": "Әмиянның сізге тиесілі екенін растау үшін ондағы кіру түймесін басыңыз."
+      },
+      "dyn_network_not_supported": {
+        "button": "Желіні ауыстыру",
+        "subtitle": "Әмияныңыз қолдау көрсетілетін желіге қосылмаған. Жалғастыру үшін желіні ауыстырыңыз.",
+        "title": "Желіні ауыстыру",
+        "warning_message": "Бұл желі қолжетімсіз. Желіні ауыстырыңыз.",
+        "wallet": "Қолдау көрсетілмейді"
+      },
+      "dyn_sign_message": {
+        "cancel_button": "Қабылдамау",
+        "sign_button": "Қол қою",
+        "title": "Қол қою сұрауы",
+        "warning": "Бұл сайтқа сенсеңіз ғана хабарламаға қол қойыңыз.",
+        "message_label": "Хабарлама:"
+      },
+      "dyn_subdomain_field": {
+        "label": "Субдомен атауы",
+        "available": "Субдомен қолжетімді",
+        "not_available": "Субдомен қолжетімсіз",
+        "error": "Субдоменді тексеру мүмкін болмады",
+        "details": "Бұл атау әмияныңызға бірегей ENS субдоменін жасайды. Ол әмиянды тануды және басқалармен бөлісуді жеңілдетеді."
+      },
+      "dyn_email_update": {
+        "current_email": "Ағымдағы эл. пошта мекенжайыңыз:",
+        "label": "Эл. пошта мекенжайы",
+        "send_verification": "Растау кодын жіберу",
+        "title": "Эл. поштаны өзгерту"
+      },
+      "dyn_merge_user_accounts": {
+        "confirm_button": "Аккаунттарды біріктіру",
+        "errors": {
+          "merge_error": "Бірдеңе дұрыс болмады. Қайталап көріңіз."
+        },
+        "wallet": {
+          "content": "Бұл әмиян басқа аккаунтпен байланыстырылған. Аккаунттарды біріктіру керек пе?",
+          "title": "Әмиян қолданылып жатыр"
+        }
+      },
+      "dyn_export_and_recovery": {
+        "title": "Экспорттау және қалпына келтіру",
+        "private_key": "Жеке кілт",
+        "export_shares": "Кілт үлесін экспорттау",
+        "advanced": "ҚОСЫМША"
+      },
+      "dyn_email_confirmation": {
+        "description": "Растау хаты мына мекенжайға жіберілді:",
+        "note": "Ескертпе: хаттағы сілтемені басқаннан кейін жалғастыру үшін бірнеше секунд қажет болуы мүмкін.",
+        "title": "Эл. поштаңызды растаңыз"
+      },
+      "dyn_pending_connection": {
+        "title": "Қосылу",
+        "mobile": "Мобильді әмияндағы қосылу түймесін басыңыз",
+        "computer": "Әмиянның қалқымалы терезесіндегі қосылу түймесін басыңыз"
+      },
+      "dyn_wallet_transfer": {
+        "sign": {
+          "spinner": {
+            "cancel": "Бас тарту",
+            "confirm_transfer": "Осы әмиянды осы аккаунтқа көшіруді растау үшін хабарламаға қол қойыңыз."
+          },
+          "title": "Көшіруді растау үшін қол қойыңыз"
+        }
+      },
+      "dyn_widget_header": {
+        "buttons": {
+          "deposit_funds": "Толықтыру",
+          "send_funds": "Жіберу",
+          "more": "Тағы"
+        }
+      },
+      "dyn_captcha": {
+        "verify_user_subtitle": "Жалғастырмас бұрын адам екеніңізді жылдам тексеруіміз керек.",
+        "verify_user_title": "Адам екеніңізді растаңыз"
+      },
+      "dyn_common": {
+        "aria": {
+          "collapsed": "Жиылған",
+          "expanded": "Жайылған"
+        }
+      },
+      "wallets_delegated": {
+        "title": "Әмиян өкілеттіктері берілді",
+        "subtitle": "Өкілеттік беру басқа платформаларда әмияныңызбен әрекет етуге мүмкіндік береді."
+      },
+      "dyn_select_chain": {
+        "description": "Бұл әмиян бірнеше желіні қолдайды. Қосылатын желіні таңдаңыз.",
+        "using_hardware_wallet_toggle_label": "Ledger пайдалану"
+      },
+      "dyn_wallet_information": {
+        "balance": "Баланс",
+        "multi_asset": {
+          "empty_state": "Әмиянда активтер жоқ"
+        }
+      },
+      "dyn_select_wallet": {
+        "description": "Өзіңізге қолайлы {{walletName}} әмиянын таңдаңыз"
+      },
+      "dyn_search": {
+        "clear": "Тазарту"
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+# Modified by Quat Capital, 2026-11-01: include the pinned Dynamic localization guard patch before dependency installation. GPL-3.0.
 # *****************************
 # *** STAGE 1: Dependencies ***
 # *****************************
@@ -16,6 +17,7 @@ COPY configs/app ./configs/app
 COPY toolkit/theme ./toolkit/theme
 COPY toolkit/utils ./toolkit/utils
 COPY toolkit/components/forms/validators/url.ts ./toolkit/components/forms/validators/url.ts
+COPY tools/i18n/patch-dynamic.mjs ./tools/i18n/patch-dynamic.mjs
 RUN apk add git
 RUN yarn --frozen-lockfile --network-timeout 100000
 

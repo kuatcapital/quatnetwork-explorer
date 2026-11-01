@@ -3,7 +3,7 @@
     "modifiedBy": "Quat Capital",
     "modifiedOn": "2026-10-29",
     "license": "GPL-3.0",
-    "generatedAt": "2026-10-29T11:56:51.290Z",
+    "generatedAt": "2026-11-01T12:55:22.542Z",
     "purpose": "T18 AST candidate inventory; manual review is mandatory.",
     "sourceRoots": [
       "ui",
@@ -23,22 +23,22 @@
     "Existing literal translation calls are excluded; run check-locales.mjs to validate their keys."
   ],
   "stats": {
-    "filesScanned": 2119,
+    "filesScanned": 2121,
     "filesByRoot": {
       "configs": 75,
-      "lib": 218,
+      "lib": 220,
       "nextjs": 53,
       "pages": 94,
       "toolkit": 200,
       "ui": 1479
     },
     "filesByExtension": {
-      ".ts": 557,
+      ".ts": 559,
       ".tsx": 1559,
       ".js": 3
     },
     "skipped": {
-      "tests": 288,
+      "tests": 289,
       "declarationsOrGenerated": 1,
       "excludedDirectories": 92,
       "symbolicLinks": 0
@@ -18819,7 +18819,7 @@
     },
     {
       "file": "ui/shared/web3/providers/DynamicProvider.tsx",
-      "line": 70,
+      "line": 73,
       "column": 67,
       "source": "Something went wrong",
       "kind": "text-candidate",
@@ -18828,7 +18828,7 @@
     },
     {
       "file": "ui/shared/web3/providers/DynamicProvider.tsx",
-      "line": 90,
+      "line": 93,
       "column": 23,
       "source": "Dynamic environment ID is not set",
       "kind": "text-candidate",

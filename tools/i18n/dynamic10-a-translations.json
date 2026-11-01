@@ -1,0 +1,1698 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-11-01",
+    "license": "GPL-3.0",
+    "sourceLicense": "MIT; Dynamic Labs, Inc., 2022",
+    "kazakhReview": "Native speaker review required"
+  },
+  "en": {
+    "dynamicUi": {
+      "dyn_send_transaction": {
+        "confirmation": {
+          "cancel_button": "Cancel",
+          "confirm_button": "Confirm",
+          "send": "Confirm",
+          "data": {
+            "amount": "Amount",
+            "from": "From (You)",
+            "gas": "Gas",
+            "gas_estimate": "Network Fee",
+            "to": "To",
+            "total": "Total",
+            "wallet_used": "Wallet used",
+            "network": "Network",
+            "recipient": "Recipient",
+            "destination": "Interacting with",
+            "gas_tooltip": "Gas fees are charged by the network and can change quickly based on usage.",
+            "sending": "Sending",
+            "receiving": "Receiving",
+            "transfer": {
+              "send": "Send",
+              "receive": "Receive"
+            }
+          },
+          "not_applied": "N/A",
+          "title": "Confirm transaction"
+        },
+        "data": {
+          "amount": {
+            "label": "Amount",
+            "placeholder": "Enter amount"
+          },
+          "balance": {
+            "label": "Balance:"
+          },
+          "from": "Send from",
+          "send": "Send",
+          "send_preview": "Send Preview",
+          "confirmation_tx": "Confirm Transaction",
+          "banner": "You're nearly done! Confirm transaction to proceed.",
+          "recipient": {
+            "label": "Address",
+            "placeholder": "Enter wallet address..."
+          },
+          "fee_token_label": "Pay fees with",
+          "select_token": "Select any token",
+          "symbol_available": "{{symbol}} Available"
+        },
+        "multiple_recipients": "Multiple",
+        "preview_transaction": "Preview transaction",
+        "send_button": "Send now",
+        "succeeded": {
+          "continue_button": "Done",
+          "network": {
+            "label": "Network"
+          },
+          "recipient": {
+            "label": "Recipient"
+          },
+          "title": "Transaction successfully sent to",
+          "total_amount": {
+            "label": "Total amount"
+          }
+        },
+        "validation": {
+          "amount": {
+            "invalid_decimals": "Please enter a value up to the {{decimals}}th decimal place.",
+            "invalid_format": "The amount is in invalid format",
+            "over_balance": "Insufficient funds to send this amount.",
+            "required": "The amount field is required"
+          },
+          "recipient": {
+            "invalid_format": "The address is in invalid format",
+            "required": "The recipient is required"
+          }
+        },
+        "info_message": {
+          "refresh_balance_time": "Your balance may take up to 30s to refresh."
+        },
+        "warning_message": {
+          "insufficient_funds": {
+            "title": "Insufficient funds",
+            "description": "Insufficient funds for transaction. Please add {{amountLeft}} {{currencySymbol}} to continue."
+          },
+          "insufficient_gas_funds": {
+            "title": "Insufficient gas funds",
+            "description": "Please add {{amountLeft}} {{currencySymbol}} to continue."
+          },
+          "failed_simulation": {
+            "title": "Transaction expected to fail",
+            "description": "Something went wrong. Check your balances and try again."
+          }
+        },
+        "error_message": {
+          "gas_not_sponsored": "The gas fee has increased. Confirm if you still want to complete this transaction."
+        }
+      },
+      "global_wallet": {
+        "connect_to_apps": "Connect to apps",
+        "scan_qr_code": "Scan QR Code",
+        "or": "OR",
+        "walletconnect_uri": "WalletConnect URI",
+        "the_dapp": "the dApp",
+        "this_app": "this app",
+        "confirm": {
+          "title": "Confirm Connection",
+          "description": "Are you sure you want to connect to {{name}}?",
+          "cancel_button": "Cancel",
+          "connect_button": "Connect"
+        },
+        "banner": {
+          "warning": "There was an error connecting to {{name}}.",
+          "success": "Successfully connected to {{name}}.",
+          "already_connected": "You are already connected to {{name}}.",
+          "expired": "The link you entered expired, please get a new URI from the app.",
+          "bad_input": "Invalid URI. Please check below for how to find the valid URI."
+        },
+        "help": {
+          "title": "How do I find the URI code?",
+          "step": {
+            "1": "1. Go to the website you want to connect to",
+            "2": "2. Locate the \"Connect\" or \"Login\" button",
+            "3": "3. Open WalletConnect from the list"
+          },
+          "learn_more": "Learn more about global wallets"
+        },
+        "malicious_site": {
+          "certain": {
+            "title": "Malicious app detected!",
+            "subtitle_header": "Risk of losing funds",
+            "subtitle_text": "The site is known to exploit and or take assets from connected wallets.",
+            "go_back": "Cancel",
+            "proceed": "Proceed"
+          },
+          "unknown": {
+            "title": "Site verification did not run.",
+            "subtitle_header": "Double check the app",
+            "subtitle_text": "We were unable to verify the vailidity of the app at this time.",
+            "go_back": "Cancel",
+            "proceed": "Proceed"
+          }
+        },
+        "connected_apps": {
+          "title": "Connected Apps",
+          "subtitle": "Connected apps allow you to interact with your wallet on other platforms.",
+          "success": "Successfully connected to {{name}}.",
+          "delegate_wallets": {
+            "title": "Delegated Wallets",
+            "button": "Delegated Wallets"
+          }
+        }
+      },
+      "dyn_embedded_authenticator": {
+        "description": "Protect your account and simplify your transaction experience.",
+        "email": {
+          "badge": "Fastest",
+          "description": " You will need to renew after {{expiration}} minutes ",
+          "title": "Use a one-time code"
+        },
+        "passkey": {
+          "auth_info": {
+            "convinience": {
+              "title": "Convenient and Fast",
+              "description": "Use Face ID or Touch ID to complete transactions quickly."
+            },
+            "security": {
+              "title": "Increased Security",
+              "description": "Passkeys are encrypted end-to-end on your device or password manager to prevent phishing attempts."
+            },
+            "add_button": "Add a passkey",
+            "start_button": "Add a passkey"
+          },
+          "no_email_auth_info": {
+            "convinience": {
+              "title": "Simple and Fast",
+              "description": "Works across devices and syncs between devices and browsers."
+            },
+            "security": {
+              "title": "Secured with a bio-metric",
+              "description": "Phishing resistant and encrypted."
+            },
+            "add_button": "Add passkey",
+            "start_button": "Add passkey"
+          },
+          "badge": "Recommended",
+          "description": "Works across devices & secured with biometric to prevent phishing attempts ",
+          "title": "Create new passkey",
+          "reveal_title": "Add a passkey"
+        },
+        "skip": "Not now",
+        "title": "Account security",
+        "need_help_title": "Problem Signing?",
+        "need_help_description": "Select from an option below to complete",
+        "reveal_title": "Verification Required",
+        "reveal_description": "Choose a verification method."
+      },
+      "dyn_create_password": {
+        "continue": "Continue",
+        "create_input": {
+          "label": "Create passcode",
+          "placeholder": "Create passcode"
+        },
+        "confirm_input": {
+          "label": "Confirm passcode",
+          "placeholder": "Confirm passcode"
+        },
+        "current_password_input": {
+          "label": "Current passcode",
+          "placeholder": "Current passcode"
+        },
+        "description": "Choose a strong, unique passcode to ensure your account's security and privacy.",
+        "errors": {
+          "invalid_current_password": "Invalid current passcode",
+          "error_changing_password": "Error changing passcode",
+          "new_password_same_as_old": "New passcode cannot be the same as the old passcode",
+          "password_mismatch": "Passcodes do not match",
+          "user_closed_view": "User closed the view"
+        },
+        "intro": {
+          "continue": "Set up a passcode",
+          "description": {
+            "title": "Add a passcode to protect your account",
+            "additional_protection": {
+              "title": "Passcode Security",
+              "description": "Add a secure passcode to further prevent un-authrized access to your account."
+            },
+            "restore_access": {
+              "title": "Restore Access",
+              "description": "You will be asked to enter it when signing on to a new device."
+            }
+          },
+          "title": "Add a Passcode"
+        },
+        "logout": "Log out",
+        "title": {
+          "create": "Create passcode",
+          "update": "Create new passcode"
+        },
+        "update_input": {
+          "label": "New passcode",
+          "placeholder": "New passcode"
+        }
+      },
+      "dyn_embedded_reveal": {
+        "title": "Export wallet",
+        "agreement_title": "Agree to continue",
+        "prompt_for_export_title": "Back up wallet key",
+        "private_key_title": "Export Key",
+        "recovery_phrase_title": "Secret recovery phrase",
+        "badge_label": "Sensitive information",
+        "prompt_for_export_description": "Your wallet is ready. Back up your key to protect your assets.",
+        "statement_1": {
+          "title": "Non-custodial wallet",
+          "description": "You're always in control"
+        },
+        "statement_2": {
+          "title": "Keep your key private. It controls your account and assets."
+        },
+        "checkbox_label": "I am responsible for safeguarding and using my wallet key information.",
+        "reveal_description": "Make sure to safely back up this information",
+        "skip_button_label": "Skip for now",
+        "reveal_button_label": "Reveal",
+        "backup_button_label": "Back up now",
+        "copy_button_label": "Copy to clipboard",
+        "done_button_label": "I'm Done",
+        "aa_warning": {
+          "title": "Your assets are not in this wallet.",
+          "subtitle": "This is a smart-contract wallet. You will not see your balance if you import this to an external service. Please send your assets to your preferred external wallet first to access your funds:",
+          "button": "here"
+        },
+        "unlink": "Unlink wallet info"
+      },
+      "dyn_reset_password": {
+        "current": {
+          "title": "Enter Current Password",
+          "description": "Confirm your current password to continue",
+          "label": "Your current Password",
+          "placeholder": "Enter your password",
+          "error": {
+            "required": "Password is required",
+            "invalid_password": "Current password is incorrect",
+            "failed": "Failed to verify password"
+          }
+        },
+        "enter": {
+          "title": "Reset password",
+          "description": "Set a strong password to protect your wallet.",
+          "same_password_error": "New password cannot be the same as your current password"
+        },
+        "confirm": {
+          "title": "Confirm your Password",
+          "description": "Enter your password again to verify you've securely saved it.",
+          "acknowledgment": "I understand that if I lose my password I will lose access to my account and my assets. Keep your password safe.",
+          "error": {
+            "failed": "Failed to update password. Please try again."
+          }
+        },
+        "success": {
+          "title": "Password updated successfully!",
+          "description": "All set! You have successfully reset your password."
+        }
+      },
+      "dyn_passkey_secure_modal": {
+        "code": {
+          "action_based_description": "To {{action}} verify account.",
+          "description": "A secure code has been sent to {{email}}.",
+          "input_label": "Enter your code here...",
+          "title": "Verification code sent",
+          "resend": {
+            "button": "Resend code",
+            "text": "Didn't receive a code?"
+          },
+          "complete_transaction_action": "complete transaction",
+          "sign_message_action": "sign this message"
+        },
+        "complete": {
+          "complete_button": "Create a passkey",
+          "description": "Passkeys are stored natively to your device with a biometric and can only be accessed by you.",
+          "title": "Secure your account"
+        },
+        "start": {
+          "description": "A one-time security code will be sent to the email on file. It will expire in 15 minutes.",
+          "start_button": "Send me an email",
+          "title": "Send Email Code"
+        }
+      },
+      "dyn_exchange_transfer_confirmation": {
+        "title": "Deposit Confirmation",
+        "from": "From",
+        "to": "To",
+        "fee": "Network Fee",
+        "fee_not_found": "N/A",
+        "receive": "Receive",
+        "cost": "Amount + Fees",
+        "cost_no_fee": "Amount",
+        "terms": "By confirming I agree to the Terms of Service and acknowledge this deposit is final.",
+        "send": "Send {{fiatCurrency}} {{fiatCurrencySymbol}}",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "account": "User {{exchange}}"
+      },
+      "dyn_secondary_wallet": {
+        "title": "Select Wallet",
+        "copy_address": "Copy address",
+        "view_address": "View address",
+        "copy_ens": "Copy ENS",
+        "view_ens": "View ENS",
+        "unlink": "Unlink",
+        "switch_wallet": "Switch wallet",
+        "unlink_from_account": "Unlink from my account",
+        "disconnect_from_account": "Disconnect from my account",
+        "export": "Export private keys",
+        "connect_new": "Connect new",
+        "link_new": "Link new"
+      },
+      "dyn_wallet_link": {
+        "cannot_link": {
+          "cancel_button": "Cancel",
+          "description": "This wallet is the only wallet in your other account. You cannot transfer it, since then you will lose access to that account.",
+          "link_other_button": "Link a different wallet",
+          "title": "Cannot link this wallet to a new account"
+        },
+        "confirm_button": "Link wallet to current account",
+        "existent_account": {
+          "acceptance": "I understand that linking this wallet means that I will lose access to the other account.",
+          "warning": "Linking your wallet to this account will unlink it from its previously associated account"
+        },
+        "log_out_button": "Log out",
+        "title": "Transfer this wallet?",
+        "already_exists": {
+          "title": "Wallet Already Linked",
+          "description": "This wallet is already used as an embedded wallet. You cannot link it unless you delete the existing embedded wallet."
+        }
+      },
+      "dyn_upgrade_wallet": {
+        "title": "Upgrade your account",
+        "description": "A new version of your account is available, with better security and easier recovery.",
+        "eligible_wallets": "Eligible wallets",
+        "how_to_upgrade": "How would you like to upgrade?",
+        "keep_existing": "Keep existing wallet",
+        "keep_existing_desc": "Export your legacy wallet and securely import the private key to upgrade",
+        "start_fresh": "Start fresh",
+        "start_fresh_desc": "Removes your legacy wallet and create a brand new upgraded wallet",
+        "recommended": "recommended",
+        "upgrade": "Upgrade",
+        "not_now": "Not now"
+      },
+      "dyn_active_wallet_info": {
+        "testnet_warning": "A testnet network has been selected. Please only use testnet funds or they will be lost.",
+        "ordinals_address": "Ordinals address",
+        "payment_address": "Payment address",
+        "balance": "Total balance",
+        "options": {
+          "copy_ens": "Copy ENS",
+          "view_address": "View address",
+          "disconnect": "Disconnect",
+          "settings": "Wallet settings",
+          "export": "Export private keys"
+        }
+      },
+      "dyn_sync_wallet": {
+        "switch_wallet": {
+          "title": "Your wallets are mismatched. \nSwitch to continue.",
+          "active_address": {
+            "heading": "Currently active in wallet"
+          },
+          "expected_address": {
+            "heading": "Currently active on website",
+            "prompt": "Manually switch to this wallet"
+          }
+        },
+        "reconnecting": {
+          "title": "This wallet is not connected",
+          "description": "Reconnecting wallet {{walletAddress}} to make it active..."
+        },
+        "reconnect_with_qr_code": {
+          "title": "This wallet is not connected"
+        },
+        "cancel_button": "Cancel",
+        "retry_button": "Retry"
+      },
+      "dyn_session_permissions": {
+        "permissions_label": "Permissions",
+        "permissions": {
+          "ownership": "Act on your behalf",
+          "access": "Access ends automatically in {{time}}"
+        },
+        "spending_label": "Allow Spending",
+        "spending_limit": "Can spend up to:",
+        "advanced_label": "Advanced",
+        "advanced_description": "Session information",
+        "connected": "Connected: {{time}} ago"
+      },
+      "dyn_exchange_transfer_errors": {
+        "title": "Unable to execute transfer.",
+        "mfa_failed": "Incorrect security code. Please double-check your MFA code and try again.",
+        "invalid_currency_description": "Please choose a supported currency and try again.",
+        "invalid_balance": "This transfer, including fees, exceeds your available balance. Transfer a smaller amount.",
+        "amount_too_small": "The amount you’re trying to transfer is below the minimum allowed by the selected exchange. Please enter a larger amount and try again.",
+        "address_not_whitelisted": "The destination address is not whitelisted on this exchange. Please add it to your whitelist before retrying the transfer.",
+        "unknown": "An unknown error occurred."
+      },
+      "dyn_account_exists": {
+        "connect": "Connect with {{socialOauth}}",
+        "description_email": "It looks like an account already exists using",
+        "description_social": "To restore your account to the right place, we need you to log in again.",
+        "title": "Re-Authentication Required",
+        "trail_message_email": ". Please log in with your email.",
+        "trail_message_social": "through {{socialOauth}}"
+      },
+      "dyn_need_help_section": {
+        "info": {
+          "v1": "Need Help?",
+          "not_v1": "Need help? Get in touch:"
+        },
+        "contact_support": "Contact support",
+        "divider": "or",
+        "help_button": "Go here for support",
+        "visit_platform": "Visit {{platform}}"
+      },
+      "dyn_rename_passkeys": {
+        "error": "Whoops! There was an error updating your passkey",
+        "input_label": "Passkey name",
+        "save": "Save",
+        "title": "Rename your passkey",
+        "not_found": "No passkeys found"
+      },
+      "dyn_wallet_locked": {
+        "connect_continue": "Connect your wallet to continue",
+        "title": "Welcome back",
+        "subtitle": "We couldn't connect to your wallet. Click connect to retry the connection ",
+        "connect": "Connect wallet",
+        "logout": "Log out"
+      },
+      "dyn_exchange_list": {
+        "search": {
+          "label": "Search through exchanges",
+          "not_found": {
+            "description": "The exchange you’re looking for may not be available.",
+            "title": "Exchange not available"
+          }
+        },
+        "item": {
+          "connected": "Connected"
+        },
+        "no_exchanges": "Oops, no exchanges have been configured."
+      },
+      "dyn_wallet_details_card": {
+        "header": "Wallet Details",
+        "address": "Address",
+        "copy": "Copy",
+        "copied": "Copied!"
+      },
+      "dyn_deposited_exchange": {
+        "title": "Deposited",
+        "description": " was successfully deposited to {{address}}",
+        "done": "Done",
+        "view": "View Transaction"
+      },
+      "dyn_merge_user_accounts_conflicts": {
+        "confirm_button": "Confirm & Merge",
+        "description": "You have some conflicting information. Please select your preferences",
+        "errors": {
+          "merge_error": "Something went wrong, please try again."
+        },
+        "title": "Confirm your preferences"
+      },
+      "dyn_export_shares_passcode": {
+        "title": "Enter Passcode",
+        "description": "To export your recovery shares, enter your passcode.",
+        "enter_passcode": "Enter passcode",
+        "error": "Invalid passcode"
+      },
+      "dyn_unlock_wallet": {
+        "title": "Enter Password",
+        "description": "Enter your password to continue with this action. The wallet will be unlocked for the duration of this session.",
+        "button": {
+          "continue": "Continue"
+        }
+      },
+      "dyn_nav_bar": {
+        "wallets": "Wallets",
+        "profile": "Profile",
+        "settings": "Settings"
+      },
+      "dyn_account_upgraded": {
+        "title": "Account Upgraded",
+        "message": "All done! You've got the latest version — more powerful, flexible, and ready for what's next.",
+        "continue_button": "Continue"
+      },
+      "dyn_access_blocked": {
+        "title": "Access Blocked",
+        "content": "Logging in is not available to persons in {{jurisdiction}} as you are in a sanctioned jurisdiction."
+      },
+      "dyn_deposit": {
+        "title": "Deposit",
+        "receive_funds_on": "You can receive tokens on "
+      },
+      "dyn_passkey_success": {
+        "created": "A new passkey has been created",
+        "edited": "Your passkey has been edited"
+      },
+      "dyn_wallet_conect": {
+        "mobile": {
+          "wallet_list": {
+            "helper": "Get your first wallet",
+            "title": "WalletConnect wallets"
+          }
+        }
+      },
+      "dyn_chainalysis_blocked_wallet": {
+        "title": "Access denied"
+      },
+      "dyn_fund_from_exchange": {
+        "title": "Fund from Exchange"
+      },
+      "dyn_social_redirect": {
+        "logging_in": "Logging you in"
+      }
+    }
+  },
+  "ru": {
+    "dynamicUi": {
+      "dyn_send_transaction": {
+        "confirmation": {
+          "cancel_button": "Отмена",
+          "confirm_button": "Подтвердить",
+          "send": "Подтвердить",
+          "data": {
+            "amount": "Сумма",
+            "from": "Отправитель (вы)",
+            "gas": "Газ",
+            "gas_estimate": "Комиссия сети",
+            "to": "Получатель",
+            "total": "Итого",
+            "wallet_used": "Используемый кошелёк",
+            "network": "Сеть",
+            "recipient": "Получатель",
+            "destination": "Взаимодействие с",
+            "gas_tooltip": "Комиссию за газ взимает сеть. Она может быстро меняться в зависимости от нагрузки.",
+            "sending": "Отправка",
+            "receiving": "Получение",
+            "transfer": {
+              "send": "Отправить",
+              "receive": "Получить"
+            }
+          },
+          "not_applied": "Н/Д",
+          "title": "Подтвердите транзакцию"
+        },
+        "data": {
+          "amount": {
+            "label": "Сумма",
+            "placeholder": "Введите сумму"
+          },
+          "balance": {
+            "label": "Баланс:"
+          },
+          "from": "Отправить с",
+          "send": "Отправить",
+          "send_preview": "Просмотр перевода",
+          "confirmation_tx": "Подтвердите транзакцию",
+          "banner": "Почти готово! Подтвердите транзакцию, чтобы продолжить.",
+          "recipient": {
+            "label": "Адрес",
+            "placeholder": "Введите адрес кошелька…"
+          },
+          "fee_token_label": "Оплатить комиссию с помощью",
+          "select_token": "Выберите любой токен",
+          "symbol_available": "Доступно {{symbol}}"
+        },
+        "multiple_recipients": "Несколько",
+        "preview_transaction": "Просмотр транзакции",
+        "send_button": "Отправить сейчас",
+        "succeeded": {
+          "continue_button": "Готово",
+          "network": {
+            "label": "Сеть"
+          },
+          "recipient": {
+            "label": "Получатель"
+          },
+          "title": "Транзакция успешно отправлена получателю",
+          "total_amount": {
+            "label": "Общая сумма"
+          }
+        },
+        "validation": {
+          "amount": {
+            "invalid_decimals": "Введите значение не более чем с {{decimals}} знаками после запятой.",
+            "invalid_format": "Неверный формат суммы",
+            "over_balance": "Недостаточно средств для отправки этой суммы.",
+            "required": "Укажите сумму"
+          },
+          "recipient": {
+            "invalid_format": "Неверный формат адреса",
+            "required": "Укажите получателя"
+          }
+        },
+        "info_message": {
+          "refresh_balance_time": "Обновление баланса может занять до 30 секунд."
+        },
+        "warning_message": {
+          "insufficient_funds": {
+            "title": "Недостаточно средств",
+            "description": "Недостаточно средств для транзакции. Добавьте {{amountLeft}} {{currencySymbol}}, чтобы продолжить."
+          },
+          "insufficient_gas_funds": {
+            "title": "Недостаточно средств для оплаты газа",
+            "description": "Добавьте {{amountLeft}} {{currencySymbol}}, чтобы продолжить."
+          },
+          "failed_simulation": {
+            "title": "Транзакция, вероятно, завершится ошибкой",
+            "description": "Что-то пошло не так. Проверьте балансы и повторите попытку."
+          }
+        },
+        "error_message": {
+          "gas_not_sponsored": "Комиссия за газ выросла. Подтвердите, что по-прежнему хотите выполнить эту транзакцию."
+        }
+      },
+      "global_wallet": {
+        "connect_to_apps": "Подключение к приложениям",
+        "scan_qr_code": "Сканировать QR-код",
+        "or": "ИЛИ",
+        "walletconnect_uri": "URI WalletConnect",
+        "the_dapp": "dApp",
+        "this_app": "это приложение",
+        "confirm": {
+          "title": "Подтвердите подключение",
+          "description": "Вы уверены, что хотите подключиться к {{name}}?",
+          "cancel_button": "Отмена",
+          "connect_button": "Подключиться"
+        },
+        "banner": {
+          "warning": "Ошибка подключения к {{name}}.",
+          "success": "Подключение к {{name}} установлено.",
+          "already_connected": "Вы уже подключены к {{name}}.",
+          "expired": "Срок действия ссылки истёк. Получите новый URI в приложении.",
+          "bad_input": "Неверный URI. Ниже описано, как найти правильный URI."
+        },
+        "help": {
+          "title": "Как найти URI-код?",
+          "step": {
+            "1": "1. Откройте сайт, к которому хотите подключиться",
+            "2": "2. Найдите кнопку «Подключиться» или «Войти»",
+            "3": "3. Выберите WalletConnect в списке"
+          },
+          "learn_more": "Подробнее о глобальных кошельках"
+        },
+        "malicious_site": {
+          "certain": {
+            "title": "Обнаружено вредоносное приложение!",
+            "subtitle_header": "Риск потери средств",
+            "subtitle_text": "Известно, что этот сайт использует уязвимости подключённых кошельков или похищает из них активы.",
+            "go_back": "Отмена",
+            "proceed": "Продолжить"
+          },
+          "unknown": {
+            "title": "Проверка сайта не выполнена.",
+            "subtitle_header": "Проверьте приложение ещё раз",
+            "subtitle_text": "Сейчас нам не удалось проверить подлинность приложения.",
+            "go_back": "Отмена",
+            "proceed": "Продолжить"
+          }
+        },
+        "connected_apps": {
+          "title": "Подключённые приложения",
+          "subtitle": "Подключённые приложения позволяют использовать кошелёк на других платформах.",
+          "success": "Подключение к {{name}} установлено.",
+          "delegate_wallets": {
+            "title": "Делегированные кошельки",
+            "button": "Делегированные кошельки"
+          }
+        }
+      },
+      "dyn_embedded_authenticator": {
+        "description": "Защитите аккаунт и упростите выполнение транзакций.",
+        "email": {
+          "badge": "Самый быстрый способ",
+          "description": " Потребуется повторное подтверждение через {{expiration}} мин. ",
+          "title": "Использовать одноразовый код"
+        },
+        "passkey": {
+          "auth_info": {
+            "convinience": {
+              "title": "Удобно и быстро",
+              "description": "Быстро подтверждайте транзакции с помощью Face ID или Touch ID."
+            },
+            "security": {
+              "title": "Повышенная безопасность",
+              "description": "Ключи доступа защищены сквозным шифрованием на устройстве или в менеджере паролей, чтобы предотвратить фишинг."
+            },
+            "add_button": "Добавить ключ доступа",
+            "start_button": "Добавить ключ доступа"
+          },
+          "no_email_auth_info": {
+            "convinience": {
+              "title": "Просто и быстро",
+              "description": "Работает на разных устройствах и синхронизируется между устройствами и браузерами."
+            },
+            "security": {
+              "title": "Защита биометрией",
+              "description": "Защищено от фишинга и зашифровано."
+            },
+            "add_button": "Добавить ключ доступа",
+            "start_button": "Добавить ключ доступа"
+          },
+          "badge": "Рекомендуется",
+          "description": "Работает на разных устройствах и защищён биометрией для предотвращения фишинга ",
+          "title": "Создать новый ключ доступа",
+          "reveal_title": "Добавить ключ доступа"
+        },
+        "skip": "Не сейчас",
+        "title": "Безопасность аккаунта",
+        "need_help_title": "Проблема с подписью?",
+        "need_help_description": "Для завершения выберите один из способов ниже",
+        "reveal_title": "Требуется подтверждение",
+        "reveal_description": "Выберите способ подтверждения."
+      },
+      "dyn_create_password": {
+        "continue": "Продолжить",
+        "create_input": {
+          "label": "Создайте код-пароль",
+          "placeholder": "Создайте код-пароль"
+        },
+        "confirm_input": {
+          "label": "Подтвердите код-пароль",
+          "placeholder": "Подтвердите код-пароль"
+        },
+        "current_password_input": {
+          "label": "Текущий код-пароль",
+          "placeholder": "Текущий код-пароль"
+        },
+        "description": "Выберите надёжный и уникальный код-пароль для защиты аккаунта и конфиденциальности.",
+        "errors": {
+          "invalid_current_password": "Неверный текущий код-пароль",
+          "error_changing_password": "Ошибка изменения кода-пароля",
+          "new_password_same_as_old": "Новый код-пароль не должен совпадать со старым",
+          "password_mismatch": "Коды-пароли не совпадают",
+          "user_closed_view": "Пользователь закрыл окно"
+        },
+        "intro": {
+          "continue": "Настроить код-пароль",
+          "description": {
+            "title": "Добавьте код-пароль для защиты аккаунта",
+            "additional_protection": {
+              "title": "Защита кодом-паролем",
+              "description": "Добавьте надёжный код-пароль для дополнительной защиты аккаунта от постороннего доступа."
+            },
+            "restore_access": {
+              "title": "Восстановление доступа",
+              "description": "Он потребуется при входе с нового устройства."
+            }
+          },
+          "title": "Добавьте код-пароль"
+        },
+        "logout": "Выйти",
+        "title": {
+          "create": "Создайте код-пароль",
+          "update": "Создайте новый код-пароль"
+        },
+        "update_input": {
+          "label": "Новый код-пароль",
+          "placeholder": "Новый код-пароль"
+        }
+      },
+      "dyn_embedded_reveal": {
+        "title": "Экспорт кошелька",
+        "agreement_title": "Примите условия, чтобы продолжить",
+        "prompt_for_export_title": "Резервная копия ключа кошелька",
+        "private_key_title": "Экспорт ключа",
+        "recovery_phrase_title": "Секретная фраза восстановления",
+        "badge_label": "Конфиденциальные сведения",
+        "prompt_for_export_description": "Кошелёк готов. Создайте резервную копию ключа, чтобы защитить активы.",
+        "statement_1": {
+          "title": "Некастодиальный кошелёк",
+          "description": "Вы всегда сохраняете контроль"
+        },
+        "statement_2": {
+          "title": "Храните ключ в тайне. Он даёт доступ к аккаунту и активам."
+        },
+        "checkbox_label": "Я отвечаю за сохранность и использование сведений о ключе моего кошелька.",
+        "reveal_description": "Обязательно сохраните резервную копию этих сведений в безопасном месте",
+        "skip_button_label": "Пока пропустить",
+        "reveal_button_label": "Показать",
+        "backup_button_label": "Создать копию сейчас",
+        "copy_button_label": "Копировать в буфер обмена",
+        "done_button_label": "Готово",
+        "aa_warning": {
+          "title": "Ваши активы находятся в другом кошельке.",
+          "subtitle": "Это кошелёк на основе смарт-контракта. После импорта во внешний сервис ваш баланс не будет виден. Чтобы получить доступ к средствам, сначала переведите активы на выбранный внешний кошелёк:",
+          "button": "здесь"
+        },
+        "unlink": "Отвязать кошелёк"
+      },
+      "dyn_reset_password": {
+        "current": {
+          "title": "Введите текущий пароль",
+          "description": "Подтвердите текущий пароль, чтобы продолжить",
+          "label": "Текущий пароль",
+          "placeholder": "Введите пароль",
+          "error": {
+            "required": "Введите пароль",
+            "invalid_password": "Текущий пароль неверен",
+            "failed": "Не удалось проверить пароль"
+          }
+        },
+        "enter": {
+          "title": "Сброс пароля",
+          "description": "Задайте надёжный пароль для защиты кошелька.",
+          "same_password_error": "Новый пароль не должен совпадать с текущим"
+        },
+        "confirm": {
+          "title": "Подтвердите пароль",
+          "description": "Введите пароль ещё раз, чтобы убедиться, что вы надёжно его сохранили.",
+          "acknowledgment": "Я понимаю, что при потере пароля потеряю доступ к аккаунту и активам. Храните пароль в безопасном месте.",
+          "error": {
+            "failed": "Не удалось обновить пароль. Повторите попытку."
+          }
+        },
+        "success": {
+          "title": "Пароль успешно обновлён!",
+          "description": "Готово! Пароль успешно сброшен."
+        }
+      },
+      "dyn_passkey_secure_modal": {
+        "code": {
+          "action_based_description": "Чтобы {{action}}, подтвердите аккаунт.",
+          "description": "Код безопасности отправлен на {{email}}.",
+          "input_label": "Введите код здесь…",
+          "title": "Код подтверждения отправлен",
+          "resend": {
+            "button": "Отправить код повторно",
+            "text": "Не получили код?"
+          },
+          "complete_transaction_action": "завершить транзакцию",
+          "sign_message_action": "подписать это сообщение"
+        },
+        "complete": {
+          "complete_button": "Создать ключ доступа",
+          "description": "Ключи доступа хранятся на вашем устройстве под защитой биометрии. Доступ к ним есть только у вас.",
+          "title": "Защитите аккаунт"
+        },
+        "start": {
+          "description": "Одноразовый код безопасности будет отправлен на указанный в аккаунте email. Срок действия — 15 минут.",
+          "start_button": "Отправить письмо",
+          "title": "Отправить код на email"
+        }
+      },
+      "dyn_exchange_transfer_confirmation": {
+        "title": "Подтверждение пополнения",
+        "from": "Отправитель",
+        "to": "Получатель",
+        "fee": "Комиссия сети",
+        "fee_not_found": "Н/Д",
+        "receive": "Получить",
+        "cost": "Сумма + комиссии",
+        "cost_no_fee": "Сумма",
+        "terms": "Подтверждая, я принимаю Условия использования и понимаю, что это пополнение необратимо.",
+        "send": "Отправить {{fiatCurrency}} {{fiatCurrencySymbol}}",
+        "confirm": "Подтвердить",
+        "cancel": "Отмена",
+        "account": "Пользователь {{exchange}}"
+      },
+      "dyn_secondary_wallet": {
+        "title": "Выберите кошелёк",
+        "copy_address": "Копировать адрес",
+        "view_address": "Посмотреть адрес",
+        "copy_ens": "Копировать ENS",
+        "view_ens": "Посмотреть ENS",
+        "unlink": "Отвязать",
+        "switch_wallet": "Сменить кошелёк",
+        "unlink_from_account": "Отвязать от моего аккаунта",
+        "disconnect_from_account": "Отключить от моего аккаунта",
+        "export": "Экспорт приватных ключей",
+        "connect_new": "Подключить новый",
+        "link_new": "Привязать новый"
+      },
+      "dyn_wallet_link": {
+        "cannot_link": {
+          "cancel_button": "Отмена",
+          "description": "Это единственный кошелёк в вашем другом аккаунте. Перенести его нельзя: вы потеряете доступ к тому аккаунту.",
+          "link_other_button": "Привязать другой кошелёк",
+          "title": "Нельзя привязать этот кошелёк к новому аккаунту"
+        },
+        "confirm_button": "Привязать кошелёк к текущему аккаунту",
+        "existent_account": {
+          "acceptance": "Я понимаю, что после привязки этого кошелька потеряю доступ к другому аккаунту.",
+          "warning": "Привязка кошелька к этому аккаунту отменит его привязку к предыдущему аккаунту"
+        },
+        "log_out_button": "Выйти",
+        "title": "Перенести этот кошелёк?",
+        "already_exists": {
+          "title": "Кошелёк уже привязан",
+          "description": "Этот кошелёк уже используется как встроенный. Привязать его можно только после удаления существующего встроенного кошелька."
+        }
+      },
+      "dyn_upgrade_wallet": {
+        "title": "Обновите аккаунт",
+        "description": "Доступна новая версия аккаунта с усиленной защитой и более простым восстановлением.",
+        "eligible_wallets": "Кошельки, доступные для обновления",
+        "how_to_upgrade": "Как вы хотите выполнить обновление?",
+        "keep_existing": "Сохранить текущий кошелёк",
+        "keep_existing_desc": "Экспортируйте старый кошелёк и безопасно импортируйте приватный ключ для обновления",
+        "start_fresh": "Начать заново",
+        "start_fresh_desc": "Удалить старый кошелёк и создать совершенно новый кошелёк с улучшениями",
+        "recommended": "рекомендуется",
+        "upgrade": "Обновить",
+        "not_now": "Не сейчас"
+      },
+      "dyn_active_wallet_info": {
+        "testnet_warning": "Выбрана тестовая сеть. Используйте только тестовые средства, иначе они будут потеряны.",
+        "ordinals_address": "Адрес Ordinals",
+        "payment_address": "Платёжный адрес",
+        "balance": "Общий баланс",
+        "options": {
+          "copy_ens": "Копировать ENS",
+          "view_address": "Посмотреть адрес",
+          "disconnect": "Отключить",
+          "settings": "Настройки кошелька",
+          "export": "Экспорт приватных ключей"
+        }
+      },
+      "dyn_sync_wallet": {
+        "switch_wallet": {
+          "title": "Ваши кошельки не совпадают.\nСмените кошелёк, чтобы продолжить.",
+          "active_address": {
+            "heading": "Сейчас активен в кошельке"
+          },
+          "expected_address": {
+            "heading": "Сейчас активен на сайте",
+            "prompt": "Вручную переключитесь на этот кошелёк"
+          }
+        },
+        "reconnecting": {
+          "title": "Этот кошелёк не подключён",
+          "description": "Повторное подключение кошелька {{walletAddress}}, чтобы сделать его активным…"
+        },
+        "reconnect_with_qr_code": {
+          "title": "Этот кошелёк не подключён"
+        },
+        "cancel_button": "Отмена",
+        "retry_button": "Повторить"
+      },
+      "dyn_session_permissions": {
+        "permissions_label": "Разрешения",
+        "permissions": {
+          "ownership": "Действовать от вашего имени",
+          "access": "Доступ автоматически завершится через {{time}}"
+        },
+        "spending_label": "Разрешить расходы",
+        "spending_limit": "Можно потратить до:",
+        "advanced_label": "Дополнительно",
+        "advanced_description": "Сведения о сеансе",
+        "connected": "Подключено {{time}} назад"
+      },
+      "dyn_exchange_transfer_errors": {
+        "title": "Не удалось выполнить перевод.",
+        "mfa_failed": "Неверный код безопасности. Проверьте код MFA и повторите попытку.",
+        "invalid_currency_description": "Выберите поддерживаемую валюту и повторите попытку.",
+        "invalid_balance": "Сумма перевода с учётом комиссий превышает доступный баланс. Уменьшите сумму.",
+        "amount_too_small": "Сумма перевода меньше минимума, установленного выбранной биржей. Введите большую сумму и повторите попытку.",
+        "address_not_whitelisted": "Адрес получателя не входит в список разрешённых адресов этой биржи. Добавьте его в список перед повторной попыткой перевода.",
+        "unknown": "Произошла неизвестная ошибка."
+      },
+      "dyn_account_exists": {
+        "connect": "Подключиться через {{socialOauth}}",
+        "description_email": "Похоже, уже существует аккаунт с адресом",
+        "description_social": "Чтобы восстановить нужный аккаунт, войдите ещё раз.",
+        "title": "Требуется повторный вход",
+        "trail_message_email": ". Войдите с помощью email.",
+        "trail_message_social": "через {{socialOauth}}"
+      },
+      "dyn_need_help_section": {
+        "info": {
+          "v1": "Нужна помощь?",
+          "not_v1": "Нужна помощь? Свяжитесь с нами:"
+        },
+        "contact_support": "Связаться с поддержкой",
+        "divider": "или",
+        "help_button": "Получить помощь здесь",
+        "visit_platform": "Перейти на {{platform}}"
+      },
+      "dyn_rename_passkeys": {
+        "error": "Не удалось обновить ключ доступа",
+        "input_label": "Название ключа доступа",
+        "save": "Сохранить",
+        "title": "Переименуйте ключ доступа",
+        "not_found": "Ключи доступа не найдены"
+      },
+      "dyn_wallet_locked": {
+        "connect_continue": "Подключите кошелёк, чтобы продолжить",
+        "title": "С возвращением",
+        "subtitle": "Не удалось подключиться к кошельку. Нажмите «Подключить кошелёк», чтобы повторить попытку ",
+        "connect": "Подключить кошелёк",
+        "logout": "Выйти"
+      },
+      "dyn_exchange_list": {
+        "search": {
+          "label": "Поиск бирж",
+          "not_found": {
+            "description": "Возможно, нужная биржа недоступна.",
+            "title": "Биржа недоступна"
+          }
+        },
+        "item": {
+          "connected": "Подключено"
+        },
+        "no_exchanges": "Биржи не настроены."
+      },
+      "dyn_wallet_details_card": {
+        "header": "Сведения о кошельке",
+        "address": "Адрес",
+        "copy": "Копировать",
+        "copied": "Скопировано!"
+      },
+      "dyn_deposited_exchange": {
+        "title": "Зачислено",
+        "description": " успешно зачислено на {{address}}",
+        "done": "Готово",
+        "view": "Посмотреть транзакцию"
+      },
+      "dyn_merge_user_accounts_conflicts": {
+        "confirm_button": "Подтвердить и объединить",
+        "description": "Некоторые сведения не совпадают. Выберите нужные варианты",
+        "errors": {
+          "merge_error": "Что-то пошло не так. Повторите попытку."
+        },
+        "title": "Подтвердите свой выбор"
+      },
+      "dyn_export_shares_passcode": {
+        "title": "Введите код-пароль",
+        "description": "Для экспорта частей восстановления введите код-пароль.",
+        "enter_passcode": "Введите код-пароль",
+        "error": "Неверный код-пароль"
+      },
+      "dyn_unlock_wallet": {
+        "title": "Введите пароль",
+        "description": "Введите пароль, чтобы продолжить. Кошелёк будет разблокирован на время этого сеанса.",
+        "button": {
+          "continue": "Продолжить"
+        }
+      },
+      "dyn_nav_bar": {
+        "wallets": "Кошельки",
+        "profile": "Профиль",
+        "settings": "Настройки"
+      },
+      "dyn_account_upgraded": {
+        "title": "Аккаунт обновлён",
+        "message": "Готово! У вас последняя версия — больше возможностей, гибкости и готовность к будущим изменениям.",
+        "continue_button": "Продолжить"
+      },
+      "dyn_access_blocked": {
+        "title": "Доступ заблокирован",
+        "content": "Вход недоступен для лиц в юрисдикции {{jurisdiction}}, поскольку она находится под санкциями."
+      },
+      "dyn_deposit": {
+        "title": "Пополнить",
+        "receive_funds_on": "Вы можете получить токены в сети "
+      },
+      "dyn_passkey_success": {
+        "created": "Создан новый ключ доступа",
+        "edited": "Ключ доступа изменён"
+      },
+      "dyn_wallet_conect": {
+        "mobile": {
+          "wallet_list": {
+            "helper": "Создайте свой первый кошелёк",
+            "title": "Кошельки WalletConnect"
+          }
+        }
+      },
+      "dyn_chainalysis_blocked_wallet": {
+        "title": "Доступ запрещён"
+      },
+      "dyn_fund_from_exchange": {
+        "title": "Пополнить с биржи"
+      },
+      "dyn_social_redirect": {
+        "logging_in": "Выполняется вход"
+      }
+    }
+  },
+  "kk": {
+    "dynamicUi": {
+      "dyn_send_transaction": {
+        "confirmation": {
+          "cancel_button": "Бас тарту",
+          "confirm_button": "Растау",
+          "send": "Растау",
+          "data": {
+            "amount": "Сома",
+            "from": "Жіберуші (сіз)",
+            "gas": "Газ",
+            "gas_estimate": "Желі комиссиясы",
+            "to": "Алушы",
+            "total": "Барлығы",
+            "wallet_used": "Қолданылатын әмиян",
+            "network": "Желі",
+            "recipient": "Алушы",
+            "destination": "Өзара әрекеттесу нысаны",
+            "gas_tooltip": "Газ комиссиясын желі алады. Ол жүктемеге қарай тез өзгеруі мүмкін.",
+            "sending": "Жіберу",
+            "receiving": "Қабылдау",
+            "transfer": {
+              "send": "Жіберу",
+              "receive": "Қабылдау"
+            }
+          },
+          "not_applied": "Дерек жоқ",
+          "title": "Транзакцияны растаңыз"
+        },
+        "data": {
+          "amount": {
+            "label": "Сома",
+            "placeholder": "Соманы енгізіңіз"
+          },
+          "balance": {
+            "label": "Баланс:"
+          },
+          "from": "Жіберуші әмиян",
+          "send": "Жіберу",
+          "send_preview": "Аударымды қарап шығу",
+          "confirmation_tx": "Транзакцияны растаңыз",
+          "banner": "Дайын болуға жақын! Жалғастыру үшін транзакцияны растаңыз.",
+          "recipient": {
+            "label": "Мекенжай",
+            "placeholder": "Әмиян мекенжайын енгізіңіз…"
+          },
+          "fee_token_label": "Комиссияны төлеу токені",
+          "select_token": "Кез келген токенді таңдаңыз",
+          "symbol_available": "{{symbol}} қолжетімді"
+        },
+        "multiple_recipients": "Бірнеше",
+        "preview_transaction": "Транзакцияны қарап шығу",
+        "send_button": "Қазір жіберу",
+        "succeeded": {
+          "continue_button": "Дайын",
+          "network": {
+            "label": "Желі"
+          },
+          "recipient": {
+            "label": "Алушы"
+          },
+          "title": "Транзакция мына алушыға сәтті жіберілді:",
+          "total_amount": {
+            "label": "Жалпы сома"
+          }
+        },
+        "validation": {
+          "amount": {
+            "invalid_decimals": "Үтірден кейін {{decimals}} таңбадан аспайтын мән енгізіңіз.",
+            "invalid_format": "Сома пішімі қате",
+            "over_balance": "Бұл соманы жіберуге қаражат жеткіліксіз.",
+            "required": "Соманы көрсетіңіз"
+          },
+          "recipient": {
+            "invalid_format": "Мекенжай пішімі қате",
+            "required": "Алушыны көрсетіңіз"
+          }
+        },
+        "info_message": {
+          "refresh_balance_time": "Балансты жаңартуға 30 секундқа дейін уақыт кетуі мүмкін."
+        },
+        "warning_message": {
+          "insufficient_funds": {
+            "title": "Қаражат жеткіліксіз",
+            "description": "Транзакция үшін қаражат жеткіліксіз. Жалғастыру үшін {{amountLeft}} {{currencySymbol}} қосыңыз."
+          },
+          "insufficient_gas_funds": {
+            "title": "Газ ақысын төлеуге қаражат жеткіліксіз",
+            "description": "Жалғастыру үшін {{amountLeft}} {{currencySymbol}} қосыңыз."
+          },
+          "failed_simulation": {
+            "title": "Транзакция сәтсіз аяқталуы мүмкін",
+            "description": "Бірдеңе дұрыс болмады. Баланстарыңызды тексеріп, қайталап көріңіз."
+          }
+        },
+        "error_message": {
+          "gas_not_sponsored": "Газ комиссиясы өсті. Бұл транзакцияны әлі де орындағыңыз келетінін растаңыз."
+        }
+      },
+      "global_wallet": {
+        "connect_to_apps": "Қолданбаларға қосылу",
+        "scan_qr_code": "QR-кодты сканерлеу",
+        "or": "НЕМЕСЕ",
+        "walletconnect_uri": "WalletConnect URI",
+        "the_dapp": "dApp",
+        "this_app": "осы қолданба",
+        "confirm": {
+          "title": "Қосылуды растаңыз",
+          "description": "{{name}} қолданбасына қосылғыңыз келетініне сенімдісіз бе?",
+          "cancel_button": "Бас тарту",
+          "connect_button": "Қосылу"
+        },
+        "banner": {
+          "warning": "{{name}} қолданбасына қосылу кезінде қате пайда болды.",
+          "success": "{{name}} қолданбасына сәтті қосылды.",
+          "already_connected": "Сіз {{name}} қолданбасына қосылып тұрсыз.",
+          "expired": "Енгізілген сілтеменің мерзімі аяқталды. Қолданбадан жаңа URI алыңыз.",
+          "bad_input": "URI қате. Дұрыс URI табу жолы төменде көрсетілген."
+        },
+        "help": {
+          "title": "URI кодын қалай табуға болады?",
+          "step": {
+            "1": "1. Қосылғыңыз келетін сайтты ашыңыз",
+            "2": "2. «Қосылу» немесе «Кіру» түймесін табыңыз",
+            "3": "3. Тізімнен WalletConnect таңдаңыз"
+          },
+          "learn_more": "Жаһандық әмияндар туралы толығырақ"
+        },
+        "malicious_site": {
+          "certain": {
+            "title": "Зиянды қолданба анықталды!",
+            "subtitle_header": "Қаражатты жоғалту қаупі",
+            "subtitle_text": "Бұл сайт қосылған әмияндардың осалдықтарын пайдаланатыны немесе олардың активтерін ұрлайтыны белгілі.",
+            "go_back": "Бас тарту",
+            "proceed": "Жалғастыру"
+          },
+          "unknown": {
+            "title": "Сайт тексерілмеді.",
+            "subtitle_header": "Қолданбаны қайта тексеріңіз",
+            "subtitle_text": "Қазір қолданбаның түпнұсқалығын тексере алмадық.",
+            "go_back": "Бас тарту",
+            "proceed": "Жалғастыру"
+          }
+        },
+        "connected_apps": {
+          "title": "Қосылған қолданбалар",
+          "subtitle": "Қосылған қолданбалар әмияныңызды басқа платформаларда пайдалануға мүмкіндік береді.",
+          "success": "{{name}} қолданбасына сәтті қосылды.",
+          "delegate_wallets": {
+            "title": "Өкілеттік берілген әмияндар",
+            "button": "Өкілеттік берілген әмияндар"
+          }
+        }
+      },
+      "dyn_embedded_authenticator": {
+        "description": "Аккаунтыңызды қорғап, транзакцияларды орындауды жеңілдетіңіз.",
+        "email": {
+          "badge": "Ең жылдам тәсіл",
+          "description": " {{expiration}} минуттан кейін қайта растау қажет болады. ",
+          "title": "Бір реттік кодты пайдалану"
+        },
+        "passkey": {
+          "auth_info": {
+            "convinience": {
+              "title": "Ыңғайлы әрі жылдам",
+              "description": "Face ID немесе Touch ID арқылы транзакцияларды жылдам орындаңыз."
+            },
+            "security": {
+              "title": "Күшейтілген қауіпсіздік",
+              "description": "Фишингтен қорғау үшін кіру кілттері құрылғыңызда немесе құпиясөз менеджерінде ұштан-ұшқа шифрланады."
+            },
+            "add_button": "Кіру кілтін қосу",
+            "start_button": "Кіру кілтін қосу"
+          },
+          "no_email_auth_info": {
+            "convinience": {
+              "title": "Оңай әрі жылдам",
+              "description": "Әртүрлі құрылғыларда жұмыс істейді және құрылғылар мен браузерлер арасында синхрондалады."
+            },
+            "security": {
+              "title": "Биометриялық қорғаныс",
+              "description": "Фишингтен қорғалған және шифрланған."
+            },
+            "add_button": "Кіру кілтін қосу",
+            "start_button": "Кіру кілтін қосу"
+          },
+          "badge": "Ұсынылады",
+          "description": "Әртүрлі құрылғыларда жұмыс істейді және фишингтен қорғау үшін биометриямен қорғалған ",
+          "title": "Жаңа кіру кілтін жасау",
+          "reveal_title": "Кіру кілтін қосу"
+        },
+        "skip": "Қазір емес",
+        "title": "Аккаунт қауіпсіздігі",
+        "need_help_title": "Қол қою кезінде мәселе туындады ма?",
+        "need_help_description": "Аяқтау үшін төмендегі тәсілдердің бірін таңдаңыз",
+        "reveal_title": "Растау қажет",
+        "reveal_description": "Растау тәсілін таңдаңыз."
+      },
+      "dyn_create_password": {
+        "continue": "Жалғастыру",
+        "create_input": {
+          "label": "Құпия код жасаңыз",
+          "placeholder": "Құпия код жасаңыз"
+        },
+        "confirm_input": {
+          "label": "Құпия кодты растаңыз",
+          "placeholder": "Құпия кодты растаңыз"
+        },
+        "current_password_input": {
+          "label": "Қазіргі құпия код",
+          "placeholder": "Қазіргі құпия код"
+        },
+        "description": "Аккаунтыңыз бен құпиялылықты қорғау үшін сенімді және бірегей құпия код таңдаңыз.",
+        "errors": {
+          "invalid_current_password": "Қазіргі құпия код қате",
+          "error_changing_password": "Құпия кодты өзгерту қатесі",
+          "new_password_same_as_old": "Жаңа құпия код ескі кодпен бірдей болмауы керек",
+          "password_mismatch": "Құпия кодтар сәйкес келмейді",
+          "user_closed_view": "Пайдаланушы терезені жапты"
+        },
+        "intro": {
+          "continue": "Құпия код орнату",
+          "description": {
+            "title": "Аккаунтты қорғау үшін құпия код қосыңыз",
+            "additional_protection": {
+              "title": "Құпия кодпен қорғау",
+              "description": "Аккаунтыңызды рұқсатсыз кіруден қосымша қорғау үшін сенімді құпия код қосыңыз."
+            },
+            "restore_access": {
+              "title": "Қолжетімділікті қалпына келтіру",
+              "description": "Жаңа құрылғыдан кіргенде оны енгізу қажет болады."
+            }
+          },
+          "title": "Құпия код қосыңыз"
+        },
+        "logout": "Шығу",
+        "title": {
+          "create": "Құпия код жасаңыз",
+          "update": "Жаңа құпия код жасаңыз"
+        },
+        "update_input": {
+          "label": "Жаңа құпия код",
+          "placeholder": "Жаңа құпия код"
+        }
+      },
+      "dyn_embedded_reveal": {
+        "title": "Әмиянды экспорттау",
+        "agreement_title": "Жалғастыру үшін шарттарды қабылдаңыз",
+        "prompt_for_export_title": "Әмиян кілтінің сақтық көшірмесі",
+        "private_key_title": "Кілтті экспорттау",
+        "recovery_phrase_title": "Құпия қалпына келтіру тіркесі",
+        "badge_label": "Құпия мәліметтер",
+        "prompt_for_export_description": "Әмияныңыз дайын. Активтеріңізді қорғау үшін кілттің сақтық көшірмесін жасаңыз.",
+        "statement_1": {
+          "title": "Кастодиалды емес әмиян",
+          "description": "Басқару әрдайым өз қолыңызда"
+        },
+        "statement_2": {
+          "title": "Кілтіңізді құпия сақтаңыз. Ол аккаунтыңыз бен активтеріңізге қол жеткізуге мүмкіндік береді."
+        },
+        "checkbox_label": "Әмиянымның кілті туралы мәліметтерді сақтау мен пайдалануға өзім жауаптымын.",
+        "reveal_description": "Бұл мәліметтердің сақтық көшірмесін қауіпсіз жерде сақтаңыз",
+        "skip_button_label": "Әзірге өткізіп жіберу",
+        "reveal_button_label": "Көрсету",
+        "backup_button_label": "Қазір сақтық көшірме жасау",
+        "copy_button_label": "Алмасу буферіне көшіру",
+        "done_button_label": "Дайын",
+        "aa_warning": {
+          "title": "Активтеріңіз бұл әмиянда емес.",
+          "subtitle": "Бұл — смарт-контракт негізіндегі әмиян. Оны сыртқы сервиске импорттасаңыз, балансыңыз көрінбейді. Қаражатқа қол жеткізу үшін алдымен активтеріңізді таңдаған сыртқы әмиянға жіберіңіз:",
+          "button": "осында"
+        },
+        "unlink": "Әмиянның байланысын ажырату"
+      },
+      "dyn_reset_password": {
+        "current": {
+          "title": "Қазіргі құпиясөзді енгізіңіз",
+          "description": "Жалғастыру үшін қазіргі құпиясөзді растаңыз",
+          "label": "Қазіргі құпиясөз",
+          "placeholder": "Құпиясөзді енгізіңіз",
+          "error": {
+            "required": "Құпиясөзді енгізіңіз",
+            "invalid_password": "Қазіргі құпиясөз қате",
+            "failed": "Құпиясөзді тексеру мүмкін болмады"
+          }
+        },
+        "enter": {
+          "title": "Құпиясөзді қалпына келтіру",
+          "description": "Әмияныңызды қорғау үшін сенімді құпиясөз орнатыңыз.",
+          "same_password_error": "Жаңа құпиясөз қазіргі құпиясөзбен бірдей болмауы керек"
+        },
+        "confirm": {
+          "title": "Құпиясөзді растаңыз",
+          "description": "Құпиясөзді сенімді сақтағаныңызға көз жеткізу үшін оны қайта енгізіңіз.",
+          "acknowledgment": "Құпиясөзімді жоғалтсам, аккаунтым мен активтеріме қол жеткізе алмайтынымды түсінемін. Құпиясөзіңізді қауіпсіз жерде сақтаңыз.",
+          "error": {
+            "failed": "Құпиясөзді жаңарту мүмкін болмады. Қайталап көріңіз."
+          }
+        },
+        "success": {
+          "title": "Құпиясөз сәтті жаңартылды!",
+          "description": "Дайын! Құпиясөз сәтті қалпына келтірілді."
+        }
+      },
+      "dyn_passkey_secure_modal": {
+        "code": {
+          "action_based_description": "{{action}} үшін аккаунтты растаңыз.",
+          "description": "Қауіпсіздік коды {{email}} мекенжайына жіберілді.",
+          "input_label": "Кодты осында енгізіңіз…",
+          "title": "Растау коды жіберілді",
+          "resend": {
+            "button": "Кодты қайта жіберу",
+            "text": "Код келмеді ме?"
+          },
+          "complete_transaction_action": "транзакцияны аяқтау",
+          "sign_message_action": "осы хабарламаға қол қою"
+        },
+        "complete": {
+          "complete_button": "Кіру кілтін жасау",
+          "description": "Кіру кілттері құрылғыңызда биометриялық қорғаныспен сақталады. Оларға тек сіз қол жеткізе аласыз.",
+          "title": "Аккаунтыңызды қорғаңыз"
+        },
+        "start": {
+          "description": "Бір реттік қауіпсіздік коды аккаунтта көрсетілген электрондық поштаға жіберіледі. Код 15 минут жарамды.",
+          "start_button": "Хат жіберу",
+          "title": "Кодты электрондық поштаға жіберу"
+        }
+      },
+      "dyn_exchange_transfer_confirmation": {
+        "title": "Толықтыруды растау",
+        "from": "Жіберуші",
+        "to": "Алушы",
+        "fee": "Желі комиссиясы",
+        "fee_not_found": "Дерек жоқ",
+        "receive": "Қабылдау",
+        "cost": "Сома + комиссиялар",
+        "cost_no_fee": "Сома",
+        "terms": "Растау арқылы Пайдалану шарттарын қабылдаймын және бұл толықтыруды кері қайтаруға болмайтынын түсінемін.",
+        "send": "{{fiatCurrency}} {{fiatCurrencySymbol}} жіберу",
+        "confirm": "Растау",
+        "cancel": "Бас тарту",
+        "account": "{{exchange}} пайдаланушысы"
+      },
+      "dyn_secondary_wallet": {
+        "title": "Әмиянды таңдаңыз",
+        "copy_address": "Мекенжайды көшіру",
+        "view_address": "Мекенжайды көру",
+        "copy_ens": "ENS көшіру",
+        "view_ens": "ENS көру",
+        "unlink": "Байланысын ажырату",
+        "switch_wallet": "Әмиянды ауыстыру",
+        "unlink_from_account": "Менің аккаунтыммен байланысын ажырату",
+        "disconnect_from_account": "Менің аккаунтымнан ажырату",
+        "export": "Жеке кілттерді экспорттау",
+        "connect_new": "Жаңа әмиянды қосу",
+        "link_new": "Жаңа әмиянды байланыстыру"
+      },
+      "dyn_wallet_link": {
+        "cannot_link": {
+          "cancel_button": "Бас тарту",
+          "description": "Бұл басқа аккаунтыңыздағы жалғыз әмиян. Оны көшіруге болмайды, себебі сол аккаунтқа қол жеткізе алмай қаласыз.",
+          "link_other_button": "Басқа әмиянды байланыстыру",
+          "title": "Бұл әмиянды жаңа аккаунтқа байланыстыру мүмкін емес"
+        },
+        "confirm_button": "Әмиянды қазіргі аккаунтқа байланыстыру",
+        "existent_account": {
+          "acceptance": "Бұл әмиянды байланыстырғаннан кейін басқа аккаунтқа қол жеткізе алмайтынымды түсінемін.",
+          "warning": "Әмиянды осы аккаунтқа байланыстыру оның бұрынғы аккаунтпен байланысын ажыратады"
+        },
+        "log_out_button": "Шығу",
+        "title": "Бұл әмиянды көшіру керек пе?",
+        "already_exists": {
+          "title": "Әмиян байланыстырылған",
+          "description": "Бұл әмиян кірістірілген әмиян ретінде қолданылып жатыр. Оны байланыстыру үшін алдымен қазіргі кірістірілген әмиянды жою қажет."
+        }
+      },
+      "dyn_upgrade_wallet": {
+        "title": "Аккаунтыңызды жаңартыңыз",
+        "description": "Қорғанысы күшейтілген және қалпына келтіруі жеңілдетілген аккаунттың жаңа нұсқасы қолжетімді.",
+        "eligible_wallets": "Жаңартуға болатын әмияндар",
+        "how_to_upgrade": "Қалай жаңартқыңыз келеді?",
+        "keep_existing": "Қазіргі әмиянды сақтау",
+        "keep_existing_desc": "Жаңарту үшін ескі әмиянды экспорттап, жеке кілтті қауіпсіз импорттаңыз",
+        "start_fresh": "Жаңадан бастау",
+        "start_fresh_desc": "Ескі әмиянды жойып, жақсартылған жаңа әмиян жасау",
+        "recommended": "ұсынылады",
+        "upgrade": "Жаңарту",
+        "not_now": "Қазір емес"
+      },
+      "dyn_active_wallet_info": {
+        "testnet_warning": "Тестілік желі таңдалды. Тек тестілік қаражатты пайдаланыңыз, әйтпесе қаражатыңыз жоғалады.",
+        "ordinals_address": "Ordinals мекенжайы",
+        "payment_address": "Төлем мекенжайы",
+        "balance": "Жалпы баланс",
+        "options": {
+          "copy_ens": "ENS көшіру",
+          "view_address": "Мекенжайды көру",
+          "disconnect": "Ажырату",
+          "settings": "Әмиян баптаулары",
+          "export": "Жеке кілттерді экспорттау"
+        }
+      },
+      "dyn_sync_wallet": {
+        "switch_wallet": {
+          "title": "Әмияндарыңыз сәйкес келмейді.\nЖалғастыру үшін әмиянды ауыстырыңыз.",
+          "active_address": {
+            "heading": "Қазір әмиянда белсенді"
+          },
+          "expected_address": {
+            "heading": "Қазір сайтта белсенді",
+            "prompt": "Осы әмиянға қолмен ауысыңыз"
+          }
+        },
+        "reconnecting": {
+          "title": "Бұл әмиян қосылмаған",
+          "description": "{{walletAddress}} әмиянын белсенді ету үшін қайта қосылу…"
+        },
+        "reconnect_with_qr_code": {
+          "title": "Бұл әмиян қосылмаған"
+        },
+        "cancel_button": "Бас тарту",
+        "retry_button": "Қайталау"
+      },
+      "dyn_session_permissions": {
+        "permissions_label": "Рұқсаттар",
+        "permissions": {
+          "ownership": "Сіздің атыңыздан әрекет ету",
+          "access": "Қолжетімділік {{time}} кейін автоматты түрде аяқталады"
+        },
+        "spending_label": "Қаражат жұмсауға рұқсат беру",
+        "spending_limit": "Жұмсауға болатын шек:",
+        "advanced_label": "Қосымша",
+        "advanced_description": "Сеанс туралы мәлімет",
+        "connected": "{{time}} бұрын қосылған"
+      },
+      "dyn_exchange_transfer_errors": {
+        "title": "Аударымды орындау мүмкін болмады.",
+        "mfa_failed": "Қауіпсіздік коды қате. MFA кодын тексеріп, қайталап көріңіз.",
+        "invalid_currency_description": "Қолдау көрсетілетін валютаны таңдап, қайталап көріңіз.",
+        "invalid_balance": "Комиссияларды қоса есептегендегі аударым сомасы қолжетімді баланстан асады. Соманы азайтыңыз.",
+        "amount_too_small": "Аударым сомасы таңдалған биржа белгілеген ең төменгі сомадан аз. Көбірек сома енгізіп, қайталап көріңіз.",
+        "address_not_whitelisted": "Алушының мекенжайы осы биржаның рұқсат етілген мекенжайлар тізімінде жоқ. Аударымды қайталамас бұрын оны тізімге қосыңыз.",
+        "unknown": "Белгісіз қате пайда болды."
+      },
+      "dyn_account_exists": {
+        "connect": "{{socialOauth}} арқылы қосылу",
+        "description_email": "Мына мекенжаймен аккаунт тіркелген сияқты:",
+        "description_social": "Қажетті аккаунтты қалпына келтіру үшін қайта кіріңіз.",
+        "title": "Қайта кіру қажет",
+        "trail_message_email": ". Электрондық пошта арқылы кіріңіз.",
+        "trail_message_social": "{{socialOauth}} арқылы"
+      },
+      "dyn_need_help_section": {
+        "info": {
+          "v1": "Көмек керек пе?",
+          "not_v1": "Көмек керек пе? Бізге хабарласыңыз:"
+        },
+        "contact_support": "Қолдау қызметіне хабарласу",
+        "divider": "немесе",
+        "help_button": "Осы жерден көмек алу",
+        "visit_platform": "{{platform}} платформасына өту"
+      },
+      "dyn_rename_passkeys": {
+        "error": "Кіру кілтін жаңарту мүмкін болмады",
+        "input_label": "Кіру кілтінің атауы",
+        "save": "Сақтау",
+        "title": "Кіру кілтінің атауын өзгертіңіз",
+        "not_found": "Кіру кілттері табылмады"
+      },
+      "dyn_wallet_locked": {
+        "connect_continue": "Жалғастыру үшін әмияныңызды қосыңыз",
+        "title": "Қайта оралуыңызбен",
+        "subtitle": "Әмияныңызға қосылу мүмкін болмады. Қайталап көру үшін «Әмиянды қосу» түймесін басыңыз ",
+        "connect": "Әмиянды қосу",
+        "logout": "Шығу"
+      },
+      "dyn_exchange_list": {
+        "search": {
+          "label": "Биржаларды іздеу",
+          "not_found": {
+            "description": "Іздеген биржаңыз қолжетімсіз болуы мүмкін.",
+            "title": "Биржа қолжетімсіз"
+          }
+        },
+        "item": {
+          "connected": "Қосылған"
+        },
+        "no_exchanges": "Биржалар бапталмаған."
+      },
+      "dyn_wallet_details_card": {
+        "header": "Әмиян туралы мәлімет",
+        "address": "Мекенжай",
+        "copy": "Көшіру",
+        "copied": "Көшірілді!"
+      },
+      "dyn_deposited_exchange": {
+        "title": "Қаражат түсті",
+        "description": " {{address}} мекенжайына сәтті түсті",
+        "done": "Дайын",
+        "view": "Транзакцияны көру"
+      },
+      "dyn_merge_user_accounts_conflicts": {
+        "confirm_button": "Растау және біріктіру",
+        "description": "Кейбір мәліметтер сәйкес келмейді. Қажетті нұсқаларды таңдаңыз",
+        "errors": {
+          "merge_error": "Бірдеңе дұрыс болмады. Қайталап көріңіз."
+        },
+        "title": "Таңдауыңызды растаңыз"
+      },
+      "dyn_export_shares_passcode": {
+        "title": "Құпия кодты енгізіңіз",
+        "description": "Қалпына келтіру бөліктерін экспорттау үшін құпия кодты енгізіңіз.",
+        "enter_passcode": "Құпия кодты енгізіңіз",
+        "error": "Құпия код қате"
+      },
+      "dyn_unlock_wallet": {
+        "title": "Құпиясөзді енгізіңіз",
+        "description": "Жалғастыру үшін құпиясөзді енгізіңіз. Осы сеанс бойы әмиянның құлпы ашық болады.",
+        "button": {
+          "continue": "Жалғастыру"
+        }
+      },
+      "dyn_nav_bar": {
+        "wallets": "Әмияндар",
+        "profile": "Профиль",
+        "settings": "Баптаулар"
+      },
+      "dyn_account_upgraded": {
+        "title": "Аккаунт жаңартылды",
+        "message": "Дайын! Сізде ең соңғы нұсқа бар: мүмкіндіктері көбірек, икемдірек және алдағы өзгерістерге дайын.",
+        "continue_button": "Жалғастыру"
+      },
+      "dyn_access_blocked": {
+        "title": "Қолжетімділік бұғатталған",
+        "content": "{{jurisdiction}} юрисдикциясына санкциялар салынғандықтан, онда орналасқан тұлғаларға кіру қолжетімсіз."
+      },
+      "dyn_deposit": {
+        "title": "Толықтыру",
+        "receive_funds_on": "Токендерді қабылдауға болатын желі: "
+      },
+      "dyn_passkey_success": {
+        "created": "Жаңа кіру кілті жасалды",
+        "edited": "Кіру кілті өзгертілді"
+      },
+      "dyn_wallet_conect": {
+        "mobile": {
+          "wallet_list": {
+            "helper": "Алғашқы әмияныңызды жасаңыз",
+            "title": "WalletConnect әмияндары"
+          }
+        }
+      },
+      "dyn_chainalysis_blocked_wallet": {
+        "title": "Кіруге тыйым салынған"
+      },
+      "dyn_fund_from_exchange": {
+        "title": "Биржадан толықтыру"
+      },
+      "dyn_social_redirect": {
+        "logging_in": "Кіру орындалуда"
+      }
+    }
+  }
+}

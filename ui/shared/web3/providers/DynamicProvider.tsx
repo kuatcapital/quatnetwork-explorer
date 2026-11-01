@@ -1,4 +1,5 @@
 // Modified by Quat Capital, 2026-10-29: own auth notifications follow locale; SDK/API payloads unchanged. GPL-3.0.
+// Modified by Quat Capital, 2026-11-01: keep SDK locale synchronized without remounting the wallet provider. GPL-3.0.
 import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
 import type { DynamicContextProps, OnAuthSuccess } from '@dynamic-labs/sdk-react-core';
 import { DynamicContextProvider, getAuthToken } from '@dynamic-labs/sdk-react-core';
@@ -14,6 +15,7 @@ import useApiFetch from 'lib/api/useApiFetch';
 import { getResourceKey } from 'lib/api/useApiQuery';
 import useGetCsrfToken from 'lib/hooks/useGetCsrfToken';
 import { getUiErrorMessage, OwnUiMessageError } from 'lib/i18n/uiMessages';
+import { useDynamicLocale } from 'lib/i18n/useDynamicLocale';
 import * as mixpanel from 'lib/mixpanel/index';
 import { chains } from 'lib/web3/chains';
 import { toaster } from 'toolkit/chakra/toaster';
@@ -49,7 +51,8 @@ interface Props {
 }
 
 const DynamicProvider = ({ children }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const localeInitialized = useDynamicLocale(i18n);
 
   const apiFetch = useApiFetch();
   const queryClient = useQueryClient();
@@ -101,6 +104,8 @@ const DynamicProvider = ({ children }: Props) => {
       },
     };
   }, [ onAuthSuccess, onLogout ]);
+
+  if (!localeInitialized) return null;
 
   return (
     <DynamicContextProvider
