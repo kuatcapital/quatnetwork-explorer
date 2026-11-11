@@ -12,3 +12,7 @@ README.md
 /test-results/
 /playwright-report/
 /blob-report/
+# Modified by Quat Capital, 2026-11-02: exclude local operator configuration and browser artifacts from the build context. GPL-3.0.
+**/.env
+**/.env.*
+tools/i18n/*.tmp.*

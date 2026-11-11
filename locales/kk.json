@@ -1,7 +1,7 @@
 {
   "_meta": {
     "modifiedBy": "Quat Capital",
-    "modifiedAt": "2026-11-01",
+    "modifiedAt": "2026-11-02",
     "license": "GPL-3.0",
     "status": "draft-native-review-required",
     "dynamicSourceLicense": "MIT; Copyright (c) 2022 Dynamic Labs, Inc.; see tools/i18n/DYNAMIC-LICENSE.txt"
@@ -268,7 +268,7 @@
     "value_with_currency": "Сома {{currency}}",
     "fee_with_currency": "Комиссия{{currency}}",
     "confirmed_within": "{{seconds}} с ішінде расталды",
-    "confirmed_upper": "{{seconds}} с аспайтын уақытта расталды",
+    "confirmed_upper": "{{seconds}} секундтан аспайтын уақытта расталды",
     "confirmed_range": "{{lower}}–{{upper}} с ішінде расталды",
     "step_sequencer": "Секвенсор растады",
     "step_confirmed_layer": "{{layer}} қабатында расталды",
@@ -1557,7 +1557,7 @@
     "eip4844_blob": "EIP-4844 блобы",
     "calldata": "Шақыру деректері",
     "chain_tooltip": "{{prefix}}{{chain}} (желі идентификаторы: {{id}})",
-    "transaction_summary": "Транзакция түйіні",
+    "transaction_summary": "Транзакцияның қысқаша мазмұны",
     "noves_summary": "Noves.fi ұсынған түсінікті транзакция сипаттамасы",
     "provided_by": "ұсынған",
     "estimated_historical": "Транзакция күніндегі бағалау құны",

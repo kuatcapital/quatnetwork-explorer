@@ -1,0 +1,191 @@
+{
+  "_meta": {
+    "modifiedBy": "Quat Capital",
+    "modifiedAt": "2026-11-11",
+    "license": "GPL-3.0"
+  },
+  "command": "node tools/i18n/basic-flow-smoke.mjs",
+  "runId": "2026-11-11T02-38-19.879Z",
+  "completed": true,
+  "browser": "Local headless Chrome",
+  "api": "Deterministic loopback fixtures; no wallet connection",
+  "locales": [
+    "ru",
+    "kk"
+  ],
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "passedScenarios": 39,
+  "uncaughtBrowserErrors": 0,
+  "limitations": [
+    "Mobile viewport emulation, not physical phone acceptance",
+    "Production assets container and Docker build remain unverified",
+    "Native Kazakh review remains pending"
+  ],
+  "scenarios": [
+    {
+      "scenario": "home-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "transaction-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "address-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "token-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "block-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "pagination-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "statuses-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "empty-search-ru-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "home-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "transaction-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "address-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "token-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "block-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "pagination-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "statuses-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "empty-search-kk-desktop",
+      "passed": true
+    },
+    {
+      "scenario": "home-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "transaction-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "address-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "token-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "block-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "pagination-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "statuses-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "empty-search-ru-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "home-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "transaction-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "address-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "token-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "block-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "pagination-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "statuses-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "empty-search-kk-mobile",
+      "passed": true
+    },
+    {
+      "scenario": "runtime-json-update-without-rebuild",
+      "passed": true
+    },
+    {
+      "scenario": "runtime-json-unavailable-retains-cached-kk",
+      "passed": true
+    },
+    {
+      "scenario": "runtime-json-malformed-retains-cached-kk",
+      "passed": true
+    },
+    {
+      "scenario": "empty-transactions-ru",
+      "passed": true
+    },
+    {
+      "scenario": "api-error-ru",
+      "passed": true
+    },
+    {
+      "scenario": "empty-transactions-kk",
+      "passed": true
+    },
+    {
+      "scenario": "api-error-kk",
+      "passed": true
+    }
+  ]
+}

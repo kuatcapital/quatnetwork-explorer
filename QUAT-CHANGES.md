@@ -1672,3 +1672,19 @@ Runtime RU/KK для PIN, рейтинга, прогресса, выбора, в
 | 2026-11-01 | `tools/i18n/PHASE10-HANDOFF.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
 | 2026-11-01 | `tools/i18n/REMAINING.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
 | 2026-11-01 | `tools/i18n/EXTERNAL-UI-NOTES.md` | Dynamic RU/KK, SDK guard, регрессии либо фиксация шага 10. |
+
+<!-- Modified by Quat Capital, 2026-11-11: ordinary RU/KK acceptance and recovered local changes. GPL-3.0. -->
+## T18 · 2026-11-11 · шаг 11: локальная браузерная приёмка
+
+Сохранены правки предыдущей сессии от 02.11, выполнены 39 сценариев RU/KK на desktop/mobile viewport и runtime JSON; полный остаток указан в PHASE11-HANDOFF.md. Docker build и вычитка KK ещё не выполнены.
+
+| Дата | Файл | Изменение |
+|---|---|---|
+| 2026-11-11 | `.dockerignore` | Сохранены исключения операторской конфигурации и временных browser artifacts. |
+| 2026-11-11 | `locales/kk.json` | Сохранены две уточнённые формулировки KK от 02.11; новые ключи не добавлялись. |
+| 2026-11-11 | `ui/home/HeroBanner.tsx` | Сохранён доступ к языковому переключателю на desktop главной. |
+| 2026-11-11 | `tools/i18n/basic-flow-smoke.mjs` | Настоящий frontend с loopback fixtures, RU/KK viewport и отказы JSON/API. |
+| 2026-11-11 | `tools/i18n/basic-flow-acceptance.json` | Результаты успешного запуска 39/39 и пределы проверки. |
+| 2026-11-11 | `tools/i18n/PHASE11-HANDOFF.md` | Проверки, воспроизведение и оставшиеся действия для следующей сессии. |
+| 2026-11-11 | `tools/i18n/REMAINING.md` | Актуальный остаток после локальной браузерной приёмки. |
+| 2026-11-11 | `QUAT-CHANGES.md` | Учёт изменённых файлов шага 11. |

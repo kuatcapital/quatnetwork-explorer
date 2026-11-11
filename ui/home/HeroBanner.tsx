@@ -1,4 +1,5 @@
 // Modified by Quat Capital, 2026-10-25: localized explorer heading (T18, GPL-3.0).
+// Modified by Quat Capital, 2026-11-02: keep desktop language selection available on the home layout. GPL-3.0.
 // we use custom heading size for hero banner
 // eslint-disable-next-line no-restricted-imports
 import { Box, Flex, Heading } from '@chakra-ui/react';
@@ -9,6 +10,7 @@ import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import RewardsButton from 'ui/rewards/RewardsButton';
 import AdBanner from 'ui/shared/ad/AdBanner';
+import { LanguageSelector } from 'ui/snippets/header/LanguageSelector';
 import SearchBar from 'ui/snippets/searchBar/SearchBarDesktop';
 import SearchBarMobile from 'ui/snippets/searchBar/SearchBarMobile';
 import UserProfileDesktop from 'ui/snippets/user/UserProfileDesktop';
@@ -76,12 +78,15 @@ const HeroBanner = () => {
                 t('home.explorer', { network: config.chain.name })
             }
           </Heading>
-          { config.UI.navigation.layout === 'vertical' && (
-            <Box display={{ base: 'none', lg: 'flex' }} gap={ 2 }>
-              { config.features.rewards.isEnabled && <RewardsButton variant="hero"/> }
-              <UserProfileDesktop buttonVariant="hero"/>
-            </Box>
-          ) }
+          <Box display={{ base: 'none', lg: 'flex' }} gap={ 2 } flexShrink={ 0 }>
+            <LanguageSelector/>
+            { config.UI.navigation.layout === 'vertical' && (
+              <>
+                { config.features.rewards.isEnabled && <RewardsButton variant="hero"/> }
+                <UserProfileDesktop buttonVariant="hero"/>
+              </>
+            ) }
+          </Box>
         </Flex>
         <Box display={{ base: 'flex', lg: 'none' }}>
           <SearchBarMobile isHeroBanner/>
